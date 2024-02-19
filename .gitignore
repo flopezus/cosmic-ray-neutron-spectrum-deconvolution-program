@@ -1,0 +1,25 @@
+################################################
+## Archivos o directorios a excluir del commit##
+################################################
+
+# ignores all .root .zip .txt .dat files
+./*.root
+./*.zip
+./*.txt
+./*.dat
+deconv_data_pdf/EM_unfolding_loop_event_40_maxsteps_20_timegrid_15_ndet_11_binseed_*
+deconv_data_rootfile/*.root
+deconv_data_rootfile/EM/*.root
+
+
+ # does not ignore the README.txt file
+!README.txt
+!deconv_data_rootfile/EM/.keep_dir
+!deconv_data_rootfile/.keep_dir
+!EXPACS_Data/EXPACS_Calc_nflux/*.dat
+!EXPACS_Data/EXPACS_Calc_nflux_500/*.dat
+
+
+# Ejemplos de directorios
+# sql/
+# [Tt]est[Rr]esult*/
