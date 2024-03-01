@@ -79,7 +79,7 @@
 
 - `void em_loop_seed(string campaign, int event, int steps, int time_grid)` is a function that takes as input the number of the event to process (from which counting rates are extracted), a fixed number of steps to iterate the EM method for each seed, and the time grid of the couting rates.
 It then iterates the EM algorithm `deconv_em_output()` (for the given number of steps) over all the seed values. It returns a unique root file for every seed value in which a TTree is stored. The branches of the tree include:
-	- `vector<Double_t> deconv_vec`: Deconvoluted flux (resulting from the specified the number of steps of EM method) in its integral representation as a vector.
+- `vector<Double_t> deconv_vec`: Deconvoluted flux (resulting from the specified the number of steps of EM method) in its integral representation as a vector.
 	- `int ndet`: The numbers of detectors used in the EM method.
 	- `Intg_total`: The total integral of the spectrum.
 	- `Intg_th`: The integral in the thermal region of the spectrum.
@@ -102,7 +102,22 @@ It then iterates the EM algorithm `deconv_em_output()` (for the given number of 
 - `void deconv_flux_multiplot_by_seed(string campaign, int event, int steps, int timegrid, int ndet, int bin_seed, string flux_representation)` is a function that returns a canvas divided into a number of pads according to the maximum of steps to iterate the EM method from `1` to `steps`, with a TH1D histogram object in each of them resulting from the previous function, i.e., representing the deconvoluted flux. 
 - `void em_routine_plot(string campaign, int event, int max_steps, int max_bin_seed)` is a function that loop over `deconv_flux_multiplot_by_seed()` generating a PDF for each iteration.
 - `void em_loop_seed_plot(string campaign, int event, int steps)` test of `em_loop_seed_plot_template()` using only chi-square values in function of seed values.
-	
+- `void deconv_flux_multiplot_by_stop_criteria(string campaign, int event, int steps, int timegrid, int ndet, int bin_seed, string flux_representation)`  is a function that returns several canvas with each spectrum deconvoluted for each event of a campaign, with the EM method using the stop criteia.
+## Scatter plot functions
+- `void scatter_plot_4var(string campaign, int event, int steps, int timegrid, int ndet)`
+- `void scatter_plot_4var_MC(string campaign, int event, int steps, int timegrid, int ndet)`
+- `TScatter* scatter_plot_4var_tscatter(string campaign, int event, int steps, int timegrid, int ndet)`
+- `void scatter_plots_event_loop(string campaign, int event, int steps, int timegrid, int ndet)`
+
+
+## Monte Carlo EM functions
+- `vector<Double_t> neutron_count_vector_gauss_MC(string campaign, int event, int crptime)`
+- `vector<Double_t> Counting_rate_vector_gauss_MC(string campaign, int event, int crptime)`
+- `vector<Double_t> E_neutrons_count_vector_gauss_MC(string campaign, int event, int crptime)`
+- `vector<double> deconv_em_output_MC(string campaign, int event, int steps, int vwc_seed, int crptime, string flux_type, int norm)`
+- `void em_loop_event_MC(string campaign,int event,int steps,int time_grid, int bin_seed)`
+
+
 ## Other functions
 - `void RF_CEFNEN_spectrometer_root_file()` is a function that returns a root file containing a TTree with branches representing the energy binning and the simulated response functions of each detector-moderator system of the CEFNEN-Spectrometer.
 - `void neutron_flux_plots(int vwc_seed)` is a function that returns a canvas containing the histogram plot for a given seed (generated from EXPACS/PARMA code) in three different representations: `Differential`, `Integral` or `Group Plot`, and `Lethargy` or `Group Plot per Energy`, as well as the EXPACS spectrum, which is a spectrum in its lethargy representation.
@@ -111,6 +126,7 @@ It then iterates the EM algorithm `deconv_em_output()` (for the given number of 
 - `void TRS_data_csv_to_root()`
 - `void TRS_plot_spectra()`
 - `void neutron_flux_plots(int vwc_seed)` to compare neutron spectra representationS using seed fluxes from EXPACS
+- `void root_test_multithread()`
 
 ## USAGE
 
@@ -136,3 +152,6 @@ To generate a canvas with 6 pads with plots of Chi-square value, total integral,
 To loop the EM algorithm using steps from 1 to 20, in a time grid of 15 min, using 11 detectors over all events from a determined campaign ("LCO" in this case), we use:
 
 `em_loop_events("LCO",20,15,11)`
+
+To stop EM algorithm in the stop criteria (chi_square<ndet), we use:
+`em_loop_events("LCO",0,15,11)`

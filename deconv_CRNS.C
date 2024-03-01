@@ -657,10 +657,7 @@ auto df_NC_E16 = df_NC.Take<int>("NEUrate_D16").GetValue();
 for (int i=0; i<df_NC_E01.size();i++)
 	{
         vector<double> row_nc_matrix; /*vector de largo 16: [CR_E01[0],...,CR_E02[0]]*/
-       //~ double r;
-		//~ if(time==15){r=1.;}
-		//~ if(time==60){r=1.;}
-			
+        
 			row_nc_matrix.push_back(sqrt((double)df_NC_E01[i]));
 			row_nc_matrix.push_back(sqrt((double)df_NC_E02[i]));
 			row_nc_matrix.push_back(sqrt((double)df_NC_E03[i]));
@@ -681,17 +678,7 @@ for (int i=0; i<df_NC_E01.size();i++)
 			E_neutrons_count_matrix.push_back(row_nc_matrix);
 	
 	}
-
-
-/*visualizamos las entradas por fila*/
-//~ for (unsigned int row = 0; row < counting_rate_matrix.size(); row++) {
-    //~ std::cout << "Row " << row << ": ";
-    //~ for (double value : counting_rate_matrix[row]) {
-      //~ std::cout << value << " ";
-    //~ }
-    //~ std::cout << std::endl;
-    //~ }
-
+	
 return E_neutrons_count_matrix;
 
 }
@@ -780,6 +767,82 @@ for (int i=0; i<df_CR_E01.size();i++)
 return counting_rate_matrix;
 
 }
+
+vector<Double_t> neutron_count_vector_gauss_MC(string campaign, int event, int crptime){
+
+vector<Double_t> neutron_gauss_vec; // vector con los cr generados aleatoriamente de una distribucion gaussiana
+vector<Double_t> N; /*vector de neutrones medidos*/
+
+N = neutrons_count_matrix(campaign,crptime)[event];
+
+
+for(int i=0;i<N.size();i++)
+	{
+	  double deltaN = sqrt(N[i]);
+	  double neutron_gauss = gRandom->Gaus(N[i],deltaN);
+	  neutron_gauss_vec.push_back(neutron_gauss);
+	  
+	}
+//~ for(int i=0;i<N.size();i++)
+	//~ {
+		//~ cout << " N " << N[i] << setw(15) << setfill(' ') << " N Gauss " << neutron_gauss_vec[i] << endl;
+	//~ }
+return neutron_gauss_vec;
+
+
+}
+
+vector<Double_t> Counting_rate_vector_gauss_MC(string campaign, int event, int crptime){
+
+vector<Double_t> N_g; /*vector de neutrones aletarios gaussianos*/
+vector<Double_t> CR_g; /*vector de counting rate de neutrones aleatorios gaussianos*/
+vector<Double_t> CR; /*vector de counting rate de neutrones medidos*/
+
+N_g = neutron_count_vector_gauss_MC(campaign,event, crptime);
+CR = Counting_rate_matrix(campaign,crptime)[event]; //Para comparar
+
+
+for(int i=0;i<N_g.size();i++)
+	{
+		double r;
+		if(crptime==15){r=900;}
+		if(crptime==60){r=3600;}
+		CR_g.push_back(N_g[i]/r);
+	  
+	}
+for(int i=0;i<CR_g.size();i++)
+	{
+		cout << " CR " << CR[i] << setw(15) << setfill(' ') << " CR Gauss " << CR_g[i] << endl;
+	}
+return CR_g;
+
+
+}
+
+vector<Double_t> E_neutrons_count_vector_gauss_MC(string campaign, int event, int crptime){
+
+vector<Double_t> N_g; /*vector de neutrones aletarios gaussianos*/
+vector<Double_t> E_neutrons_count_vector; /*vector de counting rate de errores de neutrones aleatorios gaussianos*/
+
+N_g = neutron_count_vector_gauss_MC(campaign,event, crptime);
+
+
+for(int i=0;i<N_g.size();i++)
+	{
+		double e_neu = sqrt(N_g[i]);
+		E_neutrons_count_vector.push_back(e_neu);
+	  
+	}
+for(int i=0;i<N_g.size();i++)
+	{
+		cout <<  "E_neu_gauss " <<E_neutrons_count_vector[i] << endl;
+	}
+return E_neutrons_count_vector;
+
+
+}
+
+
 
 double_t Chi_Square(vector<Double_t> C_i,vector<Double_t> dCR, vector<Double_t> CR_rec, double ndet, int crptime)
 {
@@ -1687,10 +1750,10 @@ for (int i = 0; i <Seed.size(); i++)
 
 
 /***Llenamos el vector de neutrones y de errores de neutrones medidos****/
-N = neutrons_count_matrix(campaign,crptime)[event]; //Tomamos el primer evento para probar
-dN = E_neutrons_count_matrix(campaign,crptime)[event]; //Tomamos el primer evento para probar
+N = neutrons_count_matrix(campaign,crptime)[event-1]; //Tomamos el primer evento para probar
+dN = E_neutrons_count_matrix(campaign,crptime)[event-1]; //Tomamos el primer evento para probar
 /***Llenamos el vector de CR de neutrones medidos: N/T ****/
-CR = Counting_rate_matrix(campaign,crptime)[event]; //Tomamos el primer evento para probar
+CR = Counting_rate_matrix(campaign,crptime)[event-1]; //Tomamos el primer evento para probar
 
 //~ cout << "Neutrons vector filled: N[i] & dN[i]" << endl;
 //~ /**Visualizamos el vector de CR**/
@@ -1901,8 +1964,8 @@ cout << "Inicia Deconvolucion" << endl;
 	//~ cout << "Chi2 inicial: " << chi2 << endl;
 	//~ cout << "Chi2red inicial: "<< chi2_red << endl;
 	
-	/*contador em*/
-	//~ int it = 0;
+//~ /*contador em*/
+int em_it = 0;
 
 	 //~ Chi2 <<setw(5) << setfill(' ') << "it" << " "
 		 //~ <<setw(15) << setfill(' ') << "chi2" << " "
@@ -1914,91 +1977,182 @@ cout << "Inicia Deconvolucion" << endl;
 	//~ Chi2 <<setw(5) << setfill(' ') << "Init" << " "
 				 //~ <<setw(15) << setfill(' ') << chi2 << " "
 				 //~ <<setw(25) << setfill(' ') << chi2_red << endl;
-				 
-//~ while(it<steps)
-for(int it = 0; it<steps ; it++)
-{
-	FluxNext = Flux;
-	for(Int_t b=0; b<binnum; b++)
-		{
-			//~ debug_em <<setw(5) << " b " << b << endl;
-			Sum_R=0.;
-			for(Int_t r=0; r<ndet; r++) {
-				Sum_R += (R[r][b]);
-				
-				//~ debug_em <<setw(5) <<" r " << r << " Sum_R " << Sum_R << endl;
-				}
-			
-			Sum_N_R_Flux=0.;
-			for(Int_t r=0; r<ndet; r++)
-				{
-					Sum_R_Flux=0.;
 
-						//~ debug_em <<setw(5) << " r " << r << endl;
-						for(Int_t k=0; k<binnum; k++)
-							{	
-								Sum_R_Flux += (R[r][k]*Flux[k]*dE[k]); //  Flux[k]*dE[k] flujo integral, ya que Flux[k] es un flujo diferencial
-							//~ debug_em <<setw(5) << " k " << k << " Sum_R_Flux " << Sum_R_Flux << endl;
-							}
-							//~ debug_em <<setw(5) << "Sum_R_Flux total " << Sum_R_Flux << endl;
-							
-					//~ Sum_N_R_Flux += ((R[r][b]* Flux[b])*N[r])/Sum_R_Flux;
-					Sum_N_R_Flux += ((R[r][b]* Flux[b])*CR[r])/Sum_R_Flux;
-					//~ debug_em <<setw(5) << " Sum_N_R_Flux : " << Sum_N_R_Flux << endl;
+if(steps==0)
+{				 
+	while(chi2>ndet)
+	{
+		FluxNext = Flux;
+		for(Int_t b=0; b<binnum; b++)
+			{
+				//~ debug_em <<setw(5) << " b " << b << endl;
+				Sum_R=0.;
+				for(Int_t r=0; r<ndet; r++) {
+					Sum_R += (R[r][b]);
 					
-				}
-			FluxNext[b] = Sum_N_R_Flux/Sum_R;
-			//~ debug_em << " FluxNext[b] " << FluxNext[b] << endl;
-			
-		}
-	Flux=FluxNext; /*flujo deconvolucionado*/
-	
-	//Llenamos el vector de vectores de fluxnext
-	 for (int i = 0; i < Seed.size(); i++) 
-	 {
-		FluxMin_diff[i] = Flux[i]; // flujo diferencial
-		FluxMin_Intg[i] = Flux[i]*dE[i]; //integral
-	 }
-	//~ TH1D *hist_step_diff = new TH1D(TString::Format("h0_diff_%d", it),"Flujo diferencial de neutrones deconvolucionado", binnum, bins);
-	//~ for (int i = 0; i <Seed.size(); i++)
-			//~ {
-				//~ hist_step_diff->SetBinContent(i+1,FluxMin_diff[i]);
-			//~ }
-	//~ TH1D *hist_step_Intg = new TH1D(TString::Format("h0_Intg_%d", it),"Flujo Integral de neutrones deconvolucionado", binnum, bins);
-	//~ for (int i = 0; i <Seed.size(); i++)
-			//~ {
-				//~ hist_step_Intg->SetBinContent(i+1,FluxMin_Intg[i]);
-			//~ }
-			
-	//~ double_t integral_flux_deconv_diff = hist_step_diff->Integral();
-	//~ double_t integral_flux_deconv_Intg = hist_step_Intg->Integral();
-	//~ cout << "Integral del flujo deconvolucionado diferencial: " << integral_flux_deconv_diff << endl;
-	//~ cout << "Integral del flujo deconvolucionado diferencial: " << integral_flux_deconv_Intg << endl;
-	
-	/*Llenamos el vector de flujos deconvolucionados por paso*/
-	vec_fluxnext_diff.push_back(FluxMin_diff);
-	vec_fluxnext_Intg.push_back(FluxMin_Intg);
+					//~ debug_em <<setw(5) <<" r " << r << " Sum_R " << Sum_R << endl;
+					}
+				
+				Sum_N_R_Flux=0.;
+				for(Int_t r=0; r<ndet; r++)
+					{
+						Sum_R_Flux=0.;
 
-	/*Counting rate recalculado*/
-	CR_rec = Recalculate(R, FluxMin_diff, dE, ndet); // CR recalculado
+							//~ debug_em <<setw(5) << " r " << r << endl;
+							for(Int_t k=0; k<binnum; k++)
+								{	
+									Sum_R_Flux += (R[r][k]*Flux[k]*dE[k]); //  Flux[k]*dE[k] flujo integral, ya que Flux[k] es un flujo diferencial
+								//~ debug_em <<setw(5) << " k " << k << " Sum_R_Flux " << Sum_R_Flux << endl;
+								}
+								//~ debug_em <<setw(5) << "Sum_R_Flux total " << Sum_R_Flux << endl;
+								
+						//~ Sum_N_R_Flux += ((R[r][b]* Flux[b])*N[r])/Sum_R_Flux;
+						Sum_N_R_Flux += ((R[r][b]* Flux[b])*CR[r])/Sum_R_Flux;
+						//~ debug_em <<setw(5) << " Sum_N_R_Flux : " << Sum_N_R_Flux << endl;
+						
+					}
+				FluxNext[b] = Sum_N_R_Flux/Sum_R;
+				//~ debug_em << " FluxNext[b] " << FluxNext[b] << endl;
+				
+			}
+		Flux=FluxNext; /*flujo deconvolucionado*/
+		
+		//Llenamos el vector de vectores de fluxnext
+		 for (int i = 0; i < Seed.size(); i++) 
+		 {
+			FluxMin_diff[i] = Flux[i]; // flujo diferencial
+			FluxMin_Intg[i] = Flux[i]*dE[i]; //integral
+		 }
+		//~ TH1D *hist_step_diff = new TH1D(TString::Format("h0_diff_%d", it),"Flujo diferencial de neutrones deconvolucionado", binnum, bins);
+		//~ for (int i = 0; i <Seed.size(); i++)
+				//~ {
+					//~ hist_step_diff->SetBinContent(i+1,FluxMin_diff[i]);
+				//~ }
+		//~ TH1D *hist_step_Intg = new TH1D(TString::Format("h0_Intg_%d", it),"Flujo Integral de neutrones deconvolucionado", binnum, bins);
+		//~ for (int i = 0; i <Seed.size(); i++)
+				//~ {
+					//~ hist_step_Intg->SetBinContent(i+1,FluxMin_Intg[i]);
+				//~ }
+				
+		//~ double_t integral_flux_deconv_diff = hist_step_diff->Integral();
+		//~ double_t integral_flux_deconv_Intg = hist_step_Intg->Integral();
+		//~ cout << "Integral del flujo deconvolucionado diferencial: " << integral_flux_deconv_diff << endl;
+		//~ cout << "Integral del flujo deconvolucionado diferencial: " << integral_flux_deconv_Intg << endl;
+		
+		/*Llenamos el vector de flujos deconvolucionados por paso*/
+		vec_fluxnext_diff.push_back(FluxMin_diff);
+		vec_fluxnext_Intg.push_back(FluxMin_Intg);
 
-	/***Calculamos los estimadores estadisticos***/
-	chi2 = Chi_Square(CR,dCR, CR_rec, ndet, crptime);
-	chi2_red = Chi_Square_red(CR,dCR, CR_rec, ndet, crptime);
-	xi2_estimator = Xi_Square(CR, CR_rec, ndet, crptime);
-	barDelta_estimator = bar_delta(CR, CR_rec, ndet, crptime);
-	STD_cr_estimator = STD_cr(CR, CR_rec, ndet, crptime);
-	
-	//~ cout << it << "  "  << " chi2: " << chi2   << "  "  << " chi2 red: " << chi2_red <<" " << " xi2: " << xi2_estimator << " barDelta: " << " " << barDelta_estimator << " " << "STD_cr: " << STD_cr_estimator<< endl;
-	
-	 //~ Chi2<<setw(5) << setfill(' ') << it << " "
-		 //~ <<setw(15) << setfill(' ') << chi2 << " "
-		 //~ <<setw(25) << setfill(' ') << chi2_red  << " "
-		 //~ <<setw(25) << setfill(' ') << xi2_estimator  << " "
-		 //~ <<setw(25) << setfill(' ') << barDelta_estimator  << " "
-		 //~ <<setw(25) << setfill(' ') << STD_cr_estimator << endl;  
+		/*Counting rate recalculado*/
+		CR_rec = Recalculate(R, FluxMin_diff, dE, ndet); // CR recalculado
+
+		/***Calculamos los estimadores estadisticos***/
+		chi2 = Chi_Square(CR,dCR, CR_rec, ndet, crptime);
+		chi2_red = Chi_Square_red(CR,dCR, CR_rec, ndet, crptime);
+		xi2_estimator = Xi_Square(CR, CR_rec, ndet, crptime);
+		barDelta_estimator = bar_delta(CR, CR_rec, ndet, crptime);
+		STD_cr_estimator = STD_cr(CR, CR_rec, ndet, crptime);
+
+		em_it++;
+		
+		//~ cout << it << "  "  << " chi2: " << chi2   << "  "  << " chi2 red: " << chi2_red <<" " << " xi2: " << xi2_estimator << " barDelta: " << " " << barDelta_estimator << " " << "STD_cr: " << STD_cr_estimator<< endl;
+		
+		 //~ Chi2<<setw(5) << setfill(' ') << it << " "
+			 //~ <<setw(15) << setfill(' ') << chi2 << " "
+			 //~ <<setw(25) << setfill(' ') << chi2_red  << " "
+			 //~ <<setw(25) << setfill(' ') << xi2_estimator  << " "
+			 //~ <<setw(25) << setfill(' ') << barDelta_estimator  << " "
+			 //~ <<setw(25) << setfill(' ') << STD_cr_estimator << endl;  
+	}
 }
 
+else
+{				 
+	for(int it = 0; it<steps ; it++)
+	{
+		FluxNext = Flux;
+		for(Int_t b=0; b<binnum; b++)
+			{
+				//~ debug_em <<setw(5) << " b " << b << endl;
+				Sum_R=0.;
+				for(Int_t r=0; r<ndet; r++) {
+					Sum_R += (R[r][b]);
+					
+					//~ debug_em <<setw(5) <<" r " << r << " Sum_R " << Sum_R << endl;
+					}
+				
+				Sum_N_R_Flux=0.;
+				for(Int_t r=0; r<ndet; r++)
+					{
+						Sum_R_Flux=0.;
+
+							//~ debug_em <<setw(5) << " r " << r << endl;
+							for(Int_t k=0; k<binnum; k++)
+								{	
+									Sum_R_Flux += (R[r][k]*Flux[k]*dE[k]); //  Flux[k]*dE[k] flujo integral, ya que Flux[k] es un flujo diferencial
+								//~ debug_em <<setw(5) << " k " << k << " Sum_R_Flux " << Sum_R_Flux << endl;
+								}
+								//~ debug_em <<setw(5) << "Sum_R_Flux total " << Sum_R_Flux << endl;
+								
+						//~ Sum_N_R_Flux += ((R[r][b]* Flux[b])*N[r])/Sum_R_Flux;
+						Sum_N_R_Flux += ((R[r][b]* Flux[b])*CR[r])/Sum_R_Flux;
+						//~ debug_em <<setw(5) << " Sum_N_R_Flux : " << Sum_N_R_Flux << endl;
+						
+					}
+				FluxNext[b] = Sum_N_R_Flux/Sum_R;
+				//~ debug_em << " FluxNext[b] " << FluxNext[b] << endl;
+				
+			}
+		Flux=FluxNext; /*flujo deconvolucionado*/
+		
+		//Llenamos el vector de vectores de fluxnext
+		 for (int i = 0; i < Seed.size(); i++) 
+		 {
+			FluxMin_diff[i] = Flux[i]; // flujo diferencial
+			FluxMin_Intg[i] = Flux[i]*dE[i]; //integral
+		 }
+		//~ TH1D *hist_step_diff = new TH1D(TString::Format("h0_diff_%d", it),"Flujo diferencial de neutrones deconvolucionado", binnum, bins);
+		//~ for (int i = 0; i <Seed.size(); i++)
+				//~ {
+					//~ hist_step_diff->SetBinContent(i+1,FluxMin_diff[i]);
+				//~ }
+		//~ TH1D *hist_step_Intg = new TH1D(TString::Format("h0_Intg_%d", it),"Flujo Integral de neutrones deconvolucionado", binnum, bins);
+		//~ for (int i = 0; i <Seed.size(); i++)
+				//~ {
+					//~ hist_step_Intg->SetBinContent(i+1,FluxMin_Intg[i]);
+				//~ }
+				
+		//~ double_t integral_flux_deconv_diff = hist_step_diff->Integral();
+		//~ double_t integral_flux_deconv_Intg = hist_step_Intg->Integral();
+		//~ cout << "Integral del flujo deconvolucionado diferencial: " << integral_flux_deconv_diff << endl;
+		//~ cout << "Integral del flujo deconvolucionado diferencial: " << integral_flux_deconv_Intg << endl;
+		
+		/*Llenamos el vector de flujos deconvolucionados por paso*/
+		vec_fluxnext_diff.push_back(FluxMin_diff);
+		vec_fluxnext_Intg.push_back(FluxMin_Intg);
+
+		/*Counting rate recalculado*/
+		CR_rec = Recalculate(R, FluxMin_diff, dE, ndet); // CR recalculado
+
+		/***Calculamos los estimadores estadisticos***/
+		chi2 = Chi_Square(CR,dCR, CR_rec, ndet, crptime);
+		chi2_red = Chi_Square_red(CR,dCR, CR_rec, ndet, crptime);
+		xi2_estimator = Xi_Square(CR, CR_rec, ndet, crptime);
+		barDelta_estimator = bar_delta(CR, CR_rec, ndet, crptime);
+		STD_cr_estimator = STD_cr(CR, CR_rec, ndet, crptime);
+
+		em_it+=it;
+		
+		//~ cout << it << "  "  << " chi2: " << chi2   << "  "  << " chi2 red: " << chi2_red <<" " << " xi2: " << xi2_estimator << " barDelta: " << " " << barDelta_estimator << " " << "STD_cr: " << STD_cr_estimator<< endl;
+		
+		 //~ Chi2<<setw(5) << setfill(' ') << it << " "
+			 //~ <<setw(15) << setfill(' ') << chi2 << " "
+			 //~ <<setw(25) << setfill(' ') << chi2_red  << " "
+			 //~ <<setw(25) << setfill(' ') << xi2_estimator  << " "
+			 //~ <<setw(25) << setfill(' ') << barDelta_estimator  << " "
+			 //~ <<setw(25) << setfill(' ') << STD_cr_estimator << endl;  
+	}
+}
 
 /****************************************************************************************************/
 /*********************************Output*************************************************************/
@@ -2037,6 +2191,630 @@ FluxMin_Intg.push_back(chi2_red);
 FluxMin_Intg.push_back(xi2_estimator);
 FluxMin_Intg.push_back(barDelta_estimator);
 FluxMin_Intg.push_back(STD_cr_estimator);
+FluxMin_Intg.push_back(em_it);
+
+
+em_vec_output = FluxMin_Intg;
+//~ cout << "em_vec_output size: " << em_vec_output.size() << endl;
+//~ for (int i=0; i<FluxMin_Intg.size();i++)
+	//~ {
+		//~ cout <<"i " << i << " FluxMin_Intg[i] "<< FluxMin_Intg[i] << endl;
+	//~ }
+
+	
+delete flux_inicial;
+delete hist_deconv_total_Intg;
+return em_vec_output;
+
+}
+
+vector<double> deconv_em_output_MC(string campaign, int event, int steps, int vwc_seed, int crptime, string flux_type, int norm){
+
+//~ const int ndet = 16; // numero de detectores //
+int ndet = 16; /*numero de detectores*/
+int binnum = 0; /*numero de bines*/
+vector<Double_t> Seed; /*vector de flujo semilla*/
+vector<Double_t> Flux; /*vector de flujo deconvolucionado*/
+vector<Double_t> FluxNext; /*vector de flujo de salida por cada iteracion en algoritmo EM*/
+vector<Double_t> FluxMin_diff; /* vector del ultimo flujo diff deconvolucionado*/
+vector<Double_t> FluxMin_Intg; /* vector del ultimo flujo integral deconvolucionado*/
+vector<Double_t> N(ndet,0); /*vector de neutrones medidos*/
+vector<Double_t> dN(ndet,0); /*vector de errores de neutrones medidos*/
+vector<Double_t> perc_e_N(ndet,0); /*vector de errores porcentuales de neutrones medidos*/
+vector<Double_t> CR(ndet,0); /*vector de counting rate de neutrones medidos*/
+vector<Double_t> dCR(ndet,0); /*vector de errores de counting rate de neutrones medidos*/ 
+vector<Double_t> CR_rec(ndet,0); /*vector de counting rates recalculados*/ 
+vector<Double_t> dE; /*Vector de anchos de energia*/
+vector< vector<Double_t>> R;   /*matriz de funciones respuesta del espectrometro*/
+vector<Double_t> B; /*bins*/ /*matriz de bordes de bins*/
+vector<Double_t> E; /*bins*/ /*matriz de bordes inferiores de Energias*/
+vector<Double_t> Emid; /*bins*/ /*matriz de Energias centrales*/
+
+vector<Double_t> em_vec_output;
+
+ofstream Chi2("Stat_Estimators.txt"); // archivo de salida de Chi2
+ofstream debug_em("debug_em.txt"); // archivo de salida de Chi2
+
+/****Cargamos el flujo semilla*****/
+
+string str_stream_vwc;
+string seed_flux_expacs_csv;
+
+if(vwc_seed<=150)
+		{
+			// Map: 0->0 (VWC 0%)
+			// Map: 1->1 (VWC 0.2%)
+			// Map: 150->150 (30%)
+			ostringstream stream_vwc;
+			stream_vwc << vwc_seed;
+			string str_stream_vwc =stream_vwc.str();
+
+			if(campaign=="LCO")
+				{
+					seed_flux_expacs_csv ="./EXPACS_Data/EXPACS_Calc_nflux_500/csv_files/LasCampanasAtacama_"+str_stream_vwc+".csv";
+				}
+		}
+
+if(vwc_seed>150)
+		{
+			// Map: 151->32 (VWC 32%)
+			// Map: 152->34 (vwc 34%)
+			// Map: 185->100 ((vwc 100%)
+			int vwc_old_51_seed = (vwc_seed - 135)*2;
+
+			ostringstream stream_vwc_old_51_seed;
+			stream_vwc_old_51_seed << vwc_old_51_seed;
+			string str_stream_vwc_old_51_seed = stream_vwc_old_51_seed.str();
+			str_stream_vwc = str_stream_vwc_old_51_seed;
+			
+			if(campaign=="LCO")
+				{			
+					seed_flux_expacs_csv ="./EXPACS_Data/EXPACS_Calc_nflux/csv_files/LasCampanasAtacama_"+str_stream_vwc+".csv";
+				}
+		}
+				 
+char delimiter = ',';
+char double_type ='D';
+std::unordered_map<std::string, char> msdata_map = {{"lower_edge_binvalue",double_type},{"bin_width", double_type},{"flux_value", double_type}}; // mapa de values (nombre de columna)-key (tipo de variable de la columna)
+auto seed_rdf = ROOT::RDF::FromCSV(seed_flux_expacs_csv,true,delimiter,-1, std::move(msdata_map));
+//~ seed_rdf.Snapshot("expacs_flux","./seed_expacs.root"); /*Save selected columns to disk, in a new TTree treename in file filename*/
+//~ cout <<"Generated root file from csv file" << endl;
+
+/*Seleccionamos los datos del flujo semilla para LCO*/
+int bin_cut = 130;
+//~ auto seed_ref_cut_LCO = seed_rdf.Range(0, bin_cut, 1); // (a,b,c) pick an event every c entries from a to b, excluding b .
+auto seed_ref_cut_LCO = seed_rdf;
+auto d_cut_entries = seed_ref_cut_LCO.Count().GetValue();
+//~ cout << "seed_ref_cut_LCO vector size : " << d_cut_entries << endl;
+
+/*Generamos el vector de flujo semilla*/
+auto df_seed_flux_vec = seed_ref_cut_LCO.Take<double>("flux_value").GetValue();
+Seed = df_seed_flux_vec;
+//~ cout << "Seed vector size: " << Seed.size() << endl;
+/*Numero de bines*/
+binnum = Seed.size()-1;
+//~ binnum = 130;
+//~ cout << "binnum: Seed.size()-1 : " << binnum << endl;
+
+/*Generamos el vector de bordes de bin*/
+auto df_binedges_vec = seed_ref_cut_LCO.Take<double>("lower_edge_binvalue").GetValue();
+B = df_binedges_vec;
+//~ cout << "B: df_binedges_vec size " << B.size() << endl;
+
+//~ /*Generamos el vector de ancho de energias*/
+auto df_dE_vec = seed_ref_cut_LCO.Take<double>("bin_width").GetValue();
+dE = df_dE_vec;
+//~ cout << "dE: df_dE_vec " << B.size() << endl;
+
+auto df_E_vec = seed_ref_cut_LCO.Take<double>("lower_edge_binvalue").GetValue();
+E = df_E_vec;
+//~ cout << "E: df_E_vec " << B.size() << endl;
+
+/**Inicializamos los vectores**/
+for (int i = 0; i < Seed.size(); i++) /*Llenamos los vectores de flujo deconv y flujo deconv min con ceros*/
+{
+	Flux.push_back(0) ;
+	FluxMin_diff.push_back(0);
+	FluxMin_Intg.push_back(0);
+} 
+
+/****Definimos los histogramas****/
+
+/*borde de bines como array*/
+double *bins = B.data();
+//~ TCanvas *canvas_expacs = new TCanvas("Expacs_flux","Expacs_flux");
+
+/*Histograma de flujo inicial*/
+auto name_hist_seed = "flux_inicial_expacs_"+str_stream_vwc+"%";
+//~ TH1D* flux_inicial = new TH1D(name_hist_seed.c_str(),name_hist_seed.c_str(), 150, bins);
+TH1D* flux_inicial = new TH1D(name_hist_seed.c_str(),name_hist_seed.c_str(), binnum , bins);
+for (int i = 0; i <Seed.size()-1; i++)
+{
+	flux_inicial->SetBinContent(i+1,Seed[i]);
+}
+
+double_t integral_flux_seed = flux_inicial->Integral();
+
+/**Obtenemos los centros de bin de energia**/
+for (int i = 0; i < binnum; i++)
+{
+	Double_t bin_center = flux_inicial->GetBinCenter(i+1);
+	//~ cout << "bin " << i+1 << " bin center " << bin_center << endl;
+	Emid.push_back(bin_center);
+}
+
+//~ cout << "Emid size " <<  Emid.size() << endl;
+
+
+
+/********Flujo semilla diferencial para el algortimo EM*********/
+for (int i = 0; i <Seed.size(); i++)
+	{
+		double E_mid = E[i]+(dE[i]/2.); // bin: [Elow,Eup], luego E[i] =Elow y Eup-Elow = dE[i], entonces, Emid = Elow + dE/2.
+		Flux[i] = Seed[i]/(E_mid); /*expacs entrega el flujo letargico, para pasarlo a flujo diff dividimos por E_mid*/
+	}
+
+
+/***Llenamos el vector de neutrones y de errores de neutrones aleatorios gausianos****/
+N = neutron_count_vector_gauss_MC(campaign,event-1,crptime); 
+for(int i=0;i<N.size();i++)
+	{
+		double e_neu = sqrt(N[i]);
+		dN[i]=e_neu; 
+	}
+//~ for(int i=0;i<N.size();i++)
+	//~ {
+		//~ cout <<  "dN_gauss " <<dN[i] << endl;
+	//~ }
+/***Llenamos el vector de CR de neutrones aleatorios gaussianos: N/T ****/
+for(int i=0;i<N.size();i++)
+	{
+		double r;
+		if(crptime==15){r=900;}
+		if(crptime==60){r=3600;}
+		CR[i]=N[i]/r;
+	}
+//~ for(int i=0;i<CR.size();i++)
+	//~ {
+		//~ cout << " CR Gauss " << CR[i] << endl;
+	//~ };
+
+//~ cout << "Neutrons percentage error vector filled: dN[i]/N[i]" << endl;
+for(int i=0; i<N.size(); i++)
+	{
+		perc_e_N[i] = dN[i]/N[i];
+		//~ cout << "i " << i <<  " dN[i]/N[i] " << perc_e_N[i] << endl;
+    }
+    
+//~ cout << "CR [cps] vector: CR[i]" << " Time " << crptime << " min "  << endl;
+//~ for(int i=0; i<CR.size(); i++)
+	//~ {
+		//~ cout << "i " << i <<  " CR[i] " << CR[i] << endl;
+    //~ }
+/***Llenamos el vector de dCR***/
+//~ cout << " dCR[i] vector "  << endl;  
+for(int i=0; i<N.size(); i++)
+	{
+		dCR[i] = CR[i]*perc_e_N[i];
+		//~ cout << "i " << i <<  " dCR[i] " << dCR[i] << endl;
+    }
+
+/**********Matrix de funciones respuesta*****/
+//~ R = Response_function_matrix_fm(); /*matriz de funciones respuesta del espectrometro*/
+//~ vector< vector<double>> R_fm = Response_function_matrix_lin_spec_2023(); /*matriz de funciones respuesta del espectrometro*/
+R = Response_function_matrix_lin_spec_2023(); /*matriz de funciones respuesta del espectrometro*/
+
+
+//~ cout << "Response Function matrix filled: R " << endl;
+
+
+/****************ACTIVACION/DESACTIVACION DE DETECTORES*************/
+
+vector< vector<Double_t>> R_new;   /*matriz de funciones respuesta del espectrometro redefinida*/
+vector<Double_t> N_new;   /*vector de CR redefinido*/
+vector<Double_t> perc_e_N_new;
+vector<Double_t> CR_new;
+vector<Double_t> dCR_new;
+
+vector<string> det_names{"D01","D02","D03","D04","D05","D06","D07","D08","D09","D10","D11","D12","D13","D14","D15","D16"}; /*vector de nombres de detectores activados*/
+vector<string> det_names_act;
+
+//~ vector<int> des_vector(ndet,0);
+vector<int> act_vector(ndet,1);
+
+
+vector<int> vec_test{1,1,1,1,1,0,0,0,1,1,1,1,1,0,0,1};
+//~ vector<int> vec_test{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
+
+/*Redefinimos la matriz de funcion respuesta*/
+for(int i=0; i<ndet; i++)
+{
+	 if(act_vector[i] == vec_test[i])
+		{
+			R_new.push_back(R[i]);
+		}
+	else{}
+}
+
+/**Inspeccionamos la matriz****/
+//~ cout << " matrix size: " << R.size() << endl;
+
+//~ for(int i = 0; i<R_new.size();i++){
+	//~ cout << " row " << i << " ";
+	//~ for (int j=0; j <R_new[0].size(); j++){
+
+		 //~ cout <<  R_new[i][j] << " ";
+	//~ }
+   //~ cout << endl;
+//~ }
+
+
+/*Redefinimos el vector de CR*/
+for(int i=0; i<ndet; i++)
+{
+	 if(act_vector[i] == vec_test[i])
+		{
+			N_new.push_back(N[i]);
+		}
+	else{}
+}
+
+/*Redefinimos el vector de perc_e_N*/
+for(int i=0; i<ndet; i++)
+{
+	 if(act_vector[i] == vec_test[i])
+		{
+			perc_e_N_new.push_back(perc_e_N[i]);
+		}
+	else{}
+}
+
+/*Redefinimos el vector de CR*/
+for(int i=0; i<ndet; i++)
+{
+	 if(act_vector[i] == vec_test[i])
+		{
+			CR_new.push_back(CR[i]);
+		}
+	else{}
+}
+
+/*Redefinimos el vector dCR*/
+for(int i=0; i<ndet; i++)
+{
+	 if(act_vector[i] == vec_test[i])
+		{
+			dCR_new.push_back(dCR[i]);
+		}
+	else{}
+}
+
+/*Vect de nombres*/
+for(int i=0; i<ndet; i++)
+{
+	 if(act_vector[i] == vec_test[i])
+		{
+			det_names_act.push_back(det_names[i]);
+		}
+	else{}
+}
+
+/*Redefinimos ndet*/
+
+int ndet_new = R_new.size();
+ndet = ndet_new;
+
+/*Redefinimos R*/
+R = R_new;
+
+
+
+//~ cout << " matrix size: " << R.size() << endl;
+//~ for(int i = 0; i<R.size();i++){
+	//~ cout << " row " << i << " ";
+	//~ for (int j=0; j <R[0].size(); j++){
+
+		 //~ cout <<  R[i][j] << " ";
+	//~ }
+   //~ cout << endl;
+//~ }
+perc_e_N.resize(ndet);
+CR.resize(ndet);
+dCR.resize(ndet);
+
+perc_e_N = perc_e_N_new;
+CR = CR_new;
+dCR = dCR_new;
+
+
+/*Redefinimos N*/
+N.resize(ndet);
+N = N_new;
+
+//~ cout << " matrix size: " << N.size() << endl;
+
+//~ for(int i = 0; i<N.size();i++){
+	//~ cout << " row " << i << " " << N[i] << endl;
+//~ }
+
+/*******************************************************************/
+
+
+
+if (norm==1){
+/********Flujo semilla diferencial normalizado************/
+for (int i = 0; i < Seed.size(); i++)
+	{
+		Flux[i] = Flux[i]/integral_flux_seed; //Normalizamos el flujo semilla
+		// cout << i << " " << Flux[i] << endl;
+	}
+}
+else {}
+
+
+
+/*************************************************************/
+/**************Algoritmo de deconvolucion EM******************/
+/*************************************************************/
+
+cout << "Inicia Deconvolucion" << endl;
+	Double_t Sum_R=0.;
+	Double_t Sum_R_Flux=0.;
+	Double_t Sum_N_R_Flux=0.;
+	
+	vector< vector<double_t> > vec_fluxnext_diff; // vector de vectores de flux next o flujos deconvolucionados diferencial por paso
+	vector< vector<double_t> > vec_fluxnext_Intg; // vector de vectores de flux next o flujos deconvolucionados diferencial por paso
+	std::vector<TH1D*> vec_hist_deconv; //vector de histogramas de flujos deconvolucionados
+	
+
+	/***Definimos e inicializamos los estimadres estadisticos***/
+	//~ double_t chi2 = Chi_Square(N, N_rec, ndet);
+	//~ double_t chi2 = Chi_Square(N, N_rec, ndet);
+	double chi2 = 30.;
+	//~ double_t  chi2_red = Chi_Square_red(N, N_rec, ndet);
+	//~ double_t  chi2_red = Chi_Square_red(N, N_rec, ndet,crptime);
+	double_t  chi2_red = Chi_Square_red(CR,dCR, CR_rec, ndet,crptime);
+	double xi2_estimator;
+	double barDelta_estimator;
+	double STD_cr_estimator;
+	
+	//~ cout << "Chi2 inicial: " << chi2 << endl;
+	//~ cout << "Chi2red inicial: "<< chi2_red << endl;
+	
+//~ /*contador em*/
+int em_it = 0;
+
+	 //~ Chi2 <<setw(5) << setfill(' ') << "it" << " "
+		 //~ <<setw(15) << setfill(' ') << "chi2" << " "
+		 //~ <<setw(25) << setfill(' ') << "chi2_red"  << " "
+		 //~ <<setw(25) << setfill(' ') << "xi2"  << " "
+		 //~ <<setw(25) << setfill(' ') << "barDelta"  << " "
+		 //~ <<setw(25) << setfill(' ') << "STD_cr" << endl;  
+
+	//~ Chi2 <<setw(5) << setfill(' ') << "Init" << " "
+				 //~ <<setw(15) << setfill(' ') << chi2 << " "
+				 //~ <<setw(25) << setfill(' ') << chi2_red << endl;
+
+if(steps==0)
+{				 
+	while(chi2>ndet)
+	{
+		FluxNext = Flux;
+		for(Int_t b=0; b<binnum; b++)
+			{
+				//~ debug_em <<setw(5) << " b " << b << endl;
+				Sum_R=0.;
+				for(Int_t r=0; r<ndet; r++) {
+					Sum_R += (R[r][b]);
+					
+					//~ debug_em <<setw(5) <<" r " << r << " Sum_R " << Sum_R << endl;
+					}
+				
+				Sum_N_R_Flux=0.;
+				for(Int_t r=0; r<ndet; r++)
+					{
+						Sum_R_Flux=0.;
+
+							//~ debug_em <<setw(5) << " r " << r << endl;
+							for(Int_t k=0; k<binnum; k++)
+								{	
+									Sum_R_Flux += (R[r][k]*Flux[k]*dE[k]); //  Flux[k]*dE[k] flujo integral, ya que Flux[k] es un flujo diferencial
+								//~ debug_em <<setw(5) << " k " << k << " Sum_R_Flux " << Sum_R_Flux << endl;
+								}
+								//~ debug_em <<setw(5) << "Sum_R_Flux total " << Sum_R_Flux << endl;
+								
+						//~ Sum_N_R_Flux += ((R[r][b]* Flux[b])*N[r])/Sum_R_Flux;
+						Sum_N_R_Flux += ((R[r][b]* Flux[b])*CR[r])/Sum_R_Flux;
+						//~ debug_em <<setw(5) << " Sum_N_R_Flux : " << Sum_N_R_Flux << endl;
+						
+					}
+				FluxNext[b] = Sum_N_R_Flux/Sum_R;
+				//~ debug_em << " FluxNext[b] " << FluxNext[b] << endl;
+				
+			}
+		Flux=FluxNext; /*flujo deconvolucionado*/
+		
+		//Llenamos el vector de vectores de fluxnext
+		 for (int i = 0; i < Seed.size(); i++) 
+		 {
+			FluxMin_diff[i] = Flux[i]; // flujo diferencial
+			FluxMin_Intg[i] = Flux[i]*dE[i]; //integral
+		 }
+		//~ TH1D *hist_step_diff = new TH1D(TString::Format("h0_diff_%d", it),"Flujo diferencial de neutrones deconvolucionado", binnum, bins);
+		//~ for (int i = 0; i <Seed.size(); i++)
+				//~ {
+					//~ hist_step_diff->SetBinContent(i+1,FluxMin_diff[i]);
+				//~ }
+		//~ TH1D *hist_step_Intg = new TH1D(TString::Format("h0_Intg_%d", it),"Flujo Integral de neutrones deconvolucionado", binnum, bins);
+		//~ for (int i = 0; i <Seed.size(); i++)
+				//~ {
+					//~ hist_step_Intg->SetBinContent(i+1,FluxMin_Intg[i]);
+				//~ }
+				
+		//~ double_t integral_flux_deconv_diff = hist_step_diff->Integral();
+		//~ double_t integral_flux_deconv_Intg = hist_step_Intg->Integral();
+		//~ cout << "Integral del flujo deconvolucionado diferencial: " << integral_flux_deconv_diff << endl;
+		//~ cout << "Integral del flujo deconvolucionado diferencial: " << integral_flux_deconv_Intg << endl;
+		
+		/*Llenamos el vector de flujos deconvolucionados por paso*/
+		vec_fluxnext_diff.push_back(FluxMin_diff);
+		vec_fluxnext_Intg.push_back(FluxMin_Intg);
+
+		/*Counting rate recalculado*/
+		CR_rec = Recalculate(R, FluxMin_diff, dE, ndet); // CR recalculado
+
+		/***Calculamos los estimadores estadisticos***/
+		chi2 = Chi_Square(CR,dCR, CR_rec, ndet, crptime);
+		chi2_red = Chi_Square_red(CR,dCR, CR_rec, ndet, crptime);
+		xi2_estimator = Xi_Square(CR, CR_rec, ndet, crptime);
+		barDelta_estimator = bar_delta(CR, CR_rec, ndet, crptime);
+		STD_cr_estimator = STD_cr(CR, CR_rec, ndet, crptime);
+
+		em_it++;
+		cout << "\r " << " em_it " << em_it;
+		if(em_it>1000)
+			{
+				break;
+		    }
+		//~ cout << it << "  "  << " chi2: " << chi2   << "  "  << " chi2 red: " << chi2_red <<" " << " xi2: " << xi2_estimator << " barDelta: " << " " << barDelta_estimator << " " << "STD_cr: " << STD_cr_estimator<< endl;
+		
+		 //~ Chi2<<setw(5) << setfill(' ') << it << " "
+			 //~ <<setw(15) << setfill(' ') << chi2 << " "
+			 //~ <<setw(25) << setfill(' ') << chi2_red  << " "
+			 //~ <<setw(25) << setfill(' ') << xi2_estimator  << " "
+			 //~ <<setw(25) << setfill(' ') << barDelta_estimator  << " "
+			 //~ <<setw(25) << setfill(' ') << STD_cr_estimator << endl;  
+	}
+
+}
+
+else
+{				 
+	for(int it = 0; it<steps ; it++)
+	{
+		FluxNext = Flux;
+		for(Int_t b=0; b<binnum; b++)
+			{
+				//~ debug_em <<setw(5) << " b " << b << endl;
+				Sum_R=0.;
+				for(Int_t r=0; r<ndet; r++) {
+					Sum_R += (R[r][b]);
+					
+					//~ debug_em <<setw(5) <<" r " << r << " Sum_R " << Sum_R << endl;
+					}
+				
+				Sum_N_R_Flux=0.;
+				for(Int_t r=0; r<ndet; r++)
+					{
+						Sum_R_Flux=0.;
+
+							//~ debug_em <<setw(5) << " r " << r << endl;
+							for(Int_t k=0; k<binnum; k++)
+								{	
+									Sum_R_Flux += (R[r][k]*Flux[k]*dE[k]); //  Flux[k]*dE[k] flujo integral, ya que Flux[k] es un flujo diferencial
+								//~ debug_em <<setw(5) << " k " << k << " Sum_R_Flux " << Sum_R_Flux << endl;
+								}
+								//~ debug_em <<setw(5) << "Sum_R_Flux total " << Sum_R_Flux << endl;
+								
+						//~ Sum_N_R_Flux += ((R[r][b]* Flux[b])*N[r])/Sum_R_Flux;
+						Sum_N_R_Flux += ((R[r][b]* Flux[b])*CR[r])/Sum_R_Flux;
+						//~ debug_em <<setw(5) << " Sum_N_R_Flux : " << Sum_N_R_Flux << endl;
+						
+					}
+				FluxNext[b] = Sum_N_R_Flux/Sum_R;
+				//~ debug_em << " FluxNext[b] " << FluxNext[b] << endl;
+				
+			}
+		Flux=FluxNext; /*flujo deconvolucionado*/
+		
+		//Llenamos el vector de vectores de fluxnext
+		 for (int i = 0; i < Seed.size(); i++) 
+		 {
+			FluxMin_diff[i] = Flux[i]; // flujo diferencial
+			FluxMin_Intg[i] = Flux[i]*dE[i]; //integral
+		 }
+		//~ TH1D *hist_step_diff = new TH1D(TString::Format("h0_diff_%d", it),"Flujo diferencial de neutrones deconvolucionado", binnum, bins);
+		//~ for (int i = 0; i <Seed.size(); i++)
+				//~ {
+					//~ hist_step_diff->SetBinContent(i+1,FluxMin_diff[i]);
+				//~ }
+		//~ TH1D *hist_step_Intg = new TH1D(TString::Format("h0_Intg_%d", it),"Flujo Integral de neutrones deconvolucionado", binnum, bins);
+		//~ for (int i = 0; i <Seed.size(); i++)
+				//~ {
+					//~ hist_step_Intg->SetBinContent(i+1,FluxMin_Intg[i]);
+				//~ }
+				
+		//~ double_t integral_flux_deconv_diff = hist_step_diff->Integral();
+		//~ double_t integral_flux_deconv_Intg = hist_step_Intg->Integral();
+		//~ cout << "Integral del flujo deconvolucionado diferencial: " << integral_flux_deconv_diff << endl;
+		//~ cout << "Integral del flujo deconvolucionado diferencial: " << integral_flux_deconv_Intg << endl;
+		
+		/*Llenamos el vector de flujos deconvolucionados por paso*/
+		vec_fluxnext_diff.push_back(FluxMin_diff);
+		vec_fluxnext_Intg.push_back(FluxMin_Intg);
+
+		/*Counting rate recalculado*/
+		CR_rec = Recalculate(R, FluxMin_diff, dE, ndet); // CR recalculado
+
+		/***Calculamos los estimadores estadisticos***/
+		chi2 = Chi_Square(CR,dCR, CR_rec, ndet, crptime);
+		chi2_red = Chi_Square_red(CR,dCR, CR_rec, ndet, crptime);
+		xi2_estimator = Xi_Square(CR, CR_rec, ndet, crptime);
+		barDelta_estimator = bar_delta(CR, CR_rec, ndet, crptime);
+		STD_cr_estimator = STD_cr(CR, CR_rec, ndet, crptime);
+
+		
+		em_it++;
+		
+		//~ cout << it << "  "  << " chi2: " << chi2   << "  "  << " chi2 red: " << chi2_red <<" " << " xi2: " << xi2_estimator << " barDelta: " << " " << barDelta_estimator << " " << "STD_cr: " << STD_cr_estimator<< endl;
+		
+		 //~ Chi2<<setw(5) << setfill(' ') << it << " "
+			 //~ <<setw(15) << setfill(' ') << chi2 << " "
+			 //~ <<setw(25) << setfill(' ') << chi2_red  << " "
+			 //~ <<setw(25) << setfill(' ') << xi2_estimator  << " "
+			 //~ <<setw(25) << setfill(' ') << barDelta_estimator  << " "
+			 //~ <<setw(25) << setfill(' ') << STD_cr_estimator << endl;  
+	}
+}
+
+/****************************************************************************************************/
+/*********************************Output*************************************************************/
+/****************************************************************************************************/
+
+/****SALIDA DEL EM******/
+
+TH1D *hist_deconv_total_Intg = new TH1D(TString::Format("h0_%d", steps),"Flujo de neutrones deconvolucionado", binnum, bins);
+for (int i = 0; i <FluxMin_Intg.size(); i++)
+		{
+			hist_deconv_total_Intg->SetBinContent(i+1,FluxMin_Intg[i]);
+		}
+
+double integral_flux_deconv_total_Intg = hist_deconv_total_Intg->Integral(); /*Valor integral total del flujo integral */
+//~ cout << "Integral total flux deconv integral: " << integral_flux_deconv_total_Intg << endl;
+/*Cambiamos los valores de x ligeramente para que los bines no se solapen, las regiones siguen siendo las mismas*/
+double integral_flux_deconv_th = hist_deconv_total_Intg->Integral(hist_deconv_total_Intg->FindBin(0),hist_deconv_total_Intg->FindBin(1.9*1e-07));
+//~ cout << "Integral thermal region flux deconv: " << integral_flux_deconv_th << endl;
+double integral_flux_deconv_ep = hist_deconv_total_Intg->Integral(hist_deconv_total_Intg->FindBin(2.2*1e-07),hist_deconv_total_Intg->FindBin(0.9*1e-02));
+//~ cout << "Integral epithermal region flux deconv: " << integral_flux_deconv_ep << endl;
+double integral_flux_deconv_fs = hist_deconv_total_Intg->Integral(hist_deconv_total_Intg->FindBin(1.1*1e-02),hist_deconv_total_Intg->FindBin(0.89*1e+01));
+//~ cout << "Integral fast region flux deconv: " << integral_flux_deconv_fs << endl;
+double integral_flux_deconv_he = hist_deconv_total_Intg->Integral(hist_deconv_total_Intg->FindBin(1.05*1e+01),hist_deconv_total_Intg->FindBin(7.6*1e+03));
+//~ cout << "Integral high energy region flux deconv: " << integral_flux_deconv_he << endl;
+
+//~ /***Llenamos en las dos ultima entradas del vector deconvolucionado, con el chi2 y chi2_red***/
+//~ cout << "FluxMin size: " << FluxMin_Intg.size() << endl;
+FluxMin_Intg.push_back(ndet);
+FluxMin_Intg.push_back(integral_flux_deconv_total_Intg);
+FluxMin_Intg.push_back(integral_flux_deconv_th);
+FluxMin_Intg.push_back(integral_flux_deconv_ep);
+FluxMin_Intg.push_back(integral_flux_deconv_fs);
+FluxMin_Intg.push_back(integral_flux_deconv_he);
+FluxMin_Intg.push_back(chi2);
+FluxMin_Intg.push_back(chi2_red);
+FluxMin_Intg.push_back(xi2_estimator);
+FluxMin_Intg.push_back(barDelta_estimator);
+FluxMin_Intg.push_back(STD_cr_estimator);
+FluxMin_Intg.push_back(em_it);
 
 
 em_vec_output = FluxMin_Intg;
@@ -2175,12 +2953,12 @@ legend->Draw();
 
 }
 
-void TRS_data_csv_to_root(){
+//~ void TRS_data_csv_to_root(){
 	 
-auto fileNameCSV ="/home/flopez/LIN/TESIS_DOC/Analysis/IAEA_REPORTS/TRS_403_DATA_Spectra.csv";
-auto df = ROOT::RDF::MakeCsvDataFrame(fileNameCSV); 													
-df.Snapshot("TRS_403_DATA_Spectra","./TRS_403_DATA_Spectra.root"); /*Save selected columns to disk, in a new TTree treename in file filename*/
-}
+//~ auto fileNameCSV ="/home/flopez/LIN/TESIS_DOC/Analysis/IAEA_REPORTS/TRS_403_DATA_Spectra.csv";
+//~ auto df = ROOT::RDF::MakeCsvDataFrame(fileNameCSV); 													
+//~ df.Snapshot("TRS_403_DATA_Spectra","./TRS_403_DATA_Spectra.root"); /*Save selected columns to disk, in a new TTree treename in file filename*/
+//~ }
 
 void TRS_plot_spectra(){
 
@@ -2246,14 +3024,14 @@ legend->Draw();
 
 void em_loop_seed(string campaign,int event,int steps,int time_grid){
 
-
-ostringstream stream_steps, stream_event, stream_timegrid; 
+ostringstream stream_steps, stream_event, stream_timegrid, stream_em_it;
 stream_steps << steps;
-stream_event << event;
+stream_event << event; 
 stream_timegrid << time_grid;
 string str_stream_steps = stream_steps.str();
 string str_stream_event = stream_event.str();
 string str_stream_timegrid = stream_timegrid.str();
+string str_stream_em_it;
 
 
 //~ ROOT::RDataFrame df_seed_loop_i(51);
@@ -2265,10 +3043,10 @@ vector<vector<Double_t> > vec_loop_seed;
 //186 en total (archivos): 1-151: 151, 32-100 (2 en 2): 35. Entonces 151+35=186
 for(int i=0; i<186;i++)
 	{
-							cout << "EM unfolding " << " Campaign: "<< campaign << " Event: "<< event << " Steps: " << steps << " Time grid: " << time_grid << " Seed: " << i+1  << " Starting ... "<< endl;
-							vec_loop_seed.push_back(deconv_em_output(campaign,event,steps,i,time_grid,"Intg",0));
-							cout << "EM unfolding " << " Campaign: "<< campaign << " Event: "<< event << " Steps: " << steps << " Time grid: " << time_grid << " Seed: " << i+1  << " Finished. "<< endl;
-							cout << " " << endl;
+		cout << "EM unfolding " << " Campaign: "<< campaign << " Event: "<< event << " Steps: " << steps << " Time grid: " << time_grid << " Seed: " << i+1  << " Starting ... "<< endl;
+		vec_loop_seed.push_back(deconv_em_output(campaign,event,steps,i,time_grid,"Intg",0));
+		cout << "EM unfolding " << " Campaign: "<< campaign << " Event: "<< event << " Steps: " << steps << " Time grid: " << time_grid << " Seed: " << i+1  << " Finished. "<< endl;
+		cout << " " << endl;
     }
 
 /*Definimos los bordes de bin de los VWC%*/
@@ -2291,8 +3069,19 @@ for(int i=0;i<186;i++)
 
 /**extraemos la info del numero de detectores*/
 auto vec_loop_seed_elem =  vec_loop_seed[0];
-vector<int> cut_vec_ndet =  {vec_loop_seed_elem.end() - 11, vec_loop_seed_elem.end()-10};
+vector<int> cut_vec_ndet =  {vec_loop_seed_elem.end() - 12, vec_loop_seed_elem.end()-11};
 int ndet = cut_vec_ndet[0];
+
+//~ /**extraemos la info del numero de pasos del metodo EM*/
+//~ auto vec_loop_seed_elem_em_it =  vec_loop_seed[0];
+//~ vector<int> cut_vec_em_it =  {vec_loop_seed_elem_em_it.end() - 1, vec_loop_seed_elem_em_it.end()};
+//~ int em_it_value = cut_vec_em_it[0];
+
+//~ if(steps==0){
+	//~ stream_em_it << em_it_value;
+	//~ str_stream_steps = stream_em_it.str();
+	//~ }
+//~ else{}
 
 int rowid_deconv = 0;
 int rowid_intg_total = 0;
@@ -2307,10 +3096,11 @@ int rowid_xi2 = 0;
 int rowid_bardelta = 0;
 int rowid_std = 0;
 int rowid_bin_seed = 0;
+int rowid_em_it = 0;
 
 auto df_seed_loop = df_seed_loop_i.Define("deconv_vec", [&]() {
 									  auto vec_loop_seed_element =  vec_loop_seed[rowid_deconv];
-									  vector<Double_t> deconv_vec = {vec_loop_seed_element.begin(), vec_loop_seed_element.end() - 11};
+									  vector<Double_t> deconv_vec = {vec_loop_seed_element.begin(), vec_loop_seed_element.end() - 12};
 									  rowid_deconv++;
 									  return deconv_vec;
 									})
@@ -2321,89 +3111,299 @@ auto df_seed_loop = df_seed_loop_i.Define("deconv_vec", [&]() {
 									})
 									.Define("ndet", [&]() {
 									  auto vec_loop_element =  vec_loop_seed[rowid_ndet];
-									  vector<int> cut_vec_ndet = {vec_loop_element.end() - 11, vec_loop_element.end()-10};
+									  vector<int> cut_vec_ndet = {vec_loop_element.end() - 12, vec_loop_element.end()-11};
 									  int ndet = cut_vec_ndet[0];
 									  rowid_ndet++;
 									  return ndet;
 									  })
 									.Define("Intg_total", [&]() {
 									  auto vec_loop_element =  vec_loop_seed[rowid_intg_total];
-									  vector<Double_t> cut_vec_intg = {vec_loop_element.end() - 10, vec_loop_element.end()-5};
+									  vector<Double_t> cut_vec_intg = {vec_loop_element.end() - 11, vec_loop_element.end()-6};
 									  double Intg_total = cut_vec_intg[0];
 									  rowid_intg_total++;
 									  return Intg_total;
 									  })
 									.Define("Intg_th", [&]() {
 									  auto vec_loop_element =  vec_loop_seed[rowid_intg_th];
-									  vector<Double_t> cut_vec_intg = {vec_loop_element.end() - 10, vec_loop_element.end()-5};
+									  vector<Double_t> cut_vec_intg = {vec_loop_element.end() - 11, vec_loop_element.end()-6};
 									  double Intg_th = cut_vec_intg[1];
 									  rowid_intg_th++;
 									  return Intg_th;
 									  })
 									.Define("Intg_ep", [&]() {
 									  auto vec_loop_element =  vec_loop_seed[rowid_intg_ep];
-									  vector<Double_t> cut_vec_intg = {vec_loop_element.end() - 10, vec_loop_element.end()-5};
+									  vector<Double_t> cut_vec_intg = {vec_loop_element.end() - 11, vec_loop_element.end()-6};
 									  double Intg_ep = cut_vec_intg[2];
 									  rowid_intg_ep++;
 									  return Intg_ep;
 									  })
 									.Define("Intg_fs", [&]() {
 									  auto vec_loop_element =  vec_loop_seed[rowid_intg_fs];
-									  vector<Double_t> cut_vec_intg = {vec_loop_element.end() - 10, vec_loop_element.end()-5};
+									  vector<Double_t> cut_vec_intg = {vec_loop_element.end() - 11, vec_loop_element.end()-6};
 									  double Intg_fs = cut_vec_intg[3];
 									  rowid_intg_fs++;
 									  return Intg_fs;
 									  })
 									.Define("Intg_he", [&]() {
 									  auto vec_loop_element =  vec_loop_seed[rowid_intg_he];
-									  vector<Double_t> cut_vec_intg = {vec_loop_element.end() - 10, vec_loop_element.end()-5};
+									  vector<Double_t> cut_vec_intg = {vec_loop_element.end() - 11, vec_loop_element.end()-6};
 									  double Intg_he = cut_vec_intg[4];
 									  rowid_intg_he++;
 									  return Intg_he;
 									  })                                                                                           
 									.Define("Chi2", [&]() {
 									  auto vec_loop_element =  vec_loop_seed[rowid_Chi2];
-									  vector<Double_t> cut_vec = {vec_loop_element.end() - 5, vec_loop_element.end()};
+									  vector<Double_t> cut_vec = {vec_loop_element.end() - 6, vec_loop_element.end()};
 									  double Chi2_value = cut_vec[0];
 									  rowid_Chi2++;
 									  return Chi2_value;
 									})
 									.Define("Chi2red", [&]() {
 									  auto vec_loop_element =  vec_loop_seed[rowid_Chi2red];
-									  vector<Double_t> cut_vec = {vec_loop_element.end() - 5, vec_loop_element.end()};
+									  vector<Double_t> cut_vec = {vec_loop_element.end() - 6, vec_loop_element.end()};
 									  double Chi2red_value = cut_vec[1];
 									  rowid_Chi2red++;
 									  return Chi2red_value;
 									})
 									.Define("xi2", [&]() {
 									  auto vec_loop_element =  vec_loop_seed[rowid_xi2];
-									  vector<Double_t> cut_vec = {vec_loop_element.end() - 5, vec_loop_element.end()};
+									  vector<Double_t> cut_vec = {vec_loop_element.end() - 6, vec_loop_element.end()};
 									  double xi2_value = cut_vec[2];
 									  rowid_xi2++;
 									  return xi2_value;
 									})
 									.Define("barDelta", [&]() {
 									  auto vec_loop_element =  vec_loop_seed[rowid_bardelta];
-									  vector<Double_t> cut_vec = {vec_loop_element.end() - 5, vec_loop_element.end()};
+									  vector<Double_t> cut_vec = {vec_loop_element.end() - 6, vec_loop_element.end()};
 									  double bardelta_value = cut_vec[3];
 									  rowid_bardelta++;
 									  return bardelta_value;
 									})
 									.Define("std_cr", [&]() {
 									  auto vec_loop_element =  vec_loop_seed[rowid_std];
-									  vector<Double_t> cut_vec = {vec_loop_element.end() - 5, vec_loop_element.end()};
+									  vector<Double_t> cut_vec = {vec_loop_element.end() - 6, vec_loop_element.end()};
 									  double std_cr_value = cut_vec[4];
 									  rowid_std++;
 									  return std_cr_value;
+									})
+									.Define("em_it", [&]() {
+									  auto vec_loop_element =  vec_loop_seed[rowid_em_it];
+									  vector<Double_t> cut_vec = {vec_loop_element.end() - 6, vec_loop_element.end()};
+									  double em_it_value = cut_vec[5];
+									  rowid_em_it++;
+									  return em_it_value;
 									});
 
-std::ostringstream stream_ndet; 
+ostringstream stream_ndet; 
 stream_ndet << ndet;
-std::string str_stream_ndet = stream_ndet.str();
-string df_file_name = "./deconv_data_rootfile/EM/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+string str_stream_ndet = stream_ndet.str();
+
+string df_file_name;
+if(steps==0)
+	{
+		df_file_name = "./deconv_data_rootfile/EM_stop/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_0"+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+	}
+else{	
+		df_file_name = "./deconv_data_rootfile/EM/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+	}
+
 df_seed_loop.Snapshot("em_loop_tree",df_file_name); /*Save selected columns to disk, in a new TTree treename in file filename*/
 
 }
+
+void em_loop_event_MC(string campaign,int event,int steps,int time_grid, int bin_seed){
+
+auto start = std::chrono::system_clock::now();
+
+ostringstream stream_steps, stream_event, stream_timegrid, stream_em_it;
+stream_steps << steps;
+stream_event << event;
+stream_timegrid << time_grid;
+string str_stream_steps = stream_steps.str();
+string str_stream_event = stream_event.str();
+string str_stream_timegrid = stream_timegrid.str();
+string str_stream_em_it;
+
+vector<vector<Double_t> > vec_event_MC_loop;
+int N = 500000; //numero de iteraciones MC
+
+ROOT::RDataFrame df_seed_loop_i(N);
+
+/**Iteramos sobre los eventos**/
+//~ for(int i=event; i<=event;i++)
+	//~ {
+		int mc_it =0;
+		/*Iteramos el algritmo EM sobre un evento i N veces.*/
+		for(int k=1;k<=N;k++)
+			{
+				cout << "EM unfolding MC " << " Campaign: "<< campaign << " Event: "<< event << " Steps: " << steps << " Time grid: " << time_grid << " Seed: " << bin_seed  << " MC iteration " << k <<  " Starting ... "<< endl;
+				vec_event_MC_loop.push_back(deconv_em_output_MC(campaign,event,steps,bin_seed,time_grid,"Intg",0));
+				cout << " " << endl;
+				mc_it+=k;
+			}
+    //~ }
+
+/*Definimos los bordes de bin de los VWC%*/
+vector<double> x_vec_seed;
+
+for(int i=0;i<186;i++)
+	{
+		if(i<=150)
+			{
+				double x_bin_lowedges = i/5.;
+				x_vec_seed.push_back(x_bin_lowedges);
+			}
+		if(i>150)
+			{
+				double x_bin_lowedges = (i- 135.)*2;
+				x_vec_seed.push_back(x_bin_lowedges);
+			}
+    }
+ 
+
+/**extraemos la info del numero de detectores*/
+auto vec_event_MC_loop_elem = vec_event_MC_loop[0];
+vector<int> cut_vec_ndet =  {vec_event_MC_loop_elem.end()-12, vec_event_MC_loop_elem.end()-11};
+int ndet = cut_vec_ndet[0];
+
+//~ /**extraemos la info del numero de pasos del metodo EM*/
+//~ auto vec_loop_seed_elem_em_it =  vec_loop_seed[0];
+//~ vector<int> cut_vec_em_it =  {vec_loop_seed_elem_em_it.end() - 1, vec_loop_seed_elem_em_it.end()};
+//~ int em_it_value = cut_vec_em_it[0];
+
+//~ if(steps==0){
+	//~ stream_em_it << em_it_value;
+	//~ str_stream_steps = stream_em_it.str();
+	//~ }
+//~ else{}
+
+int rowid_deconv = 0;
+int rowid_intg_total = 0;
+int rowid_ndet = 0;
+int rowid_intg_th = 0;
+int rowid_intg_ep = 0;
+int rowid_intg_fs = 0;
+int rowid_intg_he = 0;
+int rowid_Chi2 = 0;
+int rowid_Chi2red = 0;
+int rowid_xi2 = 0;
+int rowid_bardelta = 0;
+int rowid_std = 0;
+int rowid_bin_seed = 0;
+int rowid_em_it = 0;
+
+auto df_seed_loop = df_seed_loop_i.Define("deconv_vec", [&]() {
+									  auto vec_event_MC_loop_element =  vec_event_MC_loop[rowid_deconv];
+									  vector<Double_t> deconv_vec = {vec_event_MC_loop_element.begin(), vec_event_MC_loop_element.end() - 12};
+									  rowid_deconv++;
+									  return deconv_vec;
+									})
+									.Define("ndet", [&]() {
+									  auto vec_loop_element =  vec_event_MC_loop[rowid_ndet];
+									  vector<int> cut_vec_ndet = {vec_loop_element.end() - 12, vec_loop_element.end()-11};
+									  int ndet = cut_vec_ndet[0];
+									  rowid_ndet++;
+									  return ndet;
+									  })
+									.Define("Intg_total", [&]() {
+									  auto vec_loop_element =  vec_event_MC_loop[rowid_intg_total];
+									  vector<Double_t> cut_vec_intg = {vec_loop_element.end() - 11, vec_loop_element.end()-6};
+									  double Intg_total = cut_vec_intg[0];
+									  rowid_intg_total++;
+									  return Intg_total;
+									  })
+									.Define("Intg_th", [&]() {
+									  auto vec_loop_element =  vec_event_MC_loop[rowid_intg_th];
+									  vector<Double_t> cut_vec_intg = {vec_loop_element.end() - 11, vec_loop_element.end()-6};
+									  double Intg_th = cut_vec_intg[1];
+									  rowid_intg_th++;
+									  return Intg_th;
+									  })
+									.Define("Intg_ep", [&]() {
+									  auto vec_loop_element =  vec_event_MC_loop[rowid_intg_ep];
+									  vector<Double_t> cut_vec_intg = {vec_loop_element.end() - 11, vec_loop_element.end()-6};
+									  double Intg_ep = cut_vec_intg[2];
+									  rowid_intg_ep++;
+									  return Intg_ep;
+									  })
+									.Define("Intg_fs", [&]() {
+									  auto vec_loop_element =  vec_event_MC_loop[rowid_intg_fs];
+									  vector<Double_t> cut_vec_intg = {vec_loop_element.end() - 11, vec_loop_element.end()-6};
+									  double Intg_fs = cut_vec_intg[3];
+									  rowid_intg_fs++;
+									  return Intg_fs;
+									  })
+									.Define("Intg_he", [&]() {
+									  auto vec_loop_element =  vec_event_MC_loop[rowid_intg_he];
+									  vector<Double_t> cut_vec_intg = {vec_loop_element.end() - 11, vec_loop_element.end()-6};
+									  double Intg_he = cut_vec_intg[4];
+									  rowid_intg_he++;
+									  return Intg_he;
+									  })                                                                                           
+									.Define("Chi2", [&]() {
+									  auto vec_loop_element =  vec_event_MC_loop[rowid_Chi2];
+									  vector<Double_t> cut_vec = {vec_loop_element.end() - 6, vec_loop_element.end()};
+									  double Chi2_value = cut_vec[0];
+									  rowid_Chi2++;
+									  return Chi2_value;
+									})
+									.Define("Chi2red", [&]() {
+									  auto vec_loop_element =  vec_event_MC_loop[rowid_Chi2red];
+									  vector<Double_t> cut_vec = {vec_loop_element.end() - 6, vec_loop_element.end()};
+									  double Chi2red_value = cut_vec[1];
+									  rowid_Chi2red++;
+									  return Chi2red_value;
+									})
+									.Define("xi2", [&]() {
+									  auto vec_loop_element =  vec_event_MC_loop[rowid_xi2];
+									  vector<Double_t> cut_vec = {vec_loop_element.end() - 6, vec_loop_element.end()};
+									  double xi2_value = cut_vec[2];
+									  rowid_xi2++;
+									  return xi2_value;
+									})
+									.Define("barDelta", [&]() {
+									  auto vec_loop_element =  vec_event_MC_loop[rowid_bardelta];
+									  vector<Double_t> cut_vec = {vec_loop_element.end() - 6, vec_loop_element.end()};
+									  double bardelta_value = cut_vec[3];
+									  rowid_bardelta++;
+									  return bardelta_value;
+									})
+									.Define("std_cr", [&]() {
+									  auto vec_loop_element =  vec_event_MC_loop[rowid_std];
+									  vector<Double_t> cut_vec = {vec_loop_element.end() - 6, vec_loop_element.end()};
+									  double std_cr_value = cut_vec[4];
+									  rowid_std++;
+									  return std_cr_value;
+									})
+									.Define("em_it", [&]() {
+									  auto vec_loop_element =  vec_event_MC_loop[rowid_em_it];
+									  vector<Double_t> cut_vec = {vec_loop_element.end() - 6, vec_loop_element.end()};
+									  double em_it_value = cut_vec[5];
+									  rowid_em_it++;
+									  return em_it_value;
+									});
+
+ostringstream stream_ndet; 
+stream_ndet << ndet;
+string str_stream_ndet = stream_ndet.str();
+
+string df_file_name;
+if(steps==0)
+	{
+		df_file_name = "./deconv_data_rootfile/EM_MC_stop/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_0"+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_MC_stop.root";
+	}
+else{	
+		df_file_name = "./deconv_data_rootfile/EM_MC/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_MC.root";
+	}
+
+df_seed_loop.Snapshot("em_loop_tree",df_file_name); /*Save selected columns to disk, in a new TTree treename in file filename*/
+
+auto end = std::chrono::system_clock::now();
+std::chrono::duration<float,std::ratio<3600>> duration = end - start; //hours
+cout <<"Duration: " <<duration.count() << " hr " << endl;
+
+}
+
 
 TH1D* deconv_hist_from_steps_and_seeds_TH1D(string campaign, int event, int steps, int timegrid, int ndet, int bin_seed, string flux_representation){
 
@@ -2471,7 +3471,20 @@ double *bins = B.data();
 /*Vector de flujo integral deconvolucionado*/
 RVec<double> deconv_vec;
 
-string input_complete_file= "./deconv_data_rootfile/EM/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+string input_complete_file;
+
+if(steps==0)
+{
+	input_complete_file= "./deconv_data_rootfile/EM_stop/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+	//~ ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
+}
+
+else
+{
+	input_complete_file= "./deconv_data_rootfile/EM/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+	//~ ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
+}
+
 ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
 
 auto df_flux_deconv_matrix = df_seed_loop_step.Take<vector<double>>("deconv_vec").GetValue();
@@ -2875,6 +3888,529 @@ canvas_deconv->SaveAs(("./deconv_data_pdf/EM_unfolding_loop_campaign_"+campaign+
 
 }
 
+void deconv_flux_multiplot_by_stop_criteria(string campaign, int event, int steps, int timegrid, int ndet, int bin_seed, string flux_representation){
+ostringstream stream_steps, stream_event, stream_ndet, stream_seed, stream_timegrid;
+stream_steps << steps;
+stream_timegrid << timegrid;
+stream_event << event;
+stream_ndet << ndet;
+stream_seed << bin_seed;
+string str_stream_steps = stream_steps.str();
+string str_stream_event = stream_event.str();
+string str_stream_ndet = stream_ndet.str();
+string str_stream_seed = stream_seed.str();
+string str_stream_timegrid = stream_timegrid.str();
+
+vector<TH1D*> hist_deconv_flux_vec;
+vector<TH1D*> vec_hist_deconv_color_th; //vector de histogramas de flujos deconvolucionados
+vector<TH1D*> vec_hist_deconv_color_ep; //vector de histogramas de flujos deconvolucionados
+vector<TH1D*> vec_hist_deconv_color_fs; //vector de histogramas de flujos deconvolucionados
+vector<TH1D*> vec_hist_deconv_color_he; //vector de histogramas de flujos deconvolucionados
+
+/*Llenamos un vector de histogramas de flujos deconvolucionados por semilla para el mismo evento, donde la iteracio del metodo em para por el criterio  de stop*/
+int max_seed = 186;
+for(int i = 1; i<=max_seed;i++)
+		{
+			hist_deconv_flux_vec.push_back(deconv_hist_from_steps_and_seeds_TH1D(campaign,event,steps,timegrid,ndet,i,flux_representation));
+		}
+		
+for(int i=0;i<hist_deconv_flux_vec.size();i++){
+/*Coloremos los histogramas deconvolucionados por region de energia*/
+	auto hist_step_color_th = (TH1D*)hist_deconv_flux_vec[i]->Clone();
+	hist_step_color_th->SetFillColor(kGray);
+	hist_step_color_th->GetXaxis()->SetRangeUser(0, 2*1e-07);
+	
+	auto hist_step_color_ep = (TH1D*)hist_deconv_flux_vec[i]->Clone();
+	hist_step_color_ep->SetFillColor(kCyan-9);
+	hist_step_color_ep->GetXaxis()->SetRangeUser(2*1e-07, 1*1e-02);
+	
+	auto hist_step_color_fs = (TH1D*)hist_deconv_flux_vec[i]->Clone();
+	hist_step_color_fs->SetFillColor(kGreen-9);
+	hist_step_color_fs->GetXaxis()->SetRangeUser(1*1e-02, 1*1e+01);
+	
+	auto hist_step_color_he = (TH1D*)hist_deconv_flux_vec[i]->Clone();
+	hist_step_color_he->SetFillColor(kRed-9);
+	hist_step_color_he->GetXaxis()->SetRangeUser(1*1e+01,7.43*1e+03);
+	
+	vec_hist_deconv_color_th.push_back(hist_step_color_th); // llenamos el vector de histogramas coloreado
+	vec_hist_deconv_color_ep.push_back(hist_step_color_ep); // llenamos el vector de histogramas coloreado
+	vec_hist_deconv_color_fs.push_back(hist_step_color_fs); // llenamos el vector de histogramas coloreado
+	vec_hist_deconv_color_he.push_back(hist_step_color_he); // llenamos el vector de histogramas coloreado	
+}
+
+
+/*Llenamos con la info de cada histograma: integrales por region, Chi2 y numero de paso de stop*/
+
+vector< vector<double>> vec_data_matrix;
+
+string input_complete_file= "./deconv_data_rootfile/EM_stop/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
+
+for(int i = 1; i<=max_seed;i++){
+	//~ ostringstream stream_steps_new;
+	//~ stream_steps_new << i;
+	//~ string str_stream_steps_new = stream_steps_new.str();
+
+	vector<double> vec_data;
+
+	//~ string input_complete_file= "./deconv_data_rootfile/EM/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps_new+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+	//~ ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
+
+	auto df_flux_deconv_ndet = df_seed_loop_step.Take<int>("ndet").GetValue();
+	auto df_flux_deconv_intg_total = df_seed_loop_step.Take<double>("Intg_total").GetValue();
+	auto df_flux_deconv_intg_th = df_seed_loop_step.Take<double>("Intg_th").GetValue();
+	auto df_flux_deconv_intg_ep = df_seed_loop_step.Take<double>("Intg_ep").GetValue();
+	auto df_flux_deconv_intg_fs = df_seed_loop_step.Take<double>("Intg_fs").GetValue();
+	auto df_flux_deconv_intg_he = df_seed_loop_step.Take<double>("Intg_he").GetValue();
+	auto df_flux_deconv_Chi2 = df_seed_loop_step.Take<double>("Chi2").GetValue();
+	auto df_flux_deconv_Chi2red = df_seed_loop_step.Take<double>("Chi2red").GetValue();
+	auto df_flux_deconv_xi2 = df_seed_loop_step.Take<double>("xi2").GetValue();
+	auto df_flux_deconv_barDelta = df_seed_loop_step.Take<double>("barDelta").GetValue();
+	auto df_flux_deconv_std_cr = df_seed_loop_step.Take<double>("std_cr").GetValue();
+	auto df_flux_deconv_em_it = df_seed_loop_step.Take<double>("em_it").GetValue();
+	
+	/**Extraemos el vector resultante del metodo EM dado cierta cantidad de pasos "steps" y asociad al numero de semilla "sed"*/
+
+	vec_data.push_back((double)df_flux_deconv_ndet[i-1]);
+	vec_data.push_back(df_flux_deconv_intg_total[i-1]);
+	vec_data.push_back(df_flux_deconv_intg_th[i-1]);
+	vec_data.push_back(df_flux_deconv_intg_ep[i-1]);
+	vec_data.push_back(df_flux_deconv_intg_fs[i-1]);
+	vec_data.push_back(df_flux_deconv_intg_he[i-1]);
+	vec_data.push_back(df_flux_deconv_Chi2[i-1]);
+	vec_data.push_back(df_flux_deconv_Chi2red[i-1]);
+	vec_data.push_back(df_flux_deconv_xi2[i-1]);
+	vec_data.push_back(df_flux_deconv_barDelta[i-1]);
+	vec_data.push_back(df_flux_deconv_std_cr[i-1]);
+	vec_data.push_back(df_flux_deconv_em_it[i-1]);
+
+	vec_data_matrix.push_back(vec_data);
+}
+
+string canvas_name;
+
+if(flux_representation=="Integral")
+			{
+				canvas_name = "Deconv Flux, Integral Representation, Event_"+str_stream_event;
+			}
+if(flux_representation=="Lethargy")
+			{
+				canvas_name = "Deconv Flux, Lethargy Representation, Event_"+str_stream_event;
+			}
+if(flux_representation=="Differential")
+			{
+				canvas_name = "Deconv Flux, Differential Representation, Event_"+str_stream_event;
+			}
+
+string canvas_name_g1 = canvas_name+"_group_1";
+string canvas_name_g2 = canvas_name+"_group_2";
+string canvas_name_g3 = canvas_name+"_group_3";
+string canvas_name_g4 = canvas_name+"_group_4";
+string canvas_name_g5 = canvas_name+"_group_5";
+string canvas_name_g6 = canvas_name+"_group_6";
+string canvas_name_g7 = canvas_name+"_group_7";
+string canvas_name_g8 = canvas_name+"_group_8";
+string canvas_name_g9 = canvas_name+"_group_9";
+string canvas_name_g10 = canvas_name+"_group_10";
+
+TCanvas *canvas_deconv_group_1 = new TCanvas(canvas_name_g1.c_str(),canvas_name_g1.c_str(),1920,1080);
+TCanvas *canvas_deconv_group_2 = new TCanvas(canvas_name_g2.c_str(),canvas_name_g2.c_str(),1920,1080);
+TCanvas *canvas_deconv_group_3 = new TCanvas(canvas_name_g3.c_str(),canvas_name_g3.c_str(),1920,1080);
+TCanvas *canvas_deconv_group_4 = new TCanvas(canvas_name_g4.c_str(),canvas_name_g4.c_str(),1920,1080);
+TCanvas *canvas_deconv_group_5 = new TCanvas(canvas_name_g5.c_str(),canvas_name_g5.c_str(),1920,1080);
+TCanvas *canvas_deconv_group_6 = new TCanvas(canvas_name_g6.c_str(),canvas_name_g6.c_str(),1920,1080);
+TCanvas *canvas_deconv_group_7 = new TCanvas(canvas_name_g7.c_str(),canvas_name_g7.c_str(),1920,1080);
+TCanvas *canvas_deconv_group_8 = new TCanvas(canvas_name_g8.c_str(),canvas_name_g8.c_str(),1920,1080);
+TCanvas *canvas_deconv_group_9 = new TCanvas(canvas_name_g9.c_str(),canvas_name_g9.c_str(),1920,1080);
+TCanvas *canvas_deconv_group_10 = new TCanvas(canvas_name_g10.c_str(),canvas_name_g10.c_str(),1920,1080);
+ 
+canvas_deconv_group_1->Divide(5,4);//seed 1-20
+canvas_deconv_group_2->Divide(5,4);//seed 21-40
+canvas_deconv_group_3->Divide(5,4);//seed 41-60
+canvas_deconv_group_4->Divide(5,4);//seed 61-80
+canvas_deconv_group_5->Divide(5,4);//seed 81-100
+canvas_deconv_group_6->Divide(5,4);//seed 101-120
+canvas_deconv_group_7->Divide(5,4);//seed 121-140
+canvas_deconv_group_8->Divide(5,4);//seed 141-160
+canvas_deconv_group_9->Divide(5,4);//seed 161-180
+canvas_deconv_group_10->Divide(3,2);//seed 181-186
+
+// llenamos cada entrada del canvas con un histograma del vector de histogramas
+for (int i = 0; i<186; i++){
+
+	
+	vector<double> data_to_hist;
+	double shift_margin = 0.05; // para reajustar la poscion de el texto dentro del pad
+	
+	if(i<20)
+		{
+			data_to_hist = vec_data_matrix[i];
+			
+			std::ostringstream stream_steps_new;
+			stream_steps_new << (i+1);
+			std::string str_stream_steps_new = stream_steps_new.str();
+
+			canvas_deconv_group_1->cd(i+1);
+			gPad->Modified(); // para que un valor correcto el gPad->GetUymin() y gPad->GetUymax()
+			gPad->Update(); // para que un valor correcto el gPad->GetUymin() y gPad->GetUymax()
+			
+			canvas_deconv_group_1->GetPad(i+1)->SetLeftMargin(0.15);
+			canvas_deconv_group_1->GetPad(i+1)->SetRightMargin(0.009);
+			//~ double shift_margin = 0.05; // para reajustar la poscion de el texto dentro del pad
+			if (flux_representation=="Differential")
+				{
+					gPad->SetLogy();
+				}
+		}
+	if(20<=i & i<40)
+		{
+			data_to_hist = vec_data_matrix[i];
+			
+			std::ostringstream stream_steps_new;
+			stream_steps_new << (i+1)-20;
+			std::string str_stream_steps_new = stream_steps_new.str();
+
+			canvas_deconv_group_2->cd((i+1)-20);
+			gPad->Modified(); // para que un valor correcto el gPad->GetUymin() y gPad->GetUymax()
+			gPad->Update(); // para que un valor correcto el gPad->GetUymin() y gPad->GetUymax()
+			
+			canvas_deconv_group_2->GetPad((i+1)-20)->SetLeftMargin(0.15);
+			canvas_deconv_group_2->GetPad((i+1)-20)->SetRightMargin(0.009);
+			//~ double shift_margin = 0.05; // para reajustar la poscion de el texto dentro del pad
+			if (flux_representation=="Differential")
+				{
+					gPad->SetLogy();
+				}
+		}
+	if(40<=i & i<60)
+		{
+			data_to_hist = vec_data_matrix[i];
+			
+			std::ostringstream stream_steps_new;
+			stream_steps_new << (i+1)-40;
+			std::string str_stream_steps_new = stream_steps_new.str();
+
+			canvas_deconv_group_3->cd((i+1)-40);
+			gPad->Modified(); // para que un valor correcto el gPad->GetUymin() y gPad->GetUymax()
+			gPad->Update(); // para que un valor correcto el gPad->GetUymin() y gPad->GetUymax()
+			
+			canvas_deconv_group_3->GetPad((i+1)-40)->SetLeftMargin(0.15);
+			canvas_deconv_group_3->GetPad((i+1)-40)->SetRightMargin(0.009);
+			//~ double shift_margin = 0.05; // para reajustar la poscion de el texto dentro del pad
+			if (flux_representation=="Differential")
+				{
+					gPad->SetLogy();
+				}
+		}
+	if(60<=i & i<80)
+		{
+			data_to_hist = vec_data_matrix[i];
+			
+			std::ostringstream stream_steps_new;
+			stream_steps_new << (i+1)-60;
+			std::string str_stream_steps_new = stream_steps_new.str();
+
+			canvas_deconv_group_4->cd((i+1)-60);
+			gPad->Modified(); // para que un valor correcto el gPad->GetUymin() y gPad->GetUymax()
+			gPad->Update(); // para que un valor correcto el gPad->GetUymin() y gPad->GetUymax()
+			
+			canvas_deconv_group_4->GetPad((i+1)-60)->SetLeftMargin(0.15);
+			canvas_deconv_group_4->GetPad((i+1)-60)->SetRightMargin(0.009);
+			//~ double shift_margin = 0.05; // para reajustar la poscion de el texto dentro del pad
+			if (flux_representation=="Differential")
+				{
+					gPad->SetLogy();
+				}
+		}
+	if(80<=i & i<100)
+		{
+			data_to_hist = vec_data_matrix[i];
+			
+			std::ostringstream stream_steps_new;
+			stream_steps_new << (i+1)-80;
+			std::string str_stream_steps_new = stream_steps_new.str();
+
+			canvas_deconv_group_5->cd((i+1)-80);
+			gPad->Modified(); // para que un valor correcto el gPad->GetUymin() y gPad->GetUymax()
+			gPad->Update(); // para que un valor correcto el gPad->GetUymin() y gPad->GetUymax()
+			
+			canvas_deconv_group_5->GetPad((i+1)-80)->SetLeftMargin(0.15);
+			canvas_deconv_group_5->GetPad((i+1)-80)->SetRightMargin(0.009);
+			//~ double shift_margin = 0.05; // para reajustar la poscion de el texto dentro del pad
+			if (flux_representation=="Differential")
+				{
+					gPad->SetLogy();
+				}
+		}		
+
+	if(100<=i & i<120)
+		{
+			data_to_hist = vec_data_matrix[i];
+			
+			std::ostringstream stream_steps_new;
+			stream_steps_new << (i+1)-100;
+			std::string str_stream_steps_new = stream_steps_new.str();
+
+			canvas_deconv_group_6->cd((i+1)-100);
+			gPad->Modified(); // para que un valor correcto el gPad->GetUymin() y gPad->GetUymax()
+			gPad->Update(); // para que un valor correcto el gPad->GetUymin() y gPad->GetUymax()
+			
+			canvas_deconv_group_6->GetPad((i+1)-100)->SetLeftMargin(0.15);
+			canvas_deconv_group_6->GetPad((i+1)-100)->SetRightMargin(0.009);
+			//~ double shift_margin = 0.05; // para reajustar la poscion de el texto dentro del pad
+			if (flux_representation=="Differential")
+				{
+					gPad->SetLogy();
+				}
+		}	
+
+	if(120<=i & i<140)
+		{
+			data_to_hist = vec_data_matrix[i];
+			
+			std::ostringstream stream_steps_new;
+			stream_steps_new << (i+1)-120;
+			std::string str_stream_steps_new = stream_steps_new.str();
+
+			canvas_deconv_group_7->cd((i+1)-120);
+			gPad->Modified(); // para que un valor correcto el gPad->GetUymin() y gPad->GetUymax()
+			gPad->Update(); // para que un valor correcto el gPad->GetUymin() y gPad->GetUymax()
+			
+			canvas_deconv_group_7->GetPad((i+1)-120)->SetLeftMargin(0.15);
+			canvas_deconv_group_7->GetPad((i+1)-120)->SetRightMargin(0.009);
+			//~ double shift_margin = 0.05; // para reajustar la poscion de el texto dentro del pad
+			if (flux_representation=="Differential")
+				{
+					gPad->SetLogy();
+				}
+		}	
+
+	if(140<=i & i<160)
+		{
+			data_to_hist = vec_data_matrix[i];
+			
+			std::ostringstream stream_steps_new;
+			stream_steps_new << (i+1)-140;
+			std::string str_stream_steps_new = stream_steps_new.str();
+
+			canvas_deconv_group_8->cd((i+1)-140);
+			gPad->Modified(); // para que un valor correcto el gPad->GetUymin() y gPad->GetUymax()
+			gPad->Update(); // para que un valor correcto el gPad->GetUymin() y gPad->GetUymax()
+			
+			canvas_deconv_group_8->GetPad((i+1)-140)->SetLeftMargin(0.15);
+			canvas_deconv_group_8->GetPad((i+1)-140)->SetRightMargin(0.009);
+			//~ double shift_margin = 0.05; // para reajustar la poscion de el texto dentro del pad
+			if (flux_representation=="Differential")
+				{
+					gPad->SetLogy();
+				}
+		}	
+
+	if(160<=i & i<180)
+		{
+			data_to_hist = vec_data_matrix[i];
+			
+			std::ostringstream stream_steps_new;
+			stream_steps_new << (i+1)-160;
+			std::string str_stream_steps_new = stream_steps_new.str();
+
+			canvas_deconv_group_9->cd((i+1)-160);
+			gPad->Modified(); // para que un valor correcto el gPad->GetUymin() y gPad->GetUymax()
+			gPad->Update(); // para que un valor correcto el gPad->GetUymin() y gPad->GetUymax()
+			
+			canvas_deconv_group_9->GetPad((i+1)-160)->SetLeftMargin(0.15);
+			canvas_deconv_group_9->GetPad((i+1)-160)->SetRightMargin(0.009);
+			//~ double shift_margin = 0.05; // para reajustar la poscion de el texto dentro del pad
+			if (flux_representation=="Differential")
+				{
+					gPad->SetLogy();
+				}
+		}	
+
+	if(180<=i & i<186)
+		{
+			data_to_hist = vec_data_matrix[i];
+			
+			std::ostringstream stream_steps_new;
+			stream_steps_new << (i+1)-180;
+			std::string str_stream_steps_new = stream_steps_new.str();
+
+			canvas_deconv_group_10->cd((i+1)-180);
+			gPad->Modified(); // para que un valor correcto el gPad->GetUymin() y gPad->GetUymax()
+			gPad->Update(); // para que un valor correcto el gPad->GetUymin() y gPad->GetUymax()
+			
+			canvas_deconv_group_10->GetPad((i+1)-180)->SetLeftMargin(0.15);
+			canvas_deconv_group_10->GetPad((i+1)-180)->SetRightMargin(0.009);
+			//~ double shift_margin = 0.05; // para reajustar la poscion de el texto dentro del pad
+			if (flux_representation=="Differential")
+				{
+					gPad->SetLogy();
+				}
+		}	
+
+	gPad->SetLogx();
+	gStyle->SetTitleX(0.5);
+	gStyle->SetTitleAlign(23);
+	gStyle->SetLineScalePS(1); // Para que guardar correctamente el canvas 
+	gStyle->SetOptStat(1001111);
+
+	double sum_eta_ratios = data_to_hist[2]/data_to_hist[5] + data_to_hist[3]/data_to_hist[5] + data_to_hist[4]/data_to_hist[5];
+		
+	ostringstream stream_ndet, stream_intgtotal, stream_intgth, stream_intgep, stream_intgfs, stream_intghe, stream_Chi2, stream_Chi2red;
+	ostringstream stream_intg_total_ratio_th, stream_intg_total_ratio_ep, stream_intg_total_ratio_fs, stream_intg_total_ratio_he;
+	ostringstream stream_intg_he_ratio_th, stream_intg_he_ratio_ep, stream_intg_he_ratio_fs;
+	ostringstream stream_sum_eta;
+	ostringstream stream_steps_stop;
+	
+	stream_ndet << data_to_hist[0];
+	stream_intgtotal << scientific << setprecision(3) << data_to_hist[1];
+	stream_intgth << scientific << setprecision(3) << data_to_hist[2];
+	stream_intgep << scientific << setprecision(3) << data_to_hist[3];
+	stream_intgfs << scientific << setprecision(3) << data_to_hist[4];
+	stream_intghe << scientific << setprecision(3) << data_to_hist[5];
+	stream_Chi2 << setprecision(3)<< data_to_hist[6];
+	stream_Chi2red << setprecision(3)<< data_to_hist[7];
+	stream_sum_eta << setprecision(3) << sum_eta_ratios;
+	
+	stream_intg_total_ratio_th << setprecision(2) << data_to_hist[2]/data_to_hist[1];
+	stream_intg_total_ratio_ep << setprecision(2) << data_to_hist[3]/data_to_hist[1];
+	stream_intg_total_ratio_fs << setprecision(2) << data_to_hist[4]/data_to_hist[1];
+	stream_intg_total_ratio_he << setprecision(2) << data_to_hist[5]/data_to_hist[1];
+
+	stream_intg_he_ratio_th << setprecision(2) << data_to_hist[2]/data_to_hist[5];
+	stream_intg_he_ratio_ep << setprecision(2) << data_to_hist[3]/data_to_hist[5];
+	stream_intg_he_ratio_fs << setprecision(2) << data_to_hist[4]/data_to_hist[5];
+
+	stream_steps_stop << data_to_hist[11];
+	
+	string str_stream_ndet = "#Det: "+stream_ndet.str()+" (ndf)";
+	string str_stream_intgtotal = "Intg Total: "+stream_intgtotal.str();
+	string str_stream_intgth = stream_intgth.str();
+	string str_stream_intgep = stream_intgep.str();
+	string str_stream_intgfs = stream_intgfs.str();
+	string str_stream_intghe = stream_intghe.str();
+	string str_stream_Chi2 = "#chi^{2}: "+stream_Chi2.str();
+	string str_stream_Chi2red = "#chi^{2}/ndf: "+stream_Chi2red.str();
+
+	string str_stream_intg_total_ratio_th = "#frac{#Phi_{th}}{#Phi_{tot}}="+stream_intg_total_ratio_th.str();
+	string str_stream_intg_total_ratio_ep = "#frac{#Phi_{ep}}{#Phi_{tot}}="+stream_intg_total_ratio_ep.str();
+	string str_stream_intg_total_ratio_fs = "#frac{#Phi_{fs}}{#Phi_{tot}}="+stream_intg_total_ratio_fs.str();
+	string str_stream_intg_total_ratio_he = "#frac{#Phi_{he}}{#Phi_{tot}}="+stream_intg_total_ratio_he.str();
+
+	string str_stream_intg_he_ratio_th = "#frac{#Phi_{th}}{#Phi_{he}}="+stream_intg_he_ratio_th.str();
+	string str_stream_intg_he_ratio_ep = "#frac{#Phi_{ep}}{#Phi_{he}}="+stream_intg_he_ratio_ep.str();
+	string str_stream_intg_he_ratio_fs = "#frac{#Phi_{fs}}{#Phi_{he}}="+stream_intg_he_ratio_fs.str();
+
+	string str_stream_sum_eta = "#sum_{#eta}="+stream_sum_eta.str();
+
+	string str_stream_steps_stop = "Steps="+stream_steps_stop.str();
+
+	TLatex *l_ndet = new TLatex(0.15+shift_margin,0.85,str_stream_ndet.c_str());
+	TLatex *l_intg_total = new TLatex(0.15+shift_margin,0.8,str_stream_intgtotal.c_str());
+	TLatex *l_Chi2 = new TLatex(0.15+shift_margin,0.75,str_stream_Chi2.c_str());
+	TLatex *l_steps_stop = new TLatex(0.35+shift_margin,0.75,str_stream_steps_stop.c_str());
+	TLatex *l_Chi2red = new TLatex(0.15+shift_margin,0.70,str_stream_Chi2red.c_str());
+	TLatex *l_intg_th = new TLatex(0.15+shift_margin,0.12,str_stream_intgth.c_str());
+	TLatex *l_intg_ep = new TLatex(0.35+shift_margin,0.12,str_stream_intgep.c_str());
+	TLatex *l_intg_fs = new TLatex(0.58+shift_margin,0.12,str_stream_intgfs.c_str());
+	TLatex *l_intg_he = new TLatex(0.78+shift_margin,0.12,str_stream_intghe.c_str());
+
+	TLatex *l_intgtotal_ratio_th = new TLatex(0.15+shift_margin,0.55,str_stream_intg_total_ratio_th.c_str());
+	TLatex *l_intgtotal_ratio_ep = new TLatex(0.35+shift_margin,0.55,str_stream_intg_total_ratio_ep.c_str());
+	TLatex *l_intgtotal_ratio_fs = new TLatex(0.58+shift_margin,0.55,str_stream_intg_total_ratio_fs.c_str());
+	TLatex *l_intgtotal_ratio_he = new TLatex(0.78+shift_margin,0.55,str_stream_intg_total_ratio_he.c_str());
+
+	TLatex *l_intghe_ratio_th = new TLatex(0.15+shift_margin,0.35,str_stream_intg_he_ratio_th.c_str());
+	TLatex *l_intghe_ratio_ep = new TLatex(0.35+shift_margin,0.35,str_stream_intg_he_ratio_ep.c_str());
+	TLatex *l_intghe_ratio_fs = new TLatex(0.58+shift_margin,0.35,str_stream_intg_he_ratio_fs.c_str());
+
+	TLatex *l_sum_eta = new TLatex(0.58+shift_margin,0.75,str_stream_sum_eta.c_str());
+
+	//~ intg_total->SetTextAlign(23);
+	//~ intg_total->SetTextSize(0.08);
+	
+	hist_deconv_flux_vec[i]->Draw("HIST");
+	vec_hist_deconv_color_th[i]->Draw("SAME");
+	vec_hist_deconv_color_ep[i]->Draw("SAME");
+	vec_hist_deconv_color_fs[i]->Draw("SAME");
+	vec_hist_deconv_color_he[i]->Draw("SAME");
+	l_ndet->SetNDC();
+	l_ndet->SetTextSize(0.04);
+	l_intg_total->SetNDC();
+	l_intg_total->SetTextSize(0.04);
+	l_Chi2->SetNDC();
+	l_Chi2->SetTextSize(0.04);
+	l_Chi2red->SetNDC();
+	l_Chi2red->SetTextSize(0.04);
+	l_intg_th->SetNDC();
+	l_intg_th->SetTextSize(0.04);
+	l_intg_ep->SetNDC();
+	l_intg_ep->SetTextSize(0.04);
+	l_intg_fs->SetNDC();
+	l_intg_fs->SetTextSize(0.04);
+	l_intg_he->SetNDC();
+	l_intg_he->SetTextSize(0.04);
+
+	l_intgtotal_ratio_th->SetNDC();
+	l_intgtotal_ratio_th->SetTextSize(0.04);
+	l_intgtotal_ratio_ep->SetNDC();
+	l_intgtotal_ratio_ep->SetTextSize(0.04);
+	l_intgtotal_ratio_fs->SetNDC();
+	l_intgtotal_ratio_fs->SetTextSize(0.04);
+	l_intgtotal_ratio_he->SetNDC();
+	l_intgtotal_ratio_he->SetTextSize(0.04);
+
+	l_intghe_ratio_th->SetNDC();
+	l_intghe_ratio_th->SetTextSize(0.04);
+	l_intghe_ratio_ep->SetNDC();
+	l_intghe_ratio_ep->SetTextSize(0.04);
+	l_intghe_ratio_fs->SetNDC();
+	l_intghe_ratio_fs->SetTextSize(0.04);
+	
+	l_sum_eta->SetNDC();
+	l_sum_eta->SetTextSize(0.04);
+
+	l_steps_stop->SetNDC();
+	l_steps_stop->SetTextSize(0.04);
+
+		
+	l_ndet->Draw("SAME");
+	l_intg_th->Draw("SAME");
+	l_intg_total->Draw("SAME");
+	l_Chi2->Draw("SAME");
+	l_Chi2red->Draw("SAME");
+	l_intg_ep->Draw("SAME");
+	l_intg_fs->Draw("SAME");
+	l_intg_he->Draw("SAME");
+	
+	l_intgtotal_ratio_th->Draw("SAME");
+	l_intgtotal_ratio_ep->Draw("SAME");
+	l_intgtotal_ratio_fs->Draw("SAME");
+	l_intgtotal_ratio_he->Draw("SAME");
+
+	l_intghe_ratio_th->Draw("SAME");
+	l_intghe_ratio_ep->Draw("SAME");
+	l_intghe_ratio_fs->Draw("SAME");
+
+	l_sum_eta->Draw("SAME");
+	
+	l_steps_stop->Draw("SAME");
+
+	gPad->RedrawAxis();
+	}
+
+canvas_deconv_group_1->Draw();
+canvas_deconv_group_2->Draw();
+canvas_deconv_group_3->Draw();
+canvas_deconv_group_4->Draw();
+canvas_deconv_group_5->Draw();
+canvas_deconv_group_6->Draw();
+canvas_deconv_group_7->Draw();
+canvas_deconv_group_8->Draw();
+canvas_deconv_group_9->Draw();
+canvas_deconv_group_10->Draw();
+}
+
 TH1D* em_step_plot_Chi_TH1D(string campaign, int event, int steps, int timegrid, int ndet){
 
 ostringstream stream_steps, stream_event, stream_timegrid, stream_ndet;
@@ -2888,8 +4424,19 @@ string str_stream_timegrid = stream_timegrid.str();
 string str_stream_ndet = stream_ndet.str();
 
 
+string input_complete_file;
+if(steps==0)
+{
+	input_complete_file= "./deconv_data_rootfile/EM_stop/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+	//~ ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
+}
 
-string input_complete_file= "./deconv_data_rootfile/EM/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+else
+{
+	input_complete_file= "./deconv_data_rootfile/EM/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+	//~ ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
+}
+
 ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
 
 string profile_name = "Chi2_Event_"+ stream_event.str()+"_Step_"+stream_steps.str();
@@ -2942,7 +4489,19 @@ string str_stream_event = stream_event.str();
 string str_stream_timegrid = stream_timegrid.str();
 string str_stream_ndet = stream_ndet.str();
 
-string input_complete_file= "./deconv_data_rootfile/EM/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+string input_complete_file;
+if(steps==0)
+{
+	input_complete_file= "./deconv_data_rootfile/EM_stop/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+	//~ ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
+}
+
+else
+{
+	input_complete_file= "./deconv_data_rootfile/EM/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+	//~ ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
+}
+
 ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
 
 string profile_name = "Intg_Total_Event_"+ stream_event.str()+"_Step_"+stream_steps.str();
@@ -2995,7 +4554,19 @@ string str_stream_timegrid = stream_timegrid.str();
 string str_stream_ndet = stream_ndet.str();
 ;
 
-string input_complete_file= "./deconv_data_rootfile/EM/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+string input_complete_file;
+if(steps==0)
+{
+	input_complete_file= "./deconv_data_rootfile/EM_stop/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+	//~ ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
+}
+
+else
+{
+	input_complete_file= "./deconv_data_rootfile/EM/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+	//~ ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
+}
+
 ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
 
 string profile_name = "Intg_Thermal_Event_"+ stream_event.str()+"_Step_"+stream_steps.str();
@@ -3046,7 +4617,19 @@ string str_stream_event = stream_event.str();
 string str_stream_timegrid = stream_timegrid.str();
 string str_stream_ndet = stream_ndet.str();
 
-string input_complete_file= "./deconv_data_rootfile/EM/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+string input_complete_file;
+if(steps==0)
+{
+	input_complete_file= "./deconv_data_rootfile/EM_stop/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+	//~ ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
+}
+
+else
+{
+	input_complete_file= "./deconv_data_rootfile/EM/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+	//~ ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
+}
+
 ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
 
 string profile_name = "Intg_Epithermal_Event_"+ stream_event.str()+"_Step_"+stream_steps.str();
@@ -3098,7 +4681,19 @@ string str_stream_timegrid = stream_timegrid.str();
 string str_stream_ndet = stream_ndet.str();
 
 
-string input_complete_file= "./deconv_data_rootfile/EM/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+string input_complete_file;
+if(steps==0)
+{
+	input_complete_file= "./deconv_data_rootfile/EM_stop/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+	//~ ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
+}
+
+else
+{
+	input_complete_file= "./deconv_data_rootfile/EM/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+	//~ ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
+}
+
 ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
 
 string profile_name = "Intg_Fast_Event_"+ stream_event.str()+"_Step_"+stream_steps.str();
@@ -3150,7 +4745,19 @@ string str_stream_timegrid = stream_timegrid.str();
 string str_stream_ndet = stream_ndet.str();
 
 
-string input_complete_file= "./deconv_data_rootfile/EM/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+string input_complete_file;
+if(steps==0)
+{
+	input_complete_file= "./deconv_data_rootfile/EM_stop/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+	//~ ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
+}
+
+else
+{
+	input_complete_file= "./deconv_data_rootfile/EM/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+	//~ ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
+}
+
 ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
 
 string profile_name = "Intg_High_Event_"+ stream_event.str()+"_Step_"+stream_steps.str();
@@ -3193,13 +4800,13 @@ return h_steps;
 /*del algoritmo EM*/
 void em_loop_seed_plot_template(string campaign, int event, int steps, int timegrid, int ndet){
 
-std::ostringstream stream_steps, stream_event, stream_ndet;
+ostringstream stream_steps, stream_event, stream_ndet;
 stream_steps << steps;
 stream_event << event;
 stream_ndet << ndet;
-std::string str_stream_steps = stream_steps.str();
-std::string str_stream_event = stream_event.str();
-std::string str_stream_ndet = stream_ndet.str();
+string str_stream_steps = stream_steps.str();
+string str_stream_event = stream_event.str();
+string str_stream_ndet = stream_ndet.str();
 
 vector<TH1D*> hist_vec_Chi2;
 vector<TH1D*> hist_vec_IntgTotal;
@@ -3363,15 +4970,415 @@ legend->Draw();
 
 }
 
+void scatter_plot_4var(string campaign, int event, int steps, int timegrid, int ndet)
+{
+	ostringstream stream_steps, stream_event, stream_ndet, stream_timegrid;
+	stream_steps << steps;
+	stream_timegrid << timegrid;
+	stream_event << event;
+	stream_ndet << ndet;
+	string str_stream_steps = stream_steps.str();
+	string str_stream_event = stream_event.str();
+	string str_stream_ndet = stream_ndet.str();
+	string str_stream_timegrid = stream_timegrid.str();
+	
+   auto canvas = new TCanvas("scatter_plot","scatter_plot",1920,1080);
+   gPad->Modified();
+   gPad->Update();
+   gStyle->SetCanvasPreferGL(kTRUE);
+   gStyle->SetLineScalePS(1); // Para que guardar correctamente el canvas 
+   gStyle->SetPalette(kBird, 0, 0.6); // define a transparent palette
+   
+
+	string input_complete_file= "./deconv_data_rootfile/EM_stop/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+	ROOT::RDataFrame df_event("em_loop_tree", input_complete_file);
+
+	auto df_event_vwc = df_event.Take<double>("seed_bin_edgeds").GetValue();
+	auto df_event_chi2 = df_event.Take<double>("Chi2").GetValue();
+	auto df_event_em_it = df_event.Take<double>("em_it").GetValue();
+	auto df_event_Intg_total = df_event.Take<double>("Intg_total").GetValue();
+
+	int n_scatter_size = df_event_vwc.size();
+	/*borde de bines como array*/
+	double *x_vwc = df_event_vwc.data();
+	double *y_chi2 = df_event_chi2.data();
+	double *c_em_it = df_event_em_it.data(); // color
+	double *s_intg_total = df_event_Intg_total.data(); //size 
+
+   string scatter_plot_title = campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_scatterplot;%VWC;#chi^{2}";
+   auto scatter = new TScatter(n_scatter_size, x_vwc, y_chi2, c_em_it, s_intg_total);
+   scatter->SetMarkerStyle(20);
+   //~ scatter->SetTitle("Scatter plot;VWC;#chi^{2}");
+   scatter->SetTitle(scatter_plot_title.c_str());
+   scatter->Draw("A");
+
+   canvas->SaveAs(("./deconv_data_pdf/EM_scatter_plots/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_scatterplot.pdf").c_str());
+
+
+}
+
+TScatter* scatter_plot_4var_tscatter(string campaign, int event, int steps, int timegrid, int ndet)
+{
+	ostringstream stream_steps, stream_event, stream_ndet, stream_timegrid;
+	stream_steps << steps;
+	stream_timegrid << timegrid;
+	stream_event << event;
+	stream_ndet << ndet;
+	string str_stream_steps = stream_steps.str();
+	string str_stream_event = stream_event.str();
+	string str_stream_ndet = stream_ndet.str();
+	string str_stream_timegrid = stream_timegrid.str();
+
+
+	string input_complete_file= "./deconv_data_rootfile/EM_stop/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+	ROOT::RDataFrame df_event("em_loop_tree", input_complete_file);
+
+	auto df_event_vwc = df_event.Take<double>("seed_bin_edgeds").GetValue();
+	auto df_event_chi2 = df_event.Take<double>("Chi2").GetValue();
+	auto df_event_em_it = df_event.Take<double>("em_it").GetValue();
+	auto df_event_Intg_total = df_event.Take<double>("Intg_total").GetValue();
+
+	int n_scatter_size = df_event_vwc.size();
+	/*borde de bines como array*/
+	double *x_vwc = df_event_vwc.data();
+	double *y_chi2 = df_event_chi2.data();
+	double *c_em_it = df_event_em_it.data(); // color
+	double *s_intg_total = df_event_Intg_total.data(); //size 
+ 
+   string scatter_plot_title = campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_scatterplot;%VWC;#chi^{2}";
+   auto scatter = new TScatter(n_scatter_size, x_vwc, y_chi2, c_em_it, s_intg_total);
+   scatter->SetMarkerStyle(20);
+   //~ scatter->SetTitle("Scatter plot;VWC;#chi^{2}");
+   scatter->SetMaxMarkerSize(3);
+   scatter->SetMinMarkerSize(0.5);
+   scatter->SetTitle(scatter_plot_title.c_str());
+
+	return scatter;
+	delete scatter;
+}
+
+void scatter_plot_4var_MC(string campaign, int event, int steps, int timegrid, int ndet)
+{
+	ostringstream stream_steps, stream_event, stream_ndet, stream_timegrid;
+	stream_steps << steps;
+	stream_timegrid << timegrid;
+	stream_event << event;
+	stream_ndet << ndet;
+	string str_stream_steps = stream_steps.str();
+	string str_stream_event = stream_event.str();
+	string str_stream_ndet = stream_ndet.str();
+	string str_stream_timegrid = stream_timegrid.str();
+	
+   auto canvas = new TCanvas("scatter_plot","scatter_plot",1920,1080);
+   gPad->Modified();
+   gPad->Update();
+   gStyle->SetCanvasPreferGL(kTRUE);
+   gStyle->SetLineScalePS(1); // Para que guardar correctamente el canvas 
+   gStyle->SetPalette(kBird, 0, 0.6); // define a transparent palette
+   
+
+	string input_complete_file= "./deconv_data_rootfile/EM_MC_stop/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_MC_stop.root";
+	ROOT::RDataFrame df_event("em_loop_tree", input_complete_file);
+
+	auto df_event_entry = df_event.Take<ULong64_t>("rdfentry_").GetValue();
+	vector<double> df_event_entry_fix;
+	for(int i=0;i<df_event_entry.size();i++)
+		{
+			double val = (double)df_event_entry[i];
+			df_event_entry_fix.push_back(val);
+	    }
+	auto df_event_chi2 = df_event.Take<double>("Chi2").GetValue();
+	auto df_event_em_it = df_event.Take<double>("em_it").GetValue();
+	auto df_event_Intg_total = df_event.Take<double>("Intg_total").GetValue();
+
+	int n_scatter_size = df_event_entry_fix.size();
+	/*borde de bines como array*/
+	double *x_entry= df_event_entry_fix.data();
+	double *y_chi2 = df_event_chi2.data();
+	double *c_em_it = df_event_em_it.data(); // color
+	double *s_intg_total = df_event_Intg_total.data(); //size 
+
+	ostringstream stream_mc_it;
+	stream_mc_it << n_scatter_size;
+	string str_stream_mc_it = stream_mc_it.str();
+   string scatter_plot_title = campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_scatterplot_MC_"+str_stream_mc_it+"_it;entry;#chi^{2}";
+   auto scatter = new TScatter(n_scatter_size, x_entry, y_chi2, c_em_it, s_intg_total);
+   scatter->SetMarkerStyle(20);
+   //~ scatter->SetTitle("Scatter plot;VWC;#chi^{2}");
+   scatter->SetTitle(scatter_plot_title.c_str());
+   scatter->Draw("A");
+
+   canvas->SaveAs(("./deconv_data_pdf/EM_scatter_plots/MC/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_scatterplot_MC_"+str_stream_mc_it+"_it.pdf").c_str());
+
+
+}
+
+void scatter_plots_event_loop(string campaign, int event, int steps, int timegrid, int ndet){
+
+	ostringstream stream_steps, stream_event, stream_ndet, stream_timegrid;
+	stream_steps << steps;
+	stream_timegrid << timegrid;
+	stream_event << event;
+	stream_ndet << ndet;
+	string str_stream_steps = stream_steps.str();
+	string str_stream_event = stream_event.str();
+	string str_stream_ndet = stream_ndet.str();
+	string str_stream_timegrid = stream_timegrid.str();
+
+
+vector<TScatter*> vec_scater_plot;
+
+/*Iteramos sobre el numero de eventos*/
+for(int i=1;i<=21;i++)
+	{
+		vec_scater_plot.push_back(scatter_plot_4var_tscatter(campaign,i,steps,timegrid, ndet));
+    }
+for(int i=23; i<=45; i++)
+	{
+		 vec_scater_plot.push_back(scatter_plot_4var_tscatter(campaign,i,steps,timegrid, ndet));
+    }
+for(int i=49;i<=54;i++)
+	{
+		vec_scater_plot.push_back(scatter_plot_4var_tscatter(campaign,i,steps,timegrid, ndet));
+    }
+for(int i=55;i<=69;i++)
+	{
+		vec_scater_plot.push_back(scatter_plot_4var_tscatter(campaign,i,steps,timegrid, ndet));
+    }
+for(int i=71;i<=83;i++)
+	{
+		vec_scater_plot.push_back(scatter_plot_4var_tscatter(campaign,i,steps,timegrid, ndet));
+    }
+for(int i=85;i<=110;i++)
+	{
+		vec_scater_plot.push_back(scatter_plot_4var_tscatter(campaign,i,steps,timegrid, ndet));
+    }
+for(int i=112;i<=193;i++)
+	{
+		vec_scater_plot.push_back(scatter_plot_4var_tscatter(campaign,i,steps,timegrid, ndet));
+    }
+for(int i=194;i<=239;i++)
+	{
+		vec_scater_plot.push_back(scatter_plot_4var_tscatter(campaign,i,steps,timegrid, ndet));
+    }   
+for(int i=241;i<=272;i++)
+	{
+		vec_scater_plot.push_back(scatter_plot_4var_tscatter(campaign,i,steps,timegrid, ndet));
+    }
+for(int i=275;i<=283;i++)
+	{
+		vec_scater_plot.push_back(scatter_plot_4var_tscatter(campaign,i,steps,timegrid, ndet));
+    }
+for(int i=285;i<=289;i++)
+	{
+		vec_scater_plot.push_back(scatter_plot_4var_tscatter(campaign,i,steps,timegrid, ndet));
+    }
+
+string canvas_name = "Scatter_plot";
+
+string canvas_name_g1 = canvas_name+"_group_1";
+string canvas_name_g2 = canvas_name+"_group_2";
+string canvas_name_g3 = canvas_name+"_group_3";
+string canvas_name_g4 = canvas_name+"_group_4";
+string canvas_name_g5 = canvas_name+"_group_5";
+string canvas_name_g6 = canvas_name+"_group_6";
+string canvas_name_g7 = canvas_name+"_group_7";
+string canvas_name_g8 = canvas_name+"_group_8";
+string canvas_name_g9 = canvas_name+"_group_9";
+string canvas_name_g10 = canvas_name+"_group_10";
+string canvas_name_g11 = canvas_name+"_group_11";
+string canvas_name_g12 = canvas_name+"_group_12";
+string canvas_name_g13 = canvas_name+"_group_13";
+string canvas_name_g14 = canvas_name+"_group_14";
+string canvas_name_g15 = canvas_name+"_group_15";
+string canvas_name_g16 = canvas_name+"_group_16";
+string canvas_name_g17 = canvas_name+"_group_17";
+string canvas_name_g18 = canvas_name+"_group_18";
+
+TCanvas *canvas_deconv_group_1 = new TCanvas(canvas_name_g1.c_str(),canvas_name_g1.c_str(),1920,1080);
+TCanvas *canvas_deconv_group_2 = new TCanvas(canvas_name_g2.c_str(),canvas_name_g2.c_str(),1920,1080);
+TCanvas *canvas_deconv_group_3 = new TCanvas(canvas_name_g3.c_str(),canvas_name_g3.c_str(),1920,1080);
+TCanvas *canvas_deconv_group_4 = new TCanvas(canvas_name_g4.c_str(),canvas_name_g4.c_str(),1920,1080);
+TCanvas *canvas_deconv_group_5 = new TCanvas(canvas_name_g5.c_str(),canvas_name_g5.c_str(),1920,1080);
+TCanvas *canvas_deconv_group_6 = new TCanvas(canvas_name_g6.c_str(),canvas_name_g6.c_str(),1920,1080);
+TCanvas *canvas_deconv_group_7 = new TCanvas(canvas_name_g7.c_str(),canvas_name_g7.c_str(),1920,1080);
+TCanvas *canvas_deconv_group_8 = new TCanvas(canvas_name_g8.c_str(),canvas_name_g8.c_str(),1920,1080);
+TCanvas *canvas_deconv_group_9 = new TCanvas(canvas_name_g9.c_str(),canvas_name_g9.c_str(),1920,1080);
+TCanvas *canvas_deconv_group_10 = new TCanvas(canvas_name_g10.c_str(),canvas_name_g10.c_str(),1920,1080);
+TCanvas *canvas_deconv_group_11 = new TCanvas(canvas_name_g11.c_str(),canvas_name_g11.c_str(),1920,1080);
+TCanvas *canvas_deconv_group_12 = new TCanvas(canvas_name_g12.c_str(),canvas_name_g12.c_str(),1920,1080);
+TCanvas *canvas_deconv_group_13 = new TCanvas(canvas_name_g13.c_str(),canvas_name_g13.c_str(),1920,1080);
+TCanvas *canvas_deconv_group_14 = new TCanvas(canvas_name_g14.c_str(),canvas_name_g14.c_str(),1920,1080);
+TCanvas *canvas_deconv_group_15 = new TCanvas(canvas_name_g15.c_str(),canvas_name_g15.c_str(),1920,1080);
+TCanvas *canvas_deconv_group_16 = new TCanvas(canvas_name_g16.c_str(),canvas_name_g16.c_str(),1920,1080);
+TCanvas *canvas_deconv_group_17 = new TCanvas(canvas_name_g17.c_str(),canvas_name_g17.c_str(),1920,1080);
+TCanvas *canvas_deconv_group_18 = new TCanvas(canvas_name_g18.c_str(),canvas_name_g18.c_str(),1920,1080);
+ 
+canvas_deconv_group_1->Divide(4,4);//seed 1-16
+canvas_deconv_group_2->Divide(4,4);//seed 17-33
+canvas_deconv_group_3->Divide(4,4);//seed 34-50
+canvas_deconv_group_4->Divide(4,4);//seed 51-67
+canvas_deconv_group_5->Divide(4,4);//seed 68-84
+canvas_deconv_group_6->Divide(4,4);//seed 85-101
+canvas_deconv_group_7->Divide(4,4);//seed 102-118
+canvas_deconv_group_8->Divide(4,4);//seed 119-135
+canvas_deconv_group_9->Divide(4,4);//seed 136-152
+canvas_deconv_group_10->Divide(4,4);//seed 153-169
+canvas_deconv_group_11->Divide(4,4);//seed 170-186
+canvas_deconv_group_12->Divide(4,4);
+canvas_deconv_group_13->Divide(4,4);
+canvas_deconv_group_14->Divide(4,4);
+canvas_deconv_group_15->Divide(4,4);
+canvas_deconv_group_16->Divide(4,4);
+canvas_deconv_group_17->Divide(4,4);
+canvas_deconv_group_18->Divide(4,4);
+
+/* llenamos cada entrada del canvas con un histograma del vector de histogramas*/
+int count_group=0;
+int total_events = 289 - 11; //278
+//~ int total_events = 289;
+for (int i = 0; i<total_events; i++){
+
+		  gPad->Modified();
+		  gPad->Update();
+		  gStyle->SetCanvasPreferGL(kTRUE);
+		  gStyle->SetLineScalePS(1); // Para que guardar correctamente el canvas 
+		  gStyle->SetPalette(kBird, 0, 0.6); // define a transparent palette
+		if(i<16)
+			{
+			 canvas_deconv_group_1->cd(i+1);
+			}
+		if(16<=i & i<32)
+			{
+			 canvas_deconv_group_2->cd((i+1)-16);
+			}
+		if(32<=i & i<48)
+			{
+			 canvas_deconv_group_3->cd((i+1)-32);
+			}
+		if(48<=i & i<64)
+			{
+			 canvas_deconv_group_4->cd((i+1)-48);
+			}
+		if(64<=i & i<80)
+			{
+			 canvas_deconv_group_5->cd((i+1)-64);
+			}
+		if(80<=i & i<96)
+			{
+			 canvas_deconv_group_6->cd((i+1)-80);
+			}
+		if(96<=i & i<112)
+			{
+			 canvas_deconv_group_7->cd((i+1)-96);
+			}
+		if(112<=i & i<128)
+			{
+			 canvas_deconv_group_8->cd((i+1)-112);
+			}
+		if(128<=i & i<144)
+			{
+			 canvas_deconv_group_9->cd((i+1)-128);
+			}
+		if(144<=i & i<160)
+			{
+			 canvas_deconv_group_10->cd((i+1)-144);
+			}								
+		if(160<=i & i<176)
+			{
+			 canvas_deconv_group_11->cd((i+1)-160);
+			}	
+		if(176<=i & i<192)
+			{
+			 canvas_deconv_group_12->cd((i+1)-176);
+			}	
+		if(192<=i & i<208)
+			{
+			 canvas_deconv_group_13->cd((i+1)-192);
+			}	
+		if(208<=i & i<224)
+			{
+			 canvas_deconv_group_14->cd((i+1)-208);
+			}	
+		if(224<=i & i<240)
+			{
+			 canvas_deconv_group_15->cd((i+1)-224);
+			}
+		if(240<=i & i<256)
+			{
+			 canvas_deconv_group_16->cd((i+1)-240);
+			}
+		if(256<=i & i<272)
+			{
+			 canvas_deconv_group_17->cd((i+1)-256);
+			}
+		if(272<=i & i<278)
+			{
+			 canvas_deconv_group_18->cd((i+1)-272);
+			}
+		vec_scater_plot[i]->Draw("A");
+
+		count_group+=i;
+	}
+	
+canvas_deconv_group_1->Draw();
+canvas_deconv_group_2->Draw();
+canvas_deconv_group_3->Draw();
+canvas_deconv_group_4->Draw();
+canvas_deconv_group_5->Draw();
+canvas_deconv_group_6->Draw();
+canvas_deconv_group_7->Draw();
+canvas_deconv_group_8->Draw();
+canvas_deconv_group_9->Draw();
+canvas_deconv_group_10->Draw();
+canvas_deconv_group_11->Draw();
+canvas_deconv_group_12->Draw();
+canvas_deconv_group_13->Draw();
+canvas_deconv_group_14->Draw();
+canvas_deconv_group_15->Draw();
+canvas_deconv_group_16->Draw();
+canvas_deconv_group_17->Draw();
+canvas_deconv_group_18->Draw();
+
+	canvas_deconv_group_1->SaveAs(("./deconv_data_pdf/EM_scatter_plots/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g1+".pdf").c_str());
+	canvas_deconv_group_2->SaveAs(("./deconv_data_pdf/EM_scatter_plots/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g2+".pdf").c_str());
+	canvas_deconv_group_3->SaveAs(("./deconv_data_pdf/EM_scatter_plots/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g3+".pdf").c_str());
+	canvas_deconv_group_4->SaveAs(("./deconv_data_pdf/EM_scatter_plots/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g4+".pdf").c_str());
+	canvas_deconv_group_5->SaveAs(("./deconv_data_pdf/EM_scatter_plots/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g5+".pdf").c_str());
+	canvas_deconv_group_6->SaveAs(("./deconv_data_pdf/EM_scatter_plots/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g6+".pdf").c_str());
+	canvas_deconv_group_7->SaveAs(("./deconv_data_pdf/EM_scatter_plots/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g7+".pdf").c_str());
+	canvas_deconv_group_8->SaveAs(("./deconv_data_pdf/EM_scatter_plots/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g8+".pdf").c_str());
+	canvas_deconv_group_9->SaveAs(("./deconv_data_pdf/EM_scatter_plots/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g9+".pdf").c_str());
+	canvas_deconv_group_10->SaveAs(("./deconv_data_pdf/EM_scatter_plots/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g10+".pdf").c_str());
+	canvas_deconv_group_11->SaveAs(("./deconv_data_pdf/EM_scatter_plots/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g11+".pdf").c_str());
+	canvas_deconv_group_12->SaveAs(("./deconv_data_pdf/EM_scatter_plots/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g12+".pdf").c_str());
+	canvas_deconv_group_13->SaveAs(("./deconv_data_pdf/EM_scatter_plots/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g13+".pdf").c_str());
+	canvas_deconv_group_14->SaveAs(("./deconv_data_pdf/EM_scatter_plots/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g14+".pdf").c_str());
+	canvas_deconv_group_15->SaveAs(("./deconv_data_pdf/EM_scatter_plots/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g15+".pdf").c_str());
+	canvas_deconv_group_16->SaveAs(("./deconv_data_pdf/EM_scatter_plots/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g16+".pdf").c_str());
+	canvas_deconv_group_17->SaveAs(("./deconv_data_pdf/EM_scatter_plots/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g17+".pdf").c_str());
+	canvas_deconv_group_18->SaveAs(("./deconv_data_pdf/EM_scatter_plots/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g18+".pdf").c_str());
+}
+
 /*Funcion que itera la funcion em_loop_seed() sobre el numero de pasos*/
 void em_loop_steps(string campaign,int event,int steps,int time_grid, int ndet){
 
-/*Iteramos sobre el numero de pasos*/
-for(int i=1; i<=steps; i++)
+
+if(steps==0)
 	{
-		cout << "Number of steps: " << i << endl;
-		em_loop_seed(campaign,event,i,time_grid);
-    }
+		em_loop_seed(campaign,event,steps,time_grid);
+	}
+
+else
+	{
+		/*Iteramos sobre el numero de pasos*/
+		for(int i=1; i<=steps; i++)
+			{
+				cout << "Number of steps: " << i << endl;
+				em_loop_seed(campaign,event,i,time_grid);
+			}
+	}
+
 }
 
 /*Funcion que itera la funcion em_loop_steps() sobre el numero de eventos*/
@@ -3379,23 +5386,40 @@ for(int i=1; i<=steps; i++)
 void em_loop_events(string campaign,int steps,int time_grid, int ndet){
 
 /*Iteramos sobre el numero de eventos*/
-for(int i=4; i<=53; i++)
-	{
-		cout << "Number of event: " << i << endl;
-		 em_loop_steps(campaign,i,steps,time_grid,ndet);
-    }
+//~ for(int i=46; i<=53; i++)
+	//~ {
+		//~ cout << "Number of event: " << i << endl;
+		 //~ em_loop_steps(campaign,i,steps,time_grid,ndet);
+    //~ }
     
-for(int i=55; i<=192; i++)
+//~ for(int i=55; i<=192; i++)
+//~ for(int i=111; i<=192; i++)
+	//~ {
+		//~ cout << "Number of event: " << i << endl;
+		 //~ em_loop_steps(campaign,i,steps,time_grid,ndet);
+    //~ }
+
+//~ for(int i=194; i<=289; i++)
+//~ for(int i=284; i<=289; i++)
+	//~ {
+		//~ cout << "Number of event: " << i << endl;
+		 //~ em_loop_steps(campaign,i,steps,time_grid,ndet);
+    //~ }
+
+for(int i=194; i<=194; i++)
 	{
-		cout << "Number of event: " << i << endl;
+		 cout << "Number of event: " << i << endl;
 		 em_loop_steps(campaign,i,steps,time_grid,ndet);
     }
 
-for(int i=194; i<=289; i++)
-	{
-		cout << "Number of event: " << i << endl;
-		 em_loop_steps(campaign,i,steps,time_grid,ndet);
-    }
+/*************************/
+
+//~ for(int i=21; i<=21; i++)
+	//~ {
+		//~ cout << "Number of event: " << i << endl;
+		 //~ em_loop_steps(campaign,i,steps,time_grid,ndet);
+    //~ }
+
 
 }
 
