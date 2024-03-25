@@ -81,7 +81,7 @@
 It then iterates the EM algorithm `deconv_em_output()` (for the given number of steps) over all the seed values. It returns a unique root file for every seed value in which a TTree is stored. The branches of the tree include:
 - `vector<Double_t> deconv_vec`: Deconvoluted flux (resulting from the specified the number of steps of EM method) in its integral representation as a vector.
 	- `int ndet`: The numbers of detectors used in the EM method.
-	- `Intg_total`: The total integral of the spectrum.
+	- `Intg_total`: The total integral of the spectrum.+
 	- `Intg_th`: The integral in the thermal region of the spectrum.
 	- `Intg_ep`: The integral in the epithermal region of the spectrum.
 	- `Intg_fs`: The integral in the fast region of the spectrum.
@@ -116,6 +116,7 @@ It then iterates the EM algorithm `deconv_em_output()` (for the given number of 
 - `vector<Double_t> E_neutrons_count_vector_gauss_MC(string campaign, int event, int crptime)`
 - `vector<double> deconv_em_output_MC(string campaign, int event, int steps, int vwc_seed, int crptime, string flux_type, int norm)`
 - `void em_loop_event_MC(string campaign,int event,int steps,int time_grid, int bin_seed)`
+- `void em_loop_MC_opt(string campaign,int event,int steps,int time_grid, int ndet, int bin_seed, int random_seed)` It is a function that returns the spectrum unfolded with its uncertainty by bin energy of an event, optimizing the steps of the  Monte Carlo Expectation-Maximization (MC EM) algorithm. 
 
 
 ## Other functions
