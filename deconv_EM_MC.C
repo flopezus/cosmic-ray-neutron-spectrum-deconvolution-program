@@ -803,7 +803,8 @@ vector<Double_t> dE; /*Vector de anchos de energia*/
 vector<Double_t> B; /*bins*/ /*matriz de bordes de bins*/
 vector<Double_t> E; /*bins*/ /*matriz de Energias*/
 
-string input_deconv_file= "./deconv_data_rootfile/EM_stop/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+//~ string input_deconv_file= "./deconv_data_rootfile/EM_stop/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+string input_deconv_file= "./deconv_data_rootfile/EM_stop/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_15_ndet_"+str_stream_ndet+".root";
 ROOT::RDataFrame df_event("em_loop_tree", input_deconv_file);
 
 //~ string df_fit_mc_file = "./deconv_mc_data_energy_fitting/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_em_it_9.root";
@@ -811,7 +812,7 @@ ROOT::RDataFrame df_event("em_loop_tree", input_deconv_file);
 //~ string df_fit_mc_file = "./deconv_mc_data_energy_fitting/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_2e04_it.root";
 //~ string df_fit_mc_file = "./deconv_mc_data_energy_fitting/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_2e04_it_filter.root";
 //~ string df_fit_mc_file = "./deconv_mc_data_energy_fitting/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_backup.root";
-string df_fit_mc_file = "./deconv_mc_data_energy_fitting/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+".root";
+string df_fit_mc_file = "./deconv_mc_data_energy_fitting/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+".root";
 ROOT::RDataFrame df_fit_file("fit_loop_tree", df_fit_mc_file);
 
 // string deconv_vec_bin_seed = "deconv_vec["+sstr_stream_bin_seed+"]";
@@ -1204,9 +1205,9 @@ for (int i = 0; i <deconv_mean_vec.size()-1; i++)
 /***********FIXED UNCERTAINTIES VALUES*****************/
 /****Retrieve Values*/
 
-Double_t integral_flux_deconv_MC_total = flux_deconv_integral->Integral(flux_deconv_integral->FindBin(0),flux_deconv_integral->FindBin(7.6*1e+03));
-Double_t integral_flux_deconv_MC_th = flux_deconv_integral->Integral(flux_deconv_integral->FindBin(0),flux_deconv_integral->FindBin(1.9*1e-07));
-cout << "Thermal region: " << "0 MeV" << "(bin: " << flux_deconv_integral->FindBin(1e-09) <<")" << " " << "1.9*1e-07 MeV" << "(bin: "<< flux_deconv_integral->FindBin(1.9*1e-07) <<")" << endl;
+Double_t integral_flux_deconv_MC_total = flux_deconv_integral->Integral(flux_deconv_integral->FindBin(1e-09),flux_deconv_integral->FindBin(7.6*1e+03));
+Double_t integral_flux_deconv_MC_th = flux_deconv_integral->Integral(flux_deconv_integral->FindBin(1e-09),flux_deconv_integral->FindBin(1.9*1e-07));
+cout << "Thermal region: " << "1e-09 MeV" << "(bin: " << flux_deconv_integral->FindBin(1e-09) <<")" << " " << "1.9*1e-07 MeV" << "(bin: "<< flux_deconv_integral->FindBin(1.9*1e-07) <<")" << endl;
 Double_t integral_flux_deconv_MC_ep = flux_deconv_integral->Integral(flux_deconv_integral->FindBin(2.2*1e-07),flux_deconv_integral->FindBin(0.9*1e-02));
 cout << "Epithermal region: " << "2.2*1e-07 MeV" << "(bin: "<< flux_deconv_integral->FindBin(2.2*1e-07)<<")" << " " << "0.9*1e-02 MeV" << "(bin: "<< flux_deconv_integral->FindBin(0.9*1e-02) <<")" << endl;
 Double_t integral_flux_deconv_MC_fs = flux_deconv_integral->Integral(flux_deconv_integral->FindBin(1.1*1e-02),flux_deconv_integral->FindBin(0.89*1e+01));
@@ -1221,7 +1222,7 @@ double error_MC_fs = 0.;
 double error_MC_he = 0.;
 double error_MC_total = 0.;
 
-for(int i=flux_deconv_integral->FindBin(0);i<=flux_deconv_integral->FindBin(1.9*1e-07);i++)
+for(int i=flux_deconv_integral->FindBin(1e-09);i<=flux_deconv_integral->FindBin(1.9*1e-07);i++)
 {
 	double sum_error_partial=0;
 	sum_error_partial = flux_deconv_integral->GetBinError(i+1);
@@ -1760,7 +1761,7 @@ auto  df_fit_file_update =  df_fit_file_new.Define("deconv_vec_MC", [&]() {
 												return error_ratio_fs_he_MC;
 										});
 										
-string fit_event_file_name ="./deconv_mc_data_energy_fitting/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_update.root";
+string fit_event_file_name ="./deconv_mc_data_energy_fitting/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+"_update.root";
 df_fit_file_update.Snapshot("fit_loop_tree_update",fit_event_file_name); /*Save selected columns to disk, in a new TTree treename in file filename*/
 
 
@@ -2159,6 +2160,8 @@ vector<double> err_ratio_he_tot_vec;
 vector<double> err_eta_th_vec;
 vector<double> err_eta_ep_vec;
 vector<double> err_eta_fs_vec;
+vector<vector<double>> deconv_matrix_MC;
+vector<vector<double>> deconv_sigma_Matrix_MC;
 
 for(int i=1;i<=289;i++)
 	{
@@ -2176,6 +2179,9 @@ for(int i=1;i<=289;i++)
 			{
 				cout << "There is no .root file" << endl;
 
+				vector<double> deconv_vec_zero_MC(130,0.0);
+				vector<double> deconv_sigma_vec_zero_MC(130,0.0);
+				
 				intg_total_vec.push_back(0);
 				intg_th_vec.push_back(0);
 				intg_ep_vec.push_back(0);
@@ -2200,6 +2206,9 @@ for(int i=1;i<=289;i++)
                 err_eta_th_vec.push_back(0);
                 err_eta_ep_vec.push_back(0);
                 err_eta_fs_vec.push_back(0);
+                deconv_matrix_MC.push_back(deconv_vec_zero_MC);
+                deconv_sigma_Matrix_MC.push_back(deconv_sigma_vec_zero_MC);
+                
 
 				delete event_file;
 
@@ -2235,6 +2244,9 @@ for(int i=1;i<=289;i++)
 					auto err_eta_ep_value = df_fit_event.Take<double>("err_eta_ep").GetValue();
 					auto err_eta_fs_value = df_fit_event.Take<double>("err_eta_fs").GetValue();
 
+					auto deconv_vec_mc = df_fit_event.Take<vector<double>>("deconv_vec_MC").GetValue();
+					auto deconv_sigma_vec_mc = df_fit_event.Take<vector<double>>("deconv_sigma_vec_MC").GetValue();
+
 
 				
 					intg_total_vec.push_back(intg_total_value[0]);
@@ -2261,6 +2273,10 @@ for(int i=1;i<=289;i++)
                     err_eta_th_vec.push_back(err_eta_th_value[0]);
 					err_eta_ep_vec.push_back(err_eta_ep_value[0]);
 					err_eta_fs_vec.push_back(err_eta_fs_value[0]);
+
+					deconv_matrix_MC.push_back(deconv_vec_mc[0]);
+					deconv_sigma_Matrix_MC.push_back(deconv_sigma_vec_mc[0]);
+					
 
 
 					delete event_file;
@@ -2297,6 +2313,9 @@ int err_ratio_he_tot_id = 0;
 int err_eta_th_id = 0;
 int err_eta_ep_id = 0;
 int err_eta_fs_id = 0;
+
+int deconv_matrix_MC_id = 0;
+int deconv_sigma_Matrix_MC_id = 0;
 
 ROOT::RDataFrame  df_fit_file_new(289);
 auto  df_fit_file_update =  df_fit_file_new.Define("event_id",[&]() {
@@ -2423,6 +2442,16 @@ auto  df_fit_file_update =  df_fit_file_new.Define("event_id",[&]() {
 												auto err_eta_fs_elem = err_eta_fs_vec[err_eta_fs_id];
 												err_eta_fs_id++;
 												return err_eta_fs_elem;
+											})
+											.Define("flux_intg_MC",[&]() {
+												auto deconv_vec_element =  deconv_matrix_MC[deconv_matrix_MC_id];
+												deconv_matrix_MC_id++;
+												return deconv_vec_element;
+											})
+											.Define("err_flux_intg_MC",[&]() {
+												auto err_deconv_vec_element =  deconv_sigma_Matrix_MC[deconv_sigma_Matrix_MC_id];
+												deconv_sigma_Matrix_MC_id++;
+												return err_deconv_vec_element;
 											});
 	
 	
@@ -3006,21 +3035,70 @@ auto canvas_scatter_plot = new TCanvas(("relations_scatter_plot_"+num).c_str(),(
    gStyle->SetPaperSize(20,24);
    gStyle->SetPalette(kTemperatureMap, 0, 0.6); // define a transparent palette
    
-   
+   /**Column type**/
+   auto df_x_vec_colType = df_merge_data_new.GetColumnType(x_arr);
+   auto df_y_vec_colType = df_merge_data_new.GetColumnType(y_arr);
+   auto df_color_vec_colType = df_merge_data_new.GetColumnType(color_arr);
+   auto df_size_vec_colType = df_merge_data_new.GetColumnType(size_arr);
 
-	auto df_x_vec = df_merge_data_new.Take<double>(x_arr).GetValue();
-	auto df_y_vec = df_merge_data_new.Take<double>(y_arr).GetValue();
-	//~ auto df_y_vec = df_merge_data_new.Take<int>(y_arr).GetValue();
-	auto df_color_vec = df_merge_data_new.Take<double>(color_arr).GetValue();
-	auto df_size_vec = df_merge_data_new.Take<double>(size_arr).GetValue();
+	cout << "Colum: " << x_arr << " has type " << df_x_vec_colType << endl;
+	cout << "Colum: " << y_arr << " has type " << df_y_vec_colType << endl;
+	cout << "Colum: " << color_arr << " has type " << df_color_vec_colType << endl;
+	cout << "Colum: " << size_arr << " has type " << df_size_vec_colType << endl;
 
-	//~ vector<double> df_y_vec_double(df_y_vec.begin(), df_y_vec.end());
+	vector<double>  df_y_vec;
+	vector<double>  df_x_vec;
+	vector<double>  df_color_vec;
+	vector<double>  df_size_vec;
+	
+
+	if(df_x_vec_colType=="Double_t")
+		{
+			df_x_vec = df_merge_data_new.Take<double>(x_arr).GetValue();
+		}
+	if(df_x_vec_colType=="Int_t")
+		{
+			auto df_x_vec_int = df_merge_data_new.Take<int>(x_arr).GetValue();
+			vector<double> df_x_vec_double(df_x_vec_int.begin(), df_x_vec_int.end());
+			df_x_vec =  df_x_vec_double;
+		}
+	if(df_y_vec_colType=="Double_t")
+		{
+			df_y_vec = df_merge_data_new.Take<double>(y_arr).GetValue();
+		}
+	if(df_y_vec_colType=="Int_t")
+		{
+			auto df_y_vec_int = df_merge_data_new.Take<int>(y_arr).GetValue();
+			vector<double> df_y_vec_double(df_y_vec_int.begin(), df_y_vec_int.end());
+			df_y_vec =  df_y_vec_double;
+		}
+	if(df_color_vec_colType=="Double_t")
+		{
+			df_color_vec = df_merge_data_new.Take<double>(color_arr).GetValue();
+		}
+	if(df_color_vec_colType=="Int_t")
+		{
+			auto df_color_vec_int = df_merge_data_new.Take<int>(color_arr).GetValue();
+			vector<double> df_color_vec_double(df_color_vec_int.begin(), df_color_vec_int.end());
+			df_color_vec =  df_color_vec_double;
+		}
+	if(df_size_vec_colType=="Double_t")
+		{
+			df_size_vec = df_merge_data_new.Take<double>(size_arr).GetValue();
+		}
+	if(df_size_vec_colType=="Int_t")
+		{
+			auto df_size_vec_int = df_merge_data_new.Take<int>(size_arr).GetValue();
+			vector<double> df_size_vec_double(df_size_vec_int.begin(), df_size_vec_int.end());
+			df_size_vec =  df_size_vec_double;
+		}	
+
+
 		
 	int n_scatter_size =  df_x_vec.size();
 	/*borde de bines como array*/
 	double *x_array=  df_x_vec.data();
 	double *y_array = df_y_vec.data();
-	//~ double *y_array = df_y_vec_double.data();
 	double *color_array = df_color_vec.data(); // color
 	double *size_array = df_size_vec.data(); //size 
 
@@ -3615,118 +3693,27 @@ canvas_ratios_relations_HR_Min->Draw();
 canvas_ratios_relations_HR_Min->SaveAs(("./deconv_data_pdf/EM_scatter_plots/EM_MC_stop_relations/3rd_"+campaign+"_Campaign_relations_ratios_HR_min.pdf").c_str());
 
 /******************Scatter PLOT*******************/
-//~ auto canvas_scatter_plot_1 = new TCanvas("relations_scatter_plot","relations_scatter_plot",1920,1080);
-   //~ gPad->Modified();
-   //~ gPad->Update();
-   //~ gStyle->SetCanvasPreferGL(kTRUE);
-   //~ gStyle->SetLineScalePS(1); // Para que guardar correctamente el canvas 
-   //~ gStyle->SetPalette(kBird, 0, 0.6); // define a transparent palette
-   
 
-	//~ auto df_ratio_intg_th_ep = df_merge_data_new.Take<double>("ratio_intg_th_ep").GetValue();
-	//~ auto df_AirTC = df_merge_data_new.Take<double>("AirTC_Avg").GetValue();
-	//~ auto df_RH_Min = df_merge_data_new.Take<double>("RH_Min").GetValue();
-	//~ auto df_TC_5cm = df_merge_data_new.Take<double>("TC_5cm").GetValue();
-	
-	
+	tscatter_plot("LCO","AirTC_Avg","ratio_intg_th_ep","RH_Min","TC_5cm", "1");
+	tscatter_plot("LCO","AirTC_Avg","ratio_intg_th_fs","RH_Min","TC_5cm", "2");
+	tscatter_plot("LCO","AirTC_Avg","ratio_intg_th_sum_fs_ep","RH_Min","TC_5cm", "3");
+	tscatter_plot("LCO","AirTC_Avg","ratio_intg_fs_ep","RH_Min","TC_5cm", "4");
 
-	//~ int n_scatter_size = df_ratio_intg_th_ep.size();
-	//~ /*borde de bines como array*/
-	//~ double *x_array=  df_AirTC.data();
-	//~ double *y_array = df_ratio_intg_th_ep.data();
-	//~ double *color_array = df_RH_Min.data(); // color
-	//~ double *size_array = df_TC_5cm.data(); //size 
+	tscatter_plot("LCO","RH_Min","ratio_intg_th_ep","AirTC_Avg","TC_5cm", "5");
+	tscatter_plot("LCO","RH_Min","ratio_intg_th_fs","AirTC_Avg","TC_5cm", "6");
+	tscatter_plot("LCO","RH_Min","ratio_intg_th_sum_fs_ep","AirTC_Avg","TC_5cm", "7");
+	tscatter_plot("LCO","RH_Min","ratio_intg_fs_ep","AirTC_Avg","TC_5cm", "8");
 
-   //~ auto scatter = new TScatter(n_scatter_size, x_array, y_array, color_array, size_array);
-   //~ scatter->SetMarkerStyle(20);
-   //~ scatter->SetMaxMarkerSize(5);
-   //~ scatter->SetMinMarkerSize(1);
-   //~ scatter->SetTitle("Scatter Plot 1: AirTC, #Phi_{th}/#Phi_{ep}, AirRH, TC Soil 5cm;#bf{AirTC};#bf{#Phi_{th}/#Phi_{ep}}");
+	tscatter_plot("LCO","AirTC_Avg","RH_Min","ratio_intg_th_ep","TC_5cm", "9");
+	tscatter_plot("LCO","AirTC_Avg","RH_Min","ratio_intg_th_fs","TC_5cm", "10");
+	tscatter_plot("LCO","AirTC_Avg","RH_Min","ratio_intg_th_sum_fs_ep","TC_5cm", "11");
+	tscatter_plot("LCO","AirTC_Avg","RH_Min","ratio_intg_fs_ep","TC_5cm", "12");
 
-   //~ TLatex *color_variable = new TLatex(0.89,0.91,"Color: AirRH ");
-   //~ TLatex *size_variable = new TLatex(0.1,0.91,"#bullet Size: TC Soil 5cm");
+	tscatter_plot("LCO","Intg_th","Intg_ep","RH_Min","AirTC_Avg","13");
 
-	//~ color_variable->SetTextColor(kBlack);
-	//~ size_variable->SetTextColor(kBlack);
-	//~ color_variable->SetNDC(true);
-	//~ size_variable->SetNDC(true);
-	//~ color_variable->SetTextSize(0.02);
-	//~ size_variable->SetTextSize(0.02);
-   
-   //~ scatter->Draw("A");
-   //~ color_variable->Draw();
-   //~ size_variable->Draw();
-   //~ canvas_scatter_plot_1->Draw();
-   
-   //~ canvas_scatter_plot_1->SaveAs(("./deconv_data_pdf/EM_scatter_plots/EM_MC_stop_relations/3rd_"+campaign+"_Campaign_relations.pdf").c_str());
-
-//~ auto canvas_scatter_plot_2 = new TCanvas("relations_scatter_plot_2","relations_scatter_plot_2",1920,1080);
-   //~ gPad->Modified();
-   //~ gPad->Update();
-   //~ gStyle->SetCanvasPreferGL(kTRUE);
-   //~ gStyle->SetLineScalePS(1); // Para que guardar correctamente el canvas 
-   //~ gStyle->SetPalette(kBird, 0, 0.6); // define a transparent palette
-   
-
-	//~ auto df_ratio_intg_th_fs = df_merge_data_new.Take<double>("ratio_intg_th_fs").GetValue();
-	//~ auto df_AirTC_2 = df_merge_data_new.Take<double>("AirTC_Avg").GetValue();
-	//~ auto df_RH_Min_2 = df_merge_data_new.Take<double>("RH_Min").GetValue();
-	//~ auto df_TC_5cm_2 = df_merge_data_new.Take<double>("TC_5cm").GetValue();
-	
-	
-
-	//~ int n_scatter_size_2 = df_ratio_intg_th_fs.size();
-	//~ /*borde de bines como array*/
-	//~ double *x_array_2=  df_AirTC_2.data();
-	//~ double *y_array_2 = df_ratio_intg_th_fs.data();
-	//~ double *color_array_2 = df_RH_Min_2.data(); // color
-	//~ double *size_array_2 = df_TC_5cm_2.data(); //size 
-
-   //~ auto scatter_2 = new TScatter(n_scatter_size_2, x_array_2, y_array_2, color_array_2, size_array_2);
-   //~ scatter_2->SetMarkerStyle(20);
-   //~ scatter_2->SetMaxMarkerSize(5);
-   //~ scatter_2->SetMinMarkerSize(1);
-   //~ scatter_2->SetTitle("Scatter Plot 2: AirTC, #Phi_{th}/#Phi_{fs}, AirRH, TC Soil 5cm;#bf{AirTC};#bf{#Phi_{th}/#Phi_{fs}}");
-
-   //~ TLatex *color_variable_2 = new TLatex(0.89,0.91,"Color: AirRH ");
-   //~ TLatex *size_variable_2 = new TLatex(0.1,0.91,"#bullet Size: TC Soil 5cm");
-
-	//~ color_variable_2->SetTextColor(kBlack);
-	//~ size_variable_2->SetTextColor(kBlack);
-	//~ color_variable_2->SetNDC(true);
-	//~ size_variable_2->SetNDC(true);
-	//~ color_variable_2->SetTextSize(0.02);
-	//~ size_variable_2->SetTextSize(0.02);
-   
-   //~ scatter_2->Draw("A");
-   //~ color_variable_2->Draw();
-   //~ size_variable_2->Draw();
-   //~ canvas_scatter_plot_2->Draw();
-   
-   //~ canvas_scatter_plot_2->SaveAs(("./deconv_data_pdf/EM_scatter_plots/EM_MC_stop_relations/3rd_"+campaign+"_Campaign_relations_2.pdf").c_str());
-
-   // tscatter_plot(campaign, x_arr, y_arr, color_arr, size_arr);
-
-	//~ tscatter_plot("LCO","AirTC_Avg","ratio_intg_th_ep","RH_Min","TC_5cm", "1");
-	//~ tscatter_plot("LCO","AirTC_Avg","ratio_intg_th_fs","RH_Min","TC_5cm", "2");
-	//~ tscatter_plot("LCO","AirTC_Avg","ratio_intg_th_sum_fs_ep","RH_Min","TC_5cm", "3");
-	//~ tscatter_plot("LCO","AirTC_Avg","ratio_intg_fs_ep","RH_Min","TC_5cm", "4");
-
-	//~ tscatter_plot("LCO","RH_Min","ratio_intg_th_ep","AirTC_Avg","TC_5cm", "5");
-	//~ tscatter_plot("LCO","RH_Min","ratio_intg_th_fs","AirTC_Avg","TC_5cm", "6");
-	//~ tscatter_plot("LCO","RH_Min","ratio_intg_th_sum_fs_ep","AirTC_Avg","TC_5cm", "7");
-	//~ tscatter_plot("LCO","RH_Min","ratio_intg_fs_ep","AirTC_Avg","TC_5cm", "8");
-
-	//~ tscatter_plot("LCO","AirTC_Avg","RH_Min","ratio_intg_th_ep","TC_5cm", "9");
-	//~ tscatter_plot("LCO","AirTC_Avg","RH_Min","ratio_intg_th_fs","TC_5cm", "10");
-	//~ tscatter_plot("LCO","AirTC_Avg","RH_Min","ratio_intg_th_sum_fs_ep","TC_5cm", "11");
-	//~ tscatter_plot("LCO","AirTC_Avg","RH_Min","ratio_intg_fs_ep","TC_5cm", "12");
-
-	//~ tscatter_plot("LCO","Intg_th","Intg_ep","RH_Min","AirTC_Avg","13");
-
-	//~ tscatter_plot("LCO","AirTC_Avg","NEUrate_D16","RH_Min","TC_5cm", "14");
-	//~ tscatter_plot("LCO","AirTC_Avg","NEUrate_D12","RH_Min","TC_5cm", "15");
-	//~ tscatter_plot("LCO","AirTC_Avg","NEUrate_D02","RH_Min","TC_5cm", "16");
+	tscatter_plot("LCO","AirTC_Avg","NEUrate_D16","RH_Min","TC_5cm", "14");
+	tscatter_plot("LCO","AirTC_Avg","NEUrate_D12","RH_Min","TC_5cm", "15");
+	tscatter_plot("LCO","AirTC_Avg","NEUrate_D02","RH_Min","TC_5cm", "16");
 	
 	tscatter_plot("LCO","VWC_5cm","ratio_intg_th_sum_fs_ep","RH_Min","TC_5cm","17");
 	tscatter_plot("LCO","VWC_5cm","ratio_intg_th_sum_fs_ep","event_id","TC_5cm","18");
@@ -3734,9 +3721,433 @@ canvas_ratios_relations_HR_Min->SaveAs(("./deconv_data_pdf/EM_scatter_plots/EM_M
 	
 }
 
+vector<double> interpolate_tgraph(string dose){
+
+vector<double> interpolate_coeff_vec;
+
+string input_file = "/home/flopez/LIN/TESIS_DOC/Analysis/binning_E.csv";
+char delimiter = ',';
+char double_type ='D';
+std::unordered_map<std::string, char> msdata_map = {{"E_EXPACS_binning",double_type},{"E_ICRP116_binning", double_type},{"E_ICRP74_binning", double_type},{"E_TRS403_binning", double_type},{"E_ISO_ICRP116", double_type},{"E_ISO_ICRP74", double_type},{"E_ISO_TRS403", double_type},{"H10_ICRP74", double_type},{"H10_TRS403", double_type}}; // mapa de values (nombre de columna)-key (tipo de variable de la columna)
+auto seed_rdf = ROOT::RDF::FromCSV(input_file,true,delimiter,-1, std::move(msdata_map));
+ //~ auto seed_rdf = ROOT::RDF::FromCSV(input_file);
+//~ seed_rdf.Snapshot("binning_E","./binning_E.root"); /*Save selected columns to disk, in a new TTree treename in file filename*/
+
+
+//~ auto energy_icrp_vec = seed_rdf.Take<double>("E_ICRP116_binning").GetValue();
+//~ auto energy_icrp_vec = seed_rdf.Take<double>("E_flux_binning").GetValue();
+
+int bin_cut = 68;
+auto seed_ref_cut = seed_rdf.Range(0, bin_cut, 1); // (a,b,c) pick an event every c entries from a to b, excluding b .
+auto d_cut_entries = seed_ref_cut.Count().GetValue();
+
+int bin_cut_expacs =130;
+auto seed_ref_cut_expacs = seed_rdf.Range(0, bin_cut_expacs, 1); // (a,b,c) pick an event every c entries from a to b, excluding b .
+auto d_cut_entries_expacs = seed_ref_cut_expacs.Count().GetValue();
+
+int bin_cut_icrp_74 = 59;
+auto seed_ref_cut_icrp_74 = seed_rdf.Range(0, bin_cut_icrp_74, 1); // (a,b,c) pick an event every c entries from a to b, excluding b .
+auto d_cut_entries_icrp_74 = seed_ref_cut_icrp_74.Count().GetValue();
+
+auto expacs_binning = seed_ref_cut_expacs.Take<double>("E_EXPACS_binning").GetValue();
+auto icrp116_binning_vec = seed_ref_cut.Take<double>("E_ICRP116_binning").GetValue();
+auto icrp74_binning_vec = seed_ref_cut_icrp_74.Take<double>("E_ICRP74_binning").GetValue();
+auto trs403_binning_vec = seed_ref_cut.Take<double>("E_TRS403_binning").GetValue();
+auto E_iso_icrp116_vec = seed_ref_cut.Take<double>("E_ISO_ICRP116").GetValue();
+auto E_iso_icrp74_vec = seed_ref_cut_icrp_74.Take<double>("E_ISO_ICRP74").GetValue();
+auto E_iso_trs403_vec = seed_ref_cut.Take<double>("E_ISO_TRS403").GetValue();
+auto h10_icrp74_vec = seed_ref_cut_icrp_74.Take<double>("H10_ICRP74").GetValue();
+auto h10_trs403_vec = seed_ref_cut.Take<double>("H10_TRS403").GetValue();
+
+/***EXPACS BINNING***/
+int binnum_expacs = expacs_binning.size()-1;
+cout << "expacs_binning size " <<  expacs_binning.size() << endl;
+cout << "binnum:_expacs " << binnum_expacs  << endl;
+
+/*borde de bines como array*/
+double *bins_expacs = expacs_binning.data();
+double *bins_icrp116 = icrp116_binning_vec.data();
+double *bins_icrp74 = icrp74_binning_vec.data();
+double *bins_trs403 = trs403_binning_vec.data();
+/*******************/
+
+
+
+int binnum = icrp116_binning_vec.size()-1;
+cout << "energy_icrp_vec size " <<  icrp116_binning_vec.size() << endl;
+cout << "binnum: " << binnum  << endl;
+
+/*borde de bines como array*/
+double *bins_iso = E_iso_icrp116_vec.data();
+double *bins_iso_icrp74 = E_iso_icrp74_vec.data();
+double *bins_iso_trs403 = E_iso_trs403_vec.data();
+double *bins_h10_icrp74 = h10_icrp74_vec.data();
+double *bins_h10_trs403 = h10_trs403_vec.data();
+
+int n =  icrp116_binning_vec.size();
+int n_icrp74 =  icrp74_binning_vec.size();
+int n_trs403 =  trs403_binning_vec.size();
+
+
+
+TCanvas* canvas = new TCanvas ("canvas","canvas",1920,1080) ;
+canvas->SetLogx();
+canvas->SetLogy();
+
+auto g = new TGraph(n,bins_icrp116,bins_iso);
+auto g_e_icrp74 = new TGraph(n_icrp74,bins_icrp74,bins_iso_icrp74);
+auto g_e_trs403 = new TGraph(n_trs403,bins_trs403,bins_iso_trs403);
+auto g_h10_icrp74 = new TGraph(n_icrp74,bins_icrp74,bins_h10_icrp74);
+auto g_h10_trs403 = new TGraph(n_trs403,bins_trs403,bins_h10_trs403);
+
+/***Interpolations***/
+
+vector<double> vec_energy_icrp_interpolate;
+vector<double> vec_h10_icrp74_interpolate;
+
+for(int i=0;i<expacs_binning.size();i++)
+	{
+		double interpolate_spline_point = g->Eval(expacs_binning[i],0, "S"); // a TSpline3 object is created using this graph and the interpolated value from the spline is returned. the internally created spline is deleted on return.
+		vec_energy_icrp_interpolate.push_back(interpolate_spline_point);
+	}
+
+for(int i=0;i<expacs_binning.size();i++)
+	{
+		double interpolate_spline_point_2 = g_h10_icrp74->Eval(expacs_binning[i],0, ""); //if spline==0 and option="" a linear interpolation between the two points close to x is computed. If x is outside the graph range, a linear extrapolation is computed.
+		vec_h10_icrp74_interpolate.push_back(interpolate_spline_point_2);
+	}
+
+
+
+double *bins_iso_interpolate = vec_energy_icrp_interpolate.data();
+double *bins_h10_icrp74_interpolate =vec_h10_icrp74_interpolate.data();
+
+int n_interpolate =  expacs_binning.size();
+auto g_interpolate = new TGraph(n_interpolate,bins_expacs,bins_iso_interpolate);
+auto g_h10_icrp74_interpolate = new TGraph(n_interpolate,bins_expacs,bins_h10_icrp74_interpolate);
+
+g_interpolate->SetMarkerColor(kBlue);
+g_interpolate->SetMarkerStyle(4);
+
+g_h10_icrp74_interpolate->SetMarkerColor(kOrange);
+g_h10_icrp74_interpolate->SetMarkerStyle(46);
+
+g_interpolate->SetTitle("Effective dose per fluence conversion coefficients interpolate points for EXPACS binning");
+g_h10_icrp74_interpolate->SetTitle("H*(10) fluence conversion coefficients from ICRP 74 interpolate points for EXPACS binning");
+g->SetTitle("Effective dose per fluence conversion coefficients points from ICRP 116 binning");
+g_e_icrp74->SetTitle("Effective dose per fluence conversion coefficients points from ICRP 74 binning");
+g_e_trs403->SetTitle("Effective dose per fluence conversion coefficients points from TRS 403 binning");
+g_h10_icrp74->SetTitle("Ambient dose equivalent H*(10) per fluence conversion coefficients points from ICRP 74 binning");
+g_h10_trs403->SetTitle("Ambient dose equivalent H*(10) per fluence conversion coefficients points from TRS 403 binning");
+g->GetXaxis()->SetTitleSize(0.03);
+g->GetYaxis()->SetTitleSize(0.03);
+g->GetXaxis()->SetTitleOffset(1.2);
+g->GetYaxis()->SetTitle("#bf{Effective dose per fluence conversion coefficients (pSv cm^{2})}");
+g->GetXaxis()->SetTitle("#bf{Neutron Energy (MeV)}");
+g->SetMarkerColor(kBlue);
+g_e_icrp74->SetMarkerColor(kRed);
+g_e_trs403->SetMarkerColor(kGreen);
+g_h10_icrp74->SetMarkerColor(kOrange);
+g_h10_trs403->SetMarkerColor(kMagenta);
+g->SetMarkerStyle(8);
+g_e_icrp74->SetMarkerStyle(33);
+g_e_trs403->SetMarkerStyle(34);
+g_h10_icrp74->SetMarkerStyle(47);
+g_h10_trs403->SetMarkerStyle(22);
+g->Draw("AP");
+g_interpolate->Draw("P");
+g_h10_icrp74_interpolate->Draw("P");
+g_e_icrp74->Draw("P");
+g_e_trs403->Draw("P");
+g_h10_icrp74->Draw("P");
+g_h10_trs403->Draw("P");
+
+TLegend *legend_c = new TLegend(0.136905,0.720314,0.542208,0.897939);
+legend_c->AddEntry(g_interpolate,"#bf{Interpolate points (TSpline3) for EXPACS binning}","p");
+legend_c->AddEntry(g_h10_icrp74_interpolate,"#bf{H*(10) Interpolate (Linear interpolation) points for EXPACS binning}","p");
+legend_c->AddEntry(g,"#bf{E Conversion coefficients points from ICRP 116 binning}","p");
+legend_c->AddEntry(g_e_icrp74,"#bf{E Conversion coefficients points from ICRP 74 binning}","p");
+legend_c->AddEntry(g_e_trs403,"#bf{E Conversion coefficients points from TRS 403 binning}","p");
+legend_c->AddEntry(g_h10_icrp74,"#bf{H*(10) Conversion coefficients points from ICRP 74 binning & Ferrari1998}","p");
+legend_c->AddEntry(g_h10_trs403,"#bf{H*(10) Conversion coefficients points from TRS 403 binning}","p");
+legend_c->SetTextSize(0.02);
+legend_c->SetMargin(0.1);// acorta la distancia entre el marcador y el texto
+legend_c->Draw();
+
+
+
+if(dose=="E_ICRP116_ISO")
+	{
+		interpolate_coeff_vec = vec_energy_icrp_interpolate;
+	}
+if(dose=="H10_ICRP74")
+	{
+		interpolate_coeff_vec = vec_h10_icrp74_interpolate;
+	}
+
+return interpolate_coeff_vec;
+
+
+}
+
+void dose_coeff_conversion(){
+string input_file = "/home/flopez/LIN/TESIS_DOC/Analysis/binning_E.csv";
+char delimiter = ',';
+char double_type ='D';
+std::unordered_map<std::string, char> msdata_map = {{"E_EXPACS_binning",double_type},{"E_ICRP116_binning", double_type},{"E_ICRP74_binning", double_type},{"E_TRS403_binning", double_type},{"E_ISO_ICRP116", double_type},{"E_ISO_ICRP74", double_type},{"E_ISO_TRS403", double_type},{"H10_ICRP74", double_type},{"H10_TRS403", double_type}}; // mapa de values (nombre de columna)-key (tipo de variable de la columna)
+auto seed_rdf = ROOT::RDF::FromCSV(input_file,true,delimiter,-1, std::move(msdata_map));
+ //~ auto seed_rdf = ROOT::RDF::FromCSV(input_file);
+//~ seed_rdf.Snapshot("binning_E","./binning_E.root"); /*Save selected columns to disk, in a new TTree treename in file filename*/
+
+
+//~ auto energy_icrp_vec = seed_rdf.Take<double>("E_ICRP116_binning").GetValue();
+//~ auto energy_icrp_vec = seed_rdf.Take<double>("E_flux_binning").GetValue();
+
+int bin_cut = 68;
+auto seed_ref_cut = seed_rdf.Range(0, bin_cut, 1); // (a,b,c) pick an event every c entries from a to b, excluding b .
+auto d_cut_entries = seed_ref_cut.Count().GetValue();
+
+int bin_cut_expacs =130;
+auto seed_ref_cut_expacs = seed_rdf.Range(0, bin_cut_expacs, 1); // (a,b,c) pick an event every c entries from a to b, excluding b .
+auto d_cut_entries_expacs = seed_ref_cut_expacs.Count().GetValue();
+
+auto expacs_binning = seed_ref_cut_expacs.Take<double>("E_EXPACS_binning").GetValue();
+auto energy_icrp_vec = seed_ref_cut.Take<double>("E_ICRP116_binning").GetValue();
+auto iso_vec = seed_ref_cut.Take<double>("E_ISO_ICRP116").GetValue();
+
+
+/***EXPACS BINNING***/
+int binnum_expacs = expacs_binning.size()-1;
+cout << "expacs_binning size " <<  expacs_binning.size() << endl;
+cout << "binnum:_expacs " << binnum_expacs  << endl;
+
+/*borde de bines como array*/
+double *bins_expacs = expacs_binning.data();
+/*******************/
+
+
+
+int binnum = energy_icrp_vec.size()-1;
+cout << "energy_icrp_vec size " <<  energy_icrp_vec.size() << endl;
+cout << "binnum: " << binnum  << endl;
+
+/*borde de bines como array*/
+double *bins = energy_icrp_vec.data();
+
+/***Interpolate data***/
+
+vector<double> vec_interpolate_expacs = interpolate_tgraph("E_ICRP116_ISO");
+int binnum_interpolate = vec_interpolate_expacs.size()-1;
+/***********************/
+
+TCanvas *canvas_dose = new TCanvas("dose_conver_coeff","dose_conver_coeff",1920,1080);
+canvas_dose->SetLogx();
+canvas_dose->SetLogy();
+
+/*Histograma de flujo inicial*/
+
+/*Coefficientes en bineado ICRP 116*/
+TH1D* fluence_to_dose_coef_hist = new TH1D("dose_coeff_ICRP_116","dose_coeff_ICRP_116", binnum , bins);
+for (int i = 0; i<energy_icrp_vec.size(); i++)
+	{
+		fluence_to_dose_coef_hist->SetBinContent(i+1,iso_vec[i]);
+	}
+
+/*Coefficientes en bineado ICRP 116*/
+TH1D* fluence_to_dose_coef_hist_interpolate = new TH1D("dose_coeff_interpolate","dose_coeff_interpolate", binnum_interpolate,bins_expacs);
+for (int i = 0; i<vec_interpolate_expacs.size(); i++)
+	{
+		fluence_to_dose_coef_hist_interpolate->SetBinContent(i+1,vec_interpolate_expacs[i]);
+	}
+
+/*Coefficientes en bineado ICRP 116 EN REPRESENTACION DIFERENCIAL*/
+TH1D* fluence_to_dose_coef_hist_diff = new TH1D("dose_coeff_ICRP_116_diff","dose_coeff_ICRP_116_diff", binnum , bins);
+for (int i = 0; i<energy_icrp_vec.size(); i++)
+	{
+		double bin_width = fluence_to_dose_coef_hist->GetXaxis()->GetBinWidth(i+1);
+		fluence_to_dose_coef_hist_diff->SetBinContent(i+1,iso_vec[i]/bin_width);
+	}
+
+
+TH1D* fluence_to_dose_coef_hist_expacs_binning = new TH1D("dose_coeff_expacs_binning","dose_coeff_expacs_binning", binnum_expacs , bins_expacs);
+for (int i = 0; i<expacs_binning.size(); i++)
+	{
+		double intg_value  = fluence_to_dose_coef_hist_diff->Integral(fluence_to_dose_coef_hist_diff->FindBin(expacs_binning[i]+(expacs_binning[i]*1.5e-01)),fluence_to_dose_coef_hist_diff->FindBin(expacs_binning[i+1]-(expacs_binning[i+1]*1.5e-01)));
+		fluence_to_dose_coef_hist_expacs_binning->SetBinContent(i+1,intg_value);
+	}
+
+
+TH1D* fluence_to_dose_coef_hist_expacs_binning_intg = new TH1D("dose_coeff_expacs_binning_intg","dose_coeff_expacs_binning_intg", binnum_expacs , bins_expacs);
+for (int i = 0; i<expacs_binning.size(); i++)
+	{
+		double bin_width = fluence_to_dose_coef_hist_expacs_binning->GetXaxis()->GetBinWidth(i+1);
+		fluence_to_dose_coef_hist_expacs_binning_intg->SetBinContent(i+1,fluence_to_dose_coef_hist_expacs_binning->GetBinContent(i+1)*bin_width);
+	}
+
+
+/***TEST INTEGRALES**/
+//~ double integral_expacs = fluence_to_dose_coef_hist_expacs_binning_intg->Integral(1,10);
+//~ double integral_fluence_to_dose_coef_hist =fluence_to_dose_coef_hist->Integral(1,1);
+
+double integral_expacs = fluence_to_dose_coef_hist_expacs_binning_intg->Integral(1,10);
+double integral_fluence_to_dose_coef_hist =fluence_to_dose_coef_hist->Integral(1,1);
+
+
+cout << "integral_expacs (bin 1, bin 10): " << integral_expacs << endl;
+cout << "integral_fluence_to_dose_coef_hist (bin 1, bin 1): " << integral_fluence_to_dose_coef_hist << endl;
+
+
+fluence_to_dose_coef_hist->SetTitle("#bf{The effective dose conversion coefficients for neutrons in ISO irradiation geometry.} ");
+fluence_to_dose_coef_hist->GetYaxis()->SetTitle("#bf{Effective dose per fluence conversion coefficients (pSv cm^{2})}");
+fluence_to_dose_coef_hist->GetXaxis()->SetTitle("#bf{Neutron Energy (MeV)}");
+fluence_to_dose_coef_hist->Draw("HIST");
+fluence_to_dose_coef_hist_diff->Draw("HIST SAME");
+
+TCanvas *canvas_dose_expacs_binning = new TCanvas("dose_conver_coeff_expacs_binning","dose_conver_coeff_expacs_binning",1920,1080);
+canvas_dose_expacs_binning->SetLogx();
+canvas_dose_expacs_binning->SetLogy();
+fluence_to_dose_coef_hist_expacs_binning->SetLineColor(kBlue);
+fluence_to_dose_coef_hist_diff->SetLineColor(kRed);
+fluence_to_dose_coef_hist_diff->SetLineStyle(9);
+
+fluence_to_dose_coef_hist_expacs_binning->SetTitle("#bf{The effective dose conversion coefficients for neutrons in ISO irradiation geometry for EXPACS binning.} ");
+fluence_to_dose_coef_hist_expacs_binning->GetYaxis()->SetTitle("#bf{Effective dose per fluence conversion coefficients (pSv cm^{2})}");
+fluence_to_dose_coef_hist_expacs_binning->GetXaxis()->SetTitle("#bf{Neutron Energy (MeV)}");
+fluence_to_dose_coef_hist_expacs_binning->Draw("HIST");
+fluence_to_dose_coef_hist_diff->Draw("HIST SAME");
+
+
+TCanvas *canvas_dose_expacs_binning_intg = new TCanvas("dose_conver_coeff_expacs_binning_intg","dose_conver_coeff_expacs_binning_intg",1920,1080);
+canvas_dose_expacs_binning_intg ->SetLogx();
+canvas_dose_expacs_binning_intg ->SetLogy();
+fluence_to_dose_coef_hist_expacs_binning_intg->SetLineColor(kBlue);
+fluence_to_dose_coef_hist->SetLineColor(kRed);
+fluence_to_dose_coef_hist->SetLineStyle(9);
+
+fluence_to_dose_coef_hist_expacs_binning_intg->SetTitle("#bf{The effective dose conversion coefficients for neutrons in ISO irradiation geometry for EXPACS binning - Integral Representation.} ");
+fluence_to_dose_coef_hist_expacs_binning_intg->GetYaxis()->SetTitle("#bf{Effective dose per fluence conversion coefficients (pSv cm^{2})}");
+fluence_to_dose_coef_hist_expacs_binning_intg->GetXaxis()->SetTitle("#bf{Neutron Energy (MeV)}");
+fluence_to_dose_coef_hist_expacs_binning_intg->Draw("HIST");
+fluence_to_dose_coef_hist->Draw("HIST SAME");
+
+
+TCanvas *canvas_dose_expacs_binning_intg_interpolate = new TCanvas("dose_conver_coeff_expacs_binning_intg_interpolate","dose_conver_coeff_expacs_binning_intg_interpolate",1920,1080);
+canvas_dose_expacs_binning_intg_interpolate->SetLogx();
+canvas_dose_expacs_binning_intg_interpolate->SetLogy();
+fluence_to_dose_coef_hist_interpolate->SetLineColor(kBlue);
+fluence_to_dose_coef_hist->SetLineColor(kRed);
+fluence_to_dose_coef_hist->SetLineStyle(9);
+
+fluence_to_dose_coef_hist_interpolate->SetTitle("#bf{The effective dose conversion coefficients for neutrons in ISO irradiation geometry for EXPACS binning - Integral Representation.} ");
+fluence_to_dose_coef_hist_interpolate->GetYaxis()->SetTitle("#bf{Effective dose per fluence conversion coefficients (pSv cm^{2})}");
+fluence_to_dose_coef_hist_interpolate->GetXaxis()->SetTitle("#bf{Neutron Energy (MeV)}");
+fluence_to_dose_coef_hist_interpolate->GetXaxis()->SetTitleSize(0.03);
+fluence_to_dose_coef_hist_interpolate->GetYaxis()->SetTitleSize(0.03);
+fluence_to_dose_coef_hist_interpolate->GetXaxis()->SetTitleOffset(1.2);
+fluence_to_dose_coef_hist_interpolate->Draw("HIST");
+fluence_to_dose_coef_hist->Draw("HIST SAME");
+
+TLegend *legend_c = new TLegend(0.136905,0.720314,0.502706,0.896958);
+legend_c->AddEntry(fluence_to_dose_coef_hist_interpolate,"#bf{Interpolate points for EXPACS binning}","l");
+legend_c->AddEntry(fluence_to_dose_coef_hist,"#bf{Conversion coefficients points from ICRP 116 binning}","l");
+legend_c->SetTextSize(0.02);
+legend_c->Draw();
+
+}
+
+void effective_dose_per_diff_flux_H(string campaign){
+	
+string input_file = "./deconv_mc_data_energy_fitting/3rd_"+campaign+"_data_complete_update.root";
+ROOT::RDataFrame df_data("LCO_data_tree", input_file);
+
+RVec<double> coeff_conver_fluence_to_dose_vec = interpolate_tgraph("E_ICRP116_ISO"); // C(E)
+RVec<double> coeff_conver_fluence_to_ambient_dose_vec = interpolate_tgraph("H10_ICRP74");
+
+auto flux_intg_mc_matrix = df_data.Take<RVec<double>>("flux_intg_MC").GetValue();
+auto err_flux_intg_mc_matrix = df_data.Take<RVec<double>>("err_flux_intg_MC").GetValue();
+
+RVec<RVec<double>>  effective_dose_per_event_matrix;
+RVec<double>  effective_dose_per_event_sum_vector;
+
+RVec<RVec<double>>  ambient_dose_per_event_matrix;
+RVec<double>  ambient_dose_per_event_sum_vector;
+
+for(int i=0; i<flux_intg_mc_matrix.size(); i++)
+	{
+		RVec<double> effective_dose_per_event_vector = flux_intg_mc_matrix[i]*coeff_conver_fluence_to_dose_vec;
+		RVec<double> ambient_dose_per_event_vector = flux_intg_mc_matrix[i]*coeff_conver_fluence_to_ambient_dose_vec;
+		double effective_dose_sum = 0.0;
+		double ambient_dose_sum = 0.0;
+		for(int j=0;j<effective_dose_per_event_vector.size();j++)
+			{
+				//~ double partial_sum =0.0;
+				effective_dose_sum += effective_dose_per_event_vector[j];
+				ambient_dose_sum +=  ambient_dose_per_event_vector[j];
+			}
+		
+
+		effective_dose_per_event_sum_vector.push_back(effective_dose_sum*3.6); // to pass from (pSv/s) to (nSv/h) we multiplied by 3.6
+		effective_dose_per_event_matrix.push_back(effective_dose_per_event_vector);
+
+		ambient_dose_per_event_sum_vector.push_back(ambient_dose_sum*3.6); // to pass from (pSv/s) to (nSv/h) we multiplied by 3.6
+		ambient_dose_per_event_matrix.push_back(ambient_dose_per_event_vector);
+	}
+
+int event_dose_id = 0;
+int event_ambient_dose_id = 0;
+
+auto df_data_update = df_data.Define("effective_dose",[&]() {
+												auto event_dose_elem =effective_dose_per_event_sum_vector[event_dose_id];
+												event_dose_id++;
+												return event_dose_elem;
+							 })
+							 .Define("ambient_dose_equivalent",[&]() {
+												auto event_dose_elem =ambient_dose_per_event_sum_vector[event_ambient_dose_id];
+												event_ambient_dose_id++;
+												return event_dose_elem;
+							 });
+
+	
+auto effec_dose_hist = df_data_update.GraphAsymmErrors("event_id","effective_dose","err_event","err_event","err_event","err_event");
+auto ambient_dose_hist = df_data_update.GraphAsymmErrors("event_id","ambient_dose_equivalent","err_event","err_event","err_event","err_event");
+
+auto *effec_dose_hist_clone = (TGraphAsymmErrors*)effec_dose_hist->Clone("effective_dose");
+auto *ambient_dose_hist_clone = (TGraphAsymmErrors*)ambient_dose_hist->Clone("ambient_dose_equivalent");
+
+TCanvas* canvas = new TCanvas ("canvas","canvas",1920,1080) ;
+
+effec_dose_hist_clone->SetLineColor(kBlue);
+effec_dose_hist_clone->SetMarkerStyle(20);
+effec_dose_hist_clone->SetLineWidth(2);
+effec_dose_hist_clone->SetMarkerColor(kBlue);
+
+ambient_dose_hist_clone->SetLineColor(kOrange);
+ambient_dose_hist_clone->SetMarkerStyle(47);
+ambient_dose_hist_clone->SetLineWidth(2);
+ambient_dose_hist_clone->SetMarkerColor(kOrange);
+
+ambient_dose_hist_clone->SetTitle("#bf{H*(10) Ambient dose equivalent per event @LCO Campaign (ICRP 74 & Ferrari1998 Conv Coeff)}"); // pag 131
+effec_dose_hist_clone->SetTitle("#bf{Effective dose per event @LCO Campaign (ICRP 116 ISO Conv Coeff)}"); // pag 131
+effec_dose_hist_clone->GetYaxis()->SetTitle("#bf{Effective dose (nSv/h) }");
+effec_dose_hist_clone->GetXaxis()->SetTitle("#bf{Event}");
+
+
+effec_dose_hist_clone->DrawClone("AP");
+ambient_dose_hist_clone->DrawClone("P");
+
+TLegend *legend_c = new TLegend(0.136905,0.720314,0.502706,0.896958);
+legend_c->AddEntry(ambient_dose_hist_clone,"#bf{E Ambient dose equivalent per event @LCO Campaign (ICRP 74 & Ferrari1998 Conv Coeff)}","p");
+legend_c->AddEntry(effec_dose_hist_clone,"#bf{Effective dose per event @LCO Campaign (ICRP 116 ISO Conv Coeff)}","p");
+legend_c->SetTextSize(0.02);
+legend_c->SetMargin(0.1);// acorta la distancia entre el marcador y el texto
+legend_c->Draw();
+
+}
+
+
 void routine_data_merge_em_mc(){
-//~ integral_data_merge("LCO");
-//~ plot_data_merge("LCO",15,11);
+integral_data_merge("LCO");
+plot_data_merge("LCO",15,11);
 relations_integral_local_variables_merge("LCO");
 plot_relations_integral_local_variables_merge("LCO");
 
