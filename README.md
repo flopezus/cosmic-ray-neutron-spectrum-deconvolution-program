@@ -1,13 +1,19 @@
 # Cosmic Ray Neutron Spectra Deconvolutions
-## Root Macro 
+## Root Macros
     
   `deconv_CRNS.C` is a `ROOT` macro written using the paradigm of functional programming. The main objective of this macro is to obtain a  
-  neutron spectrum using several deconvolution or unfolding algorithms, which use as input:  
+  neutron spectrum using several deconvolution or unfolding algorithms, which use as input:
     
   -Experimental counting rate data from the CEFNEN-Spectrometer based on the Bonner's Sphere Method.  
   -Simulated Response Functions of the CEFNEN-Spectrometer using Geant4 code.  
-  -Calculated neutron spectrum at ground level using EXPACS/PARMA code as the seed of the unfolding algorithms.  
-## Implemented Functions
+  -Calculated neutron spectrum at ground level using EXPACS/PARMA code as the seed of the unfolding algorithms.
+
+  `deconv_EM_MC.C` is a `ROOT` macro written using the paradigm of functional programming. The main objective of this macro is to fit the data resulting from expectation maximization Monte Carlo algorithm 
+  from the `deconv_CRNS.C` macro and plot the neutron spectra with its uncertainties. Also, functions are implemented to study the correlations between integral neutron flux in different energy regions with local variables using scatter plot of 4 variables from the ROOT class  `TScatter`. Additionally,
+  functions are implemented to calculate the H*(10) Ambient Dose Equivalent and Effective Dose per event using the fluence-to-dose conversion coefficients from ICRP 116, ICRP 74, and Ferrari1998."
+ 
+  
+## Implemented Functions in `deconv_CRNS.C`
     
 1. For the input data:
 	- `vector<vector<double_t> > Response_function_matrix_lin_spec_2023()` is a function that takes as input the simulated response functions
@@ -131,6 +137,24 @@ It then iterates the EM algorithm `deconv_em_output()` (for the given number of 
 
 ## USAGE
 
+### Consolidation of data from DAQ system of Cosmic Ray Neutron Spectrometer-CEFNEN and Portable Weather Station (PWS) & Visualization of Pulse High Neutron Spectra of He-3 detectors for calibration: 
+
+For this we use the macro `DataFrameCRNSAnalysis.cpp`
+
+- For instance, to process LCO data, we use the function `routine_LCO()`. The output of this function is a root file named `3rd_"+campaign+"_data_"+str_stream_timegrid+"_complete.root`, which contains a tree object named `CRNS_MSDATA` with the data from the spectrometer and PWS in a specified time grid.
+	- In this function, the following functions are executed in sequential order:"
+	- `cr_merge_files(60)` //15 min per bin
+	- `ordenar_por_tiempo("CRNS_Data_3rd_LCO_Campaign_merged.root")`
+	- `CRNS_Data_3rd_LCO_Campaign_merged_sorted.root")`
+	- `indexing_crns_data(60,"CRNS_Data_3rd_LCO_Campaign_merged_sorted.root")`
+	- `CRNSData_indexed_60min_3rd_LCO.root")` // grilla temporal de 15 min para los datos de los detectores
+	- `csv_to_tree()`
+	- `msdata_cut_LCO()`
+	- `indexing_ms_data(60,"MSData_3rd_LCO_Campaign.root","MSData_3rd_LCO_Campaign_indexed_60min.root" )` // grilla temporal de 15 min para los datos de la estacion meteorologica
+	- `merged_data("LCO", "MSData_3rd_LCO_Campaign_indexed_60min.root","CRNSData_indexed_60min_3rd_LCO.root")`
+	
+### EM 
+
 To iterate one event over all seeds with different steps in the EM algoithm, we execute, for instance:
 Event: 210, Steps: from 1 to 20, Time grid: 15, Detectors used: 11.
 
@@ -156,4 +180,36 @@ To loop the EM algorithm using steps from 1 to 20, in a time grid of 15 min, usi
 
 To stop EM algorithm in the stop criteria (chi_square<ndet), we use:
 `em_loop_events("LCO",0,15,11)`
+
+## Expectation Maximization Monte Carlo (EM MC)
+
+For a specific event: Campaign: LCO, Event: 1, EM with maximum specific steps or using stop criteria: (1) & (0) respectively, Time grid: 60 min, Numbers of detectors: 11, Seed: 0 (if random seed is set to 1, this parameter is not used), Random seed: (1) activated, (0) desactivated.  
+
+- `em_loop_MC_opt("LCO",1,0,60,11,0,1)`
+
+To loop over events range we use:
+
+For a specific event range: Campaign: LCO, Event range: 1-5 (both first and end included), EM with maximum specific steps or using stop criteria: (1) & (0) respectively, Time grid: 60 min, Numbers of detectors: 11, Seed: 0 (if random seed is set to 1, this parameter is not used), Random seed: (1) activated, (0) desactivated.  
+
+- `em_loop_events_MC_opt("LCO",1,5,0,60,11,0,1)`
+
+## Implemented Functions in `deconv_EM_MC.C`
+
+## Fitting functions
+
+- `vector<double> em_mc_vec(string campaign, int event, int timegrid, int step_filter, int bin_energy)` is a function that takes as input a `em_loop_MC_opt()` output file and perfoms
+	a Gaussian fit over an event from specfic campaign given a time gride. It also filters the maximun steps in the EM MC for a specifi energy bin.
+- `void em_mc_graph(string campaign,int event, int timegrid, int step_filter, int bin_energy)` is the graphical output implementation of the `em_mc_vec()` function.
+- `void fit_loop_bin_energy(string campaign, int event, int timegrid, int step_filter)` is a function that loops over the energy bin in the previous functions `em_mc_vec()` for a given event.
+- `void loop_fit_over_events_range(int event_inf, int event_sup, int timegrid)`
+- `void loop_fit_over_events(int timegrid)`
+
+## Plotting functions
+- `void plot_deconv_spectrum_with_error(string campaign, int event, int steps, int time_grid, int ndet, string flux_representation, int bin_seed)` if a function that plot the neutron spectrum and its uncertainty for a specific event event.
+
+## USAGE
+
+Then, the resulting data from `deconv_CRNS.C` macro, for instance, a file `~/Analysis/deconv/deconv_data_rootfile/EM_MC_stop/EM_unfolding_loop_campaign_LCO_event_91_steps_0_timegrid_15_ndet_11_MC_stop.root` need to be fitting to obtain the flux value within an energy bin with its corresponding uncertainty. For this we use the functions of the macro `deconv_EM_MC.C`:
+
+- 
 
