@@ -142,18 +142,18 @@ It then iterates the EM algorithm `deconv_em_output()` (for the given number of 
 For this we use the macro `DataFrameCRNSAnalysis.cpp`
 
 - For instance, to process LCO data, we use the function `routine_LCO()`. The output of this function is a root file named `3rd_"+campaign+"_data_"+str_stream_timegrid+"_complete.root`, which contains a tree object named `CRNS_MSDATA` with the data from the spectrometer and PWS in a specified time grid.
-	- In this function, the following functions are executed in sequential order:"
-	- `cr_merge_files(60)` //15 min per bin
+	- In this function, the following functions are executed in sequential order:
+	- `cr_merge_files(60)` 60 min per bin
 	- `ordenar_por_tiempo("CRNS_Data_3rd_LCO_Campaign_merged.root")`
 	- `CRNS_Data_3rd_LCO_Campaign_merged_sorted.root")`
 	- `indexing_crns_data(60,"CRNS_Data_3rd_LCO_Campaign_merged_sorted.root")`
-	- `CRNSData_indexed_60min_3rd_LCO.root")` // grilla temporal de 15 min para los datos de los detectores
+	- `CRNSData_indexed_60min_3rd_LCO.root")` time grid of 15 min for the data from CRNS
 	- `csv_to_tree()`
 	- `msdata_cut_LCO()`
-	- `indexing_ms_data(60,"MSData_3rd_LCO_Campaign.root","MSData_3rd_LCO_Campaign_indexed_60min.root" )` // grilla temporal de 15 min para los datos de la estacion meteorologica
+	- `indexing_ms_data(60,"MSData_3rd_LCO_Campaign.root","MSData_3rd_LCO_Campaign_indexed_60min.root")` time gride of 15 min for the data from PWS
 	- `merged_data("LCO", "MSData_3rd_LCO_Campaign_indexed_60min.root","CRNSData_indexed_60min_3rd_LCO.root")`
 	
-### EM 
+### Expectation Maximization EM 
 
 To iterate one event over all seeds with different steps in the EM algoithm, we execute, for instance:
 Event: 210, Steps: from 1 to 20, Time grid: 15, Detectors used: 11.
@@ -183,13 +183,13 @@ To stop EM algorithm in the stop criteria (chi_square<ndet), we use:
 
 ## Expectation Maximization Monte Carlo (EM MC)
 
-For a specific event: Campaign: LCO, Event: 1, EM with maximum specific steps or using stop criteria: (1) & (0) respectively, Time grid: 60 min, Numbers of detectors: 11, Seed: 0 (if random seed is set to 1, this parameter is not used), Random seed: (1) activated, (0) desactivated.  
+For a specific event: Campaign: LCO, Event: 1, Steps: number of maximun steps (>0) or stop criteria (0), Time grid: 60 min, Numbers of detectors: 11, Seed: 0 (if random seed is set to 1, this parameter is not used), Random seed: (1) activated, (0) desactivated.  
 
 - `em_loop_MC_opt("LCO",1,0,60,11,0,1)`
 
 To loop over events range we use:
 
-For a specific event range: Campaign: LCO, Event range: 1-5 (both first and end included), EM with maximum specific steps or using stop criteria: (1) & (0) respectively, Time grid: 60 min, Numbers of detectors: 11, Seed: 0 (if random seed is set to 1, this parameter is not used), Random seed: (1) activated, (0) desactivated.  
+For a specific event range: Campaign: LCO, Event range: 1-5 (both first and end included), Steps: number of maximun steps (>0) or stop criteria (0), Time grid: 60 min, Numbers of detectors: 11, Seed: 0 (if random seed is set to 1, this parameter is not used), Random seed: (1) activated, (0) desactivated.  
 
 - `em_loop_events_MC_opt("LCO",1,5,0,60,11,0,1)`
 
@@ -205,11 +205,48 @@ For a specific event range: Campaign: LCO, Event range: 1-5 (both first and end 
 - `void loop_fit_over_events(int timegrid)`
 
 ## Plotting functions
-- `void plot_deconv_spectrum_with_error(string campaign, int event, int steps, int time_grid, int ndet, string flux_representation, int bin_seed)` if a function that plot the neutron spectrum and its uncertainty for a specific event event.
+
+- `void tscatter_plot(string campaign, string x_arr, string y_arr, string color_arr, string size_arr, string num)` is a template function that returns a `TScatter` plot for integral neutron flux data and local variables data.
+
+### Spectra plots:
+
+- `void plot_deconv_spectrum_with_error(string campaign, int event, int steps, int time_grid, int ndet, string flux_representation, int bin_seed)` is a function that plot the neutron spectrum and its uncertainty for a specific event additionally update the file input:
+	- Input file:
+		- ROOT file: `EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root"` from `em_loop_seed()` function.
+		- `EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+".root"` from `em_loop_MC_opt()` function.		
+	- Ouput file:
+		- pdf file: `EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error.pdf"`
+		- pdf file: `EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error_compare.pdf"`
+		- input ROOT file update: `EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+"_update.root"` with a tree object named `fit_loop_tree_update` containing integral neutron flux in four energy regions: thermal, epithermal, fast and high-energy regions and ratios between them, along with their corresponding uncertainties. 
+- `void loop_plot_deconv_over_events(string campaign, int event_inf, int event_sup, int steps, int time_grid, int ndet, string flux_representation, int bin_seed)` is a function that loops over events in the `plot_deconv_spectrum_with_error()` function
+- `routine_final_plot_lco_15min()` is function that returns all spectra plot from LCO campaign given a 15 minutes timegrid
+
+
+### Data Merge for correlations studies & Scatter Plotting:
+
+- `void routine_data_merge_em_mc()` is a function that executed sequentially functions that merge the necessary data to plot correlations:
+	- `integral_data_merge("LCO")` is a function that merge all files `EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event_i+"_update.root` generates by `plot_deconv_spectrum_with_error()` in one root file.
+		- Input file: Several `EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event_i+"_update.root`
+		- Ouput file: `EM_MC_fit_parameters_campaign_"+campaign+"_update_merge.root"` with a tree object named `EM_MC_tree`
+	- `plot_data_merge("LCO",15,11)`
+		- Input file:
+		- Output files: 3 pdf files and 1 ROOT file
+			- `EM_integrales_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".pdf"`
+			- `EM_ratio_integrales_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".pdf"`
+			- `EM_eta_integrales_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".pdf"`
+			- `EM_MC_fit_parameters_campaign_"+campaign+"_update_merge_02.root` added branches with ratios and uncertainties between integral thermal flux and epithermal, fast and high-energy regions and sum of them.
+	- `relations_integral_local_variables_merge("LCO")` is a function that merge data laterally from `Counting_rates/LCO_15min/3rd_LCO_data_complete_15min.root` with `EM_MC_fit_parameters_campaign_"+campaign+"_update_merge_02.root`
+			- Ouput file: `3rd_"+campaign+"_data_complete_update.root` with a tree object named `LCO_data_tree`
+	- `plot_relations_integral_local_variables_merge("LCO")` is a function that returns `TGraphAsymmErrors` and `TScater` plots for integral neutron fluxes and local variables. Use `tscatter_plot()` function.
+			- Outputs files: pdf's
 
 ## USAGE
 
-Then, the resulting data from `deconv_CRNS.C` macro, for instance, a file `~/Analysis/deconv/deconv_data_rootfile/EM_MC_stop/EM_unfolding_loop_campaign_LCO_event_91_steps_0_timegrid_15_ndet_11_MC_stop.root` need to be fitting to obtain the flux value within an energy bin with its corresponding uncertainty. For this we use the functions of the macro `deconv_EM_MC.C`:
+The resulting data from `deconv_CRNS.C` macro, for instance, a file `~/Analysis/deconv/deconv_data_rootfile/EM_MC_stop/EM_unfolding_loop_campaign_LCO_event_91_steps_0_timegrid_15_ndet_11_MC_stop.root` need to be fitting to obtain the flux value within an energy bin with its corresponding uncertainty. For this we use the functions of the macro `deconv_EM_MC.C`:
 
-- 
+For LCO campaign using a 15 minutes time grid:
+
+- `void loop_fit_over_events(15)`
+- `routine_final_plot_lco_15min()`
+- `routine_data_merge_em_mc()` 
 
