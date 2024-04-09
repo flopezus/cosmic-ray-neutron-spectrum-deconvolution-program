@@ -3243,10 +3243,10 @@ string str_stream_ndet = stream_ndet.str();
 string df_file_name;
 if(steps==0)
 	{
-		df_file_name = "./deconv_data_rootfile/EM_stop/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_0"+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+		df_file_name = "./deconv_data_rootfile/EM_stop/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_0"+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 	}
 else{	
-		df_file_name = "./deconv_data_rootfile/EM/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+		df_file_name = "./deconv_data_rootfile/EM/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 	}
 
 df_seed_loop.Snapshot("em_loop_tree",df_file_name); /*Save selected columns to disk, in a new TTree treename in file filename*/
@@ -3578,10 +3578,10 @@ string str_stream_ndet = stream_ndet.str();
 string df_file_name;
 if(steps==0)
 	{
-		df_file_name = "./deconv_data_rootfile/EM_MC_stop/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_0"+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_MC_stop.root";
+		df_file_name = "./deconv_data_rootfile/EM_MC_stop/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_0"+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_MC_stop.root";
 	}
 else{	
-		df_file_name = "./deconv_data_rootfile/EM_MC/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_MC.root";
+		df_file_name = "./deconv_data_rootfile/EM_MC/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_MC.root";
 	}
 
 df_seed_loop.Snapshot("em_loop_tree",df_file_name); /*Save selected columns to disk, in a new TTree treename in file filename*/
@@ -3809,10 +3809,10 @@ void em_loop_MC_opt(string campaign,int event,int steps,int time_grid, int ndet,
 	string df_file_name;
 	if(steps==0)
 		{
-			df_file_name = "./deconv_data_rootfile/EM_MC_stop/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_0"+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_MC_stop.root";
+			df_file_name = "./deconv_data_rootfile/EM_MC_stop/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_0"+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_MC_stop.root";
 		}
 	else{	
-			df_file_name = "./deconv_data_rootfile/EM_MC/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_MC.root";
+			df_file_name = "./deconv_data_rootfile/EM_MC/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_MC.root";
 		}
 
 	df_seed_loop.Snapshot("em_loop_tree",df_file_name); /*Save selected columns to disk, in a new TTree treename in file filename*/
@@ -3904,13 +3904,13 @@ string input_complete_file;
 
 if(steps==0)
 {
-	input_complete_file= "./deconv_data_rootfile/EM_stop/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+	input_complete_file= "./deconv_data_rootfile/EM_stop/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 	//~ ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
 }
 
 else
 {
-	input_complete_file= "./deconv_data_rootfile/EM/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+	input_complete_file= "./deconv_data_rootfile/EM/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 	//~ ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
 }
 
@@ -4054,7 +4054,7 @@ for(int i = 1; i<=steps;i++){
 
 	vector<double> vec_data_step;
 
-	string input_complete_file= "./deconv_data_rootfile/EM/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps_new+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+	string input_complete_file= "./deconv_data_rootfile/EM/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps_new+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 	ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
 
 	auto df_flux_deconv_ndet = df_seed_loop_step.Take<int>("ndet").GetValue();
@@ -4340,8 +4340,8 @@ for (int i = 0; i < hist_deconv_flux_vec.size(); i++){
 /*Mostramos el canvas y lo guardamos*/
 
 canvas_deconv->Draw();
-canvas_deconv->SaveAs(("./deconv_data_pdf/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_maxsteps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_binseed_"+str_stream_seed+".pdf").c_str());
-canvas_deconv->SaveAs(("./deconv_data_pdf/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_maxsteps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_binseed_"+str_stream_seed+".eps").c_str());
+canvas_deconv->SaveAs(("./deconv_data_pdf/deconv_flux_multiplot/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_maxsteps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_binseed_"+str_stream_seed+".pdf").c_str());
+//~ canvas_deconv->SaveAs(("./deconv_data_pdf/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_maxsteps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_binseed_"+str_stream_seed+".eps").c_str());
 
 
 //~ delete canvas_deconv;
@@ -4404,7 +4404,7 @@ for(int i=0;i<hist_deconv_flux_vec.size();i++){
 
 vector< vector<double>> vec_data_matrix;
 
-string input_complete_file= "./deconv_data_rootfile/EM_stop/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+string input_complete_file= "./deconv_data_rootfile/EM_stop/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
 
 for(int i = 1; i<=max_seed;i++){
@@ -4915,13 +4915,13 @@ string str_stream_ndet = stream_ndet.str();
 string input_complete_file;
 if(steps==0)
 {
-	input_complete_file= "./deconv_data_rootfile/EM_stop/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+	input_complete_file= "./deconv_data_rootfile/EM_stop/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 	//~ ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
 }
 
 else
 {
-	input_complete_file= "./deconv_data_rootfile/EM/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+	input_complete_file= "./deconv_data_rootfile/EM/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 	//~ ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
 }
 
@@ -4980,13 +4980,13 @@ string str_stream_ndet = stream_ndet.str();
 string input_complete_file;
 if(steps==0)
 {
-	input_complete_file= "./deconv_data_rootfile/EM_stop/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+	input_complete_file= "./deconv_data_rootfile/EM_stop/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 	//~ ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
 }
 
 else
 {
-	input_complete_file= "./deconv_data_rootfile/EM/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+	input_complete_file= "./deconv_data_rootfile/EM/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 	//~ ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
 }
 
@@ -5045,13 +5045,13 @@ string str_stream_ndet = stream_ndet.str();
 string input_complete_file;
 if(steps==0)
 {
-	input_complete_file= "./deconv_data_rootfile/EM_stop/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+	input_complete_file= "./deconv_data_rootfile/EM_stop/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 	//~ ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
 }
 
 else
 {
-	input_complete_file= "./deconv_data_rootfile/EM/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+	input_complete_file= "./deconv_data_rootfile/EM/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 	//~ ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
 }
 
@@ -5108,13 +5108,13 @@ string str_stream_ndet = stream_ndet.str();
 string input_complete_file;
 if(steps==0)
 {
-	input_complete_file= "./deconv_data_rootfile/EM_stop/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+	input_complete_file= "./deconv_data_rootfile/EM_stop/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 	//~ ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
 }
 
 else
 {
-	input_complete_file= "./deconv_data_rootfile/EM/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+	input_complete_file= "./deconv_data_rootfile/EM/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 	//~ ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
 }
 
@@ -5172,13 +5172,13 @@ string str_stream_ndet = stream_ndet.str();
 string input_complete_file;
 if(steps==0)
 {
-	input_complete_file= "./deconv_data_rootfile/EM_stop/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+	input_complete_file= "./deconv_data_rootfile/EM_stop/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 	//~ ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
 }
 
 else
 {
-	input_complete_file= "./deconv_data_rootfile/EM/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+	input_complete_file= "./deconv_data_rootfile/EM/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 	//~ ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
 }
 
@@ -5236,13 +5236,13 @@ string str_stream_ndet = stream_ndet.str();
 string input_complete_file;
 if(steps==0)
 {
-	input_complete_file= "./deconv_data_rootfile/EM_stop/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+	input_complete_file= "./deconv_data_rootfile/EM_stop/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 	//~ ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
 }
 
 else
 {
-	input_complete_file= "./deconv_data_rootfile/EM/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+	input_complete_file= "./deconv_data_rootfile/EM/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 	//~ ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
 }
 
@@ -5478,7 +5478,7 @@ void scatter_plot_4var(string campaign, int event, int steps, int timegrid, int 
    gStyle->SetPalette(kBird, 0, 0.6); // define a transparent palette
    
 
-	string input_complete_file= "./deconv_data_rootfile/EM_stop/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+	string input_complete_file= "./deconv_data_rootfile/EM_stop/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 	ROOT::RDataFrame df_event("em_loop_tree", input_complete_file);
 
 	auto df_event_vwc = df_event.Take<double>("seed_bin_edgeds").GetValue();
@@ -5500,7 +5500,7 @@ void scatter_plot_4var(string campaign, int event, int steps, int timegrid, int 
    scatter->SetTitle(scatter_plot_title.c_str());
    scatter->Draw("A");
 
-   canvas->SaveAs(("./deconv_data_pdf/EM_scatter_plots/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_scatterplot.pdf").c_str());
+   canvas->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_scatterplot.pdf").c_str());
 
 
 }
@@ -5518,7 +5518,7 @@ TScatter* scatter_plot_4var_tscatter(string campaign, int event, int steps, int 
 	string str_stream_timegrid = stream_timegrid.str();
 
 
-	string input_complete_file= "./deconv_data_rootfile/EM_stop/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+	string input_complete_file= "./deconv_data_rootfile/EM_stop/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 	ROOT::RDataFrame df_event("em_loop_tree", input_complete_file);
 
 	auto df_event_vwc = df_event.Take<double>("seed_bin_edgeds").GetValue();
@@ -5565,7 +5565,7 @@ void scatter_plot_4var_MC(string campaign, int event, int steps, int timegrid, i
    gStyle->SetPalette(kBird, 0, 0.6); // define a transparent palette
    
 
-	string input_complete_file= "./deconv_data_rootfile/EM_MC_stop/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_MC_stop.root";
+	string input_complete_file= "./deconv_data_rootfile/EM_MC_stop/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_MC_stop.root";
 	ROOT::RDataFrame df_event("em_loop_tree", input_complete_file);
 
 	
@@ -5616,7 +5616,7 @@ void scatter_plot_4var_MC(string campaign, int event, int steps, int timegrid, i
    scatter->SetTitle(scatter_plot_title.c_str());
    scatter->Draw("A");
 
-   canvas->SaveAs(("./deconv_data_pdf/EM_scatter_plots/MC/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_scatterplot_MC_"+str_stream_mc_it+"_it.pdf").c_str());
+   canvas->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/MC/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_scatterplot_MC_"+str_stream_mc_it+"_it.pdf").c_str());
 
 
 }
@@ -5848,24 +5848,24 @@ canvas_deconv_group_16->Draw();
 canvas_deconv_group_17->Draw();
 canvas_deconv_group_18->Draw();
 
-	canvas_deconv_group_1->SaveAs(("./deconv_data_pdf/EM_scatter_plots/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g1+".pdf").c_str());
-	canvas_deconv_group_2->SaveAs(("./deconv_data_pdf/EM_scatter_plots/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g2+".pdf").c_str());
-	canvas_deconv_group_3->SaveAs(("./deconv_data_pdf/EM_scatter_plots/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g3+".pdf").c_str());
-	canvas_deconv_group_4->SaveAs(("./deconv_data_pdf/EM_scatter_plots/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g4+".pdf").c_str());
-	canvas_deconv_group_5->SaveAs(("./deconv_data_pdf/EM_scatter_plots/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g5+".pdf").c_str());
-	canvas_deconv_group_6->SaveAs(("./deconv_data_pdf/EM_scatter_plots/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g6+".pdf").c_str());
-	canvas_deconv_group_7->SaveAs(("./deconv_data_pdf/EM_scatter_plots/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g7+".pdf").c_str());
-	canvas_deconv_group_8->SaveAs(("./deconv_data_pdf/EM_scatter_plots/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g8+".pdf").c_str());
-	canvas_deconv_group_9->SaveAs(("./deconv_data_pdf/EM_scatter_plots/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g9+".pdf").c_str());
-	canvas_deconv_group_10->SaveAs(("./deconv_data_pdf/EM_scatter_plots/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g10+".pdf").c_str());
-	canvas_deconv_group_11->SaveAs(("./deconv_data_pdf/EM_scatter_plots/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g11+".pdf").c_str());
-	canvas_deconv_group_12->SaveAs(("./deconv_data_pdf/EM_scatter_plots/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g12+".pdf").c_str());
-	canvas_deconv_group_13->SaveAs(("./deconv_data_pdf/EM_scatter_plots/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g13+".pdf").c_str());
-	canvas_deconv_group_14->SaveAs(("./deconv_data_pdf/EM_scatter_plots/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g14+".pdf").c_str());
-	canvas_deconv_group_15->SaveAs(("./deconv_data_pdf/EM_scatter_plots/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g15+".pdf").c_str());
-	canvas_deconv_group_16->SaveAs(("./deconv_data_pdf/EM_scatter_plots/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g16+".pdf").c_str());
-	canvas_deconv_group_17->SaveAs(("./deconv_data_pdf/EM_scatter_plots/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g17+".pdf").c_str());
-	canvas_deconv_group_18->SaveAs(("./deconv_data_pdf/EM_scatter_plots/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g18+".pdf").c_str());
+	canvas_deconv_group_1->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g1+".pdf").c_str());
+	canvas_deconv_group_2->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g2+".pdf").c_str());
+	canvas_deconv_group_3->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g3+".pdf").c_str());
+	canvas_deconv_group_4->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g4+".pdf").c_str());
+	canvas_deconv_group_5->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g5+".pdf").c_str());
+	canvas_deconv_group_6->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g6+".pdf").c_str());
+	canvas_deconv_group_7->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g7+".pdf").c_str());
+	canvas_deconv_group_8->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g8+".pdf").c_str());
+	canvas_deconv_group_9->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g9+".pdf").c_str());
+	canvas_deconv_group_10->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g10+".pdf").c_str());
+	canvas_deconv_group_11->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g11+".pdf").c_str());
+	canvas_deconv_group_12->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g12+".pdf").c_str());
+	canvas_deconv_group_13->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g13+".pdf").c_str());
+	canvas_deconv_group_14->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g14+".pdf").c_str());
+	canvas_deconv_group_15->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g15+".pdf").c_str());
+	canvas_deconv_group_16->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g16+".pdf").c_str());
+	canvas_deconv_group_17->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g17+".pdf").c_str());
+	canvas_deconv_group_18->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g18+".pdf").c_str());
 }
 
 RVec<double> deconv_steps_diff(string campaign, int event, int steps, int timegrid, int ndet, int bin_seed){
@@ -5902,7 +5902,7 @@ for(int i=1;i<=20;i++)
 		stream_steps << i;
 		string str_stream_steps;
 		str_stream_steps = stream_steps.str();
-		input_complete_file= "./deconv_data_rootfile/EM/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+		input_complete_file= "./deconv_data_rootfile/EM/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 
 		ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
 
@@ -6018,7 +6018,7 @@ for(int i=1;i<=186;i++)
 		stream_step_pick <<step_pick[i-1];
 		string str_stream_step_pick = stream_step_pick.str();
 		
-		string input_complete_file= "./deconv_data_rootfile/EM/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_step_pick+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+		string input_complete_file= "./deconv_data_rootfile/EM/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_step_pick+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 
 		ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
 
@@ -6167,7 +6167,7 @@ hist_vec[70]->Draw("HIST SAME");
 
 
 canvas_deconv_fluxes->Draw();
-canvas_deconv_fluxes->SaveAs(("./deconv_data_pdf/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_comparacion_semillas_eventos.pdf").c_str());
+canvas_deconv_fluxes->SaveAs(("./deconv_data_pdf/event_seed_picker/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_comparacion_semillas_eventos_picker_1.pdf").c_str());
 
 
 }
@@ -6203,7 +6203,7 @@ for(int i=1;i<=186;i++)
 				stream_steps << k;
 				string str_stream_steps;
 				str_stream_steps = stream_steps.str();
-				string input_complete_file = "./deconv_data_rootfile/EM/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+				string input_complete_file = "./deconv_data_rootfile/EM/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 
 				ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
 
@@ -6251,7 +6251,7 @@ for(int i=1;i<=186;i++)
 		stream_step_pick <<step_pick[i-1];
 		string str_stream_step_pick = stream_step_pick.str();
 		
-		string input_complete_file= "./deconv_data_rootfile/EM/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_step_pick+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+		string input_complete_file= "./deconv_data_rootfile/EM/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_step_pick+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 
 		ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
 
@@ -6400,7 +6400,7 @@ hist_vec[70]->Draw("HIST SAME");
 }
 
 canvas_deconv_fluxes->Draw();
-canvas_deconv_fluxes->SaveAs(("./deconv_data_pdf/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_comparacion_semillas_eventos.pdf").c_str());
+canvas_deconv_fluxes->SaveAs(("./deconv_data_pdf/event_seed_picker/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_comparacion_semillas_eventos_picker_2.pdf").c_str());
 
 
 }
@@ -6436,7 +6436,7 @@ for(int i=1;i<=186;i++)
 				stream_steps << k;
 				string str_stream_steps;
 				str_stream_steps = stream_steps.str();
-				string input_complete_file = "./deconv_data_rootfile/EM/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+				string input_complete_file = "./deconv_data_rootfile/EM/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 
 				ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
 
@@ -6483,7 +6483,7 @@ for(int i=1;i<=186;i++)
 		stream_step_pick <<step_pick[i-1];
 		string str_stream_step_pick = stream_step_pick.str();
 		
-		string input_complete_file= "./deconv_data_rootfile/EM/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_step_pick+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+		string input_complete_file= "./deconv_data_rootfile/EM/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_step_pick+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 
 		ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
 
@@ -6647,7 +6647,7 @@ hist_vec[70]->Draw("HIST SAME");
 }
 
 canvas_deconv_fluxes->Draw();
-canvas_deconv_fluxes->SaveAs(("./deconv_data_pdf/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_comparacion_semillas_eventos.pdf").c_str());
+canvas_deconv_fluxes->SaveAs(("./deconv_data_pdf/event_seed_picker/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_comparacion_semillas_eventos_picker_3.pdf").c_str());
 
 
 }

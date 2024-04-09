@@ -151,11 +151,12 @@ cout << "Sigma: " << fit_parameters[1] << endl;
 
 }
 
-void plot_em_mc(){
+void plot_em_mc(string campaign){
 
 ROOT::EnableImplicitMT(); 
 //~ TFile *em_mc_loop = new TFile("./deconv_data_rootfile/EM_MC_stop/EM_unfolding_loop_campaign_LCO_event_211_steps_0_timegrid_15_ndet_11_MC_stop_1000_it.root");
-TFile *em_mc_loop = new TFile("./deconv_data_rootfile/EM_MC_stop/EM_unfolding_loop_campaign_LCO_event_211_steps_0_timegrid_15_ndet_11_MC_stop_5e05_it.root");
+string file_name = "./deconv_data_rootfile/EM_MC_stop/"+campaign+"/EM_unfolding_loop_campaign_LCO_event_211_steps_0_timegrid_15_ndet_11_MC_stop_5e05_it.root";
+TFile *em_mc_loop = new TFile(file_name.c_str());
 ROOT::RDataFrame df_em_mc("em_loop_tree", em_mc_loop);
 
 auto df_cut_steps = df_em_mc.Filter("em_it<30.");
@@ -289,7 +290,7 @@ string str_stream_step_filter = stream_step_filter.str();
 //~ ROOT::EnableImplicitMT(); 
 //~ TFile *em_mc_loop = new TFile("./deconv_data_rootfile/EM_MC_stop/EM_unfolding_loop_campaign_LCO_event_211_steps_0_timegrid_15_ndet_11_MC_stop_1000_it.root");
 //~ string file_name_MC = "./deconv_data_rootfile/EM_MC_stop/EM_unfolding_loop_campaign_LCO_event_"+str_stream_event+"_steps_0_timegrid_15_ndet_11_MC_stop_5e05_it.root";
-string file_name_MC = "./deconv_data_rootfile/EM_MC_stop/EM_unfolding_loop_campaign_LCO_event_"+str_stream_event+"_steps_0_timegrid_"+str_stream_timegrid+"_ndet_11_MC_stop.root";
+string file_name_MC = "./deconv_data_rootfile/EM_MC_stop/"+campaign+"/EM_unfolding_loop_campaign_LCO_event_"+str_stream_event+"_steps_0_timegrid_"+str_stream_timegrid+"_ndet_11_MC_stop.root";
 //~ string file_name_MC = "./deconv_data_rootfile/EM_MC_stop/EM_unfolding_loop_campaign_LCO_event_"+str_stream_event+"_steps_0_timegrid_15_ndet_11_MC_stop_2e04_it.root";
 TFile *em_mc_loop = new TFile(file_name_MC.c_str());
 ROOT::RDataFrame df_em_mc("em_loop_tree", em_mc_loop);
@@ -521,7 +522,7 @@ canvas_gaus->Draw();
 
 gStyle->SetImageScaling(3.); //works only in bach mode
 //~ canvas_gaus->SaveAs(("./deconv_data_pdf/EM_MC_fitting/event_41_fitting/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_bin_energy_"+str_stream_binenergy_name +".pdf").c_str());
-canvas_gaus->SaveAs(("./deconv_data_pdf/EM_MC_fitting/event_41_fitting/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_bin_energy_"+str_stream_binenergy_name +".png").c_str());
+//~ canvas_gaus->SaveAs(("./deconv_data_pdf/EM_MC_fitting/event_41_fitting/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_bin_energy_"+str_stream_binenergy_name +".png").c_str());
 
 auto end = std::chrono::system_clock::now();
 //~ std::chrono::duration<float> duration = end - start; //seconds
@@ -536,26 +537,28 @@ cout << duration.count() << "hr " << endl;
 
 
 
-vector<double> em_mc_vec(string campaign, int event, int timegrid, int step_filter, int bin_energy){
+vector<double> em_mc_vec(string campaign, int event, int timegrid, int ndet, int step_filter, int bin_energy){
 
 //~ ROOT::Math::MinimizerOptions::SetDefaultMinimizer(“Minuit2”);
 
 vector<double> fitGaussParam;
 
-ostringstream  stream_event, stream_timegrid, stream_binenergy, stream_binenergy_name;
+ostringstream  stream_event, stream_timegrid, stream_ndet, stream_binenergy, stream_binenergy_name;
 stream_event << event;
-stream_timegrid << timegrid; 
+stream_timegrid << timegrid;
+stream_ndet << ndet;
 stream_binenergy << bin_energy-1;
 stream_binenergy_name << bin_energy;
 string str_stream_event = stream_event.str();
 string str_stream_timegrid = stream_timegrid.str();
 string str_stream_binenergy = stream_binenergy.str();
 string str_stream_binenergy_name = stream_binenergy_name.str();
+string str_stream_ndet = stream_ndet.str();
 
 //~ ROOT::EnableImplicitMT(); 
 //~ TFile *em_mc_loop = new TFile("./deconv_data_rootfile/EM_MC_stop/EM_unfolding_loop_campaign_LCO_event_211_steps_0_timegrid_15_ndet_11_MC_stop_1000_it.root");
 //~ string file_name_MC = "./deconv_data_rootfile/EM_MC_stop/EM_unfolding_loop_campaign_LCO_event_"+str_stream_event+"_steps_0_timegrid_15_ndet_11_MC_stop_5e05_it.root";
-string file_name_MC = "./deconv_data_rootfile/EM_MC_stop/EM_unfolding_loop_campaign_LCO_event_"+str_stream_event+"_steps_0_timegrid_"+str_stream_timegrid+"_ndet_11_MC_stop.root";
+string file_name_MC = "./deconv_data_rootfile/EM_MC_stop/"+campaign+"/EM_unfolding_loop_campaign_LCO_event_"+str_stream_event+"_steps_0_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_MC_stop.root";
 TFile *em_mc_loop = new TFile(file_name_MC.c_str());
 ROOT::RDataFrame df_em_mc("em_loop_tree", em_mc_loop);
 
@@ -673,16 +676,18 @@ return fitGaussParam;
 
 }
 
-void fit_loop_bin_energy(string campaign, int event, int timegrid, int step_filter){
+void fit_loop_bin_energy(string campaign, int event, int timegrid, int ndet, int step_filter){
 
 
 auto start = std::chrono::system_clock::now();
 
-ostringstream  stream_event, stream_timegrid;
+ostringstream  stream_event, stream_timegrid, stream_ndet;
 stream_event << event;
-stream_timegrid << timegrid; 
+stream_timegrid << timegrid;
+stream_ndet << ndet;
 string str_stream_event = stream_event.str();
 string str_stream_timegrid = stream_timegrid.str();
+string str_stream_ndet = stream_ndet.str();
 
 ROOT::RDataFrame df_fit_loop_i(130);
 vector<vector<double>> fit_parameters_loop;
@@ -694,7 +699,7 @@ ROOT::EnableImplicitMT(6);
 for(int i=1;i<=130;i++)
 	{
 	 cout <<"\r " << " Event " << event << " Energy bin: " << i << endl;
-	 fit_parameters_loop.push_back(em_mc_vec(campaign,event,timegrid,step_filter,i));
+	 fit_parameters_loop.push_back(em_mc_vec(campaign,event,timegrid,ndet,step_filter,i));
 
 	}
 
@@ -729,7 +734,7 @@ auto df_fit_loop = df_fit_loop_i.Define("mean", [&]() {
 									});
 
 
-string df_file_name ="./deconv_mc_data_energy_fitting/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+".root";
+string df_file_name ="./deconv_mc_data_energy_fitting/"+campaign+"/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 
 ROOT::DisableImplicitMT();
 df_fit_loop.Snapshot("fit_loop_tree",df_file_name); /*Save selected columns to disk, in a new TTree treename in file filename*/
@@ -740,47 +745,47 @@ cout << duration.count() << "min " << endl;
 
 }
 
-void loop_fit_over_events(int timegrid)
+void loop_fit_over_events(int timegrid, int ndet)
 {
 	for(int i=1;i<22;i++)
 		{
-		 fit_loop_bin_energy("LCO",i,timegrid,20);
+		 fit_loop_bin_energy("LCO",i,timegrid,ndet,20);
 	    }
 	for(int i=23;i<46;i++)
 		{
-		 fit_loop_bin_energy("LCO",i,timegrid,20);
+		 fit_loop_bin_energy("LCO",i,timegrid,ndet,20);
 	    }
 	for(int i=49;i<70;i++)
 		{
-		 fit_loop_bin_energy("LCO",i,timegrid,20);
+		 fit_loop_bin_energy("LCO",i,timegrid,ndet,20);
 	    }
 	for(int i=71;i<84;i++)
 		{
-		 fit_loop_bin_energy("LCO",i,timegrid,20);
+		 fit_loop_bin_energy("LCO",i,timegrid,ndet,20);
 	    }
 	for(int i=85;i<111;i++)
 		{
-		 fit_loop_bin_energy("LCO",i,timegrid,20);
+		 fit_loop_bin_energy("LCO",i,timegrid,ndet,20);
 	    }
 	for(int i=112;i<240;i++)
 		{
-		 fit_loop_bin_energy("LCO",i,timegrid,20);
+		 fit_loop_bin_energy("LCO",i,timegrid,ndet,20);
 	    }
 	for(int i=241;i<273;i++)
 		{
-		 fit_loop_bin_energy("LCO",i,timegrid,20);
+		 fit_loop_bin_energy("LCO",i,timegrid,ndet,20);
 	    }
 	for(int i=275;i<=289;i++)
 		{
-		 fit_loop_bin_energy("LCO",i,timegrid,20);
+		 fit_loop_bin_energy("LCO",i,timegrid,ndet,20);
 	    }	    	      
 }
 
-void loop_fit_over_events_range(int event_inf, int event_sup, int timegrid)
+void loop_fit_over_events_range(int event_inf, int event_sup, int timegrid, int ndet)
 {
 	for(int i=event_inf;i<event_sup;i++)
 		{
-		 fit_loop_bin_energy("LCO",i,timegrid,20);
+		 fit_loop_bin_energy("LCO",i,timegrid,ndet,20);
 	    }	      
 }
 
@@ -804,7 +809,7 @@ vector<Double_t> B; /*bins*/ /*matriz de bordes de bins*/
 vector<Double_t> E; /*bins*/ /*matriz de Energias*/
 
 //~ string input_deconv_file= "./deconv_data_rootfile/EM_stop/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
-string input_deconv_file= "./deconv_data_rootfile/EM_stop/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_15_ndet_"+str_stream_ndet+".root";
+string input_deconv_file= "./deconv_data_rootfile/EM_stop/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_15_ndet_"+str_stream_ndet+".root";
 ROOT::RDataFrame df_event("em_loop_tree", input_deconv_file);
 
 //~ string df_fit_mc_file = "./deconv_mc_data_energy_fitting/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_em_it_9.root";
@@ -812,7 +817,7 @@ ROOT::RDataFrame df_event("em_loop_tree", input_deconv_file);
 //~ string df_fit_mc_file = "./deconv_mc_data_energy_fitting/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_2e04_it.root";
 //~ string df_fit_mc_file = "./deconv_mc_data_energy_fitting/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_2e04_it_filter.root";
 //~ string df_fit_mc_file = "./deconv_mc_data_energy_fitting/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_backup.root";
-string df_fit_mc_file = "./deconv_mc_data_energy_fitting/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+".root";
+string df_fit_mc_file = "./deconv_mc_data_energy_fitting/"+campaign+"/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 ROOT::RDataFrame df_fit_file("fit_loop_tree", df_fit_mc_file);
 
 // string deconv_vec_bin_seed = "deconv_vec["+sstr_stream_bin_seed+"]";
@@ -1548,7 +1553,7 @@ gPad->SetLogx();
 gPad->RedrawAxis();
 
 canvas_error->Draw();
-canvas_error->SaveAs(("./deconv_data_pdf/EM_MC_fitting/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error.pdf").c_str());
+canvas_error->SaveAs(("./deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error.pdf").c_str());
 
 
 TCanvas *canvas_compare = new TCanvas("Compare flux seed, flux deconv","Compare flux seed, flux decon",1920,1080);
@@ -1646,7 +1651,7 @@ legend_c->AddEntry(flux_deconv,name_hist_deconv_legend.c_str(),"l");
 legend_c->Draw();
 
 canvas_compare->Draw();
-canvas_compare->SaveAs(("./deconv_data_pdf/EM_MC_fitting/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error_compare.pdf").c_str());
+canvas_compare->SaveAs(("./deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error_compare.pdf").c_str());
 
 
 /**update RDataframe**/
@@ -1761,7 +1766,7 @@ auto  df_fit_file_update =  df_fit_file_new.Define("deconv_vec_MC", [&]() {
 												return error_ratio_fs_he_MC;
 										});
 										
-string fit_event_file_name ="./deconv_mc_data_energy_fitting/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+"_update.root";
+string fit_event_file_name ="./deconv_mc_data_energy_fitting/"+campaign+"/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_update.root";
 df_fit_file_update.Snapshot("fit_loop_tree_update",fit_event_file_name); /*Save selected columns to disk, in a new TTree treename in file filename*/
 
 
@@ -1779,7 +1784,7 @@ vector<Double_t> B; /*bins*/ /*matriz de bordes de bins*/
 vector<Double_t> E; /*bins*/ /*matriz de Energias*/
 
 
-string input_deconv_file= "./deconv_data_rootfile/EM_stop/EM_unfolding_loop_campaign_"+campaign+"_event_1_steps_0_timegrid_15_ndet_11.root";
+string input_deconv_file= "./deconv_data_rootfile/EM_stop/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_1_steps_0_timegrid_15_ndet_11.root";
 ROOT::RDataFrame df_event("em_loop_tree", input_deconv_file);
 
 /****Cargamos el flujo semilla*****/
@@ -2049,8 +2054,8 @@ cout << duration.count() << "min " << endl;
 
 void compare_sigma_perc(){
 
-string fit_1 = "/home/flopez/LIN/TESIS_DOC/Analysis/deconv/deconv_mc_data_energy_fitting/EM_MC_fit_parameters_campaign_LCO_event_41_5e05_it.root";
-string fit_2 = "/home/flopez/LIN/TESIS_DOC/Analysis/deconv/deconv_mc_data_energy_fitting/EM_MC_fit_parameters_campaign_LCO_event_41_2e04_it.root";
+string fit_1 = "./deconv_mc_data_energy_fitting/EM_MC_fit_parameters_campaign_LCO_event_41_5e05_it.root";
+string fit_2 = "./deconv_mc_data_energy_fitting/EM_MC_fit_parameters_campaign_LCO_event_41_2e04_it.root";
 ROOT::RDataFrame df_fit_1("fit_loop_tree", fit_1);
 ROOT::RDataFrame df_fit_2("fit_loop_tree", fit_2);
 
@@ -2132,8 +2137,13 @@ counting_rate_canvas->Draw();
 
 }
 
-void integral_data_merge(string campaign){
+void integral_data_merge(string campaign, int time_grid, int ndet){
 
+ostringstream stream_timegrid, stream_ndet;
+stream_timegrid << time_grid;
+stream_ndet << ndet;
+string str_stream_timegrid = stream_timegrid.str();
+string str_stream_ndet = stream_ndet.str();
 
 vector<double> event_vec;
 vector<double> intg_total_vec;
@@ -2169,7 +2179,7 @@ for(int i=1;i<=289;i++)
 		stream_event_i << i; 
 		string str_stream_event_i = stream_event_i.str();
 
-		string fit_event_file_name ="./deconv_mc_data_energy_fitting/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event_i+"_update.root";
+		string fit_event_file_name ="./deconv_mc_data_energy_fitting/"+campaign+"/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event_i+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_update.root";
 		
 		//~ TFile *event_file = TFile::Open(fit_event_file_name.c_str());
 		
@@ -2458,7 +2468,7 @@ auto  df_fit_file_update =  df_fit_file_new.Define("event_id",[&]() {
 
 
 										
-string fit_event_file_name ="./deconv_mc_data_energy_fitting/EM_MC_fit_parameters_campaign_"+campaign+"_update_merge.root";
+string fit_event_file_name ="./deconv_mc_data_energy_fitting/"+campaign+"/EM_MC_fit_parameters_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_update_merge.root";
 df_fit_file_update.Snapshot("fit_loop_tree_update",fit_event_file_name); /*Save selected columns to disk, in a new TTree treename in file filename*/
 
 
@@ -2476,7 +2486,7 @@ string str_stream_ndet = stream_ndet.str();
 
 
 
-string merge_data_file_name ="./deconv_mc_data_energy_fitting/EM_MC_fit_parameters_campaign_"+campaign+"_update_merge.root";
+string merge_data_file_name ="./deconv_mc_data_energy_fitting/"+campaign+"/EM_MC_fit_parameters_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_update_merge.root";
 ROOT::RDataFrame df_merge_data("fit_loop_tree_update", merge_data_file_name);
 
 auto Intg_total_error_vec = df_merge_data.Take<double>("err_intg_total").GetValue();
@@ -2812,7 +2822,7 @@ cout<< endl;
 cout << "p0_he_1 (intercepto): " << p0_1_he << endl;
 cout << "p0_he_2 (intercepto): " << p0_2_he << endl;
 
-canvas_intg->SaveAs(("./deconv_data_pdf/EM_MC_fitting/EM_integrales_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".pdf").c_str());
+canvas_intg->SaveAs(("./deconv_data_pdf/EM_MC_fitting/integral_flux_relations/"+campaign+"/EM_integrales_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".pdf").c_str());
 
 
 TCanvas *canvas_ratio_integrales = new TCanvas("Ratio_Integrales","Ratio_Integrales",786,927);
@@ -2838,8 +2848,8 @@ hist_intg_ratio_th_ep_clone->GetXaxis()->SetRangeUser(0,290);
 //~ TMath::MaxElement(n,hist_intg_ratio_fs_ep_clone->GetY());
 hist_intg_ratio_th_ep_clone->SetMaximum(4.5);
 
-gPad->Modified(); // para que un valor correcto el gPad->GetUymin() y gPad->GetUymax()
-gPad->Update(); // para que un valor correcto el gPad->GetUymin() y gPad->GetUymax()
+//~ gPad->Modified(); // para que un valor correcto el gPad->GetUymin() y gPad->GetUymax()
+//~ gPad->Update(); // para que un valor correcto el gPad->GetUymin() y gPad->GetUymax()
 
 canvas_ratio_integrales->SetLogy();
 gStyle->SetTitleFontSize(0.06);
@@ -2898,7 +2908,7 @@ legend_c->AddEntry(hist_intg_ratio_th_total_clone,"Ratio #Phi_{th}/(#Phi_{total}
 legend_c->Draw();
 
 canvas_ratio_integrales->Draw();
-canvas_ratio_integrales->SaveAs(("./deconv_data_pdf/EM_MC_fitting/EM_ratio_integrales_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".pdf").c_str());
+canvas_ratio_integrales->SaveAs(("./deconv_data_pdf/EM_MC_fitting/integral_flux_relations/"+campaign+"/EM_ratio_integrales_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".pdf").c_str());
 
 TCanvas *canvas_eta_integrales = new TCanvas("Eta_Integrales","#Eta Integrales",700,1027);
 canvas_eta_integrales->Divide(1,3);
@@ -2947,8 +2957,8 @@ canvas_eta_integrales->cd(1);
 gStyle->SetTitleFontSize(0.06);
 hist_intg_eta_th_clone->GetXaxis()->SetRangeUser(0,290);
 hist_intg_eta_th_clone->SetMinimum(0.0);
-gPad->Modified(); // para que un valor correcto el gPad->GetUymin() y gPad->GetUymax()
-gPad->Update(); // para que un valor correcto el gPad->GetUymin() y gPad->GetUymax()
+//~ gPad->Modified(); // para que un valor correcto el gPad->GetUymin() y gPad->GetUymax()
+//~ gPad->Update(); // para que un valor correcto el gPad->GetUymin() y gPad->GetUymax()
 
 hist_intg_eta_th_clone->GetXaxis()->SetTitleSize(0.06);
 hist_intg_eta_th_clone->GetXaxis()->SetTitleOffset(0.8);
@@ -2972,8 +2982,8 @@ legend_th->Draw();
 canvas_eta_integrales->cd(2);
 hist_intg_eta_ep_clone->GetXaxis()->SetRangeUser(0,290);
 hist_intg_eta_ep_clone->SetMinimum(0.0);
-gPad->Modified(); // para que un valor correcto el gPad->GetUymin() y gPad->GetUymax()
-gPad->Update(); // para que un valor correcto el gPad->GetUymin() y gPad->GetUymax()
+//~ gPad->Modified(); // para que un valor correcto el gPad->GetUymin() y gPad->GetUymax()
+//~ gPad->Update(); // para que un valor correcto el gPad->GetUymin() y gPad->GetUymax()
 hist_intg_eta_ep_clone->GetXaxis()->SetTitleSize(0.06);
 hist_intg_eta_ep_clone->GetXaxis()->SetTitleOffset(0.8);
 hist_intg_eta_ep_clone->GetXaxis()->SetLabelSize(0.06);
@@ -2992,8 +3002,8 @@ legend_ep->Draw();
 canvas_eta_integrales->cd(3);
 hist_intg_eta_fs_clone->GetXaxis()->SetRangeUser(0,290);
 hist_intg_eta_fs_clone->SetMinimum(0.0);
-gPad->Modified(); // para que un valor correcto el gPad->GetUymin() y gPad->GetUymax()
-gPad->Update(); // para que un valor correcto el gPad->GetUymin() y gPad->GetUymax()
+//~ gPad->Modified(); // para que un valor correcto el gPad->GetUymin() y gPad->GetUymax()
+//~ gPad->Update(); // para que un valor correcto el gPad->GetUymin() y gPad->GetUymax()
 hist_intg_eta_fs_clone->GetXaxis()->SetTitleSize(0.06);
 hist_intg_eta_fs_clone->GetXaxis()->SetTitleOffset(0.8);
 hist_intg_eta_fs_clone->GetXaxis()->SetLabelSize(0.06);
@@ -3011,17 +3021,17 @@ legend_fs->AddEntry(hist_intg_eta_fs_clone,"Ratio #eta_{fs}","lep");
 legend_fs->Draw();
 
 canvas_eta_integrales->Draw();
-canvas_eta_integrales->SaveAs(("./deconv_data_pdf/EM_MC_fitting/EM_eta_integrales_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".pdf").c_str());
+canvas_eta_integrales->SaveAs(("./deconv_data_pdf/EM_MC_fitting/integral_flux_relations/"+campaign+"/EM_eta_integrales_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".pdf").c_str());
 
 
-string fit_event_file_name ="./deconv_mc_data_energy_fitting/EM_MC_fit_parameters_campaign_"+campaign+"_update_merge_02.root";
+string fit_event_file_name ="./deconv_mc_data_energy_fitting/"+campaign+"/EM_MC_fit_parameters_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_update_merge_02.root";
 df_merge_data_new.Snapshot("EM_MC_tree", fit_event_file_name);
 
 }
 
 void tscatter_plot(string campaign, string x_arr, string y_arr, string color_arr, string size_arr, string num){
 
-string input_file = "./deconv_mc_data_energy_fitting/3rd_"+campaign+"_data_complete_update.root";
+string input_file = "./deconv_mc_data_energy_fitting/"+campaign+"/3rd_"+campaign+"_data_complete_update.root";
 ROOT::RDataFrame df_data("LCO_data_tree", input_file );
 auto df_merge_data_new = df_data.Define("err_msdata","VWC_5cm*0.");
 
@@ -3210,7 +3220,7 @@ auto canvas_scatter_plot = new TCanvas(("relations_scatter_plot_"+num).c_str(),(
    size_variable->Draw();
    canvas_scatter_plot->Draw();
    
-   canvas_scatter_plot->SaveAs(("./deconv_data_pdf/EM_scatter_plots/EM_MC_stop_relations/3rd_"+campaign+"_Campaign_relations_"+num+".pdf").c_str());
+   canvas_scatter_plot->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_MC_stop_relations/3rd_"+campaign+"_Campaign_relations_"+num+".pdf").c_str());
 
 	x_arr.clear();
 	y_arr.clear();
@@ -3251,11 +3261,17 @@ auto canvas_scatter_plot = new TCanvas(("relations_scatter_plot_"+num).c_str(),(
 
 //~ }
 
-void relations_integral_local_variables_merge(string campaign){
+void relations_integral_local_variables_merge(string campaign, int time_grid, int ndet){
+
+ostringstream stream_timegrid, stream_ndet;
+stream_timegrid << time_grid;
+stream_ndet << ndet;
+string str_stream_timegrid = stream_timegrid.str();
+string str_stream_ndet = stream_ndet.str();
 
 /*MSDATA*/
-string input_complete_file = "/home/flopez/LIN/TESIS_DOC/Analysis/Counting_rates/LCO_15min/3rd_LCO_data_complete_15min.root";
-string fit_event_file_name ="./deconv_mc_data_energy_fitting/EM_MC_fit_parameters_campaign_"+campaign+"_update_merge_02.root";
+string input_complete_file = "./CRNS_Data/"+campaign+"/3rd_LCO_data_complete_15min.root";
+string fit_event_file_name ="./deconv_mc_data_energy_fitting/"+campaign+"/EM_MC_fit_parameters_campaign_"+campaign+"_update_merge_02.root";
 
 TFile *file1 = TFile::Open(input_complete_file.c_str());
 TFile *file2 = TFile::Open(fit_event_file_name.c_str());
@@ -3268,7 +3284,7 @@ auto *t1 = file1->Get<TTree>("CRNS_MSDATA");
 auto *t2 = file2->Get<TTree>("EM_MC_tree");
 t1->AddFriend(t2);
 ROOT::RDataFrame df(*t1);
-df.Snapshot("LCO_data_tree", "./deconv_mc_data_energy_fitting/3rd_"+campaign+"_data_complete_update.root");
+df.Snapshot("LCO_data_tree", "./deconv_mc_data_energy_fitting/"+campaign+"/3rd_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_data_complete_update.root");
 cout <<"Merging data complete" << endl;
 
 
@@ -3276,10 +3292,17 @@ cout <<"Merging data complete" << endl;
 }
 
 
-void plot_relations_integral_local_variables_merge(string campaign){
+void plot_relations_integral_local_variables_merge(string campaign, int time_grid, int ndet){
 
-string input_file = "./deconv_mc_data_energy_fitting/3rd_"+campaign+"_data_complete_update.root";
-ROOT::RDataFrame df_data("LCO_data_tree", input_file );
+ostringstream stream_timegrid, stream_ndet;
+stream_timegrid << time_grid;
+stream_ndet << ndet;
+string str_stream_timegrid = stream_timegrid.str();
+string str_stream_ndet = stream_ndet.str();
+
+
+string input_file = "./deconv_mc_data_energy_fitting/"+campaign+"/3rd_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_data_complete_update.root";
+ROOT::RDataFrame df_data("LCO_data_tree", input_file);
 
 
 auto df_merge_data_new = df_data.Define("err_msdata","VWC_5cm*0.");
@@ -3408,8 +3431,8 @@ tgraph_intg_fs_vwc5cm_clone->DrawClone("AP");
 canvas_intg_relations->cd(5);
 tgraph_intg_he_vwc5cm_clone->DrawClone("AP");
 
-canvas_intg_relations->Draw();
-canvas_intg_relations->SaveAs(("./deconv_data_pdf/EM_scatter_plots/EM_MC_stop_relations/3rd_"+campaign+"_Campaign_relations_intg_VWC_5cm.pdf").c_str());
+//~ canvas_intg_relations->Draw();
+canvas_intg_relations->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_MC_stop_relations/3rd_"+campaign+"_Campaign_relations_intg_VWC_5cm.pdf").c_str());
 
 TCanvas *canvas_ratios_relations = new TCanvas("ratios_relations","ratios_relations",689,1040);
 
@@ -3501,8 +3524,8 @@ canvas_ratios_relations->cd(4);
 tgraph_intg_th_fsep_vwc5cm_clone->SetMinimum(0.0);
 tgraph_intg_th_fsep_vwc5cm_clone->DrawClone("AP");
 
-canvas_ratios_relations->Draw();
-canvas_ratios_relations->SaveAs(("./deconv_data_pdf/EM_scatter_plots/EM_MC_stop_relations/3rd_"+campaign+"_Campaign_relations_ratios_VWC_5cm.pdf").c_str());
+//~ canvas_ratios_relations->Draw();
+canvas_ratios_relations->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_MC_stop_relations/3rd_"+campaign+"_Campaign_relations_ratios_VWC_5cm.pdf").c_str());
 
 
 TCanvas *canvas_ratios_relations_airTC = new TCanvas("ratios_relations_airtc","ratios_relations_airtc",689,1040);
@@ -3595,8 +3618,8 @@ canvas_ratios_relations_airTC->cd(4);
 tgraph_intg_th_fsep_AirTC_Avg_clone->SetMinimum(0.0);
 tgraph_intg_th_fsep_AirTC_Avg_clone->DrawClone("AP");
 
-canvas_ratios_relations_airTC->Draw();
-canvas_ratios_relations_airTC->SaveAs(("./deconv_data_pdf/EM_scatter_plots/EM_MC_stop_relations/3rd_"+campaign+"_Campaign_relations_ratios_AirTC.pdf").c_str());
+//~ canvas_ratios_relations_airTC->Draw();
+canvas_ratios_relations_airTC->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_MC_stop_relations/3rd_"+campaign+"_Campaign_relations_ratios_AirTC.pdf").c_str());
 
 
 TCanvas *canvas_ratios_relations_HR_Min = new TCanvas("ratios_relations_HR_Min","ratios_relations_HR_Min",689,1040);
@@ -3689,8 +3712,8 @@ canvas_ratios_relations_HR_Min->cd(4);
 tgraph_intg_th_fsep_RH_Min_clone->SetMinimum(0.0);
 tgraph_intg_th_fsep_RH_Min_clone->DrawClone("AP");
 
-canvas_ratios_relations_HR_Min->Draw();
-canvas_ratios_relations_HR_Min->SaveAs(("./deconv_data_pdf/EM_scatter_plots/EM_MC_stop_relations/3rd_"+campaign+"_Campaign_relations_ratios_HR_min.pdf").c_str());
+//~ canvas_ratios_relations_HR_Min->Draw();
+canvas_ratios_relations_HR_Min->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_MC_stop_relations/3rd_"+campaign+"_Campaign_relations_ratios_HR_min.pdf").c_str());
 
 /******************Scatter PLOT*******************/
 
@@ -4057,7 +4080,7 @@ legend_c->Draw();
 
 void effective_dose_per_diff_flux_H(string campaign){
 	
-string input_file = "./deconv_mc_data_energy_fitting/3rd_"+campaign+"_data_complete_update.root";
+string input_file = "./deconv_mc_data_energy_fitting/"+campaign+"/3rd_"+campaign+"_data_complete_update.root";
 ROOT::RDataFrame df_data("LCO_data_tree", input_file);
 
 RVec<double> coeff_conver_fluence_to_dose_vec = interpolate_tgraph("E_ICRP116_ISO"); // C(E)
@@ -4146,10 +4169,10 @@ legend_c->Draw();
 
 
 void routine_data_merge_em_mc(){
-integral_data_merge("LCO");
+integral_data_merge("LCO",15,11);
 plot_data_merge("LCO",15,11);
-relations_integral_local_variables_merge("LCO");
-plot_relations_integral_local_variables_merge("LCO");
+relations_integral_local_variables_merge("LCO",15,11);
+plot_relations_integral_local_variables_merge("LCO",15,11);
 
 }
 
