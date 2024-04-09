@@ -3029,9 +3029,15 @@ df_merge_data_new.Snapshot("EM_MC_tree", fit_event_file_name);
 
 }
 
-void tscatter_plot(string campaign, string x_arr, string y_arr, string color_arr, string size_arr, string num){
+void tscatter_plot(string campaign, int time_grid, int ndet, string x_arr, string y_arr, string color_arr, string size_arr, string num){
 
-string input_file = "./deconv_mc_data_energy_fitting/"+campaign+"/3rd_"+campaign+"_data_complete_update.root";
+ostringstream stream_timegrid, stream_ndet;
+stream_timegrid << time_grid;
+stream_ndet << ndet;
+string str_stream_timegrid = stream_timegrid.str();
+string str_stream_ndet = stream_ndet.str();
+
+string input_file = "./deconv_mc_data_energy_fitting/"+campaign+"/3rd_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_data_complete_update.root";
 ROOT::RDataFrame df_data("LCO_data_tree", input_file );
 auto df_merge_data_new = df_data.Define("err_msdata","VWC_5cm*0.");
 
@@ -3271,7 +3277,7 @@ string str_stream_ndet = stream_ndet.str();
 
 /*MSDATA*/
 string input_complete_file = "./CRNS_Data/"+campaign+"/3rd_LCO_data_complete_15min.root";
-string fit_event_file_name ="./deconv_mc_data_energy_fitting/"+campaign+"/EM_MC_fit_parameters_campaign_"+campaign+"_update_merge_02.root";
+string fit_event_file_name ="./deconv_mc_data_energy_fitting/"+campaign+"/EM_MC_fit_parameters_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_update_merge_02.root";
 
 TFile *file1 = TFile::Open(input_complete_file.c_str());
 TFile *file2 = TFile::Open(fit_event_file_name.c_str());
@@ -3717,30 +3723,30 @@ canvas_ratios_relations_HR_Min->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+ca
 
 /******************Scatter PLOT*******************/
 
-	tscatter_plot("LCO","AirTC_Avg","ratio_intg_th_ep","RH_Min","TC_5cm", "1");
-	tscatter_plot("LCO","AirTC_Avg","ratio_intg_th_fs","RH_Min","TC_5cm", "2");
-	tscatter_plot("LCO","AirTC_Avg","ratio_intg_th_sum_fs_ep","RH_Min","TC_5cm", "3");
-	tscatter_plot("LCO","AirTC_Avg","ratio_intg_fs_ep","RH_Min","TC_5cm", "4");
+	tscatter_plot("LCO",time_grid,ndet,"AirTC_Avg","ratio_intg_th_ep","RH_Min","TC_5cm", "1");
+	tscatter_plot("LCO",time_grid,ndet,"AirTC_Avg","ratio_intg_th_fs","RH_Min","TC_5cm", "2");
+	tscatter_plot("LCO",time_grid,ndet,"AirTC_Avg","ratio_intg_th_sum_fs_ep","RH_Min","TC_5cm", "3");
+	tscatter_plot("LCO",time_grid,ndet,"AirTC_Avg","ratio_intg_fs_ep","RH_Min","TC_5cm", "4");
 
-	tscatter_plot("LCO","RH_Min","ratio_intg_th_ep","AirTC_Avg","TC_5cm", "5");
-	tscatter_plot("LCO","RH_Min","ratio_intg_th_fs","AirTC_Avg","TC_5cm", "6");
-	tscatter_plot("LCO","RH_Min","ratio_intg_th_sum_fs_ep","AirTC_Avg","TC_5cm", "7");
-	tscatter_plot("LCO","RH_Min","ratio_intg_fs_ep","AirTC_Avg","TC_5cm", "8");
+	tscatter_plot("LCO",time_grid,ndet,"RH_Min","ratio_intg_th_ep","AirTC_Avg","TC_5cm", "5");
+	tscatter_plot("LCO",time_grid,ndet,"RH_Min","ratio_intg_th_fs","AirTC_Avg","TC_5cm", "6");
+	tscatter_plot("LCO",time_grid,ndet,"RH_Min","ratio_intg_th_sum_fs_ep","AirTC_Avg","TC_5cm", "7");
+	tscatter_plot("LCO",time_grid,ndet,"RH_Min","ratio_intg_fs_ep","AirTC_Avg","TC_5cm", "8");
 
-	tscatter_plot("LCO","AirTC_Avg","RH_Min","ratio_intg_th_ep","TC_5cm", "9");
-	tscatter_plot("LCO","AirTC_Avg","RH_Min","ratio_intg_th_fs","TC_5cm", "10");
-	tscatter_plot("LCO","AirTC_Avg","RH_Min","ratio_intg_th_sum_fs_ep","TC_5cm", "11");
-	tscatter_plot("LCO","AirTC_Avg","RH_Min","ratio_intg_fs_ep","TC_5cm", "12");
+	tscatter_plot("LCO",time_grid,ndet,"AirTC_Avg","RH_Min","ratio_intg_th_ep","TC_5cm", "9");
+	tscatter_plot("LCO",time_grid,ndet,"AirTC_Avg","RH_Min","ratio_intg_th_fs","TC_5cm", "10");
+	tscatter_plot("LCO",time_grid,ndet,"AirTC_Avg","RH_Min","ratio_intg_th_sum_fs_ep","TC_5cm", "11");
+	tscatter_plot("LCO",time_grid,ndet,"AirTC_Avg","RH_Min","ratio_intg_fs_ep","TC_5cm", "12");
 
-	tscatter_plot("LCO","Intg_th","Intg_ep","RH_Min","AirTC_Avg","13");
+	tscatter_plot("LCO",time_grid,ndet,"Intg_th","Intg_ep","RH_Min","AirTC_Avg","13");
 
-	tscatter_plot("LCO","AirTC_Avg","NEUrate_D16","RH_Min","TC_5cm", "14");
-	tscatter_plot("LCO","AirTC_Avg","NEUrate_D12","RH_Min","TC_5cm", "15");
-	tscatter_plot("LCO","AirTC_Avg","NEUrate_D02","RH_Min","TC_5cm", "16");
+	tscatter_plot("LCO",time_grid,ndet,"AirTC_Avg","NEUrate_D16","RH_Min","TC_5cm", "14");
+	tscatter_plot("LCO",time_grid,ndet,"AirTC_Avg","NEUrate_D12","RH_Min","TC_5cm", "15");
+	tscatter_plot("LCO",time_grid,ndet,"AirTC_Avg","NEUrate_D02","RH_Min","TC_5cm", "16");
 	
-	tscatter_plot("LCO","VWC_5cm","ratio_intg_th_sum_fs_ep","RH_Min","TC_5cm","17");
-	tscatter_plot("LCO","VWC_5cm","ratio_intg_th_sum_fs_ep","event_id","TC_5cm","18");
-	tscatter_plot("LCO","VWC_5cm","ratio_intg_th_sum_fs_ep","AirTC_Avg","TC_5cm","19");
+	tscatter_plot("LCO",time_grid,ndet,"VWC_5cm","ratio_intg_th_sum_fs_ep","RH_Min","TC_5cm","17");
+	tscatter_plot("LCO",time_grid,ndet,"VWC_5cm","ratio_intg_th_sum_fs_ep","event_id","TC_5cm","18");
+	tscatter_plot("LCO",time_grid,ndet,"VWC_5cm","ratio_intg_th_sum_fs_ep","AirTC_Avg","TC_5cm","19");
 	
 }
 
