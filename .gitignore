@@ -1,33 +1,55 @@
 ################################################
 ## Archivos o directorios a excluir del commit##
 ################################################
+local editor
+.vscode/
 
-# ignores all .root .zip .txt .dat files
-./*.root
-./*.zip
-./*.txt
-./*.dat
-./deconv_data_rootfile/*.root
-./deconv_data_rootfile/EM/LCO/*.root
-./deconv_data_rootfile/EM_MC/LCO/*.root
-./deconv_data_rootfile/EM_MC_stop/LCO/*.root
-./deconv_data_rootfile/EM_stop/LCO/*.root
-./deconv_mc_data_energy_fitting/LCO/*.root
+# local backups
+backup_code_pclin5/
 
- # does not ignore the README.txt file
-!README.txt
-!deconv_data_rootfile/.keep_dir
-!deconv_data_rootfile/EM/.keep_dir
-!deconv_data_rootfile/EM/LCO/.keep_dir
-!deconv_data_rootfile/EM_MC/LCO/.keep_dir
-!deconv_data_rootfile/EM_MC_stop/LCO/.keep_dir
-!deconv_data_rootfile/EM_stop/.keep_dir
-!deconv_mc_data_energy_fitting/.keep_dir
-!deconv_mc_data_energy_fitting/LCO/.keep_dir
-!EXPACS_Data/EXPACS_Calc_nflux/*.dat
-!EXPACS_Data/EXPACS_Calc_nflux_500/*.dat
+############################################
+# Generated outputs (never track)
+############################################
+# Ignore everything under outputs/pdf/ & outputs/root/ & outputs/log/
+outputs/pdf/*
+outputs/root/*
+outputs/log/*
 
+# Allow the directories we want to keep
+#!outputs/pdf/
+#!outputs/root/
+#!outputs/log/
 
-# Ejemplos de directorios
-# sql/
-# [Tt]est[Rr]esult*/
+# Allow placeholders in those dirs
+!outputs/pdf/.keep_dir
+!outputs/root/.keep_dir
+!outputs/log/.keep_dir
+
+############################################
+# External data (downloaded, not tracked)
+############################################
+# Ignore everything under data/external/ and data/sample/
+data/external/*
+data/sample/*
+
+# Allow placeholders
+!data/external/.keep_dir
+!data/sample/.keep_dir
+
+############################################
+# Large binaries anywhere
+############################################
+*.root
+*.zip
+*.pdf
+*.png
+*.svg
+
+############################################
+# Logs / temp
+############################################
+*.log
+*.out
+*.err
+*~
+.DS_Store
