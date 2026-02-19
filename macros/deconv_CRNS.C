@@ -17,22 +17,22 @@ namespace fs = std::filesystem;
 void Response_function_matrix_lin_spec_2023_plot(){
 
 
-		TFile *E01_file = TFile::Open("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_1_12cmHDPE_VV.root");
-		TFile *E02_file = TFile::Open("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_2_10cmHDPE_VV.root");
-		TFile *E03_file = TFile::Open("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_3_4cmHDPE_VV.root");
-		TFile *E04_file = TFile::Open("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_4_CylinderHDPE_VV.root");
-		TFile *E05_file = TFile::Open("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_5_Cylinder7mmAl_1.8cmBHDPECore_VV.root");
-		TFile *E06_file = TFile::Open("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_6_18cmHDPE_VV.root");
-		TFile *E07_file = TFile::Open("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_7_20cmHDPE_VV.root");
-		TFile *E08_file = TFile::Open("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_8_1inchBHDPE_10cmHDPE_VV.root");
-		TFile *E09_file = TFile::Open("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_9_20cmBHDPE_1.0inch_VV.root");
-		TFile *E10_file = TFile::Open("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_10_Cylinder_4cm_VV.root");
-		TFile *E11_file = TFile::Open("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_11_Cylinder_3cm_VV.root");
-		TFile *E12_file = TFile::Open("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_12_Pb_10cmBHDPEcore_VV.root");
-		TFile *E13_file = TFile::Open("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_13_1inchBHDPE_15cmGraphite_VV.root");
-		TFile *E14_file = TFile::Open("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_14_inchBHDPE_15cmHDPE_VV.root");
-		TFile *E15_file = TFile::Open("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_15_24cmHDPE_VV.root");
-		TFile *E16_file = TFile::Open("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_16_Naked_1inch_VV.root");
+		TFile *E01_file = TFile::Open("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_1_12cmHDPE_VV.root");
+		TFile *E02_file = TFile::Open("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_2_10cmHDPE_VV.root");
+		TFile *E03_file = TFile::Open("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_3_4cmHDPE_VV.root");
+		TFile *E04_file = TFile::Open("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_4_CylinderHDPE_VV.root");
+		TFile *E05_file = TFile::Open("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_5_Cylinder7mmAl_1.8cmBHDPECore_VV.root");
+		TFile *E06_file = TFile::Open("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_6_18cmHDPE_VV.root");
+		TFile *E07_file = TFile::Open("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_7_20cmHDPE_VV.root");
+		TFile *E08_file = TFile::Open("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_8_1inchBHDPE_10cmHDPE_VV.root");
+		TFile *E09_file = TFile::Open("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_9_20cmBHDPE_1.0inch_VV.root");
+		TFile *E10_file = TFile::Open("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_10_Cylinder_4cm_VV.root");
+		TFile *E11_file = TFile::Open("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_11_Cylinder_3cm_VV.root");
+		TFile *E12_file = TFile::Open("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_12_Pb_10cmBHDPEcore_VV.root");
+		TFile *E13_file = TFile::Open("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_13_1inchBHDPE_15cmGraphite_VV.root");
+		TFile *E14_file = TFile::Open("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_14_inchBHDPE_15cmHDPE_VV.root");
+		TFile *E15_file = TFile::Open("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_15_24cmHDPE_VV.root");
+		TFile *E16_file = TFile::Open("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_16_Naked_1inch_VV.root");
 		
 		TH1D *h_d01 = (TH1D*)E01_file->Get("E1_12cmHDPE");
 		TH1D *h_d02 = (TH1D*)E02_file->Get("E2_10cmHDPE");
@@ -138,22 +138,22 @@ void Response_function_matrix_lin_spec_2023_plot(){
 void Response_function_matrix_lin_spec_2024_plot(){
 
 
-		TFile *E01_file = TFile::Open("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_1_12cmHDPE_VV.root");
-		TFile *E02_file = TFile::Open("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_2_10cmHDPE_VV.root");
-		TFile *E03_file = TFile::Open("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024/Efi_3_4cmHDPE_NEW_VV.root");
-		TFile *E04_file = TFile::Open("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_4_CylinderHDPE_VV.root");
-		TFile *E05_file = TFile::Open("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024/Efi_5_Cylinder7mmAl_1.8cmBHDPECore_NEW_VV.root");
-		TFile *E06_file = TFile::Open("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_6_18cmHDPE_VV.root");
-		TFile *E07_file = TFile::Open("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_7_20cmHDPE_VV.root");
-		TFile *E08_file = TFile::Open("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024/Efi_8_1inchBHDPE_10cmHDPE_NEW_VV.root");
-		TFile *E09_file = TFile::Open("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024/Efi_9_20cmBHDPE_1.0inch_NEW_VV.root");
-		TFile *E10_file = TFile::Open("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_10_Cylinder_4cm_VV.root");
-		TFile *E11_file = TFile::Open("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_11_Cylinder_3cm_VV.root");
-		TFile *E12_file = TFile::Open("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024/Efi_12_Pb_10cmBHDPEcore_NEW_VV.root");
-		TFile *E13_file = TFile::Open("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024/Efi_13_1inchBHDPE_15cmGraphite_NEW_VV.root");
-		TFile *E14_file = TFile::Open("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024/Efi_14_inchBHDPE_15cmHDPE_NEW_VV.root");
-		TFile *E15_file = TFile::Open("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_15_24cmHDPE_VV.root");
-		TFile *E16_file = TFile::Open("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024/Efi_16_Naked_1inch_NEW_VV.root");
+		TFile *E01_file = TFile::Open("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_1_12cmHDPE_VV.root");
+		TFile *E02_file = TFile::Open("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_2_10cmHDPE_VV.root");
+		TFile *E03_file = TFile::Open("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024/Efi_3_4cmHDPE_NEW_VV.root");
+		TFile *E04_file = TFile::Open("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_4_CylinderHDPE_VV.root");
+		TFile *E05_file = TFile::Open("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024/Efi_5_Cylinder7mmAl_1.8cmBHDPECore_NEW_VV.root");
+		TFile *E06_file = TFile::Open("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_6_18cmHDPE_VV.root");
+		TFile *E07_file = TFile::Open("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_7_20cmHDPE_VV.root");
+		TFile *E08_file = TFile::Open("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024/Efi_8_1inchBHDPE_10cmHDPE_NEW_VV.root");
+		TFile *E09_file = TFile::Open("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024/Efi_9_20cmBHDPE_1.0inch_NEW_VV.root");
+		TFile *E10_file = TFile::Open("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_10_Cylinder_4cm_VV.root");
+		TFile *E11_file = TFile::Open("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_11_Cylinder_3cm_VV.root");
+		TFile *E12_file = TFile::Open("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024/Efi_12_Pb_10cmBHDPEcore_NEW_VV.root");
+		TFile *E13_file = TFile::Open("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024/Efi_13_1inchBHDPE_15cmGraphite_NEW_VV.root");
+		TFile *E14_file = TFile::Open("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024/Efi_14_inchBHDPE_15cmHDPE_NEW_VV.root");
+		TFile *E15_file = TFile::Open("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_15_24cmHDPE_VV.root");
+		TFile *E16_file = TFile::Open("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024/Efi_16_Naked_1inch_NEW_VV.root");
 		
 		TH1D *h_d01 = (TH1D*)E01_file->Get("E1_12cmHDPE");
 		TH1D *h_d02 = (TH1D*)E02_file->Get("E2_10cmHDPE");
@@ -278,23 +278,23 @@ vector< vector<Double_t>> R; /*matriz de eficiencias absolutas (viene de la func
 //~ TFile *E15_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_15_24cmHDPE_VV.root");
 //~ TFile *E16_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_16_Naked_1inch_VV.root");
 
-TFile *E01_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_1_12cmHDPE_NEW_VV.root");
-TFile *E02_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_2_10cmHDPE_NEW_VV.root");
-TFile *E03_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_3_4cmHDPE_NEW_VV.root");
+TFile *E01_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_1_12cmHDPE_NEW_VV.root");
+TFile *E02_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_2_10cmHDPE_NEW_VV.root");
+TFile *E03_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_3_4cmHDPE_NEW_VV.root");
 //~ TFile *E04_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_4_CylinderHDPE_NEW_VV.root");
-TFile *E04_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_17_Cylinder_HDPE_10cm_plus_5cm_BHDPE_VV.root");
-TFile *E05_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_5_Cylinder7mmAl_1.8cmBHDPECore_NEW_VV.root");
-TFile *E06_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_6_18cmHDPE_NEW_VV.root");
-TFile *E07_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_7_20cmHDPE_NEW_VV.root");
-TFile *E08_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_8_1inchBHDPE_10cmHDPE_NEW_VV.root");
-TFile *E09_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_9_20cmBHDPE_1.0inch_NEW_VV.root");
-TFile *E10_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_10_Cylinder_4cm_NEW_VV.root");
-TFile *E11_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_11_Cylinder_3cm_NEW_VV.root");
-TFile *E12_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_12_Pb_10cmBHDPEcore_NEW_VV.root");
-TFile *E13_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_13_1inchBHDPE_15cmGraphite_NEW_VV.root");
-TFile *E14_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_14_inchBHDPE_15cmHDPE_NEW_VV.root");
-TFile *E15_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_15_24cmHDPE_NEW_VV.root");
-TFile *E16_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_16_Naked_1inch_NEW_VV.root");
+TFile *E04_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_17_Cylinder_HDPE_10cm_plus_5cm_BHDPE_VV.root");
+TFile *E05_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_5_Cylinder7mmAl_1.8cmBHDPECore_NEW_VV.root");
+TFile *E06_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_6_18cmHDPE_NEW_VV.root");
+TFile *E07_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_7_20cmHDPE_NEW_VV.root");
+TFile *E08_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_8_1inchBHDPE_10cmHDPE_NEW_VV.root");
+TFile *E09_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_9_20cmBHDPE_1.0inch_NEW_VV.root");
+TFile *E10_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_10_Cylinder_4cm_NEW_VV.root");
+TFile *E11_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_11_Cylinder_3cm_NEW_VV.root");
+TFile *E12_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_12_Pb_10cmBHDPEcore_NEW_VV.root");
+TFile *E13_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_13_1inchBHDPE_15cmGraphite_NEW_VV.root");
+TFile *E14_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_14_inchBHDPE_15cmHDPE_NEW_VV.root");
+TFile *E15_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_15_24cmHDPE_NEW_VV.root");
+TFile *E16_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_16_Naked_1inch_NEW_VV.root");
 
 TH1D *h_d01 = (TH1D*)E01_file->Get("E1_12cmHDPE_NEW");
 TH1D *h_d02 = (TH1D*)E02_file->Get("E2_10cmHDPE_NEW");
@@ -441,26 +441,26 @@ vector< vector<Double_t>> R; /*matriz de eficiencias absolutas (viene de la func
 //~ string scale_factor = "/RF_wo_aquarter_factor/"; //con el factor 1/4
 string scale_factor = "/"; //sin el factor 1/4
 
-TFile *E01_file = new TFile(("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix"+scale_factor+"Efi_1_12cmHDPE_NEW_VV_smooth_smooth_root_15.root").c_str());
-TFile *E02_file = new TFile(("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix"+scale_factor+"Efi_2_10cmHDPE_NEW_VV_smooth_smooth_root_15.root").c_str());
-TFile *E03_file = new TFile(("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix"+scale_factor+"Efi_3_4cmHDPE_NEW_VV_smooth_smooth_root_15.root").c_str());
+TFile *E01_file = new TFile(("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix"+scale_factor+"Efi_1_12cmHDPE_NEW_VV_smooth_smooth_root_15.root").c_str());
+TFile *E02_file = new TFile(("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix"+scale_factor+"Efi_2_10cmHDPE_NEW_VV_smooth_smooth_root_15.root").c_str());
+TFile *E03_file = new TFile(("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix"+scale_factor+"Efi_3_4cmHDPE_NEW_VV_smooth_smooth_root_15.root").c_str());
 
 //~ TFile *E04_file = new TFile(("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix"+scale_factor+"Efi_4_CylinderHDPE_NEW_VV.root").c_str()); //2023
 //~ TFile *E04_file = new TFile(("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix"+scale_factor+"Efi_4_CylinderHDPE_NEW_VV_smooth_smooth_root_15.root").c_str()); //2023
 
-TFile *E04_file = new TFile(("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix"+scale_factor+"Efi_17_Cylinder_HDPE_10cm_plus_5cm_BHDPE_VV_smooth_smooth_root_15.root").c_str());
-TFile *E05_file = new TFile(("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix"+scale_factor+"Efi_5_Cylinder7mmAl_1.8cmBHDPECore_NEW_VV_smooth_smooth_root_15.root").c_str());
-TFile *E06_file = new TFile(("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix"+scale_factor+"Efi_6_18cmHDPE_NEW_VV_smooth_smooth_root_15.root").c_str());
-TFile *E07_file = new TFile(("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix"+scale_factor+"Efi_7_20cmHDPE_NEW_VV_smooth_smooth_root_15.root").c_str());
-TFile *E08_file = new TFile(("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix"+scale_factor+"Efi_8_1inchBHDPE_10cmHDPE_NEW_VV_smooth_smooth_root_15.root").c_str());
-TFile *E09_file = new TFile(("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix"+scale_factor+"Efi_9_20cmBHDPE_1.0inch_NEW_VV_smooth_smooth_root_15.root").c_str());
-TFile *E10_file = new TFile(("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix"+scale_factor+"Efi_10_Cylinder_4cm_NEW_VV_smooth_smooth_root_15.root").c_str());
-TFile *E11_file = new TFile(("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix"+scale_factor+"Efi_11_Cylinder_3cm_NEW_VV_smooth_smooth_root_15.root").c_str());
-TFile *E12_file = new TFile(("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix"+scale_factor+"Efi_12_Pb_10cmBHDPEcore_NEW_VV_smooth_smooth_root_15.root").c_str());
-TFile *E13_file = new TFile(("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix"+scale_factor+"Efi_13_1inchBHDPE_15cmGraphite_NEW_VV_smooth_smooth_root_15.root").c_str());
-TFile *E14_file = new TFile(("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix"+scale_factor+"Efi_14_inchBHDPE_15cmHDPE_NEW_VV_smooth_smooth_root_15.root").c_str());
-TFile *E15_file = new TFile(("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix"+scale_factor+"Efi_15_24cmHDPE_NEW_VV_smooth_smooth_root_15.root").c_str());
-TFile *E16_file = new TFile(("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix"+scale_factor+"Efi_16_Naked_1inch_NEW_VV_smooth_smooth_root_15.root").c_str());
+TFile *E04_file = new TFile(("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix"+scale_factor+"Efi_17_Cylinder_HDPE_10cm_plus_5cm_BHDPE_VV_smooth_smooth_root_15.root").c_str());
+TFile *E05_file = new TFile(("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix"+scale_factor+"Efi_5_Cylinder7mmAl_1.8cmBHDPECore_NEW_VV_smooth_smooth_root_15.root").c_str());
+TFile *E06_file = new TFile(("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix"+scale_factor+"Efi_6_18cmHDPE_NEW_VV_smooth_smooth_root_15.root").c_str());
+TFile *E07_file = new TFile(("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix"+scale_factor+"Efi_7_20cmHDPE_NEW_VV_smooth_smooth_root_15.root").c_str());
+TFile *E08_file = new TFile(("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix"+scale_factor+"Efi_8_1inchBHDPE_10cmHDPE_NEW_VV_smooth_smooth_root_15.root").c_str());
+TFile *E09_file = new TFile(("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix"+scale_factor+"Efi_9_20cmBHDPE_1.0inch_NEW_VV_smooth_smooth_root_15.root").c_str());
+TFile *E10_file = new TFile(("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix"+scale_factor+"Efi_10_Cylinder_4cm_NEW_VV_smooth_smooth_root_15.root").c_str());
+TFile *E11_file = new TFile(("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix"+scale_factor+"Efi_11_Cylinder_3cm_NEW_VV_smooth_smooth_root_15.root").c_str());
+TFile *E12_file = new TFile(("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix"+scale_factor+"Efi_12_Pb_10cmBHDPEcore_NEW_VV_smooth_smooth_root_15.root").c_str());
+TFile *E13_file = new TFile(("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix"+scale_factor+"Efi_13_1inchBHDPE_15cmGraphite_NEW_VV_smooth_smooth_root_15.root").c_str());
+TFile *E14_file = new TFile(("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix"+scale_factor+"Efi_14_inchBHDPE_15cmHDPE_NEW_VV_smooth_smooth_root_15.root").c_str());
+TFile *E15_file = new TFile(("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix"+scale_factor+"Efi_15_24cmHDPE_NEW_VV_smooth_smooth_root_15.root").c_str());
+TFile *E16_file = new TFile(("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix"+scale_factor+"Efi_16_Naked_1inch_NEW_VV_smooth_smooth_root_15.root").c_str());
 //~ TFile *E17_file = new TFile(("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix"+scale_factor+"Efi_17_Cylinder_HDPE_10cm_plus_5cm_BHDPE_VV_smooth_smooth_root_15.root").c_str());
 
 
@@ -629,22 +629,22 @@ vector< vector<Double_t>> R; /*matriz de eficiencias absolutas (viene de la func
 //~ TFile *E15_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_15_24cmHDPE_VV.root");
 //~ TFile *E16_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_16_Naked_1inch_VV.root");
 
-TFile *E01_file = TFile::Open("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_1_12cmHDPE_VV.root");
-TFile *E02_file = TFile::Open("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_2_10cmHDPE_VV.root");
-TFile *E03_file = TFile::Open("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_3_4cmHDPE_VV.root");
-TFile *E04_file = TFile::Open("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_4_CylinderHDPE_VV.root");
-TFile *E05_file = TFile::Open("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_5_Cylinder7mmAl_1.8cmBHDPECore_VV.root");
-TFile *E06_file = TFile::Open("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_6_18cmHDPE_VV.root");
-TFile *E07_file = TFile::Open("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_7_20cmHDPE_VV.root");
-TFile *E08_file = TFile::Open("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_8_1inchBHDPE_10cmHDPE_VV.root");
-TFile *E09_file = TFile::Open("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_9_20cmBHDPE_1.0inch_VV.root");
-TFile *E10_file = TFile::Open("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_10_Cylinder_4cm_VV.root");
-TFile *E11_file = TFile::Open("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_11_Cylinder_3cm_VV.root");
-TFile *E12_file = TFile::Open("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_12_Pb_10cmBHDPEcore_VV.root");
-TFile *E13_file = TFile::Open("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_13_1inchBHDPE_15cmGraphite_VV.root");
-TFile *E14_file = TFile::Open("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_14_inchBHDPE_15cmHDPE_VV.root");
-TFile *E15_file = TFile::Open("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_15_24cmHDPE_VV.root");
-TFile *E16_file = TFile::Open("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_16_Naked_1inch_VV.root");
+TFile *E01_file = TFile::Open("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_1_12cmHDPE_VV.root");
+TFile *E02_file = TFile::Open("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_2_10cmHDPE_VV.root");
+TFile *E03_file = TFile::Open("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_3_4cmHDPE_VV.root");
+TFile *E04_file = TFile::Open("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_4_CylinderHDPE_VV.root");
+TFile *E05_file = TFile::Open("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_5_Cylinder7mmAl_1.8cmBHDPECore_VV.root");
+TFile *E06_file = TFile::Open("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_6_18cmHDPE_VV.root");
+TFile *E07_file = TFile::Open("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_7_20cmHDPE_VV.root");
+TFile *E08_file = TFile::Open("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_8_1inchBHDPE_10cmHDPE_VV.root");
+TFile *E09_file = TFile::Open("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_9_20cmBHDPE_1.0inch_VV.root");
+TFile *E10_file = TFile::Open("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_10_Cylinder_4cm_VV.root");
+TFile *E11_file = TFile::Open("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_11_Cylinder_3cm_VV.root");
+TFile *E12_file = TFile::Open("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_12_Pb_10cmBHDPEcore_VV.root");
+TFile *E13_file = TFile::Open("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_13_1inchBHDPE_15cmGraphite_VV.root");
+TFile *E14_file = TFile::Open("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_14_inchBHDPE_15cmHDPE_VV.root");
+TFile *E15_file = TFile::Open("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_15_24cmHDPE_VV.root");
+TFile *E16_file = TFile::Open("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_16_Naked_1inch_VV.root");
 
 TH1D *h_d01 = (TH1D*)E01_file->Get("E1_12cmHDPE");
 TH1D *h_d02 = (TH1D*)E02_file->Get("E2_10cmHDPE");
@@ -800,11 +800,11 @@ if (scale_factor == "ws" || scale_factor == "wos") {
 }
 
 if(physic_list=="QGSP_BERT")
-	{ path = "./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/"+scale_path;
+	{ path = "../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/"+scale_path;
 	  phylst_name = "NEW";
 	  cout << physic_list+" Physic_list" << endl;}
 else if(physic_list=="FTFP_BERT")
-	{path ="./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/"+scale_path;
+	{path ="../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/"+scale_path;
 	 phylst_name = "FTFP_BERT";
 	 cout << physic_list+" Physic_list" << endl;}
 else{cout << "Physics list inexistente o incorrecta" << endl;}
@@ -1135,23 +1135,23 @@ void Response_function_matrix_lin_spec_2023_fix_active_volume_more_statistics_sm
 		//~ TFile *E15_file = TFile::Open("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_15_24cmHDPE_VV.root");
 		//~ TFile *E16_file = TFile::Open("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024/Efi_16_Naked_1inch_NEW_VV.root");
 
-		TFile *E01_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_1_12cmHDPE_NEW_VV_smooth_smooth_root_15.root");
-		TFile *E02_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_2_10cmHDPE_NEW_VV_smooth_smooth_root_15.root");
-		TFile *E03_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_3_4cmHDPE_NEW_VV_smooth_smooth_root_15.root");
-		TFile *E04_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_4_CylinderHDPE_NEW_VV_smooth_smooth_root_15.root");
+		TFile *E01_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_1_12cmHDPE_NEW_VV_smooth_smooth_root_15.root");
+		TFile *E02_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_2_10cmHDPE_NEW_VV_smooth_smooth_root_15.root");
+		TFile *E03_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_3_4cmHDPE_NEW_VV_smooth_smooth_root_15.root");
+		TFile *E04_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_4_CylinderHDPE_NEW_VV_smooth_smooth_root_15.root");
 		//~ TFile *E04_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_17_Cylinder_HDPE_10cm_plus_5cm_BHDPE_VV_smooth_smooth_root_15.root");
-		TFile *E05_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_5_Cylinder7mmAl_1.8cmBHDPECore_NEW_VV_smooth_smooth_root_15.root");
-		TFile *E06_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_6_18cmHDPE_NEW_VV_smooth_smooth_root_15.root");
-		TFile *E07_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_7_20cmHDPE_NEW_VV_smooth_smooth_root_15.root");
-		TFile *E08_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_8_1inchBHDPE_10cmHDPE_NEW_VV_smooth_smooth_root_15.root");
-		TFile *E09_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_9_20cmBHDPE_1.0inch_NEW_VV_smooth_smooth_root_15.root");
-		TFile *E10_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_10_Cylinder_4cm_NEW_VV_smooth_smooth_root_15.root");
-		TFile *E11_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_11_Cylinder_3cm_NEW_VV_smooth_smooth_root_15.root");
-		TFile *E12_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_12_Pb_10cmBHDPEcore_NEW_VV_smooth_smooth_root_15.root");
-		TFile *E13_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_13_1inchBHDPE_15cmGraphite_NEW_VV_smooth_smooth_root_15.root");
-		TFile *E14_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_14_inchBHDPE_15cmHDPE_NEW_VV_smooth_smooth_root_15.root");
-		TFile *E15_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_15_24cmHDPE_NEW_VV_smooth_smooth_root_15.root");
-		TFile *E16_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_16_Naked_1inch_NEW_VV_smooth_smooth_root_15.root");
+		TFile *E05_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_5_Cylinder7mmAl_1.8cmBHDPECore_NEW_VV_smooth_smooth_root_15.root");
+		TFile *E06_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_6_18cmHDPE_NEW_VV_smooth_smooth_root_15.root");
+		TFile *E07_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_7_20cmHDPE_NEW_VV_smooth_smooth_root_15.root");
+		TFile *E08_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_8_1inchBHDPE_10cmHDPE_NEW_VV_smooth_smooth_root_15.root");
+		TFile *E09_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_9_20cmBHDPE_1.0inch_NEW_VV_smooth_smooth_root_15.root");
+		TFile *E10_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_10_Cylinder_4cm_NEW_VV_smooth_smooth_root_15.root");
+		TFile *E11_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_11_Cylinder_3cm_NEW_VV_smooth_smooth_root_15.root");
+		TFile *E12_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_12_Pb_10cmBHDPEcore_NEW_VV_smooth_smooth_root_15.root");
+		TFile *E13_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_13_1inchBHDPE_15cmGraphite_NEW_VV_smooth_smooth_root_15.root");
+		TFile *E14_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_14_inchBHDPE_15cmHDPE_NEW_VV_smooth_smooth_root_15.root");
+		TFile *E15_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_15_24cmHDPE_NEW_VV_smooth_smooth_root_15.root");
+		TFile *E16_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_16_Naked_1inch_NEW_VV_smooth_smooth_root_15.root");
 		//~ TFile *E17_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_17_Cylinder_HDPE_10cm_plus_5cm_BHDPE_VV_smooth_smooth_root_15.root");
 
 
@@ -1302,9 +1302,9 @@ void Response_function_matrix_lin_spec_2023_fix_active_volume_more_statistics_sm
 	   //~ c1_new->Update();
 	   c1_new->Draw();
 		
-	   c1_new->SaveAs("RF_Spec_CEFNEN_2023_fix_smooth_SG_smooth_root.svg");
-	   c1_new->SaveAs("RF_Spec_CEFNEN_2023_fix_smooth_SG_smooth_root.png");
-	   c1_new->SaveAs("RF_Spec_CEFNEN_2023_fix_smooth_SG_smooth_root.pdf");
+	   c1_new->SaveAs("../outputs/pdf/deconv_data_pdf/RF_img/RF_Spec_CEFNEN_2023_fix_smooth_SG_smooth_root.svg");
+	   c1_new->SaveAs("../outputs/pdf/deconv_data_pdf/RF_img/RF_Spec_CEFNEN_2023_fix_smooth_SG_smooth_root.png");
+	   c1_new->SaveAs("../outputs/pdf/deconv_data_pdf/RF_img/RF_Spec_CEFNEN_2023_fix_smooth_SG_smooth_root.pdf");
 	
 	
 
@@ -1330,23 +1330,23 @@ void Response_function_matrix_lin_spec_2024_fix_active_volume_plot(){
 		//~ TFile *E15_file = TFile::Open("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_15_24cmHDPE_VV.root");
 		//~ TFile *E16_file = TFile::Open("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024/Efi_16_Naked_1inch_NEW_VV.root");
 
-		TFile *E01_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_1_12cmHDPE_NEW_VV.root");
-		TFile *E02_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_2_10cmHDPE_NEW_VV.root");
-		TFile *E03_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_3_4cmHDPE_NEW_VV.root");
-		TFile *E04_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_4_CylinderHDPE_NEW_VV.root");
-		TFile *E05_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_5_Cylinder7mmAl_1.8cmBHDPECore_NEW_VV.root");
-		TFile *E06_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_6_18cmHDPE_NEW_VV.root");
-		TFile *E07_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_7_20cmHDPE_NEW_VV.root");
-		TFile *E08_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_8_1inchBHDPE_10cmHDPE_NEW_VV.root");
-		TFile *E09_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_9_20cmBHDPE_1.0inch_NEW_VV.root");
-		TFile *E10_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_10_Cylinder_4cm_NEW_VV.root");
-		TFile *E11_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_11_Cylinder_3cm_NEW_VV.root");
-		TFile *E12_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_12_Pb_10cmBHDPEcore_NEW_VV.root");
-		TFile *E13_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_13_1inchBHDPE_15cmGraphite_NEW_VV.root");
-		TFile *E14_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_14_inchBHDPE_15cmHDPE_NEW_VV.root");
-		TFile *E15_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_15_24cmHDPE_NEW_VV.root");
-		TFile *E16_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_16_Naked_1inch_NEW_VV.root");
-		TFile *E17_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_17_Cylinder_HDPE_10cm_plus_5cm_BHDPE_VV.root");
+		TFile *E01_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_1_12cmHDPE_NEW_VV.root");
+		TFile *E02_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_2_10cmHDPE_NEW_VV.root");
+		TFile *E03_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_3_4cmHDPE_NEW_VV.root");
+		TFile *E04_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_4_CylinderHDPE_NEW_VV.root");
+		TFile *E05_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_5_Cylinder7mmAl_1.8cmBHDPECore_NEW_VV.root");
+		TFile *E06_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_6_18cmHDPE_NEW_VV.root");
+		TFile *E07_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_7_20cmHDPE_NEW_VV.root");
+		TFile *E08_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_8_1inchBHDPE_10cmHDPE_NEW_VV.root");
+		TFile *E09_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_9_20cmBHDPE_1.0inch_NEW_VV.root");
+		TFile *E10_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_10_Cylinder_4cm_NEW_VV.root");
+		TFile *E11_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_11_Cylinder_3cm_NEW_VV.root");
+		TFile *E12_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_12_Pb_10cmBHDPEcore_NEW_VV.root");
+		TFile *E13_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_13_1inchBHDPE_15cmGraphite_NEW_VV.root");
+		TFile *E14_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_14_inchBHDPE_15cmHDPE_NEW_VV.root");
+		TFile *E15_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_15_24cmHDPE_NEW_VV.root");
+		TFile *E16_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_16_Naked_1inch_NEW_VV.root");
+		TFile *E17_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_17_Cylinder_HDPE_10cm_plus_5cm_BHDPE_VV.root");
 
 		TH1D *h_d01 = (TH1D*)E01_file->Get("E1_12cmHDPE_NEW");
 		TH1D *h_d02 = (TH1D*)E02_file->Get("E2_10cmHDPE_NEW");
@@ -1505,9 +1505,9 @@ void Response_function_matrix_lin_spec_2024_fix_active_volume_plot(){
 	   //~ c1_new->Update();
 	   c1_new->Draw();
 		
-	   c1_new->SaveAs("RF_Spectrometer_CEFNEN_2024_raw_sim_log.pdf");
-	   c1_new->SaveAs("RF_Spectrometer_CEFNEN_2024_raw_sim_log.svg");
-	   c1_new->SaveAs("RF_Spectrometer_CEFNEN_2024_raw_sim_log.png");
+	   c1_new->SaveAs("../outputs/pdf/deconv_data_pdf/RF_img/RF_Spectrometer_CEFNEN_2024_raw_sim_log.pdf");
+	   c1_new->SaveAs("../outputs/pdf/deconv_data_pdf/RF_img/RF_Spectrometer_CEFNEN_2024_raw_sim_log.svg");
+	   c1_new->SaveAs("../outputs/pdf/deconv_data_pdf/RF_img/RF_Spectrometer_CEFNEN_2024_raw_sim_log.png");
 	   c1_new->SaveAs("RF_Spectrometer_CEFNEN_2024_raw_sim_log.eps");
 	
 	
@@ -1534,23 +1534,23 @@ void Response_function_matrix_lin_spec_2024_fix_active_volume_smooth_plot(){
 		//~ TFile *E15_file = TFile::Open("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_15_24cmHDPE_VV.root");
 		//~ TFile *E16_file = TFile::Open("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024/Efi_16_Naked_1inch_NEW_VV.root");
 
-		TFile *E01_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_1_12cmHDPE_NEW_VV_smooth.root");
-		TFile *E02_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_2_10cmHDPE_NEW_VV_smooth.root");
-		TFile *E03_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_3_4cmHDPE_NEW_VV_smooth.root");
-		TFile *E04_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_4_CylinderHDPE_NEW_VV.root");
-		TFile *E05_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_5_Cylinder7mmAl_1.8cmBHDPECore_NEW_VV_smooth.root");
-		TFile *E06_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_6_18cmHDPE_NEW_VV_smooth.root");
-		TFile *E07_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_7_20cmHDPE_NEW_VV_smooth.root");
-		TFile *E08_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_8_1inchBHDPE_10cmHDPE_NEW_VV_smooth.root");
-		TFile *E09_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_9_20cmBHDPE_1.0inch_NEW_VV_smooth.root");
-		TFile *E10_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_10_Cylinder_4cm_NEW_VV_smooth.root");
-		TFile *E11_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_11_Cylinder_3cm_NEW_VV_smooth.root");
-		TFile *E12_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_12_Pb_10cmBHDPEcore_NEW_VV_smooth.root");
-		TFile *E13_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_13_1inchBHDPE_15cmGraphite_NEW_VV_smooth.root");
-		TFile *E14_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_14_inchBHDPE_15cmHDPE_NEW_VV_smooth.root");
-		TFile *E15_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_15_24cmHDPE_NEW_VV_smooth.root");
-		TFile *E16_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_16_Naked_1inch_NEW_VV_smooth.root");
-		TFile *E17_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_17_Cylinder_HDPE_10cm_plus_5cm_BHDPE_VV_smooth.root");
+		TFile *E01_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_1_12cmHDPE_NEW_VV_smooth.root");
+		TFile *E02_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_2_10cmHDPE_NEW_VV_smooth.root");
+		TFile *E03_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_3_4cmHDPE_NEW_VV_smooth.root");
+		TFile *E04_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_4_CylinderHDPE_NEW_VV.root");
+		TFile *E05_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_5_Cylinder7mmAl_1.8cmBHDPECore_NEW_VV_smooth.root");
+		TFile *E06_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_6_18cmHDPE_NEW_VV_smooth.root");
+		TFile *E07_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_7_20cmHDPE_NEW_VV_smooth.root");
+		TFile *E08_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_8_1inchBHDPE_10cmHDPE_NEW_VV_smooth.root");
+		TFile *E09_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_9_20cmBHDPE_1.0inch_NEW_VV_smooth.root");
+		TFile *E10_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_10_Cylinder_4cm_NEW_VV_smooth.root");
+		TFile *E11_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_11_Cylinder_3cm_NEW_VV_smooth.root");
+		TFile *E12_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_12_Pb_10cmBHDPEcore_NEW_VV_smooth.root");
+		TFile *E13_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_13_1inchBHDPE_15cmGraphite_NEW_VV_smooth.root");
+		TFile *E14_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_14_inchBHDPE_15cmHDPE_NEW_VV_smooth.root");
+		TFile *E15_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_15_24cmHDPE_NEW_VV_smooth.root");
+		TFile *E16_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_16_Naked_1inch_NEW_VV_smooth.root");
+		TFile *E17_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_17_Cylinder_HDPE_10cm_plus_5cm_BHDPE_VV_smooth.root");
 
 
 		TH1D *h_d01 = (TH1D*)E01_file->Get("E1_12cmHDPE_NEW_smooth");
@@ -1695,7 +1695,7 @@ void Response_function_matrix_lin_spec_2024_fix_active_volume_smooth_plot(){
 	   //~ c1_new->Update();
 	   c1_new->Draw();
 		
-	   c1_new->SaveAs("RF_Spec_CEFNEN_2024_fix_smooth_SG.svg");
+	   c1_new->SaveAs("../outputs/pdf/deconv_data_pdf/RF_img/RF_Spec_CEFNEN_2024_fix_smooth_SG.svg");
 	
 	
 
@@ -1721,23 +1721,23 @@ void Response_function_matrix_lin_spec_2024_fix_active_volume_smooth_root_plot()
 		//~ TFile *E15_file = TFile::Open("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_15_24cmHDPE_VV.root");
 		//~ TFile *E16_file = TFile::Open("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024/Efi_16_Naked_1inch_NEW_VV.root");
 
-		TFile *E01_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_1_12cmHDPE_NEW_VV_smooth_smooth_root_15.root");
-		TFile *E02_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_2_10cmHDPE_NEW_VV_smooth_smooth_root_15.root");
-		TFile *E03_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_3_4cmHDPE_NEW_VV_smooth_smooth_root_15.root");
+		TFile *E01_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_1_12cmHDPE_NEW_VV_smooth_smooth_root_15.root");
+		TFile *E02_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_2_10cmHDPE_NEW_VV_smooth_smooth_root_15.root");
+		TFile *E03_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_3_4cmHDPE_NEW_VV_smooth_smooth_root_15.root");
 		//~ TFile *E04_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_4_CylinderHDPE_NEW_VV.root");
-		TFile *E04_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_17_Cylinder_HDPE_10cm_plus_5cm_BHDPE_VV_smooth_smooth_root_15.root");
-		TFile *E05_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_5_Cylinder7mmAl_1.8cmBHDPECore_NEW_VV_smooth_smooth_root_15.root");
-		TFile *E06_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_6_18cmHDPE_NEW_VV_smooth_smooth_root_15.root");
-		TFile *E07_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_7_20cmHDPE_NEW_VV_smooth_smooth_root_15.root");
-		TFile *E08_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_8_1inchBHDPE_10cmHDPE_NEW_VV_smooth_smooth_root_15.root");
-		TFile *E09_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_9_20cmBHDPE_1.0inch_NEW_VV_smooth_smooth_root_15.root");
-		TFile *E10_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_10_Cylinder_4cm_NEW_VV_smooth_smooth_root_15.root");
-		TFile *E11_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_11_Cylinder_3cm_NEW_VV_smooth_smooth_root_15.root");
-		TFile *E12_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_12_Pb_10cmBHDPEcore_NEW_VV_smooth_smooth_root_15.root");
-		TFile *E13_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_13_1inchBHDPE_15cmGraphite_NEW_VV_smooth_smooth_root_15.root");
-		TFile *E14_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_14_inchBHDPE_15cmHDPE_NEW_VV_smooth_smooth_root_15.root");
-		TFile *E15_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_15_24cmHDPE_NEW_VV_smooth_smooth_root_15.root");
-		TFile *E16_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_16_Naked_1inch_NEW_VV_smooth_smooth_root_15.root");
+		TFile *E04_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_17_Cylinder_HDPE_10cm_plus_5cm_BHDPE_VV_smooth_smooth_root_15.root");
+		TFile *E05_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_5_Cylinder7mmAl_1.8cmBHDPECore_NEW_VV_smooth_smooth_root_15.root");
+		TFile *E06_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_6_18cmHDPE_NEW_VV_smooth_smooth_root_15.root");
+		TFile *E07_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_7_20cmHDPE_NEW_VV_smooth_smooth_root_15.root");
+		TFile *E08_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_8_1inchBHDPE_10cmHDPE_NEW_VV_smooth_smooth_root_15.root");
+		TFile *E09_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_9_20cmBHDPE_1.0inch_NEW_VV_smooth_smooth_root_15.root");
+		TFile *E10_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_10_Cylinder_4cm_NEW_VV_smooth_smooth_root_15.root");
+		TFile *E11_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_11_Cylinder_3cm_NEW_VV_smooth_smooth_root_15.root");
+		TFile *E12_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_12_Pb_10cmBHDPEcore_NEW_VV_smooth_smooth_root_15.root");
+		TFile *E13_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_13_1inchBHDPE_15cmGraphite_NEW_VV_smooth_smooth_root_15.root");
+		TFile *E14_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_14_inchBHDPE_15cmHDPE_NEW_VV_smooth_smooth_root_15.root");
+		TFile *E15_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_15_24cmHDPE_NEW_VV_smooth_smooth_root_15.root");
+		TFile *E16_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_16_Naked_1inch_NEW_VV_smooth_smooth_root_15.root");
 		//~ TFile *E17_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_17_Cylinder_HDPE_10cm_plus_5cm_BHDPE_VV_smooth_smooth_root_15.root");
 
 
@@ -1886,9 +1886,9 @@ void Response_function_matrix_lin_spec_2024_fix_active_volume_smooth_root_plot()
 	   //~ c1_new->Update();
 	   c1_new->Draw();
 		
-	   c1_new->SaveAs("RF_Spec_CEFNEN_2024_fix_smooth_SG_smooth_root.svg");
-	   c1_new->SaveAs("RF_Spec_CEFNEN_2024_fix_smooth_SG_smooth_root.png");
-	   c1_new->SaveAs("RF_Spec_CEFNEN_2024_fix_smooth_SG_smooth_root.pdf");
+	   c1_new->SaveAs("../outputs/pdf/deconv_data_pdf/RF_img/RF_Spec_CEFNEN_2024_fix_smooth_SG_smooth_root.svg");
+	   c1_new->SaveAs("../outputs/pdf/deconv_data_pdf/RF_img/RF_Spec_CEFNEN_2024_fix_smooth_SG_smooth_root.png");
+	   c1_new->SaveAs("../outputs/pdf/deconv_data_pdf/RF_img/RF_Spec_CEFNEN_2024_fix_smooth_SG_smooth_root.pdf");
 	
 	
 
@@ -1897,23 +1897,23 @@ void Response_function_matrix_lin_spec_2024_fix_active_volume_smooth_root_plot()
 
 void Response_function_matrix_lin_spec_2024_fix_active_volume_more_statistics_and_percperregion_plot(){
 
-		TFile *E01_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_1_12cmHDPE_NEW_VV.root");
-		TFile *E02_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_2_10cmHDPE_NEW_VV.root");
-		TFile *E03_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_3_4cmHDPE_NEW_VV.root");
-		TFile *E04_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_4_CylinderHDPE_NEW_VV.root");
+		TFile *E01_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_1_12cmHDPE_NEW_VV.root");
+		TFile *E02_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_2_10cmHDPE_NEW_VV.root");
+		TFile *E03_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_3_4cmHDPE_NEW_VV.root");
+		TFile *E04_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_4_CylinderHDPE_NEW_VV.root");
 		//~ TFile *E04_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_17_Cylinder_HDPE_10cm_plus_5cm_BHDPE_VV.root");
-		TFile *E05_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_5_Cylinder7mmAl_1.8cmBHDPECore_NEW_VV.root");
-		TFile *E06_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_6_18cmHDPE_NEW_VV.root");
-		TFile *E07_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_7_20cmHDPE_NEW_VV.root");
-		TFile *E08_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_8_1inchBHDPE_10cmHDPE_NEW_VV.root");
-		TFile *E09_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_9_20cmBHDPE_1.0inch_NEW_VV.root");
-		TFile *E10_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_10_Cylinder_4cm_NEW_VV.root");
-		TFile *E11_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_11_Cylinder_3cm_NEW_VV.root");
-		TFile *E12_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_12_Pb_10cmBHDPEcore_NEW_VV.root");
-		TFile *E13_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_13_1inchBHDPE_15cmGraphite_NEW_VV.root");
-		TFile *E14_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_14_inchBHDPE_15cmHDPE_NEW_VV.root");
-		TFile *E15_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_15_24cmHDPE_NEW_VV.root");
-		TFile *E16_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_16_Naked_1inch_NEW_VV.root");
+		TFile *E05_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_5_Cylinder7mmAl_1.8cmBHDPECore_NEW_VV.root");
+		TFile *E06_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_6_18cmHDPE_NEW_VV.root");
+		TFile *E07_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_7_20cmHDPE_NEW_VV.root");
+		TFile *E08_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_8_1inchBHDPE_10cmHDPE_NEW_VV.root");
+		TFile *E09_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_9_20cmBHDPE_1.0inch_NEW_VV.root");
+		TFile *E10_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_10_Cylinder_4cm_NEW_VV.root");
+		TFile *E11_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_11_Cylinder_3cm_NEW_VV.root");
+		TFile *E12_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_12_Pb_10cmBHDPEcore_NEW_VV.root");
+		TFile *E13_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_13_1inchBHDPE_15cmGraphite_NEW_VV.root");
+		TFile *E14_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_14_inchBHDPE_15cmHDPE_NEW_VV.root");
+		TFile *E15_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_15_24cmHDPE_NEW_VV.root");
+		TFile *E16_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_16_Naked_1inch_NEW_VV.root");
 
 		TH1D *h_d01 = (TH1D*)E01_file->Get("E1_12cmHDPE_NEW");
 		TH1D *h_d02 = (TH1D*)E02_file->Get("E2_10cmHDPE_NEW");
@@ -2134,22 +2134,22 @@ void Response_function_matrix_lin_spec_2024_fix_active_volume_more_statistics_an
 /*2do smooth, root smooth, PARA PAPER*/
 void Response_function_matrix_lin_spec_paper_fix_active_volume_smooth_root_FTFP_plot(){
 
-		TFile *E01_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/ws_factor/Efi_1_12cmHDPE_FTFP_BERT_VV_smooth_smooth_root_15_ws.root");
-		TFile *E02_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/ws_factor/Efi_2_10cmHDPE_FTFP_BERT_VV_smooth_smooth_root_15_ws.root");
-		TFile *E03_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/ws_factor/Efi_3_4cmHDPE_FTFP_BERT_VV_smooth_smooth_root_15_ws.root");
-		TFile *E04_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/ws_factor/Efi_4_CylinderHDPE_FTFP_BERT_VV_smooth_smooth_root_15_ws.root");
-		TFile *E05_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/ws_factor/Efi_5_Cylinder7mmAl_1.8cmBHDPECore_FTFP_BERT_VV_smooth_smooth_root_15_ws.root");
-		TFile *E06_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/ws_factor/Efi_6_18cmHDPE_FTFP_BERT_VV_smooth_smooth_root_15_ws.root");
-		TFile *E07_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/ws_factor/Efi_7_20cmHDPE_FTFP_BERT_VV_smooth_smooth_root_15_ws.root");
-		TFile *E08_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/ws_factor/Efi_8_1inchBHDPE_10cmHDPE_FTFP_BERT_VV_smooth_smooth_root_15_ws.root");
-		TFile *E09_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/ws_factor/Efi_9_20cmBHDPE_1.0inch_FTFP_BERT_VV_smooth_smooth_root_15_ws.root");
-		TFile *E10_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/ws_factor/Efi_10_Cylinder_4cm_FTFP_BERT_VV_smooth_smooth_root_15_ws.root");
-		TFile *E11_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/ws_factor/Efi_11_Cylinder_3cm_FTFP_BERT_VV_smooth_smooth_root_15_ws.root");
-		TFile *E12_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/ws_factor/Efi_12_Pb_10cmBHDPEcore_FTFP_BERT_VV_smooth_smooth_root_15_ws.root");
-		TFile *E13_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/ws_factor/Efi_13_1inchBHDPE_15cmGraphite_FTFP_BERT_VV_smooth_smooth_root_15_ws.root");
-		TFile *E14_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/ws_factor/Efi_14_inchBHDPE_15cmHDPE_FTFP_BERT_VV_smooth_smooth_root_15_ws.root");
-		TFile *E15_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/ws_factor/Efi_15_24cmHDPE_FTFP_BERT_VV_smooth_smooth_root_15_ws.root");
-		TFile *E16_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/ws_factor/Efi_16_Naked_1inch_FTFP_BERT_VV_smooth_smooth_root_15_ws.root");
+		TFile *E01_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/ws_factor/Efi_1_12cmHDPE_FTFP_BERT_VV_smooth_smooth_root_15_ws.root");
+		TFile *E02_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/ws_factor/Efi_2_10cmHDPE_FTFP_BERT_VV_smooth_smooth_root_15_ws.root");
+		TFile *E03_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/ws_factor/Efi_3_4cmHDPE_FTFP_BERT_VV_smooth_smooth_root_15_ws.root");
+		TFile *E04_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/ws_factor/Efi_4_CylinderHDPE_FTFP_BERT_VV_smooth_smooth_root_15_ws.root");
+		TFile *E05_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/ws_factor/Efi_5_Cylinder7mmAl_1.8cmBHDPECore_FTFP_BERT_VV_smooth_smooth_root_15_ws.root");
+		TFile *E06_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/ws_factor/Efi_6_18cmHDPE_FTFP_BERT_VV_smooth_smooth_root_15_ws.root");
+		TFile *E07_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/ws_factor/Efi_7_20cmHDPE_FTFP_BERT_VV_smooth_smooth_root_15_ws.root");
+		TFile *E08_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/ws_factor/Efi_8_1inchBHDPE_10cmHDPE_FTFP_BERT_VV_smooth_smooth_root_15_ws.root");
+		TFile *E09_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/ws_factor/Efi_9_20cmBHDPE_1.0inch_FTFP_BERT_VV_smooth_smooth_root_15_ws.root");
+		TFile *E10_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/ws_factor/Efi_10_Cylinder_4cm_FTFP_BERT_VV_smooth_smooth_root_15_ws.root");
+		TFile *E11_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/ws_factor/Efi_11_Cylinder_3cm_FTFP_BERT_VV_smooth_smooth_root_15_ws.root");
+		TFile *E12_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/ws_factor/Efi_12_Pb_10cmBHDPEcore_FTFP_BERT_VV_smooth_smooth_root_15_ws.root");
+		TFile *E13_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/ws_factor/Efi_13_1inchBHDPE_15cmGraphite_FTFP_BERT_VV_smooth_smooth_root_15_ws.root");
+		TFile *E14_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/ws_factor/Efi_14_inchBHDPE_15cmHDPE_FTFP_BERT_VV_smooth_smooth_root_15_ws.root");
+		TFile *E15_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/ws_factor/Efi_15_24cmHDPE_FTFP_BERT_VV_smooth_smooth_root_15_ws.root");
+		TFile *E16_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/ws_factor/Efi_16_Naked_1inch_FTFP_BERT_VV_smooth_smooth_root_15_ws.root");
 		//~ TFile *E17_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/Efi_17_Cylinder_HDPE_10cm_plus_5cm_BHDPE_VV_smooth_smooth_root_15.root");
 
 
@@ -2567,9 +2567,9 @@ for(int i=1;i<ndet;i++){
 		
 	   c1_new->Draw();
 		
-	   c1_new->SaveAs("./Response_Functions_CEFNEN_Spectrometer/RF_img/RF_Spec_CEFNEN_2025_FTFP_smooth_SG_smooth_root_scaled.svg");
-	   c1_new->SaveAs("./Response_Functions_CEFNEN_Spectrometer/RF_img/RF_Spec_CEFNEN_2025_FTFP_smooth_SG_smooth_root_scaled.png");
-	   c1_new->SaveAs("./Response_Functions_CEFNEN_Spectrometer/RF_img/RF_Spec_CEFNEN_2025_FTFP_smooth_SG_smooth_root_scaled.pdf");
+	   c1_new->SaveAs("../data/external/Response_Functions_CEFNEN_Spectrometer/RF_img/RF_Spec_CEFNEN_2025_FTFP_smooth_SG_smooth_root_scaled.svg");
+	   c1_new->SaveAs("../data/external/Response_Functions_CEFNEN_Spectrometer/RF_img/RF_Spec_CEFNEN_2025_FTFP_smooth_SG_smooth_root_scaled.png");
+	   c1_new->SaveAs("../data/external/Response_Functions_CEFNEN_Spectrometer/RF_img/RF_Spec_CEFNEN_2025_FTFP_smooth_SG_smooth_root_scaled.pdf");
 }
 
 
@@ -2594,23 +2594,23 @@ void Response_function_matrix_lin_spec_23_24_fix_active_volume_smooth_root_plot(
 		//~ TFile *E15_file = TFile::Open("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2023/Efi_15_24cmHDPE_VV.root");
 		//~ TFile *E16_file = TFile::Open("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024/Efi_16_Naked_1inch_NEW_VV.root");
 
-		TFile *E01_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_1_12cmHDPE_NEW_VV_smooth_smooth_root_15.root");
-		TFile *E02_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_2_10cmHDPE_NEW_VV_smooth_smooth_root_15.root");
-		TFile *E03_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_3_4cmHDPE_NEW_VV_smooth_smooth_root_15.root");
-		TFile *E04_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_4_CylinderHDPE_NEW_VV_smooth_smooth_root_15.root");
-		TFile *E05_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_5_Cylinder7mmAl_1.8cmBHDPECore_NEW_VV_smooth_smooth_root_15.root");
-		TFile *E06_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_6_18cmHDPE_NEW_VV_smooth_smooth_root_15.root");
-		TFile *E07_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_7_20cmHDPE_NEW_VV_smooth_smooth_root_15.root");
-		TFile *E08_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_8_1inchBHDPE_10cmHDPE_NEW_VV_smooth_smooth_root_15.root");
-		TFile *E09_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_9_20cmBHDPE_1.0inch_NEW_VV_smooth_smooth_root_15.root");
-		TFile *E10_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_10_Cylinder_4cm_NEW_VV_smooth_smooth_root_15.root");
-		TFile *E11_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_11_Cylinder_3cm_NEW_VV_smooth_smooth_root_15.root");
-		TFile *E12_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_12_Pb_10cmBHDPEcore_NEW_VV_smooth_smooth_root_15.root");
-		TFile *E13_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_13_1inchBHDPE_15cmGraphite_NEW_VV_smooth_smooth_root_15.root");
-		TFile *E14_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_14_inchBHDPE_15cmHDPE_NEW_VV_smooth_smooth_root_15.root");
-		TFile *E15_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_15_24cmHDPE_NEW_VV_smooth_smooth_root_15.root");
-		TFile *E16_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_16_Naked_1inch_NEW_VV_smooth_smooth_root_15.root");
-		TFile *E17_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_17_Cylinder_HDPE_10cm_plus_5cm_BHDPE_VV_smooth_smooth_root_15.root");
+		TFile *E01_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_1_12cmHDPE_NEW_VV_smooth_smooth_root_15.root");
+		TFile *E02_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_2_10cmHDPE_NEW_VV_smooth_smooth_root_15.root");
+		TFile *E03_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_3_4cmHDPE_NEW_VV_smooth_smooth_root_15.root");
+		TFile *E04_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_4_CylinderHDPE_NEW_VV_smooth_smooth_root_15.root");
+		TFile *E05_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_5_Cylinder7mmAl_1.8cmBHDPECore_NEW_VV_smooth_smooth_root_15.root");
+		TFile *E06_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_6_18cmHDPE_NEW_VV_smooth_smooth_root_15.root");
+		TFile *E07_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_7_20cmHDPE_NEW_VV_smooth_smooth_root_15.root");
+		TFile *E08_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_8_1inchBHDPE_10cmHDPE_NEW_VV_smooth_smooth_root_15.root");
+		TFile *E09_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_9_20cmBHDPE_1.0inch_NEW_VV_smooth_smooth_root_15.root");
+		TFile *E10_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_10_Cylinder_4cm_NEW_VV_smooth_smooth_root_15.root");
+		TFile *E11_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_11_Cylinder_3cm_NEW_VV_smooth_smooth_root_15.root");
+		TFile *E12_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_12_Pb_10cmBHDPEcore_NEW_VV_smooth_smooth_root_15.root");
+		TFile *E13_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_13_1inchBHDPE_15cmGraphite_NEW_VV_smooth_smooth_root_15.root");
+		TFile *E14_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_14_inchBHDPE_15cmHDPE_NEW_VV_smooth_smooth_root_15.root");
+		TFile *E15_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_15_24cmHDPE_NEW_VV_smooth_smooth_root_15.root");
+		TFile *E16_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_16_Naked_1inch_NEW_VV_smooth_smooth_root_15.root");
+		TFile *E17_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_17_Cylinder_HDPE_10cm_plus_5cm_BHDPE_VV_smooth_smooth_root_15.root");
 
 
 		TH1D *h_d01 = (TH1D*)E01_file->Get("E1_12cmHDPE_NEW_smooth_smooth_root_15");
@@ -3010,51 +3010,51 @@ for(int i=1;i<ndet;i++){
 		
 	   c1_new->Draw();
 		
-	   c1_new->SaveAs("./Response_Functions_CEFNEN_Spectrometer/RF_img/RF_Spec_CEFNEN_23_24_fix_smooth_SG_smooth_root_scaled.svg");
-	   c1_new->SaveAs("./Response_Functions_CEFNEN_Spectrometer/RF_img/RF_Spec_CEFNEN_23_24_fix_smooth_SG_smooth_root_scaled.png");
-	   c1_new->SaveAs("./Response_Functions_CEFNEN_Spectrometer/RF_img/RF_Spec_CEFNEN_23_24_fix_smooth_SG_smooth_root_scaled.pdf");
+	   c1_new->SaveAs("../data/external/Response_Functions_CEFNEN_Spectrometer/RF_img/RF_Spec_CEFNEN_23_24_fix_smooth_SG_smooth_root_scaled.svg");
+	   c1_new->SaveAs("../data/external/Response_Functions_CEFNEN_Spectrometer/RF_img/RF_Spec_CEFNEN_23_24_fix_smooth_SG_smooth_root_scaled.png");
+	   c1_new->SaveAs("../data/external/Response_Functions_CEFNEN_Spectrometer/RF_img/RF_Spec_CEFNEN_23_24_fix_smooth_SG_smooth_root_scaled.pdf");
 }
 
 
 
 void Response_function_comparison_plot(int det){
 
-		TFile *E01_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_1_12cmHDPE_NEW_VV.root");
-		TFile *E02_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_2_10cmHDPE_NEW_VV.root");
-		TFile *E03_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_3_4cmHDPE_NEW_VV.root");
-		TFile *E04_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_4_CylinderHDPE_NEW_VV.root");
-		TFile *E05_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_5_Cylinder7mmAl_1.8cmBHDPECore_NEW_VV.root");
-		TFile *E06_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_6_18cmHDPE_NEW_VV.root");
-		TFile *E07_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_7_20cmHDPE_NEW_VV.root");
-		TFile *E08_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_8_1inchBHDPE_10cmHDPE_NEW_VV.root");
-		TFile *E09_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_9_20cmBHDPE_1.0inch_NEW_VV.root");
-		TFile *E10_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_10_Cylinder_4cm_NEW_VV.root");
-		TFile *E11_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_11_Cylinder_3cm_NEW_VV.root");
-		TFile *E12_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_12_Pb_10cmBHDPEcore_NEW_VV.root");
-		TFile *E13_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_13_1inchBHDPE_15cmGraphite_NEW_VV.root");
-		TFile *E14_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_14_inchBHDPE_15cmHDPE_NEW_VV.root");
-		TFile *E15_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_15_24cmHDPE_NEW_VV.root");
-		TFile *E16_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_16_Naked_1inch_NEW_VV.root");
-		TFile *E17_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_17_Cylinder_HDPE_10cm_plus_5cm_BHDPE_VV.root");
+		TFile *E01_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_1_12cmHDPE_NEW_VV.root");
+		TFile *E02_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_2_10cmHDPE_NEW_VV.root");
+		TFile *E03_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_3_4cmHDPE_NEW_VV.root");
+		TFile *E04_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_4_CylinderHDPE_NEW_VV.root");
+		TFile *E05_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_5_Cylinder7mmAl_1.8cmBHDPECore_NEW_VV.root");
+		TFile *E06_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_6_18cmHDPE_NEW_VV.root");
+		TFile *E07_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_7_20cmHDPE_NEW_VV.root");
+		TFile *E08_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_8_1inchBHDPE_10cmHDPE_NEW_VV.root");
+		TFile *E09_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_9_20cmBHDPE_1.0inch_NEW_VV.root");
+		TFile *E10_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_10_Cylinder_4cm_NEW_VV.root");
+		TFile *E11_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_11_Cylinder_3cm_NEW_VV.root");
+		TFile *E12_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_12_Pb_10cmBHDPEcore_NEW_VV.root");
+		TFile *E13_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_13_1inchBHDPE_15cmGraphite_NEW_VV.root");
+		TFile *E14_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_14_inchBHDPE_15cmHDPE_NEW_VV.root");
+		TFile *E15_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_15_24cmHDPE_NEW_VV.root");
+		TFile *E16_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_16_Naked_1inch_NEW_VV.root");
+		TFile *E17_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_17_Cylinder_HDPE_10cm_plus_5cm_BHDPE_VV.root");
 
 		//* NEW RF*//
-		TFile *E01_file_ftfp = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/Efi_1_12cmHDPE_FTFP_VV.root");
-		TFile *E02_file_ftfp = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/Efi_2_10cmHDPE_FTFP_VV.root");
-		TFile *E03_file_ftfp = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/Efi_3_4cmHDPE_FTFP_VV.root");
-		TFile *E04_file_ftfp = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/Efi_4_CylinderHDPE_FTFP_VV.root");
-		TFile *E05_file_ftfp = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/Efi_5_Cylinder7mmAl_1.8cmBHDPECore_FTFP_VV.root");
-		TFile *E06_file_ftfp = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/Efi_6_18cmHDPE_FTFP_VV.root");
-		TFile *E07_file_ftfp = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/Efi_7_20cmHDPE_FTFP_VV.root");
-		TFile *E08_file_ftfp = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/Efi_8_1inchBHDPE_10cmHDPE_FTFP_VV.root");
-		TFile *E09_file_ftfp = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/Efi_9_20cmBHDPE_1.0inch_FTFP_VV.root");
-		TFile *E10_file_ftfp = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/Efi_10_Cylinder_4cm_FTFP_VV.root");
-		TFile *E11_file_ftfp = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/Efi_11_Cylinder_3cm_FTFP_VV.root");
-		TFile *E12_file_ftfp = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/Efi_12_Pb_10cmBHDPEcore_FTFP_VV.root");
-		TFile *E13_file_ftfp = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/Efi_13_1inchBHDPE_15cmGraphite_FTFP_VV.root");
-		TFile *E14_file_ftfp = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/Efi_14_inchBHDPE_15cmHDPE_FTFP_VV.root");
-		TFile *E15_file_ftfp = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/Efi_15_24cmHDPE_FTFP_VV.root");
-		TFile *E16_file_ftfp = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/Efi_16_Naked_1inch_FTFP_VV.root");
-		TFile *E17_file_ftfp = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/Efi_17_Cylinder_HDPE_10cm_plus_5cm_BHDPE_FTFP_VV.root");
+		TFile *E01_file_ftfp = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/Efi_1_12cmHDPE_FTFP_VV.root");
+		TFile *E02_file_ftfp = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/Efi_2_10cmHDPE_FTFP_VV.root");
+		TFile *E03_file_ftfp = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/Efi_3_4cmHDPE_FTFP_VV.root");
+		TFile *E04_file_ftfp = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/Efi_4_CylinderHDPE_FTFP_VV.root");
+		TFile *E05_file_ftfp = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/Efi_5_Cylinder7mmAl_1.8cmBHDPECore_FTFP_VV.root");
+		TFile *E06_file_ftfp = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/Efi_6_18cmHDPE_FTFP_VV.root");
+		TFile *E07_file_ftfp = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/Efi_7_20cmHDPE_FTFP_VV.root");
+		TFile *E08_file_ftfp = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/Efi_8_1inchBHDPE_10cmHDPE_FTFP_VV.root");
+		TFile *E09_file_ftfp = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/Efi_9_20cmBHDPE_1.0inch_FTFP_VV.root");
+		TFile *E10_file_ftfp = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/Efi_10_Cylinder_4cm_FTFP_VV.root");
+		TFile *E11_file_ftfp = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/Efi_11_Cylinder_3cm_FTFP_VV.root");
+		TFile *E12_file_ftfp = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/Efi_12_Pb_10cmBHDPEcore_FTFP_VV.root");
+		TFile *E13_file_ftfp = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/Efi_13_1inchBHDPE_15cmGraphite_FTFP_VV.root");
+		TFile *E14_file_ftfp = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/Efi_14_inchBHDPE_15cmHDPE_FTFP_VV.root");
+		TFile *E15_file_ftfp = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/Efi_15_24cmHDPE_FTFP_VV.root");
+		TFile *E16_file_ftfp = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/Efi_16_Naked_1inch_FTFP_VV.root");
+		TFile *E17_file_ftfp = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/Efi_17_Cylinder_HDPE_10cm_plus_5cm_BHDPE_FTFP_VV.root");
 
 		//~ TFile *E02_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_2_10cmHDPE_NEW_VV_smooth_smooth_root_15.root");
 		//~ TFile *E03_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_3_4cmHDPE_NEW_VV_smooth_smooth_root_15.root");
@@ -3438,9 +3438,9 @@ vec_hist_ftfp.push_back(h_d17_ftfp);
 	    //~ c1_new->cd();
 		//~ c1_new->Update();
 		
-	   c1_new->SaveAs(("./Response_Functions_CEFNEN_Spectrometer/RF_img/RF_2025_IMG/RF_Spec_CEFNEN_DET"+det_name+"_Comparison.svg").c_str());
-	   c1_new->SaveAs(("./Response_Functions_CEFNEN_Spectrometer/RF_img/RF_2025_IMG/RF_Spec_CEFNEN_DET"+det_name+"_Comparison.png").c_str());
-	   c1_new->SaveAs(("./Response_Functions_CEFNEN_Spectrometer/RF_img/RF_2025_IMG/RF_Spec_CEFNEN_DET"+det_name+"_Comparison.pdf").c_str());
+	   c1_new->SaveAs(("../data/external/Response_Functions_CEFNEN_Spectrometer/RF_img/RF_2025_IMG/RF_Spec_CEFNEN_DET"+det_name+"_Comparison.svg").c_str());
+	   c1_new->SaveAs(("../data/external/Response_Functions_CEFNEN_Spectrometer/RF_img/RF_2025_IMG/RF_Spec_CEFNEN_DET"+det_name+"_Comparison.png").c_str());
+	   c1_new->SaveAs(("../data/external/Response_Functions_CEFNEN_Spectrometer/RF_img/RF_2025_IMG/RF_Spec_CEFNEN_DET"+det_name+"_Comparison.pdf").c_str());
 }
 
 void Response_function_comparison_plot_loop(){
@@ -3528,22 +3528,22 @@ vector< vector<Double_t>> R; /*matriz de eficiencias absolutas (viene de la func
 
 /*LIN SPECTROMETER 2023 FIX active volume*/
 
-TFile *E01_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_1_12cmHDPE_NEW_VV.root");
-TFile *E02_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_2_10cmHDPE_NEW_VV.root");
-TFile *E03_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_3_4cmHDPE_NEW_VV.root");
-TFile *E04_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_4_CylinderHDPE_NEW_VV.root");
-TFile *E05_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_5_Cylinder7mmAl_1.8cmBHDPECore_NEW_VV.root");
-TFile *E06_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_6_18cmHDPE_NEW_VV.root");
-TFile *E07_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_7_20cmHDPE_NEW_VV.root");
-TFile *E08_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_8_1inchBHDPE_10cmHDPE_NEW_VV.root");
-TFile *E09_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_9_20cmBHDPE_1.0inch_NEW_VV.root");
-TFile *E10_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_10_Cylinder_4cm_NEW_VV.root");
-TFile *E11_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_11_Cylinder_3cm_NEW_VV.root");
-TFile *E12_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_12_Pb_10cmBHDPEcore_NEW_VV.root");
-TFile *E13_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_13_1inchBHDPE_15cmGraphite_NEW_VV.root");
-TFile *E14_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_14_inchBHDPE_15cmHDPE_NEW_VV.root");
-TFile *E15_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_15_24cmHDPE_NEW_VV.root");
-TFile *E16_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_16_Naked_1inch_NEW_VV.root");
+TFile *E01_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_1_12cmHDPE_NEW_VV.root");
+TFile *E02_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_2_10cmHDPE_NEW_VV.root");
+TFile *E03_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_3_4cmHDPE_NEW_VV.root");
+TFile *E04_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_4_CylinderHDPE_NEW_VV.root");
+TFile *E05_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_5_Cylinder7mmAl_1.8cmBHDPECore_NEW_VV.root");
+TFile *E06_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_6_18cmHDPE_NEW_VV.root");
+TFile *E07_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_7_20cmHDPE_NEW_VV.root");
+TFile *E08_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_8_1inchBHDPE_10cmHDPE_NEW_VV.root");
+TFile *E09_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_9_20cmBHDPE_1.0inch_NEW_VV.root");
+TFile *E10_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_10_Cylinder_4cm_NEW_VV.root");
+TFile *E11_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_11_Cylinder_3cm_NEW_VV.root");
+TFile *E12_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_12_Pb_10cmBHDPEcore_NEW_VV.root");
+TFile *E13_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_13_1inchBHDPE_15cmGraphite_NEW_VV.root");
+TFile *E14_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_14_inchBHDPE_15cmHDPE_NEW_VV.root");
+TFile *E15_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_15_24cmHDPE_NEW_VV.root");
+TFile *E16_file = new TFile("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_16_Naked_1inch_NEW_VV.root");
 
 /**************************************************/
 
@@ -3647,7 +3647,7 @@ for(int i =0; i<binning; i++)
 
 
 //~ auto seed_flux_expacs_csv ="/home/flopez/Dropbox/EXPACS_Data/EXPACS_Calc_nflux/csv_files/LasCampanasAtacama_2.csv";
-auto seed_flux_expacs_csv ="./EXPACS_Data/EXPACS_Calc_nflux/csv_files/LasCampanasAtacama_2.csv";
+auto seed_flux_expacs_csv ="../data/external/EXPACS_Data/EXPACS_Calc_nflux/csv_files/LasCampanasAtacama_2.csv";
 char delimiter = ',';
 char double_type ='D';
 std::unordered_map<std::string, char> msdata_map = {{"lower_edge_binvalue",double_type},{"bin_width", double_type},{"flux_value", double_type}}; // mapa de values (nombre de columna)-key (tipo de variable de la columna)
@@ -3771,7 +3771,7 @@ auto df_final = df_spec.Define("energy", [&]() {
 	//~ cout << j << " " << RF_d01_vec[j] << endl;
 //~ }
 
-df_final.Snapshot("Response_function_tree","Response_function_CEFNEN_2024_fix.root"); /*Save selected columns to disk, in a new TTree treename in file filename*/
+df_final.Snapshot("Response_function_tree","../outputs/root/Response_function_CEFNEN_2024_fix.root"); /*Save selected columns to disk, in a new TTree treename in file filename*/
 
 
 }
@@ -3791,11 +3791,11 @@ if (scale_factor == "ws" || scale_factor == "wos") {
 }
 
 if(physic_list=="QGSP_BERT")
-	{ path = "./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/"+scale_path;
+	{ path = "../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/"+scale_path;
 	  phylst_name = "NEW";
 	  cout << physic_list+" Physic_list" << endl;}
 else if(physic_list=="FTFP_BERT")
-	{path ="./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/"+scale_path;
+	{path ="../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/"+scale_path;
 	 phylst_name = "FTFP_BERT";
 	 cout << physic_list+" Physic_list" << endl;}
 else{cout << "Physics list inexistente o incorrecta" << endl;}
@@ -3926,7 +3926,7 @@ int bin_cut = 130;
 /*ICRP binning*/
 char delimiter = ',';
 char double_type ='D';
-string icrp116_binning_csv_path = "./EXPACS_Data/parma_cpp_flopez/ICRP116_binning_resume.csv";
+string icrp116_binning_csv_path = "../data/external/EXPACS_Data/parma_cpp_flopez/ICRP116_binning_resume.csv";
 std::unordered_map<std::string, char> icrp116_map = {{"Emid",double_type},{"Ewid", double_type},{"Elower", double_type},{"Eupper", double_type}}; // mapa de values (nombre de columna)-key (tipo de variable de la columna)
 auto df_icrp116 = ROOT::RDF::FromCSV(icrp116_binning_csv_path,true,delimiter,-1, std::move(icrp116_map));
 
@@ -3979,7 +3979,7 @@ auto df_final = df_spec
 
 
 
-df_final.Snapshot("Response_Function_CEFNEN_tree","Response_Function_CEFNEN_Spectrometer.root"); /*Save selected columns to disk, in a new TTree treename in file filename*/
+df_final.Snapshot("Response_Function_CEFNEN_tree","../outputs/root/Response_Function_CEFNEN_Spectrometer.root"); /*Save selected columns to disk, in a new TTree treename in file filename*/
 
 
 }
@@ -3990,7 +3990,7 @@ vector<vector<double_t> > Response_function_matrix_fm()
 vector< vector<Double_t>> R; /*matriz de eficiencias absolutas (viene de la funcion respuesta)*/
 
 /**Generamos archivos .root de cada csv file de funcion respuesta**/
-string path_files = "./Response_Functions_CEFNEN_Spectrometer/old_fm/csv_files/";
+string path_files = "../data/external/Response_Functions_CEFNEN_Spectrometer/old_fm/csv_files/";
 auto response_function_csv_E01 =path_files+"E1_12cmHDPE.csv";
 auto response_function_csv_E02 =path_files+"E2_10cmHDPE.csv";
 auto response_function_csv_E03 =path_files+"E3_4cmHDPE.csv";
@@ -4141,7 +4141,7 @@ void BackusGilbert_ResolutionPower(){
 	char delimiter = ',';
 	char double_type ='D';
 	//~ string icrp116_binning_csv_path = "/home/flopez/Data/Dropbox/EXPACS/parma_cpp_flopez/ICRP116_binning_resume.csv";
-	string icrp116_binning_csv_path = "./EXPACS_Data/parma_cpp_flopez/ICRP116_binning_resume.csv";
+	string icrp116_binning_csv_path = "../data/external/EXPACS_Data/parma_cpp_flopez/ICRP116_binning_resume.csv";
 	std::unordered_map<std::string, char> icrp116_map = {{"Emid",double_type},{"Ewid", double_type},{"Elower", double_type},{"Eupper", double_type}}; // mapa de values (nombre de columna)-key (tipo de variable de la columna)
 	auto df_icrp116 = ROOT::RDF::FromCSV(icrp116_binning_csv_path,true,delimiter,-1, std::move(icrp116_map));
 	/*Vectors*/
@@ -4167,7 +4167,7 @@ void BackusGilbert_ResolutionPower(){
     std::stringstream numero;
     numero << Eo;
     std::string numeronotacioncientifica = numero.str();
-    TFile *archivo = new TFile("./histogramas2.root", "RECREATE");
+    TFile *archivo = new TFile("../outputs/root/histogramas2.root", "RECREATE");
 	if (!archivo || archivo->IsZombie()) {
 		std::cerr << "File 'histogramas2.root' is a zombie or could not be opened.\n";
 		return;
@@ -4461,7 +4461,7 @@ TH1D* BackusGilbert_ResolutionPower_TH1D(double Eo_input){
 	char delimiter = ',';
 	char double_type ='D';
 	//~ string icrp116_binning_csv_path = "/home/flopez/Data/Dropbox/EXPACS/parma_cpp_flopez/ICRP116_binning_resume.csv";
-	string icrp116_binning_csv_path = "./EXPACS_Data/parma_cpp_flopez/ICRP116_binning_resume.csv";
+	string icrp116_binning_csv_path = "../data/external/EXPACS_Data/parma_cpp_flopez/ICRP116_binning_resume.csv";
 	std::unordered_map<std::string, char> icrp116_map = {{"Emid",double_type},{"Ewid", double_type},{"Elower", double_type},{"Eupper", double_type}}; // mapa de values (nombre de columna)-key (tipo de variable de la columna)
 	auto df_icrp116 = ROOT::RDF::FromCSV(icrp116_binning_csv_path,true,delimiter,-1, std::move(icrp116_map));
 	/*Vectors*/
@@ -4489,7 +4489,7 @@ TH1D* BackusGilbert_ResolutionPower_TH1D(double Eo_input){
     std::stringstream numero;
     numero << Eo;
     std::string numeronotacioncientifica = numero.str();
-    TFile *archivo = new TFile("./histogramas2.root", "RECREATE");
+    TFile *archivo = new TFile("../outputs/root/histogramas2.root", "RECREATE");
 	if (!archivo || archivo->IsZombie()) {
 		std::cerr << "File 'histogramas2.root' is a zombie or could not be opened.\n";
 		//~ return;
@@ -5031,9 +5031,9 @@ box->Draw();
     //~ canvas->SaveAs("./ResolvingPower_16det_SPA_CHA.png");
 
         
-     canvas->SaveAs("./deconv_data_pdf/ResolvingPower/ResolvingPower_16det_LCO_MAR_FTFP_BERT.pdf");
-     canvas->SaveAs("./deconv_data_pdf/ResolvingPower/ResolvingPower_16det_LCO_MAR_FTFP_BERT.png");
-     canvas->SaveAs("./deconv_data_pdf/ResolvingPower/ResolvingPower_16det_LCO_MAR_FTFP_BERT.svg");
+     canvas->SaveAs("../outputs/pdf/deconv_data_pdf/ResolvingPower/ResolvingPower_16det_LCO_MAR_FTFP_BERT.pdf");
+     canvas->SaveAs("../outputs/pdf/deconv_data_pdf/ResolvingPower/ResolvingPower_16det_LCO_MAR_FTFP_BERT.png");
+     canvas->SaveAs("../outputs/pdf/deconv_data_pdf/ResolvingPower/ResolvingPower_16det_LCO_MAR_FTFP_BERT.svg");
     
     // canvas->SaveAs("./deconv_data_pdf/ResolvingPower/ResolvingPower_11det_LCO_MAR_FTFP_BERT.pdf");
     // canvas->SaveAs("./deconv_data_pdf/ResolvingPower/ResolvingPower_11det_LCO_MAR_FTFP_BERT.png");
@@ -5061,24 +5061,24 @@ if(time==15)
 		{
 			//~ cout << "Read Data LCO " << endl;
 				//~ counting_rate_campaign_path ="./CRNS_Data/LCO/3rd_LCO_data_complete_15min.root"; //Old deconv
-				counting_rate_campaign_path ="./CRNS_Data/LCO/LCO_data_15min_complete.root";
+				counting_rate_campaign_path ="../data/external/CRNS_Data/LCO/LCO_data_15min_complete.root";
 		}
 	if(campaign=="Maricunga")
 		{
 				//~ counting_rate_campaign_path ="./CRNS_Data/Maricunga/3rd_Maricunga_data_15min_complete.root";
-				counting_rate_campaign_path ="./CRNS_Data/Maricunga/Maricunga_data_15min_complete.root";
+				counting_rate_campaign_path ="../data/external/CRNS_Data/Maricunga/Maricunga_data_15min_complete.root";
 		}
 	if(campaign=="RetenDesierto")
 		{
-				counting_rate_campaign_path ="./CRNS_Data/RetenDesierto/3rd_RetenDesierto_data_15min_complete.root";
+				counting_rate_campaign_path ="../data/external/CRNS_Data/RetenDesierto/3rd_RetenDesierto_data_15min_complete.root";
 		}	
 	if(campaign=="Chapiquilta")
 		{
-				counting_rate_campaign_path ="./CRNS_Data/Chapiquilta/Chapiquilta_data_15min_complete.root";
+				counting_rate_campaign_path ="../data/external/CRNS_Data/Chapiquilta/Chapiquilta_data_15min_complete.root";
 		}	
 	if(campaign=="SanPedrodeAtacama")
 		{
-				counting_rate_campaign_path ="./CRNS_Data/SanPedrodeAtacama/SanPedrodeAtacama_data_15min_complete.root";
+				counting_rate_campaign_path ="../data/external/CRNS_Data/SanPedrodeAtacama/SanPedrodeAtacama_data_15min_complete.root";
 		}	
 }
 
@@ -5087,7 +5087,7 @@ if(time==60)
 	if(campaign=="LCO")
 		{
 				//~ counting_rate_campaign_path ="./CRNS_Data/LCO/3rd_LCO_data_complete_1h.root";
-				counting_rate_campaign_path ="./CRNS_Data/LCO/LCO_data_60min_complete.root";
+				counting_rate_campaign_path ="../data/external/CRNS_Data/LCO/LCO_data_60min_complete.root";
 		}
 }
 
@@ -5206,24 +5206,24 @@ if(time==15)
 		{
 			//~ cout << "Read Data LCO " << endl;
 			//~ counting_rate_campaign_path ="./CRNS_Data/LCO/3rd_LCO_data_complete_15min.root"; //Old deconv
-			counting_rate_campaign_path ="./CRNS_Data/LCO/LCO_data_15min_complete.root";
+			counting_rate_campaign_path ="../data/external/CRNS_Data/LCO/LCO_data_15min_complete.root";
 		}
 	if(campaign=="Maricunga")
 		{
 				//~ counting_rate_campaign_path ="./CRNS_Data/Maricunga/3rd_Maricunga_data_15min_complete.root";
-				counting_rate_campaign_path ="./CRNS_Data/Maricunga/Maricunga_data_15min_complete.root";
+				counting_rate_campaign_path ="../data/external/CRNS_Data/Maricunga/Maricunga_data_15min_complete.root";
 		}
 	if(campaign=="RetenDesierto")
 		{
-				counting_rate_campaign_path ="./CRNS_Data/RetenDesierto/3rd_RetenDesierto_data_15min_complete.root";
+				counting_rate_campaign_path ="../data/external/CRNS_Data/RetenDesierto/3rd_RetenDesierto_data_15min_complete.root";
 		}
 	if(campaign=="Chapiquilta")
 		{
-				counting_rate_campaign_path ="./CRNS_Data/Chapiquilta/Chapiquilta_data_15min_complete.root";
+				counting_rate_campaign_path ="../data/external/CRNS_Data/Chapiquilta/Chapiquilta_data_15min_complete.root";
 		}
 	if(campaign=="SanPedrodeAtacama")
 		{
-				counting_rate_campaign_path ="./CRNS_Data/SanPedrodeAtacama/SanPedrodeAtacama_data_15min_complete.root";
+				counting_rate_campaign_path ="../data/external/CRNS_Data/SanPedrodeAtacama/SanPedrodeAtacama_data_15min_complete.root";
 		}	
 }
 
@@ -5232,7 +5232,7 @@ if(time==60)
 	if(campaign=="LCO")
 		{
 				//~ counting_rate_campaign_path ="./CRNS_Data/LCO/3rd_LCO_data_complete_1h.root";
-				counting_rate_campaign_path ="./CRNS_Data/LCO/LCO_data_60min_complete.root";
+				counting_rate_campaign_path ="../data/external/CRNS_Data/LCO/LCO_data_60min_complete.root";
 		}
 }
 
@@ -5340,24 +5340,24 @@ if(time==15)
 		{
 			//~ cout << "Read Data LCO " << endl;
 			//~ counting_rate_campaign_path ="./CRNS_Data/LCO/3rd_LCO_data_complete_15min.root"; //Old deconv
-			counting_rate_campaign_path ="./CRNS_Data/LCO/LCO_data_15min_complete.root";
+			counting_rate_campaign_path ="../data/external/CRNS_Data/LCO/LCO_data_15min_complete.root";
 		}
 	if(campaign=="Maricunga")
 		{
 				//~ counting_rate_campaign_path ="./CRNS_Data/Maricunga/3rd_Maricunga_data_15min_complete.root";
-				counting_rate_campaign_path ="./CRNS_Data/Maricunga/Maricunga_data_15min_complete.root";
+				counting_rate_campaign_path ="../data/external/CRNS_Data/Maricunga/Maricunga_data_15min_complete.root";
 		}
 	if(campaign=="RetenDesierto")
 		{
-				counting_rate_campaign_path ="./CRNS_Data/RetenDesierto/3rd_RetenDesierto_data_15min_complete.root";
+				counting_rate_campaign_path ="../data/external/CRNS_Data/RetenDesierto/3rd_RetenDesierto_data_15min_complete.root";
 		}	
 	if(campaign=="Chapiquilta")
 		{
-				counting_rate_campaign_path ="./CRNS_Data/Chapiquilta/Chapiquilta_data_15min_complete.root";
+				counting_rate_campaign_path ="../data/external/CRNS_Data/Chapiquilta/Chapiquilta_data_15min_complete.root";
 		}
 	if(campaign=="SanPedrodeAtacama")
 		{
-				counting_rate_campaign_path ="./CRNS_Data/SanPedrodeAtacama/SanPedrodeAtacama_data_15min_complete.root";
+				counting_rate_campaign_path ="../data/external/CRNS_Data/SanPedrodeAtacama/SanPedrodeAtacama_data_15min_complete.root";
 		}	
 }
 
@@ -5366,7 +5366,7 @@ if(time==60)
 	if(campaign=="LCO")
 		{
 				//~ counting_rate_campaign_path ="./CRNS_Data/LCO/3rd_LCO_data_complete_1h.root";
-				counting_rate_campaign_path ="./CRNS_Data/LCO/LCO_data_60min_complete.root";
+				counting_rate_campaign_path ="../data/external/CRNS_Data/LCO/LCO_data_60min_complete.root";
 		}
 }
 
@@ -5795,7 +5795,7 @@ vector<Double_t> B; /*bins*/ /*matriz de bordes de bins*/
 vector<Double_t> E; /*bins*/ /*matriz de Energias*/
 vector<Double_t> Emid; /*bins*/ /*matriz de Energias*/
 
-ofstream Chi2("chi2.txt"); // archivo de salida de chi2
+ofstream Chi2("../outputs/log/chi2.txt"); // archivo de salida de chi2
 
 /****Cargamos el flujo semilla*****/
 string str_stream_vwc;
@@ -5812,15 +5812,15 @@ if(vwc_seed<=150)
 
 			if(campaign=="LCO")
 				{
-					seed_flux_expacs_csv ="./EXPACS_Data/EXPACS_Calc_nflux_500/csv_files/LasCampanasAtacama_"+str_stream_vwc+".csv";
+					seed_flux_expacs_csv ="../data/external/EXPACS_Data/EXPACS_Calc_nflux_500/csv_files/LasCampanasAtacama_"+str_stream_vwc+".csv";
 				}
 			if(campaign=="Maricunga")
 				{
-					seed_flux_expacs_csv ="./EXPACS_Data/EXPACS_Calc_nflux_500/csv_files/PasoSanFcoAtacama_"+str_stream_vwc+".csv";
+					seed_flux_expacs_csv ="../data/external/EXPACS_Data/EXPACS_Calc_nflux_500/csv_files/PasoSanFcoAtacama_"+str_stream_vwc+".csv";
 				}
 			if(campaign=="RetenDesierto")
 				{
-					seed_flux_expacs_csv ="./EXPACS_Data/EXPACS_Calc_nflux_500/csv_files/DesiertoAtacama_"+str_stream_vwc+".csv";
+					seed_flux_expacs_csv ="../data/external/EXPACS_Data/EXPACS_Calc_nflux_500/csv_files/DesiertoAtacama_"+str_stream_vwc+".csv";
 				}
 		}
 
@@ -5838,11 +5838,11 @@ if(vwc_seed>150)
 			
 			if(campaign=="LCO")
 				{			
-					seed_flux_expacs_csv ="./EXPACS_Data/EXPACS_Calc_nflux/csv_files/LasCampanasAtacama_"+str_stream_vwc+".csv";
+					seed_flux_expacs_csv ="../data/external/EXPACS_Data/EXPACS_Calc_nflux/csv_files/LasCampanasAtacama_"+str_stream_vwc+".csv";
 				}
 			if(campaign=="Maricunga")
 				{
-					seed_flux_expacs_csv ="./EXPACS_Data/EXPACS_Calc_nflux/csv_files/PasoSanFcoAtacama_"+str_stream_vwc+".csv";
+					seed_flux_expacs_csv ="../data/external/EXPACS_Data/EXPACS_Calc_nflux/csv_files/PasoSanFcoAtacama_"+str_stream_vwc+".csv";
 				}
 		}
 
@@ -5850,7 +5850,7 @@ char delimiter = ',';
 char double_type ='D';
 std::unordered_map<std::string, char> msdata_map = {{"lower_edge_binvalue",double_type},{"bin_width", double_type},{"flux_value", double_type}}; // mapa de values (nombre de columna)-key (tipo de variable de la columna)
 auto seed_rdf = ROOT::RDF::FromCSV(seed_flux_expacs_csv,true,delimiter,-1, std::move(msdata_map));
-seed_rdf.Snapshot("expacs_flux","./seed_expacs.root"); /*Save selected columns to disk, in a new TTree treename in file filename*/
+seed_rdf.Snapshot("expacs_flux","../outputs/root/seed_expacs.root"); /*Save selected columns to disk, in a new TTree treename in file filename*/
 cout <<"Generated root file from csv file" << endl;
 
 /*Seleccionamos los datos del flujo semilla para LCO*/
@@ -6430,10 +6430,10 @@ vector<Double_t> Emid; /*bins*/ /*matriz de Energias centrales*/
 
 vector<Double_t> em_vec_output;
 
-ofstream Chi2("Stat_Estimators.txt"); // archivo de salida de Chi2
+ofstream Chi2("../outputs/log/Stat_Estimators.txt"); // archivo de salida de Chi2
 //~ ofstream debug_em("debug_em.txt"); // archivo de salida de Chi2
 // Abro una sola vez en modo append
-ofstream debug_em("debug_em.txt", std::ios::app);
+ofstream debug_em("../outputs/log/debug_em.txt", std::ios::app);
 
 /****Cargamos el flujo semilla*****/
 
@@ -6451,21 +6451,21 @@ if(vwc_seed<=150)
 
 			if(campaign=="LCO")
 				{
-					seed_flux_expacs_csv ="./EXPACS_Data/EXPACS_Calc_nflux_500/csv_files/LasCampanasAtacama_"+str_stream_vwc+".csv";
+					seed_flux_expacs_csv ="../data/external/EXPACS_Data/EXPACS_Calc_nflux_500/csv_files/LasCampanasAtacama_"+str_stream_vwc+".csv";
 				}
 			if(campaign=="Maricunga")
 				{
-					seed_flux_expacs_csv ="./EXPACS_Data/EXPACS_Calc_nflux_500/csv_files/PasoSanFcoAtacama_"+str_stream_vwc+".csv";
+					seed_flux_expacs_csv ="../data/external/EXPACS_Data/EXPACS_Calc_nflux_500/csv_files/PasoSanFcoAtacama_"+str_stream_vwc+".csv";
 				}
 			if(campaign=="RetenDesierto")
 				{
-					seed_flux_expacs_csv ="./EXPACS_Data/EXPACS_Calc_nflux_500/csv_files/DesiertoAtacama_"+str_stream_vwc+".csv";
+					seed_flux_expacs_csv ="../data/external/EXPACS_Data/EXPACS_Calc_nflux_500/csv_files/DesiertoAtacama_"+str_stream_vwc+".csv";
 				}
 			/**2024**/
 			if(campaign=="Chapiquilta")
 				{
 					/*Tomamos las mismas semillas que maricunga*/
-					seed_flux_expacs_csv ="./EXPACS_Data/EXPACS_Calc_nflux_500/csv_files/LasCampanasAtacama_"+str_stream_vwc+".csv";
+					seed_flux_expacs_csv ="../data/external/EXPACS_Data/EXPACS_Calc_nflux_500/csv_files/LasCampanasAtacama_"+str_stream_vwc+".csv";
 				}
 		}
 
@@ -6483,15 +6483,15 @@ if(vwc_seed>150)
 			
 			if(campaign=="LCO")
 				{			
-					seed_flux_expacs_csv ="./EXPACS_Data/EXPACS_Calc_nflux/csv_files/LasCampanasAtacama_"+str_stream_vwc+".csv";
+					seed_flux_expacs_csv ="../data/external/EXPACS_Data/EXPACS_Calc_nflux/csv_files/LasCampanasAtacama_"+str_stream_vwc+".csv";
 				}
 			if(campaign=="Maricunga")
 				{
-					seed_flux_expacs_csv ="./EXPACS_Data/EXPACS_Calc_nflux/csv_files/PasoSanFcoAtacama_"+str_stream_vwc+".csv";
+					seed_flux_expacs_csv ="../data/external/EXPACS_Data/EXPACS_Calc_nflux/csv_files/PasoSanFcoAtacama_"+str_stream_vwc+".csv";
 				}
 			if(campaign=="Chapiquilta")
 				{
-					seed_flux_expacs_csv ="./EXPACS_Data/EXPACS_Calc_nflux/csv_files/LasCampanasAtacama_"+str_stream_vwc+".csv";
+					seed_flux_expacs_csv ="../data/external/EXPACS_Data/EXPACS_Calc_nflux/csv_files/LasCampanasAtacama_"+str_stream_vwc+".csv";
 				}
 		}
 				 
@@ -7164,10 +7164,10 @@ vector<Double_t> Emid; /*bins*/ /*matriz de Energias centrales*/
 
 vector<Double_t> em_vec_output;
 
-ofstream Chi2("Stat_Estimators.txt"); // archivo de salida de Chi2
+ofstream Chi2("../outputs/log/Stat_Estimators.txt"); // archivo de salida de Chi2
 //~ ofstream debug_em("debug_em.txt"); // archivo de salida de Chi2
 // Abro una sola vez en modo append
-ofstream debug_em("debug_em.txt", std::ios::app);
+ofstream debug_em("../outputs/log/debug_em.txt", std::ios::app);
 
 /****Cargamos el flujo semilla*****/
 
@@ -7847,7 +7847,7 @@ void deconv_em_event_write_singlefile(
     char delimiter = ',';
     char double_type ='D';
 
-    std::string icrp116_binning_csv_path = "./EXPACS_Data/parma_cpp_flopez/ICRP116_binning_resume.csv";
+    std::string icrp116_binning_csv_path = "../data/external/EXPACS_Data/parma_cpp_flopez/ICRP116_binning_resume.csv";
     std::unordered_map<std::string, char> icrp116_map = {
         {"Emid",double_type},{"Ewid", double_type},{"Elower", double_type},{"Eupper", double_type}
     };
@@ -7870,7 +7870,7 @@ void deconv_em_event_write_singlefile(
     // -----------------------------
     // 2) PARMA/EXPACS seeds del ROOT file
     // -----------------------------
-    std::string parma_file_path = "./EXPACS_Data/parma_cpp_flopez/" + campaign + "_parma_fluxes_5.root";
+    std::string parma_file_path = "../data/external/EXPACS_Data/parma_cpp_flopez/" + campaign + "_parma_fluxes_5.root";
     ROOT::RDataFrame df_parma_spectra("BkgNeutronSpectra", parma_file_path);
 
     int year_input=0, month_input=0, day_input=0;
@@ -7982,7 +7982,7 @@ void deconv_em_event_write_singlefile(
     ss_event << event; ss_timegrid << time_grid;
 
     std::string outFileName =
-        "./deconv_data_rootfile/EM_single/" + campaign_path +
+        "../outputs/root/deconv_data_rootfile/EM_single/" + campaign_path +
         "/EM_single_campaign_" + campaign +
         "_event_" + ss_event.str() +
         "_timegrid_" + ss_timegrid.str() +
@@ -8205,19 +8205,19 @@ if(vwc_seed<=150)
 
 			if(campaign=="LCO")
 				{
-					seed_flux_expacs_csv ="./EXPACS_Data/EXPACS_Calc_nflux_500/csv_files/LasCampanasAtacama_"+str_stream_vwc+".csv";
+					seed_flux_expacs_csv ="../data/external/EXPACS_Data/EXPACS_Calc_nflux_500/csv_files/LasCampanasAtacama_"+str_stream_vwc+".csv";
 				}
 			if(campaign=="Maricunga")
 				{
-					seed_flux_expacs_csv ="./EXPACS_Data/EXPACS_Calc_nflux_500/csv_files/PasoSanFcoAtacama_"+str_stream_vwc+".csv";
+					seed_flux_expacs_csv ="../data/external/EXPACS_Data/EXPACS_Calc_nflux_500/csv_files/PasoSanFcoAtacama_"+str_stream_vwc+".csv";
 				}
 			if(campaign=="RetenDesierto")
 				{
-					seed_flux_expacs_csv ="./EXPACS_Data/EXPACS_Calc_nflux_500/csv_files/DesiertoAtacama_"+str_stream_vwc+".csv";
+					seed_flux_expacs_csv ="../data/external/EXPACS_Data/EXPACS_Calc_nflux_500/csv_files/DesiertoAtacama_"+str_stream_vwc+".csv";
 				}
 			if(campaign=="Chapiquilta")
 				{
-					seed_flux_expacs_csv ="./EXPACS_Data/EXPACS_Calc_nflux_500/csv_files/LasCampanasAtacama_"+str_stream_vwc+".csv";
+					seed_flux_expacs_csv ="../data/external/EXPACS_Data/EXPACS_Calc_nflux_500/csv_files/LasCampanasAtacama_"+str_stream_vwc+".csv";
 				}
 		}
 
@@ -8235,15 +8235,15 @@ if(vwc_seed>150)
 			
 			if(campaign=="LCO")
 				{			
-					seed_flux_expacs_csv ="./EXPACS_Data/EXPACS_Calc_nflux/csv_files/LasCampanasAtacama_"+str_stream_vwc+".csv";
+					seed_flux_expacs_csv ="../data/external/EXPACS_Data/EXPACS_Calc_nflux/csv_files/LasCampanasAtacama_"+str_stream_vwc+".csv";
 				}
 			if(campaign=="Maricunga")
 				{
-					seed_flux_expacs_csv ="./EXPACS_Data/EXPACS_Calc_nflux/csv_files/PasoSanFcoAtacama_"+str_stream_vwc+".csv";
+					seed_flux_expacs_csv ="../data/external/EXPACS_Data/EXPACS_Calc_nflux/csv_files/PasoSanFcoAtacama_"+str_stream_vwc+".csv";
 				}
 			if(campaign=="Chapiquilta")
 				{
-					seed_flux_expacs_csv ="./EXPACS_Data/EXPACS_Calc_nflux/csv_files/LasCampanasAtacama_"+str_stream_vwc+".csv";
+					seed_flux_expacs_csv ="../data/external/EXPACS_Data/EXPACS_Calc_nflux/csv_files/LasCampanasAtacama_"+str_stream_vwc+".csv";
 				}
 		}
 				 
@@ -9504,12 +9504,12 @@ stream_vwc << vwc_seed;
 std::string str_stream_vwc =stream_vwc.str();
 
 //~ auto seed_flux_expacs_csv ="/home/flopez/Dropbox./EXPACS_Data/EXPACS_Calc_nflux/csv_files/LasCampanasAtacama_"+str_stream_vwc+".csv";
-auto seed_flux_expacs_csv ="./EXPACS_Data/EXPACS_Calc_nflux/csv_files/LasCampanasAtacama_"+str_stream_vwc+".csv";
+auto seed_flux_expacs_csv ="../data/external/EXPACS_Data/EXPACS_Calc_nflux/csv_files/LasCampanasAtacama_"+str_stream_vwc+".csv";
 char delimiter = ',';
 char double_type ='D';
 std::unordered_map<std::string, char> msdata_map = {{"lower_edge_binvalue",double_type},{"bin_width", double_type},{"flux_value", double_type}}; // mapa de values (nombre de columna)-key (tipo de variable de la columna)
 auto seed_rdf = ROOT::RDF::FromCSV(seed_flux_expacs_csv,true,delimiter,-1, std::move(msdata_map));
-seed_rdf.Snapshot("expacs_flux","./seed_expacs.root"); /*Save selected columns to disk, in a new TTree treename in file filename*/
+seed_rdf.Snapshot("expacs_flux","../outputs/root/seed_expacs.root"); /*Save selected columns to disk, in a new TTree treename in file filename*/
 cout <<"Generated root file from csv file" << endl;
 
 /*Seleccionamos los datos del flujo semilla para LCO*/
@@ -9625,19 +9625,19 @@ std::unordered_map<std::string, char> msdata_map = {{"Elow",double_type},{"Eup",
 auto df = ROOT::RDF::FromCSV(fileNameCSV,true,delimiter,-1, std::move(msdata_map));
 //~ auto df = ROOT::RDF::MakeCsvDataFrame(fileNameCSV); 													
 //~ df.Snapshot("MAIRE_DATA_Spectra","./MAIRE_neutron_flux_Maricunga.root"); /*Save selected columns to disk, in a new TTree treename in file filename*/
-df.Snapshot("TRS_403_DATA_Spectra","./TRS_403_DATA_Spectra.root"); /*Save selected columns to disk, in a new TTree treename in file filename*/
+df.Snapshot("TRS_403_DATA_Spectra","../outputs/root/TRS_403_DATA_Spectra.root"); /*Save selected columns to disk, in a new TTree treename in file filename*/
 }
 
 void MAIRE_data_csv_to_root(){
 //~ auto fileNameCSV ="/home/flopez/Data/Dropbox/EXPACS/parma_cpp_flopez/MAIRE_neutron_flux_Maricunga.csv"; // energy from 1.13E-11
-auto fileNameCSV ="/home/flopez/Data/Dropbox/EXPACS/parma_cpp_flopez/MAIRE_neutron_flux_Maricunga_cut.csv"; //energy from 1.13E-09
+auto fileNameCSV ="../data/external/EXPACS_Data/parma_cpp_flopez/MAIRE_neutron_flux_Maricunga_cut.csv"; //energy from 1.13E-09
 
 char delimiter = ',';
 char double_type ='D';
 std::unordered_map<std::string, char> msdata_map = {{"energy_diff",double_type},{"diff_flux_up", double_type},{"diff_flux_down", double_type},{"diff_flux_total", double_type},{"energy_integral", double_type},{"integral_flux", double_type}}; // mapa de values (nombre de columna)-key (tipo de variable de la columna)
 auto df = ROOT::RDF::FromCSV(fileNameCSV,true,delimiter,-1, std::move(msdata_map));
 //~ auto df = ROOT::RDF::MakeCsvDataFrame(fileNameCSV); 													
-df.Snapshot("MAIRE_DATA_Spectra","./MAIRE_neutron_flux_Maricunga.root"); /*Save selected columns to disk, in a new TTree treename in file filename*/
+df.Snapshot("MAIRE_DATA_Spectra","../outputs/root/MAIRE_neutron_flux_Maricunga.root"); /*Save selected columns to disk, in a new TTree treename in file filename*/
 }
 
 
@@ -9647,7 +9647,7 @@ void neutron_flux_plot_expacs_code(){
 //~ string campaign = "Chacaltaya";
 string campaign = "Maricunga";
 //~ string campaign = "Chapiquilta";
-string name_file = "/home/flopez/Data/Dropbox/EXPACS/parma_cpp_flopez/"+campaign+"_parma_fluxes.root"; 
+string name_file = "../data/external/EXPACS_Data/parma_cpp_flopez/"+campaign+"_parma_fluxes.root"; 
 
 TFile *icrp116_binning_file = new TFile("/home/flopez/LIN/TESIS_DOC/Analysis/deconv/ICRP116_binning.root");
 TFile *maire_root_file = new TFile(("/home/flopez/LIN/TESIS_DOC/Analysis/deconv/MAIRE_neutron_flux_"+campaign+".root").c_str()); //Por ahora solo existe el archivo de Maricunga
@@ -9937,9 +9937,9 @@ void neutron_flux_plot_maire(){
 //~ string campaign = "Chacaltaya";
 string campaign = "Maricunga";
 //~ string campaign = "Chapiquilta";
-string name_file = "/home/flopez/Data/Dropbox/EXPACS/parma_cpp_flopez/"+campaign+"_parma_fluxes.root"; 
-string name_file_no_earth = "/home/flopez/Data/Dropbox/EXPACS/parma_cpp_flopez/"+campaign+"_parma_fluxes_no_earth.root"; 
-string name_file_blackhole = "/home/flopez/Data/Dropbox/EXPACS/parma_cpp_flopez/"+campaign+"_parma_fluxes_blackhole.root"; 
+string name_file = "../data/external/EXPACS_Data/parma_cpp_flopez/"+campaign+"_parma_fluxes.root"; 
+string name_file_no_earth = "../data/external/EXPACS_Data/parma_cpp_flopez/"+campaign+"_parma_fluxes_no_earth.root"; 
+string name_file_blackhole = "../data/external/EXPACS_Data/parma_cpp_flopez/"+campaign+"_parma_fluxes_blackhole.root"; 
 
 TFile *icrp116_binning_file = new TFile("/home/flopez/LIN/TESIS_DOC/Analysis/deconv/ICRP116_binning.root");
 TFile *maire_root_file = new TFile(("/home/flopez/LIN/TESIS_DOC/Analysis/deconv/MAIRE_neutron_flux_"+campaign+".root").c_str()); //Por ahora solo existe el archivo de Maricunga
@@ -10466,7 +10466,7 @@ auto df_final = df_binning.Define("emid", [&]() {
 						 return vec_Elower[rowid_elow++];
 						});
 
-df_final.Snapshot("ICRP116_binning","ICRP116_binning.root"); /*Save selected columns to disk, in a new TTree treename in file filename*/
+df_final.Snapshot("ICRP116_binning","../outputs/root/ICRP116_binning.root"); /*Save selected columns to disk, in a new TTree treename in file filename*/
 
 }
 
@@ -10476,7 +10476,7 @@ df_final.Snapshot("ICRP116_binning","ICRP116_binning.root"); /*Save selected col
 
 void TRS_plot_spectra(){
 
-TFile *TRS_Spectra_file = new TFile("TRS_403_DATA_Spectra.root");
+TFile *TRS_Spectra_file = new TFile("../outputs/root/TRS_403_DATA_Spectra.root");
 
 ROOT::RDataFrame df_TRS_403("TRS_403_DATA_Spectra", TRS_Spectra_file);
 
@@ -10761,10 +10761,10 @@ string str_stream_ndet = stream_ndet.str();
 string df_file_name;
 if(steps==0)
 	{
-		df_file_name = "./deconv_data_rootfile/EM_stop/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_0"+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+		df_file_name = "../outputs/root/deconv_data_rootfile/EM_stop/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_0"+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 	}
 else{	
-		df_file_name = "./deconv_data_rootfile/EM/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+		df_file_name = "../outputs/root/deconv_data_rootfile/EM/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 	}
 
 df_seed_loop.Snapshot("em_loop_tree",df_file_name); /*Save selected columns to disk, in a new TTree treename in file filename*/
@@ -10804,7 +10804,7 @@ else{cout << "Physics list inexistente o incorrecta" << endl;}
 	char delimiter = ',';
 	char double_type ='D';
 	//~ string icrp116_binning_csv_path = "/home/flopez/Data/Dropbox/EXPACS/parma_cpp_flopez/ICRP116_binning_resume.csv";
-	string icrp116_binning_csv_path = "./EXPACS_Data/parma_cpp_flopez/ICRP116_binning_resume.csv";
+	string icrp116_binning_csv_path = "../data/external/EXPACS_Data/parma_cpp_flopez/ICRP116_binning_resume.csv";
 	std::unordered_map<std::string, char> icrp116_map = {{"Emid",double_type},{"Ewid", double_type},{"Elower", double_type},{"Eupper", double_type}}; // mapa de values (nombre de columna)-key (tipo de variable de la columna)
 	auto df_icrp116 = ROOT::RDF::FromCSV(icrp116_binning_csv_path,true,delimiter,-1, std::move(icrp116_map));
 	/*Vectors*/
@@ -10816,7 +10816,7 @@ else{cout << "Physics list inexistente o incorrecta" << endl;}
 
 	/****CARGAMOS SEMILLAS DE PARMA/EXPACS**********/
 	//~ string parma_file_path = "/home/flopez/Data/Dropbox/EXPACS/parma_cpp_flopez/"+campaign+"_parma_fluxes.root";
-	string parma_file_path = "./EXPACS_Data/parma_cpp_flopez/"+campaign+"_parma_fluxes.root";
+	string parma_file_path = "../data/external/EXPACS_Data/parma_cpp_flopez/"+campaign+"_parma_fluxes.root";
 	ROOT::RDataFrame df_parma_spectra("BkgNeutronSpectra", parma_file_path);
 
 	int year_input;
@@ -11095,11 +11095,11 @@ string df_file_name;
 if(steps==0)
 	{
 		//~ df_file_name = "./deconv_data_rootfile/EM_stop/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_0"+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
-		df_file_name = "./deconv_data_rootfile/EM_stop/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_0"+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+		df_file_name = "../outputs/root/deconv_data_rootfile/EM_stop/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_0"+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 	}
 else{	
 		//~ df_file_name = "./deconv_data_rootfile/EM/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
-		df_file_name = "./deconv_data_rootfile/EM/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+		df_file_name = "../outputs/root/deconv_data_rootfile/EM/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 	}
 
 df_seed_loop.Snapshot("em_loop_tree",df_file_name); /*Save selected columns to disk, in a new TTree treename in file filename*/
@@ -11240,10 +11240,10 @@ string str_stream_ndet = stream_ndet.str();
 string df_file_name;
 if(steps==0)
 	{
-		df_file_name = "./deconv_data_rootfile/EM_MC_stop/data_em_mc_it/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_0"+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_MC_stop"+"_mc_it_"+str_stream_mc_it+".root";
+		df_file_name = "../outputs/root/deconv_data_rootfile/EM_MC_stop/data_em_mc_it/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_0"+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_MC_stop"+"_mc_it_"+str_stream_mc_it+".root";
 	}
 else{	
-		df_file_name = "./deconv_data_rootfile/EM_MC/data_em_mc_it/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_MC"+"_mc_it_"+str_stream_mc_it+".root";
+		df_file_name = "../outputs/root/deconv_data_rootfile/EM_MC/data_em_mc_it/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_MC"+"_mc_it_"+str_stream_mc_it+".root";
 	}
 
 //~ vector<Double_t>().swap(vec_event_MC_loop);
@@ -11431,10 +11431,10 @@ string str_stream_ndet = stream_ndet.str();
 string df_file_name;
 if(steps==0)
 	{
-		df_file_name = "./deconv_data_rootfile/EM_MC_stop/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_0"+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_MC_stop.root";
+		df_file_name = "../outputs/root/deconv_data_rootfile/EM_MC_stop/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_0"+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_MC_stop.root";
 	}
 else{	
-		df_file_name = "./deconv_data_rootfile/EM_MC/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_MC.root";
+		df_file_name = "../outputs/root/deconv_data_rootfile/EM_MC/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_MC.root";
 	}
 
 df_seed_loop.Snapshot("em_loop_tree",df_file_name); /*Save selected columns to disk, in a new TTree treename in file filename*/
@@ -11471,7 +11471,7 @@ void em_loop_MC_opt(string campaign,int event,int steps,int time_grid, int ndet,
 
 	vector<vector<Double_t> > vec_event_MC_loop;
 
-	string file_name_stat = "./deconv_data_rootfile/EM_MC_stop/"+campaign+"/event_"+str_stream_event+"_stat.txt";
+	string file_name_stat = "../outputs/root/deconv_data_rootfile/EM_MC_stop/"+campaign+"/event_"+str_stream_event+"_stat.txt";
 	//~ ofstream event_mc_info(file_name_stat); // archivo de salida de con la info del evento sin sobreescribir la iteracion MC
 	ofstream event_mc_info(file_name_stat, std::ofstream::trunc); // archivo de salida de con la info del evento sobreescribiendo la iteracion MC
 	
@@ -11689,10 +11689,10 @@ void em_loop_MC_opt(string campaign,int event,int steps,int time_grid, int ndet,
 	string df_file_name;
 	if(steps==0)
 		{
-			df_file_name = "./deconv_data_rootfile/EM_MC_stop/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_0"+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_MC_stop.root";
+			df_file_name = "../outputs/root/deconv_data_rootfile/EM_MC_stop/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_0"+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_MC_stop.root";
 		}
 	else{	
-			df_file_name = "./deconv_data_rootfile/EM_MC/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_MC.root";
+			df_file_name = "../outputs/root/deconv_data_rootfile/EM_MC/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_MC.root";
 		}
 
 	df_seed_loop.Snapshot("em_loop_tree",df_file_name); /*Save selected columns to disk, in a new TTree treename in file filename*/
@@ -11726,7 +11726,7 @@ void em_loop_MC_opt_new(string campaign,int event,int steps,int time_grid, int n
     std::vector<std::vector<Double_t>> vec_event_MC_loop;
     vec_event_MC_loop.reserve(max_em_mc_it); // Solo almacenarás hasta max_em_mc_it eventos aceptados
 
-    std::ofstream event_mc_info("./deconv_data_rootfile/EM_MC_stop/" + campaign + "/event_" + std::to_string(event) + "_stat.txt", std::ofstream::trunc);
+    std::ofstream event_mc_info("../outputs/root/deconv_data_rootfile/EM_MC_stop/" + campaign + "/event_" + std::to_string(event) + "_stat.txt", std::ofstream::trunc);
 
     for (int k = 1; mc_it < max_em_mc_it && k <= N; ++k) {
         // Selecciona la semilla aleatoria
@@ -11896,7 +11896,7 @@ void em_loop_MC_opt_new(string campaign,int event,int steps,int time_grid, int n
 	string df_file_name;
 	if(steps==0)
 		{
-			df_file_name =  "./deconv_data_rootfile/EM_MC_stop/" + campaign +
+			df_file_name =  "../outputs/root/deconv_data_rootfile/EM_MC_stop/" + campaign +
                               "/EM_unfolding_loop_campaign_" + campaign +
                               "_event_" + std::to_string(event) +
                               "_steps_" + std::to_string(steps) +
@@ -11904,7 +11904,7 @@ void em_loop_MC_opt_new(string campaign,int event,int steps,int time_grid, int n
                               "_ndet_" + std::to_string(ndet) + "_MC_stop.root";
         }
 	else{	
-			df_file_name =  "./deconv_data_rootfile/EM_MC/" + campaign +
+			df_file_name =  "../outputs/root/deconv_data_rootfile/EM_MC/" + campaign +
                               "/EM_unfolding_loop_campaign_" + campaign +
                               "_event_" + std::to_string(event) +
                               "_steps_" + std::to_string(steps) +
@@ -11970,7 +11970,7 @@ void em_loop_MC_opt_new_update(string campaign,int event,int steps,int time_grid
     std::vector<std::vector<Double_t>> vec_event_MC_loop;
     vec_event_MC_loop.reserve(max_em_mc_it); // Solo almacenarás hasta max_em_mc_it eventos aceptados
 
-    std::ofstream event_mc_info("./deconv_data_rootfile/EM_MC_stop/" + campaign_path_new + "/event_" + std::to_string(event) + "_stat.txt", std::ofstream::trunc);
+    std::ofstream event_mc_info("../outputs/root/deconv_data_rootfile/EM_MC_stop/" + campaign_path_new + "/event_" + std::to_string(event) + "_stat.txt", std::ofstream::trunc);
 
 	/****CARGAMOS EL BINEADO ICRP116**********/
 	//~ string icrp116_file_path = "/home/flopez/Data/Dropbox/EXPACS/parma_cpp_flopez/icrp116_binning_resume.csv";
@@ -11980,7 +11980,7 @@ void em_loop_MC_opt_new_update(string campaign,int event,int steps,int time_grid
 	char delimiter = ',';
 	char double_type ='D';
 	//~ string icrp116_binning_csv_path = "/home/flopez/Data/Dropbox/EXPACS/parma_cpp_flopez/ICRP116_binning_resume.csv";
-	string icrp116_binning_csv_path = "./EXPACS_Data/parma_cpp_flopez/ICRP116_binning_resume.csv";
+	string icrp116_binning_csv_path = "../data/external/EXPACS_Data/parma_cpp_flopez/ICRP116_binning_resume.csv";
 	std::unordered_map<std::string, char> icrp116_map = {{"Emid",double_type},{"Ewid", double_type},{"Elower", double_type},{"Eupper", double_type}}; // mapa de values (nombre de columna)-key (tipo de variable de la columna)
 	auto df_icrp116 = ROOT::RDF::FromCSV(icrp116_binning_csv_path,true,delimiter,-1, std::move(icrp116_map));
 	/*Vectors*/
@@ -11992,7 +11992,7 @@ void em_loop_MC_opt_new_update(string campaign,int event,int steps,int time_grid
 
 	/****CARGAMOS SEMILLAS DE PARMA/EXPACS**********/
 	//~ string parma_file_path = "/home/flopez/Data/Dropbox/EXPACS/parma_cpp_flopez/"+campaign+"_parma_fluxes.root";
-	string parma_file_path = "./EXPACS_Data/parma_cpp_flopez/"+campaign+"_parma_fluxes.root";
+	string parma_file_path = "../data/external/EXPACS_Data/parma_cpp_flopez/"+campaign+"_parma_fluxes.root";
 	ROOT::RDataFrame df_parma_spectra("BkgNeutronSpectra", parma_file_path);
 
 	auto diff_flux_parma = df_parma_spectra.Take<vector<double>>("NeutronFdiff").GetValue();
@@ -12194,7 +12194,7 @@ void em_loop_MC_opt_new_update(string campaign,int event,int steps,int time_grid
 	string df_file_name;
 	if(steps==0)
 		{
-			df_file_name =  "./deconv_data_rootfile/EM_MC_stop/" + campaign_path_new +
+			df_file_name =  "../outputs/root/deconv_data_rootfile/EM_MC_stop/" + campaign_path_new +
                               "/EM_unfolding_loop_campaign_" + campaign +
                               "_event_" + std::to_string(event) +
                               "_steps_" + std::to_string(steps) +
@@ -12202,7 +12202,7 @@ void em_loop_MC_opt_new_update(string campaign,int event,int steps,int time_grid
                               "_ndet_" + std::to_string(ndet) + "_MC_stop.root";
         }
 	else{	
-			df_file_name =  "./deconv_data_rootfile/EM_MC/" + campaign_path_new +
+			df_file_name =  "../outputs/root/deconv_data_rootfile/EM_MC/" + campaign_path_new +
                               "/EM_unfolding_loop_campaign_" + campaign +
                               "_event_" + std::to_string(event) +
                               "_steps_" + std::to_string(steps) +
@@ -12234,7 +12234,7 @@ void em_loop_MC_opt_new_append(string campaign, int event, int steps, int time_g
 
 
     // --- 1) Nombre de ficheros old & new ---
-    std::string old_root = "./deconv_data_rootfile/EM_MC_stop/" + campaign
+    std::string old_root = "../outputs/root/deconv_data_rootfile/EM_MC_stop/" + campaign
         + "/EM_unfolding_loop_campaign_" + campaign
         + "_event_" + std::to_string(event)
         + "_steps_" + std::to_string(steps)
@@ -12242,7 +12242,7 @@ void em_loop_MC_opt_new_append(string campaign, int event, int steps, int time_g
         + "_ndet_" + std::to_string(ndet)
         + "_MC_stop.root";
 
-    std::string new_root = "./deconv_data_rootfile/EM_MC_stop/" + campaign
+    std::string new_root = "../outputs/root/deconv_data_rootfile/EM_MC_stop/" + campaign
         + "/EM_unfolding_loop_campaign_" + campaign
         + "_event_" + std::to_string(event)
         + "_steps_" + std::to_string(steps)
@@ -12250,7 +12250,7 @@ void em_loop_MC_opt_new_append(string campaign, int event, int steps, int time_g
         + "_ndet_" + std::to_string(ndet)
         + "append_MC_stop.root";
 
-    std::string stat_txt = "./deconv_data_rootfile/EM_MC_stop/" + campaign
+    std::string stat_txt = "../outputs/root/deconv_data_rootfile/EM_MC_stop/" + campaign
         + "/event_" + std::to_string(event) + "_stat_append.txt";
 
     // --- 2) Cuenta cuántos ya hay en el ROOT viejo ---
@@ -12280,7 +12280,7 @@ void em_loop_MC_opt_new_append(string campaign, int event, int steps, int time_g
 	char delimiter = ',';
 	char double_type ='D';
 	//~ string icrp116_binning_csv_path = "/home/flopez/Data/Dropbox/EXPACS/parma_cpp_flopez/ICRP116_binning_resume.csv";
-	string icrp116_binning_csv_path = "./EXPACS_Data/parma_cpp_flopez/ICRP116_binning_resume.csv";
+	string icrp116_binning_csv_path = "../data/external/EXPACS_Data/parma_cpp_flopez/ICRP116_binning_resume.csv";
 	std::unordered_map<std::string, char> icrp116_map = {{"Emid",double_type},{"Ewid", double_type},{"Elower", double_type},{"Eupper", double_type}}; // mapa de values (nombre de columna)-key (tipo de variable de la columna)
 	auto df_icrp116 = ROOT::RDF::FromCSV(icrp116_binning_csv_path,true,delimiter,-1, std::move(icrp116_map));
 	/*Vectors*/
@@ -12292,7 +12292,7 @@ void em_loop_MC_opt_new_append(string campaign, int event, int steps, int time_g
 
 	/****CARGAMOS SEMILLAS DE PARMA/EXPACS**********/
 	//~ string parma_file_path = "/home/flopez/Data/Dropbox/EXPACS/parma_cpp_flopez/"+campaign+"_parma_fluxes.root";
-	string parma_file_path = "./EXPACS_Data/parma_cpp_flopez/"+campaign+"_parma_fluxes.root";
+	string parma_file_path = "../data/external/EXPACS_Data/parma_cpp_flopez/"+campaign+"_parma_fluxes.root";
 	ROOT::RDataFrame df_parma_spectra("BkgNeutronSpectra", parma_file_path);
 
 	auto diff_flux_parma = df_parma_spectra.Take<vector<double>>("NeutronFdiff").GetValue();
@@ -12521,7 +12521,7 @@ void em_loop_MC_opt_new_append(string campaign, int event, int steps, int time_g
     //~ auto df_concat = df_old_simple.Concatenate(df1);
     //~ df_concat.Snapshot("em_loop_tree", new_root);
 
-	std::string new_root_final = "./deconv_data_rootfile/EM_MC_stop/" + campaign
+	std::string new_root_final = "../outputs/root/deconv_data_rootfile/EM_MC_stop/" + campaign
         + "/EM_unfolding_loop_campaign_" + campaign
         + "_event_" + std::to_string(event)
         + "_steps_" + std::to_string(steps)
@@ -12558,7 +12558,7 @@ string campaign_phylst = campaign+"_FTFP_BERT";
 //~ string campaign_phylst = campaign; //QGSP_BERT (primer analisis)
 
     // --- 1) Nombre de ficheros old & new ---
-    std::string old_root = "./deconv_data_rootfile/EM_MC_stop/" + campaign_phylst
+    std::string old_root = "../outputs/root/deconv_data_rootfile/EM_MC_stop/" + campaign_phylst
         + "/EM_unfolding_loop_campaign_" + campaign
         + "_event_" + std::to_string(event)
         + "_steps_" + std::to_string(steps)
@@ -12566,7 +12566,7 @@ string campaign_phylst = campaign+"_FTFP_BERT";
         + "_ndet_" + std::to_string(ndet)
         + "_MC_stop.root";
 
-    std::string new_root = "./deconv_data_rootfile/EM_MC_stop/" + campaign_phylst
+    std::string new_root = "../outputs/root/deconv_data_rootfile/EM_MC_stop/" + campaign_phylst
         + "/EM_unfolding_loop_campaign_" + campaign
         + "_event_" + std::to_string(event)
         + "_steps_" + std::to_string(steps)
@@ -12574,7 +12574,7 @@ string campaign_phylst = campaign+"_FTFP_BERT";
         + "_ndet_" + std::to_string(ndet)
         + "append_MC_stop.root";
 
-    std::string stat_txt = "./deconv_data_rootfile/EM_MC_stop/" + campaign_phylst
+    std::string stat_txt = "../outputs/root/deconv_data_rootfile/EM_MC_stop/" + campaign_phylst
         + "/event_" + std::to_string(event) + "_stat_append.txt";
 
     // --- 2) Cuenta cuántos ya hay en el ROOT viejo ---
@@ -12604,7 +12604,7 @@ string campaign_phylst = campaign+"_FTFP_BERT";
 	char delimiter = ',';
 	char double_type ='D';
 	//~ string icrp116_binning_csv_path = "/home/flopez/Data/Dropbox/EXPACS/parma_cpp_flopez/ICRP116_binning_resume.csv";
-	string icrp116_binning_csv_path = "./EXPACS_Data/parma_cpp_flopez/ICRP116_binning_resume.csv";
+	string icrp116_binning_csv_path = "../data/external/EXPACS_Data/parma_cpp_flopez/ICRP116_binning_resume.csv";
 	std::unordered_map<std::string, char> icrp116_map = {{"Emid",double_type},{"Ewid", double_type},{"Elower", double_type},{"Eupper", double_type}}; // mapa de values (nombre de columna)-key (tipo de variable de la columna)
 	auto df_icrp116 = ROOT::RDF::FromCSV(icrp116_binning_csv_path,true,delimiter,-1, std::move(icrp116_map));
 	/*Vectors*/
@@ -12616,7 +12616,7 @@ string campaign_phylst = campaign+"_FTFP_BERT";
 
 	/****CARGAMOS SEMILLAS DE PARMA/EXPACS**********/
 	//~ string parma_file_path = "/home/flopez/Data/Dropbox/EXPACS/parma_cpp_flopez/"+campaign+"_parma_fluxes.root";
-	string parma_file_path = "./EXPACS_Data/parma_cpp_flopez/"+campaign+"_parma_fluxes.root";
+	string parma_file_path = "../data/external/EXPACS_Data/parma_cpp_flopez/"+campaign+"_parma_fluxes.root";
 	ROOT::RDataFrame df_parma_spectra("BkgNeutronSpectra", parma_file_path);
 
 	auto diff_flux_parma = df_parma_spectra.Take<vector<double>>("NeutronFdiff").GetValue();
@@ -12845,7 +12845,7 @@ string campaign_phylst = campaign+"_FTFP_BERT";
     //~ auto df_concat = df_old_simple.Concatenate(df1);
     //~ df_concat.Snapshot("em_loop_tree", new_root);
 
-	std::string new_root_final = "./deconv_data_rootfile/EM_MC_stop/" + campaign_phylst
+	std::string new_root_final = "../outputs/root/deconv_data_rootfile/EM_MC_stop/" + campaign_phylst
         + "/EM_unfolding_loop_campaign_" + campaign
         + "_event_" + std::to_string(event)
         + "_steps_" + std::to_string(steps)
@@ -12938,12 +12938,12 @@ if(physic_list=="FTFP_BERT")
 else{cout << "Physics list inexistente o incorrecta" << endl;}
 
 /**************Energy Bin********************/
-auto seed_flux_expacs_csv ="./EXPACS_Data/EXPACS_Calc_nflux/csv_files/LasCampanasAtacama_2.csv";
+auto seed_flux_expacs_csv ="../data/external/EXPACS_Data/EXPACS_Calc_nflux/csv_files/LasCampanasAtacama_2.csv";
 char delimiter = ',';
 char double_type ='D';
 std::unordered_map<std::string, char> msdata_map = {{"lower_edge_binvalue",double_type},{"bin_width", double_type},{"flux_value", double_type}}; // mapa de values (nombre de columna)-key (tipo de variable de la columna)
 auto seed_rdf = ROOT::RDF::FromCSV(seed_flux_expacs_csv,true,delimiter,-1, std::move(msdata_map));
-seed_rdf.Snapshot("expacs_flux","./seed_expacs.root"); /*Save selected columns to disk, in a new TTree treename in file filename*/
+seed_rdf.Snapshot("expacs_flux","../outputs/root/seed_expacs.root"); /*Save selected columns to disk, in a new TTree treename in file filename*/
 //~ cout <<"Generated root file from csv file" << endl;
 /*Seleccionamos los datos del flujo semilla para LCO*/
 int bin_cut = 130;
@@ -12986,13 +12986,13 @@ string input_complete_file;
 
 if(steps==0)
 {
-	input_complete_file= "./deconv_data_rootfile/EM_stop/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+	input_complete_file= "../outputs/root/deconv_data_rootfile/EM_stop/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 	//~ ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
 }
 
 else
 {
-	input_complete_file= "./deconv_data_rootfile/EM/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+	input_complete_file= "../outputs/root/deconv_data_rootfile/EM/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 	//~ ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
 }
 
@@ -13148,7 +13148,7 @@ for(int i = 1; i<=steps;i++){
 
 	vector<double> vec_data_step;
 
-	string input_complete_file= "./deconv_data_rootfile/EM/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps_new+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+	string input_complete_file= "../outputs/root/deconv_data_rootfile/EM/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps_new+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 	ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
 
 	auto df_flux_deconv_ndet = df_seed_loop_step.Take<int>("ndet").GetValue();
@@ -13467,7 +13467,7 @@ for (int i = 0; i < hist_deconv_flux_vec.size(); i++){
 /*Mostramos el canvas y lo guardamos*/
 
 canvas_deconv->Draw();
-canvas_deconv->SaveAs(("./deconv_data_pdf/deconv_flux_multiplot/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_maxsteps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_binseed_"+str_stream_seed+".pdf").c_str());
+canvas_deconv->SaveAs(("../outputs/pdf/deconv_data_pdf/deconv_flux_multiplot/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_maxsteps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_binseed_"+str_stream_seed+".pdf").c_str());
 //~ canvas_deconv->SaveAs(("./deconv_data_pdf/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_maxsteps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_binseed_"+str_stream_seed+".eps").c_str());
 
 
@@ -13543,7 +13543,7 @@ for(int i=0;i<hist_deconv_flux_vec.size();i++){
 
 vector< vector<double>> vec_data_matrix;
 
-string input_complete_file= "./deconv_data_rootfile/EM_stop/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+string input_complete_file= "../outputs/root/deconv_data_rootfile/EM_stop/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
 
 for(int i = 1; i<=max_seed;i++){
@@ -14065,13 +14065,13 @@ else{cout << "Physics list inexistente o incorrecta" << endl;}
 string input_complete_file;
 if(steps==0)
 {
-	input_complete_file= "./deconv_data_rootfile/EM_stop/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+	input_complete_file= "../outputs/root/deconv_data_rootfile/EM_stop/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 	//~ ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
 }
 
 else
 {
-	input_complete_file= "./deconv_data_rootfile/EM/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+	input_complete_file= "../outputs/root/deconv_data_rootfile/EM/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 	//~ ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
 }
 
@@ -14160,13 +14160,13 @@ else{cout << "Physics list inexistente o incorrecta" << endl;}
 string input_complete_file;
 if(steps==0)
 {
-	input_complete_file= "./deconv_data_rootfile/EM_stop/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+	input_complete_file= "../outputs/root/deconv_data_rootfile/EM_stop/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 	//~ ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
 }
 
 else
 {
-	input_complete_file= "./deconv_data_rootfile/EM/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+	input_complete_file= "../outputs/root/deconv_data_rootfile/EM/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 	//~ ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
 }
 
@@ -14244,13 +14244,13 @@ else{cout << "Physics list inexistente o incorrecta" << endl;}
 string input_complete_file;
 if(steps==0)
 {
-	input_complete_file= "./deconv_data_rootfile/EM_stop/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+	input_complete_file= "../outputs/root/deconv_data_rootfile/EM_stop/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 	//~ ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
 }
 
 else
 {
-	input_complete_file= "./deconv_data_rootfile/EM/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+	input_complete_file= "../outputs/root/deconv_data_rootfile/EM/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 	//~ ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
 }
 
@@ -14327,13 +14327,13 @@ else{cout << "Physics list inexistente o incorrecta" << endl;}
 string input_complete_file;
 if(steps==0)
 {
-	input_complete_file= "./deconv_data_rootfile/EM_stop/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+	input_complete_file= "../outputs/root/deconv_data_rootfile/EM_stop/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 	//~ ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
 }
 
 else
 {
-	input_complete_file= "./deconv_data_rootfile/EM/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+	input_complete_file= "../outputs/root/deconv_data_rootfile/EM/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 	//~ ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
 }
 
@@ -14410,13 +14410,13 @@ else{cout << "Physics list inexistente o incorrecta" << endl;}
 string input_complete_file;
 if(steps==0)
 {
-	input_complete_file= "./deconv_data_rootfile/EM_stop/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+	input_complete_file= "../outputs/root/deconv_data_rootfile/EM_stop/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 	//~ ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
 }
 
 else
 {
-	input_complete_file= "./deconv_data_rootfile/EM/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+	input_complete_file= "../outputs/root/deconv_data_rootfile/EM/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 	//~ ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
 }
 
@@ -14493,13 +14493,13 @@ else{cout << "Physics list inexistente o incorrecta" << endl;}
 string input_complete_file;
 if(steps==0)
 {
-	input_complete_file= "./deconv_data_rootfile/EM_stop/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+	input_complete_file= "../outputs/root/deconv_data_rootfile/EM_stop/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 	//~ ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
 }
 
 else
 {
-	input_complete_file= "./deconv_data_rootfile/EM/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+	input_complete_file= "../outputs/root/deconv_data_rootfile/EM/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 	//~ ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
 }
 
@@ -14599,13 +14599,13 @@ for(int i = 1; i<=max_steps;i++){
 
 	if(steps==0)
 	{
-		input_complete_file= "./deconv_data_rootfile/EM_stop/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+std::to_string(i)+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+		input_complete_file= "../outputs/root/deconv_data_rootfile/EM_stop/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+std::to_string(i)+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 		//~ ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
 	}
 
 	else
 	{
-		input_complete_file= "./deconv_data_rootfile/EM/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+std::to_string(i)+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+		input_complete_file= "../outputs/root/deconv_data_rootfile/EM/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+std::to_string(i)+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 		//~ ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
 	}
 
@@ -14768,9 +14768,9 @@ l_new->Draw("SAME");
 box->Draw("SAME");
 
 canvas_chi2->Draw();
-canvas_chi2->SaveAs(("./deconv_data_pdf/Chi_squared/"+campaign_path+"/Chi_squared_"+campaign+"_Campaign_"+"event_"+str_stream_event+"_timegrid_"+std::to_string(timegrid)+"_ndet_"+std::to_string(ndet)+".pdf").c_str());
-canvas_chi2->SaveAs(("./deconv_data_pdf/Chi_squared/"+campaign_path+"/Chi_squared_"+campaign+"_Campaign_"+"event_"+str_stream_event+"_timegrid_"+std::to_string(timegrid)+"_ndet_"+std::to_string(ndet)+".svg").c_str());
-canvas_chi2->SaveAs(("./deconv_data_pdf/Chi_squared/"+campaign_path+"/Chi_squared_"+campaign+"_Campaign_"+"event_"+str_stream_event+"_timegrid_"+std::to_string(timegrid)+"_ndet_"+std::to_string(ndet)+".png").c_str());
+canvas_chi2->SaveAs(("../outputs/pdf/deconv_data_pdf/Chi_squared/"+campaign_path+"/Chi_squared_"+campaign+"_Campaign_"+"event_"+str_stream_event+"_timegrid_"+std::to_string(timegrid)+"_ndet_"+std::to_string(ndet)+".pdf").c_str());
+canvas_chi2->SaveAs(("../outputs/pdf/deconv_data_pdf/Chi_squared/"+campaign_path+"/Chi_squared_"+campaign+"_Campaign_"+"event_"+str_stream_event+"_timegrid_"+std::to_string(timegrid)+"_ndet_"+std::to_string(ndet)+".svg").c_str());
+canvas_chi2->SaveAs(("../outputs/pdf/deconv_data_pdf/Chi_squared/"+campaign_path+"/Chi_squared_"+campaign+"_Campaign_"+"event_"+str_stream_event+"_timegrid_"+std::to_string(timegrid)+"_ndet_"+std::to_string(ndet)+".png").c_str());
 
 
 TCanvas *canvas_chi2_and_diff = new TCanvas("chi2_and_diff_by_step","chi2_and_diff_by_step",1920,1080);
@@ -15182,11 +15182,11 @@ for(int i = 1; i<=max_steps;i++){
 	{
 		if(scale_factor=="ws"){
 		//Con factor 0.25
-		input_complete_file= "./deconv_data_rootfile/EM_stop/"+campaign_path+"_ws/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+std::to_string(i)+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+		input_complete_file= "../outputs/root/deconv_data_rootfile/EM_stop/"+campaign_path+"_ws/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+std::to_string(i)+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 		}
 		if(scale_factor=="wos"){
 		//Sin factor 
-		input_complete_file= "./deconv_data_rootfile/EM_stop/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+std::to_string(i)+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+		input_complete_file= "../outputs/root/deconv_data_rootfile/EM_stop/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+std::to_string(i)+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 		}
 		//~ ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
 	}
@@ -15195,11 +15195,11 @@ for(int i = 1; i<=max_steps;i++){
 	{
 		if(scale_factor=="ws"){
 		//Con factor 0.25
-		input_complete_file= "./deconv_data_rootfile/EM/"+campaign_path+"_ws/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+std::to_string(i)+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+		input_complete_file= "../outputs/root/deconv_data_rootfile/EM/"+campaign_path+"_ws/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+std::to_string(i)+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 		}
 		if(scale_factor=="wos"){
 		//Sin factor 
-		input_complete_file= "./deconv_data_rootfile/EM/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+std::to_string(i)+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+		input_complete_file= "../outputs/root/deconv_data_rootfile/EM/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+std::to_string(i)+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 		}
 		//~ ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
 	}
@@ -15368,9 +15368,9 @@ l_new->Draw("SAME");
 //~ box->Draw("SAME");
 
 canvas_chi2->Draw();
-canvas_chi2->SaveAs(("./deconv_data_pdf/Chi_squared/"+campaign_path+"/Chi_squared_"+campaign+"_Campaign_"+"event_"+str_stream_event+"_timegrid_"+std::to_string(timegrid)+"_ndet_"+std::to_string(ndet)+"_"+scale_factor+".pdf").c_str());
-canvas_chi2->SaveAs(("./deconv_data_pdf/Chi_squared/"+campaign_path+"/Chi_squared_"+campaign+"_Campaign_"+"event_"+str_stream_event+"_timegrid_"+std::to_string(timegrid)+"_ndet_"+std::to_string(ndet)+"_"+scale_factor+".svg").c_str());
-canvas_chi2->SaveAs(("./deconv_data_pdf/Chi_squared/"+campaign_path+"/Chi_squared_"+campaign+"_Campaign_"+"event_"+str_stream_event+"_timegrid_"+std::to_string(timegrid)+"_ndet_"+std::to_string(ndet)+"_"+scale_factor+".png").c_str());
+canvas_chi2->SaveAs(("../outputs/pdf/deconv_data_pdf/Chi_squared/"+campaign_path+"/Chi_squared_"+campaign+"_Campaign_"+"event_"+str_stream_event+"_timegrid_"+std::to_string(timegrid)+"_ndet_"+std::to_string(ndet)+"_"+scale_factor+".pdf").c_str());
+canvas_chi2->SaveAs(("../outputs/pdf/deconv_data_pdf/Chi_squared/"+campaign_path+"/Chi_squared_"+campaign+"_Campaign_"+"event_"+str_stream_event+"_timegrid_"+std::to_string(timegrid)+"_ndet_"+std::to_string(ndet)+"_"+scale_factor+".svg").c_str());
+canvas_chi2->SaveAs(("../outputs/pdf/deconv_data_pdf/Chi_squared/"+campaign_path+"/Chi_squared_"+campaign+"_Campaign_"+"event_"+str_stream_event+"_timegrid_"+std::to_string(timegrid)+"_ndet_"+std::to_string(ndet)+"_"+scale_factor+".png").c_str());
 
 /*************************************/
 /*** 2nd derivative of Chi2 curves ***/
@@ -15948,8 +15948,8 @@ auto DrawChi2AndDiffCanvas =
     l_diff->Draw();
 	}
 
-	c->SaveAs(("./deconv_data_pdf/Chi_squared/"+campaign_path+"/Chi_squared_and_diff_"+campaign+"_Campaign_"+"event_"+str_stream_event+"_timegrid_"+std::to_string(timegrid)+"_ndet_"+std::to_string(ndet)+"_"+scale_rep+"_"+scale_factor+".pdf").c_str());
-	c->SaveAs(("./deconv_data_pdf/Chi_squared/"+campaign_path+"/Chi_squared_and_diff_"+campaign+"_Campaign_"+"event_"+str_stream_event+"_timegrid_"+std::to_string(timegrid)+"_ndet_"+std::to_string(ndet)+"_"+scale_rep+"_"+scale_factor+".svg").c_str());
+	c->SaveAs(("../outputs/pdf/deconv_data_pdf/Chi_squared/"+campaign_path+"/Chi_squared_and_diff_"+campaign+"_Campaign_"+"event_"+str_stream_event+"_timegrid_"+std::to_string(timegrid)+"_ndet_"+std::to_string(ndet)+"_"+scale_rep+"_"+scale_factor+".pdf").c_str());
+	c->SaveAs(("../outputs/pdf/deconv_data_pdf/Chi_squared/"+campaign_path+"/Chi_squared_and_diff_"+campaign+"_Campaign_"+"event_"+str_stream_event+"_timegrid_"+std::to_string(timegrid)+"_ndet_"+std::to_string(ndet)+"_"+scale_rep+"_"+scale_factor+".svg").c_str());
 
 
     c->Update();
@@ -16119,11 +16119,11 @@ auto DrawSummaryKneeCanvas =
     c->Update();
 
     string scale_rep = logx ? "log" : "lin";
-    c->SaveAs(("./deconv_data_pdf/Chi_squared/"+campaign_path+
+    c->SaveAs(("../outputs/pdf/deconv_data_pdf/Chi_squared/"+campaign_path+
                "/Summary_knee_"+campaign+"_Campaign_event_"+str_stream_event+
                "_timegrid_"+std::to_string(timegrid)+"_ndet_"+std::to_string(ndet)+
                "_"+scale_rep+"_"+scale_factor+".pdf").c_str());
-    c->SaveAs(("./deconv_data_pdf/Chi_squared/"+campaign_path+
+    c->SaveAs(("../outputs/pdf/deconv_data_pdf/Chi_squared/"+campaign_path+
                "/Summary_knee_"+campaign+"_Campaign_event_"+str_stream_event+
                "_timegrid_"+std::to_string(timegrid)+"_ndet_"+std::to_string(ndet)+
                "_"+scale_rep+"_"+scale_factor+".svg").c_str());
@@ -16329,8 +16329,8 @@ for(int j=0;j<501;j++){
 
         c->Update();
 
-        c->SaveAs(("./deconv_data_pdf/Chi_squared/"+campaign_path+"/Integral_flux_values_"+campaign+"_Campaign_"+"event_"+str_stream_event+"_timegrid_"+std::to_string(timegrid)+"_ndet_"+std::to_string(ndet)+"_"+scale_rep+"_"+scale_factor+".pdf").c_str());
-		c->SaveAs(("./deconv_data_pdf/Chi_squared/"+campaign_path+"/Integral_flux_values_"+campaign+"_Campaign_"+"event_"+str_stream_event+"_timegrid_"+std::to_string(timegrid)+"_ndet_"+std::to_string(ndet)+"_"+scale_rep+"_"+scale_factor+".svg").c_str());
+        c->SaveAs(("../outputs/pdf/deconv_data_pdf/Chi_squared/"+campaign_path+"/Integral_flux_values_"+campaign+"_Campaign_"+"event_"+str_stream_event+"_timegrid_"+std::to_string(timegrid)+"_ndet_"+std::to_string(ndet)+"_"+scale_rep+"_"+scale_factor+".pdf").c_str());
+		c->SaveAs(("../outputs/pdf/deconv_data_pdf/Chi_squared/"+campaign_path+"/Integral_flux_values_"+campaign+"_Campaign_"+"event_"+str_stream_event+"_timegrid_"+std::to_string(timegrid)+"_ndet_"+std::to_string(ndet)+"_"+scale_rep+"_"+scale_factor+".svg").c_str());
 
     };
 
@@ -16397,7 +16397,7 @@ void em_knee_and_chi2stop_from_singlefile_update(
     // AJUSTA ESTE PATH a tu naming real si difiere
     // -------------------------
     std::string input_single_file =
-        "./deconv_data_rootfile/EM_single/"+campaign_path+
+        "../outputs/root/deconv_data_rootfile/EM_single/"+campaign_path+
         "/EM_single_campaign_"+campaign+
         "_event_"+str_stream_event+
         "_timegrid_"+str_stream_timegrid+
@@ -16551,7 +16551,7 @@ void em_knee_and_chi2stop_from_singlefile_update(
     l_new->Draw("SAME");
 
     // Guardar (mismo naming tuyo)
-    canvas_chi2->SaveAs(("./deconv_data_pdf/Chi_squared/"+campaign_path+
+    canvas_chi2->SaveAs(("../outputs/pdf/deconv_data_pdf/Chi_squared/"+campaign_path+
                          "/Chi_squared_"+campaign+"_Campaign_event_"+str_stream_event+
                          "_timegrid_"+std::to_string(timegrid)+
                          "_ndet_"+std::to_string(ndet)+
@@ -16693,7 +16693,7 @@ void em_knee_and_chi2stop_from_singlefile_update(
     }
     c_dd2->Update();
 
-    c_dd2->SaveAs(("./deconv_data_pdf/Chi_squared/"+campaign_path+
+    c_dd2->SaveAs(("../outputs/pdf/deconv_data_pdf/Chi_squared/"+campaign_path+
                    "/Chi_squared_dd2_"+campaign+"_Campaign_event_"+str_stream_event+
                    "_timegrid_"+std::to_string(timegrid)+
                    "_ndet_"+std::to_string(ndet)+
@@ -16801,7 +16801,7 @@ void em_knee_and_chi2stop_from_singlefile_update(
 
         c_knee_dist->Update();
 
-        c_knee_dist->SaveAs(("./deconv_data_pdf/Chi_squared/"+campaign_path+
+        c_knee_dist->SaveAs(("../outputs/pdf/deconv_data_pdf/Chi_squared/"+campaign_path+
                              "/Knee_distributions_"+campaign+"_Campaign_event_"+str_stream_event+
                              "_timegrid_"+std::to_string(timegrid)+
                              "_ndet_"+std::to_string(ndet)+
@@ -16960,7 +16960,7 @@ void em_knee_and_chi2stop_from_singlefile_update(
             c->Update();
 
             std::string scale_rep = logx ? "log" : "lin";
-            c->SaveAs(("./deconv_data_pdf/Chi_squared/"+campaign_path+
+            c->SaveAs(("../outputs/pdf/deconv_data_pdf/Chi_squared/"+campaign_path+
                        "/Summary_knee_"+campaign+"_Campaign_event_"+str_stream_event+
                        "_timegrid_"+std::to_string(timegrid)+
                        "_ndet_"+std::to_string(ndet)+
@@ -16975,7 +16975,7 @@ void em_knee_and_chi2stop_from_singlefile_update(
     // Guardar chi2_stop por seed + resumen por evento a un ROOT
     // -------------------------
     std::string out_root =
-        "./deconv_data_rootfile/Knee/"+campaign_path+
+        "../outputs/root/deconv_data_rootfile/Knee/"+campaign_path+
         "/Knee_chi2stop_"+campaign+"_Campaign_event_"+str_stream_event+
         "_timegrid_"+std::to_string(timegrid)+
         "_ndet_"+std::to_string(ndet)+
@@ -17248,7 +17248,7 @@ void em_knee_and_chi2stop_from_singlefile_update(
 
 			c->Update();
 
-			c->SaveAs(("./deconv_data_pdf/Chi_squared/"+campaign_path+
+			c->SaveAs(("../outputs/pdf/deconv_data_pdf/Chi_squared/"+campaign_path+
 					   "/Integral_flux_values_singlefile_"+campaign+
 					   "_event_"+str_stream_event+
 					   "_timegrid_"+std::to_string(timegrid)+
@@ -17396,7 +17396,7 @@ for(int i = steps; i<=steps;i++){
 
 	vector<double> vec_data_step;
 
-	string input_complete_file= "./deconv_data_rootfile/EM/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps_new+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+	string input_complete_file= "../outputs/root/deconv_data_rootfile/EM/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps_new+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 	ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
 
 	auto df_flux_deconv_ndet = df_seed_loop_step.Take<int>("ndet").GetValue();
@@ -17718,8 +17718,8 @@ for (int i = 0; i < hist_deconv_flux_vec.size(); i++){
 /*Mostramos el canvas y lo guardamos*/
 
 canvas_deconv->Draw();
-canvas_deconv->SaveAs(("./deconv_data_pdf/deconv_flux_multiplot/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_maxsteps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_binseed_"+str_stream_seed+".pdf").c_str());
-canvas_deconv->SaveAs(("./deconv_data_pdf/deconv_flux_multiplot/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_maxsteps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_binseed_"+str_stream_seed+".svg").c_str());
+canvas_deconv->SaveAs(("../outputs/pdf/deconv_data_pdf/deconv_flux_multiplot/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_maxsteps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_binseed_"+str_stream_seed+".pdf").c_str());
+canvas_deconv->SaveAs(("../outputs/pdf/deconv_data_pdf/deconv_flux_multiplot/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_maxsteps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_binseed_"+str_stream_seed+".svg").c_str());
 //~ canvas_deconv->SaveAs(("./deconv_data_pdf/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_maxsteps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_binseed_"+str_stream_seed+".eps").c_str());
 
 
@@ -17934,7 +17934,7 @@ void scatter_plot_4var(string campaign, int event, int steps, int timegrid, int 
    gStyle->SetPalette(kBird, 0, 0.6); // define a transparent palette
    
 
-	string input_complete_file= "./deconv_data_rootfile/EM_stop/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+	string input_complete_file= "../outputs/root/deconv_data_rootfile/EM_stop/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 	ROOT::RDataFrame df_event("em_loop_tree", input_complete_file);
 
 	auto df_event_vwc = df_event.Take<double>("seed_bin_edgeds").GetValue();
@@ -17956,7 +17956,7 @@ void scatter_plot_4var(string campaign, int event, int steps, int timegrid, int 
    scatter->SetTitle(scatter_plot_title.c_str());
    scatter->Draw("A");
 
-   canvas->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_scatterplot.pdf").c_str());
+   canvas->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_scatterplot.pdf").c_str());
 
 
 }
@@ -17976,7 +17976,7 @@ TScatter* scatter_plot_4var_tscatter(string campaign, int event, int steps, int 
 
 	//~ string input_complete_file= "./deconv_data_rootfile/EM_stop/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 	//~ string input_complete_file= "./deconv_data_rootfile/EM_stop/"+campaign+"/em_stop_2_percent_criteria/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
-	string input_complete_file= "./deconv_data_rootfile/EM_stop/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+	string input_complete_file= "../outputs/root/deconv_data_rootfile/EM_stop/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 	ROOT::RDataFrame df_event("em_loop_tree", input_complete_file);
 
 	auto df_event_vwc = df_event.Take<double>("seed_bin_edgeds").GetValue();
@@ -18023,7 +18023,7 @@ void scatter_plot_4var_MC(string campaign, int event, int steps, int timegrid, i
    gStyle->SetPalette(kBird, 0, 0.6); // define a transparent palette
    
 
-	string input_complete_file= "./deconv_data_rootfile/EM_MC_stop/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_MC_stop.root";
+	string input_complete_file= "../outputs/root/deconv_data_rootfile/EM_MC_stop/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_MC_stop.root";
 	ROOT::RDataFrame df_event("em_loop_tree", input_complete_file);
 
 	
@@ -18074,7 +18074,7 @@ void scatter_plot_4var_MC(string campaign, int event, int steps, int timegrid, i
    scatter->SetTitle(scatter_plot_title.c_str());
    scatter->Draw("A");
 
-   canvas->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/MC/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_scatterplot_MC_"+str_stream_mc_it+"_it.pdf").c_str());
+   canvas->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_scatter_plots/"+campaign+"/MC/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_scatterplot_MC_"+str_stream_mc_it+"_it.pdf").c_str());
 
 
 }
@@ -18306,24 +18306,24 @@ canvas_deconv_group_16->Draw();
 canvas_deconv_group_17->Draw();
 canvas_deconv_group_18->Draw();
 
-	canvas_deconv_group_1->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g1+".pdf").c_str());
-	canvas_deconv_group_2->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g2+".pdf").c_str());
-	canvas_deconv_group_3->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g3+".pdf").c_str());
-	canvas_deconv_group_4->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g4+".pdf").c_str());
-	canvas_deconv_group_5->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g5+".pdf").c_str());
-	canvas_deconv_group_6->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g6+".pdf").c_str());
-	canvas_deconv_group_7->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g7+".pdf").c_str());
-	canvas_deconv_group_8->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g8+".pdf").c_str());
-	canvas_deconv_group_9->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g9+".pdf").c_str());
-	canvas_deconv_group_10->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g10+".pdf").c_str());
-	canvas_deconv_group_11->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g11+".pdf").c_str());
-	canvas_deconv_group_12->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g12+".pdf").c_str());
-	canvas_deconv_group_13->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g13+".pdf").c_str());
-	canvas_deconv_group_14->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g14+".pdf").c_str());
-	canvas_deconv_group_15->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g15+".pdf").c_str());
-	canvas_deconv_group_16->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g16+".pdf").c_str());
-	canvas_deconv_group_17->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g17+".pdf").c_str());
-	canvas_deconv_group_18->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g18+".pdf").c_str());
+	canvas_deconv_group_1->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g1+".pdf").c_str());
+	canvas_deconv_group_2->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g2+".pdf").c_str());
+	canvas_deconv_group_3->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g3+".pdf").c_str());
+	canvas_deconv_group_4->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g4+".pdf").c_str());
+	canvas_deconv_group_5->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g5+".pdf").c_str());
+	canvas_deconv_group_6->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g6+".pdf").c_str());
+	canvas_deconv_group_7->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g7+".pdf").c_str());
+	canvas_deconv_group_8->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g8+".pdf").c_str());
+	canvas_deconv_group_9->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g9+".pdf").c_str());
+	canvas_deconv_group_10->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g10+".pdf").c_str());
+	canvas_deconv_group_11->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g11+".pdf").c_str());
+	canvas_deconv_group_12->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g12+".pdf").c_str());
+	canvas_deconv_group_13->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g13+".pdf").c_str());
+	canvas_deconv_group_14->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g14+".pdf").c_str());
+	canvas_deconv_group_15->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g15+".pdf").c_str());
+	canvas_deconv_group_16->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g16+".pdf").c_str());
+	canvas_deconv_group_17->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g17+".pdf").c_str());
+	canvas_deconv_group_18->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g18+".pdf").c_str());
 }
 
 void scatter_plots_event_loop_general(string campaign, int event, int steps, int timegrid, int ndet){
@@ -18550,28 +18550,28 @@ canvas_deconv_group_20->Draw();
 canvas_deconv_group_21->Draw();
 canvas_deconv_group_22->Draw();
 
-canvas_deconv_group_1->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g1+".pdf").c_str());
-canvas_deconv_group_2->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g2+".pdf").c_str());
-canvas_deconv_group_3->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g3+".pdf").c_str());
-canvas_deconv_group_4->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g4+".pdf").c_str());
-canvas_deconv_group_5->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g5+".pdf").c_str());
-canvas_deconv_group_6->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g6+".pdf").c_str());
-canvas_deconv_group_7->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g7+".pdf").c_str());
-canvas_deconv_group_8->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g8+".pdf").c_str());
-canvas_deconv_group_9->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g9+".pdf").c_str());
-canvas_deconv_group_10->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g10+".pdf").c_str());
-canvas_deconv_group_11->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g11+".pdf").c_str());
-canvas_deconv_group_12->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g12+".pdf").c_str());
-canvas_deconv_group_13->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g13+".pdf").c_str());
-canvas_deconv_group_14->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g14+".pdf").c_str());
-canvas_deconv_group_15->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g15+".pdf").c_str());
-canvas_deconv_group_16->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g16+".pdf").c_str());
-canvas_deconv_group_17->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g17+".pdf").c_str());
-canvas_deconv_group_18->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g18+".pdf").c_str());
-canvas_deconv_group_19->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g19+".pdf").c_str());
-canvas_deconv_group_20->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g20+".pdf").c_str());
-canvas_deconv_group_21->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g21+".pdf").c_str());
-canvas_deconv_group_22->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g22+".pdf").c_str());
+canvas_deconv_group_1->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g1+".pdf").c_str());
+canvas_deconv_group_2->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g2+".pdf").c_str());
+canvas_deconv_group_3->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g3+".pdf").c_str());
+canvas_deconv_group_4->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g4+".pdf").c_str());
+canvas_deconv_group_5->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g5+".pdf").c_str());
+canvas_deconv_group_6->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g6+".pdf").c_str());
+canvas_deconv_group_7->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g7+".pdf").c_str());
+canvas_deconv_group_8->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g8+".pdf").c_str());
+canvas_deconv_group_9->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g9+".pdf").c_str());
+canvas_deconv_group_10->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g10+".pdf").c_str());
+canvas_deconv_group_11->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g11+".pdf").c_str());
+canvas_deconv_group_12->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g12+".pdf").c_str());
+canvas_deconv_group_13->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g13+".pdf").c_str());
+canvas_deconv_group_14->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g14+".pdf").c_str());
+canvas_deconv_group_15->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g15+".pdf").c_str());
+canvas_deconv_group_16->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g16+".pdf").c_str());
+canvas_deconv_group_17->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g17+".pdf").c_str());
+canvas_deconv_group_18->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g18+".pdf").c_str());
+canvas_deconv_group_19->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g19+".pdf").c_str());
+canvas_deconv_group_20->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g20+".pdf").c_str());
+canvas_deconv_group_21->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g21+".pdf").c_str());
+canvas_deconv_group_22->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+canvas_name_g22+".pdf").c_str());
 }
 
 RVec<double> deconv_steps_diff(string campaign, int event, int steps, int timegrid, int ndet, int bin_seed){
@@ -18608,7 +18608,7 @@ for(int i=1;i<=20;i++)
 		stream_steps << i;
 		string str_stream_steps;
 		str_stream_steps = stream_steps.str();
-		input_complete_file= "./deconv_data_rootfile/EM/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+		input_complete_file= "../outputs/root/deconv_data_rootfile/EM/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 
 		ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
 
@@ -18724,7 +18724,7 @@ for(int i=1;i<=186;i++)
 		stream_step_pick <<step_pick[i-1];
 		string str_stream_step_pick = stream_step_pick.str();
 		
-		string input_complete_file= "./deconv_data_rootfile/EM/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_step_pick+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+		string input_complete_file= "../outputs/root/deconv_data_rootfile/EM/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_step_pick+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 
 		ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
 
@@ -18740,12 +18740,12 @@ for(int i=1;i<=186;i++)
 
 
 /**************Energy Bin********************/
-auto seed_flux_expacs_csv ="./EXPACS_Data/EXPACS_Calc_nflux/csv_files/LasCampanasAtacama_2.csv";
+auto seed_flux_expacs_csv ="../data/external/EXPACS_Data/EXPACS_Calc_nflux/csv_files/LasCampanasAtacama_2.csv";
 char delimiter = ',';
 char double_type ='D';
 std::unordered_map<std::string, char> msdata_map = {{"lower_edge_binvalue",double_type},{"bin_width", double_type},{"flux_value", double_type}}; // mapa de values (nombre de columna)-key (tipo de variable de la columna)
 auto seed_rdf = ROOT::RDF::FromCSV(seed_flux_expacs_csv,true,delimiter,-1, std::move(msdata_map));
-seed_rdf.Snapshot("expacs_flux","./seed_expacs.root"); /*Save selected columns to disk, in a new TTree treename in file filename*/
+seed_rdf.Snapshot("expacs_flux","../outputs/root/seed_expacs.root"); /*Save selected columns to disk, in a new TTree treename in file filename*/
 //~ cout <<"Generated root file from csv file" << endl;
 /*Seleccionamos los datos del flujo semilla para LCO*/
 int bin_cut = 130;
@@ -18873,7 +18873,7 @@ hist_vec[70]->Draw("HIST SAME");
 
 
 canvas_deconv_fluxes->Draw();
-canvas_deconv_fluxes->SaveAs(("./deconv_data_pdf/event_seed_picker/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_comparacion_semillas_eventos_picker_1.pdf").c_str());
+canvas_deconv_fluxes->SaveAs(("../outputs/pdf/deconv_data_pdf/event_seed_picker/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_comparacion_semillas_eventos_picker_1.pdf").c_str());
 
 
 }
@@ -18909,7 +18909,7 @@ for(int i=1;i<=186;i++)
 				stream_steps << k;
 				string str_stream_steps;
 				str_stream_steps = stream_steps.str();
-				string input_complete_file = "./deconv_data_rootfile/EM/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+				string input_complete_file = "../outputs/root/deconv_data_rootfile/EM/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 
 				ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
 
@@ -18957,7 +18957,7 @@ for(int i=1;i<=186;i++)
 		stream_step_pick <<step_pick[i-1];
 		string str_stream_step_pick = stream_step_pick.str();
 		
-		string input_complete_file= "./deconv_data_rootfile/EM/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_step_pick+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+		string input_complete_file= "../outputs/root/deconv_data_rootfile/EM/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_step_pick+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 
 		ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
 
@@ -18973,12 +18973,12 @@ for(int i=1;i<=186;i++)
 
 
 /**************Energy Bin********************/
-auto seed_flux_expacs_csv ="./EXPACS_Data/EXPACS_Calc_nflux/csv_files/LasCampanasAtacama_2.csv";
+auto seed_flux_expacs_csv ="../data/external/EXPACS_Data/EXPACS_Calc_nflux/csv_files/LasCampanasAtacama_2.csv";
 char delimiter = ',';
 char double_type ='D';
 std::unordered_map<std::string, char> msdata_map = {{"lower_edge_binvalue",double_type},{"bin_width", double_type},{"flux_value", double_type}}; // mapa de values (nombre de columna)-key (tipo de variable de la columna)
 auto seed_rdf = ROOT::RDF::FromCSV(seed_flux_expacs_csv,true,delimiter,-1, std::move(msdata_map));
-seed_rdf.Snapshot("expacs_flux","./seed_expacs.root"); /*Save selected columns to disk, in a new TTree treename in file filename*/
+seed_rdf.Snapshot("expacs_flux","../outputs/root/seed_expacs.root"); /*Save selected columns to disk, in a new TTree treename in file filename*/
 //~ cout <<"Generated root file from csv file" << endl;
 /*Seleccionamos los datos del flujo semilla para LCO*/
 int bin_cut = 130;
@@ -19106,7 +19106,7 @@ hist_vec[70]->Draw("HIST SAME");
 }
 
 canvas_deconv_fluxes->Draw();
-canvas_deconv_fluxes->SaveAs(("./deconv_data_pdf/event_seed_picker/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_comparacion_semillas_eventos_picker_2.pdf").c_str());
+canvas_deconv_fluxes->SaveAs(("../outputs/pdf/deconv_data_pdf/event_seed_picker/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_comparacion_semillas_eventos_picker_2.pdf").c_str());
 
 
 }
@@ -19142,7 +19142,7 @@ for(int i=1;i<=186;i++)
 				stream_steps << k;
 				string str_stream_steps;
 				str_stream_steps = stream_steps.str();
-				string input_complete_file = "./deconv_data_rootfile/EM/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+				string input_complete_file = "../outputs/root/deconv_data_rootfile/EM/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 
 				ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
 
@@ -19189,7 +19189,7 @@ for(int i=1;i<=186;i++)
 		stream_step_pick <<step_pick[i-1];
 		string str_stream_step_pick = stream_step_pick.str();
 		
-		string input_complete_file= "./deconv_data_rootfile/EM/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_step_pick+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+		string input_complete_file= "../outputs/root/deconv_data_rootfile/EM/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_step_pick+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 
 		ROOT::RDataFrame df_seed_loop_step("em_loop_tree", input_complete_file);
 
@@ -19205,12 +19205,12 @@ for(int i=1;i<=186;i++)
 
 
 /**************Energy Bin********************/
-auto seed_flux_expacs_csv ="./EXPACS_Data/EXPACS_Calc_nflux/csv_files/LasCampanasAtacama_2.csv";
+auto seed_flux_expacs_csv ="../data/external/EXPACS_Data/EXPACS_Calc_nflux/csv_files/LasCampanasAtacama_2.csv";
 char delimiter = ',';
 char double_type ='D';
 std::unordered_map<std::string, char> msdata_map = {{"lower_edge_binvalue",double_type},{"bin_width", double_type},{"flux_value", double_type}}; // mapa de values (nombre de columna)-key (tipo de variable de la columna)
 auto seed_rdf = ROOT::RDF::FromCSV(seed_flux_expacs_csv,true,delimiter,-1, std::move(msdata_map));
-seed_rdf.Snapshot("expacs_flux","./seed_expacs.root"); /*Save selected columns to disk, in a new TTree treename in file filename*/
+seed_rdf.Snapshot("expacs_flux","../outputs/root/seed_expacs.root"); /*Save selected columns to disk, in a new TTree treename in file filename*/
 //~ cout <<"Generated root file from csv file" << endl;
 /*Seleccionamos los datos del flujo semilla para LCO*/
 int bin_cut = 130;
@@ -19353,7 +19353,7 @@ hist_vec[70]->Draw("HIST SAME");
 }
 
 canvas_deconv_fluxes->Draw();
-canvas_deconv_fluxes->SaveAs(("./deconv_data_pdf/event_seed_picker/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_comparacion_semillas_eventos_picker_3.pdf").c_str());
+canvas_deconv_fluxes->SaveAs(("../outputs/pdf/deconv_data_pdf/event_seed_picker/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_comparacion_semillas_eventos_picker_3.pdf").c_str());
 
 
 }
