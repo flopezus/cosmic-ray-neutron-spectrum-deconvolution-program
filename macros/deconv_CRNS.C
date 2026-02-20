@@ -9649,8 +9649,8 @@ string campaign = "Maricunga";
 //~ string campaign = "Chapiquilta";
 string name_file = "../data/external/EXPACS_Data/parma_cpp_flopez/"+campaign+"_parma_fluxes.root"; 
 
-TFile *icrp116_binning_file = new TFile("/home/flopez/LIN/TESIS_DOC/Analysis/deconv/ICRP116_binning.root");
-TFile *maire_root_file = new TFile(("/home/flopez/LIN/TESIS_DOC/Analysis/deconv/MAIRE_neutron_flux_"+campaign+".root").c_str()); //Por ahora solo existe el archivo de Maricunga
+TFile *icrp116_binning_file = new TFile("../outputs/root/ICRP116_binning.root");
+TFile *maire_root_file = new TFile(("../outputs/root/MAIRE_neutron_flux_"+campaign+".root").c_str()); //Por ahora solo existe el archivo de Maricunga
 //~ TFile *parma_root_file = new TFile("/home/flopez/Data/Dropbox/EXPACS/parma_cpp_flopez/Maricunga_parma_fluxes.root");
 TFile *parma_root_file = new TFile(name_file.c_str());
 
@@ -9941,8 +9941,8 @@ string name_file = "../data/external/EXPACS_Data/parma_cpp_flopez/"+campaign+"_p
 string name_file_no_earth = "../data/external/EXPACS_Data/parma_cpp_flopez/"+campaign+"_parma_fluxes_no_earth.root"; 
 string name_file_blackhole = "../data/external/EXPACS_Data/parma_cpp_flopez/"+campaign+"_parma_fluxes_blackhole.root"; 
 
-TFile *icrp116_binning_file = new TFile("/home/flopez/LIN/TESIS_DOC/Analysis/deconv/ICRP116_binning.root");
-TFile *maire_root_file = new TFile(("/home/flopez/LIN/TESIS_DOC/Analysis/deconv/MAIRE_neutron_flux_"+campaign+".root").c_str()); //Por ahora solo existe el archivo de Maricunga
+TFile *icrp116_binning_file = new TFile("../outputs/root/ICRP116_binning.root");
+TFile *maire_root_file = new TFile(("../outputs/root/MAIRE_neutron_flux_"+campaign+".root").c_str()); //Por ahora solo existe el archivo de Maricunga
 //~ TFile *parma_root_file = new TFile("/home/flopez/Data/Dropbox/EXPACS/parma_cpp_flopez/Maricunga_parma_fluxes.root");
 TFile *parma_root_file = new TFile(name_file.c_str());
 TFile *parma_root_file_no_earth = new TFile(name_file_no_earth.c_str());
@@ -10386,7 +10386,7 @@ void generates_binning_file(){
 /*****************READ INPUT FILES********************************/
 //Read Dose Conversion Coefficient Data
 // 1) Open file "dcc/dccname.inp" for reading
-ifstream dccf("/home/flopez/Data/Dropbox/EXPACS/parma_cpp_flopez/dcc/ICRP116_new.inp", ios::in);
+ifstream dccf("../configs/ICRP116_new.inp", ios::in);
 //~ ifstream dccf("/home/flopez/Data/Dropbox/EXPACS/parma_cpp_flopez/dcc/ICRP116.inp", ios::in); // archivo original
 string str;
 // 2) Read (and discard) the first two lines (usually headers or titles)
