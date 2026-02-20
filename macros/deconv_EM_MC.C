@@ -314,7 +314,7 @@ vector<double> interpolate_tgraph(string dose){
 
 vector<double> interpolate_coeff_vec;
 
-string input_file = "/home/flopez/Data/Dropbox/DOC_WORK/TESIS_DOC/Analysis/binning_E.csv";
+string input_file = "../configs/binning_E.csv";
 char delimiter = ',';
 char double_type ='D';
 std::unordered_map<std::string, char> msdata_map = {{"E_EXPACS_binning",double_type},{"E_ICRP116_binning", double_type},{"E_ICRP74_binning", double_type},{"E_TRS403_binning", double_type},{"E_ISO_ICRP116", double_type},{"E_ISO_ICRP74", double_type},{"E_ISO_TRS403", double_type},{"H10_ICRP74", double_type},{"H10_TRS403", double_type}}; // mapa de values (nombre de columna)-key (tipo de variable de la columna)
@@ -516,7 +516,7 @@ void plot_em_mc(string campaign){
 
 ROOT::EnableImplicitMT(); 
 //~ TFile *em_mc_loop = new TFile("./deconv_data_rootfile/EM_MC_stop/EM_unfolding_loop_campaign_LCO_event_211_steps_0_timegrid_15_ndet_11_MC_stop_1000_it.root");
-string file_name = "./deconv_data_rootfile/EM_MC_stop/"+campaign+"/EM_unfolding_loop_campaign_LCO_event_211_steps_0_timegrid_15_ndet_11_MC_stop_5e05_it.root";
+string file_name = "../outputs/root/deconv_data_rootfile/EM_MC_stop/"+campaign+"/EM_unfolding_loop_campaign_LCO_event_211_steps_0_timegrid_15_ndet_11_MC_stop_5e05_it.root";
 TFile *em_mc_loop = new TFile(file_name.c_str());
 ROOT::RDataFrame df_em_mc("em_loop_tree", em_mc_loop);
 
@@ -651,7 +651,7 @@ string str_stream_step_filter = stream_step_filter.str();
 //~ ROOT::EnableImplicitMT(); 
 //~ TFile *em_mc_loop = new TFile("./deconv_data_rootfile/EM_MC_stop/EM_unfolding_loop_campaign_LCO_event_211_steps_0_timegrid_15_ndet_11_MC_stop_1000_it.root");
 //~ string file_name_MC = "./deconv_data_rootfile/EM_MC_stop/EM_unfolding_loop_campaign_LCO_event_"+str_stream_event+"_steps_0_timegrid_15_ndet_11_MC_stop_5e05_it.root";
-string file_name_MC = "./deconv_data_rootfile/EM_MC_stop/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_0_timegrid_"+str_stream_timegrid+"_ndet_11_MC_stop.root";
+string file_name_MC = "../outputs/root/deconv_data_rootfile/EM_MC_stop/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_0_timegrid_"+str_stream_timegrid+"_ndet_11_MC_stop.root";
 //~ string file_name_MC = "./deconv_data_rootfile/EM_MC_stop/EM_unfolding_loop_campaign_LCO_event_"+str_stream_event+"_steps_0_timegrid_15_ndet_11_MC_stop_2e04_it.root";
 TFile *em_mc_loop = new TFile(file_name_MC.c_str());
 ROOT::RDataFrame df_em_mc("em_loop_tree", em_mc_loop);
@@ -1160,7 +1160,7 @@ canvas_gaus->Draw();
 
 gStyle->SetImageScaling(3.); //works only in bach mode
 //~ canvas_gaus->SaveAs(("./deconv_data_pdf/EM_MC_fitting/bin_fit_per_event/Maricunga/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_bin_energy_"+str_stream_binenergy_name +".pdf").c_str());
-canvas_gaus->SaveAs(("./deconv_data_pdf/EM_MC_fitting/bin_fit_per_event/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_bin_energy_"+str_stream_binenergy_name +".pdf").c_str());
+canvas_gaus->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/bin_fit_per_event/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_bin_energy_"+str_stream_binenergy_name +".pdf").c_str());
 //~ canvas_gaus->SaveAs(("./deconv_data_pdf/EM_MC_fitting/event_41_fitting/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_bin_energy_"+str_stream_binenergy_name +".png").c_str());
 
 auto end = std::chrono::system_clock::now();
@@ -1196,7 +1196,7 @@ string str_stream_step_filter = stream_step_filter.str();
 //~ ROOT::EnableImplicitMT(); 
 //~ TFile *em_mc_loop = new TFile("./deconv_data_rootfile/EM_MC_stop/EM_unfolding_loop_campaign_LCO_event_211_steps_0_timegrid_15_ndet_11_MC_stop_1000_it.root");
 //~ string file_name_MC = "./deconv_data_rootfile/EM_MC_stop/EM_unfolding_loop_campaign_LCO_event_"+str_stream_event+"_steps_0_timegrid_15_ndet_11_MC_stop_5e05_it.root";
-string file_name_MC = "./deconv_data_rootfile/EM_MC_stop/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_0_timegrid_"+str_stream_timegrid+"_ndet_11_MC_stop.root";
+string file_name_MC = "../outputs/root/deconv_data_rootfile/EM_MC_stop/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_0_timegrid_"+str_stream_timegrid+"_ndet_11_MC_stop.root";
 //~ string file_name_MC = "./deconv_data_rootfile/EM_MC_stop/EM_unfolding_loop_campaign_LCO_event_"+str_stream_event+"_steps_0_timegrid_15_ndet_11_MC_stop_2e04_it.root";
 TFile *em_mc_loop = new TFile(file_name_MC.c_str());
 ROOT::RDataFrame df_em_mc("em_loop_tree", em_mc_loop);
@@ -1704,7 +1704,7 @@ fitGaussParam.push_back(p2_f);
 canvas_gaus->Draw();
 
 gStyle->SetImageScaling(3.); //works only in bach mode
-canvas_gaus->SaveAs(("./deconv_data_pdf/EM_MC_fitting/bin_fit_per_event/Maricunga/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_bin_energy_"+str_stream_binenergy_name +".pdf").c_str());
+canvas_gaus->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/bin_fit_per_event/Maricunga/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_bin_energy_"+str_stream_binenergy_name +".pdf").c_str());
 //~ canvas_gaus->SaveAs(("./deconv_data_pdf/EM_MC_fitting/event_41_fitting/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_bin_energy_"+str_stream_binenergy_name +".png").c_str());
 
 auto end = std::chrono::system_clock::now();
@@ -2001,7 +2001,7 @@ fit_parameters_loop.reserve(130);
 
 
 // Archivo de salida (el que queremos verificar antes de escribir)
-string df_file_name = "./deconv_mc_data_energy_fitting/" + campaign +
+string df_file_name = "../outputs/root/deconv_mc_data_energy_fitting/" + campaign +
                       "/EM_MC_fit_parameters_campaign_" + campaign +
                       "_event_" + str_stream_event +
                       "_timegrid_" + str_stream_timegrid +
@@ -2023,7 +2023,7 @@ string df_file_name = "./deconv_mc_data_energy_fitting/" + campaign +
 
 ROOT::EnableImplicitMT(6);
 
-string file_name_MC = "./deconv_data_rootfile/EM_MC_stop/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_0_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_MC_stop.root";
+string file_name_MC = "../outputs/root/deconv_data_rootfile/EM_MC_stop/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_0_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_MC_stop.root";
 TFile *event_file = new TFile(file_name_MC.c_str());
 //~ TFile *event_file = TFile::Open(file_name_MC.c_str(), "READ");
 
@@ -2127,7 +2127,7 @@ auto start = std::chrono::system_clock::now();
 	string str_stream_ndet = stream_ndet.str();
 
 	// Archivo de salida (el que queremos verificar antes de escribir)
-	string df_file_name = "./deconv_mc_data_energy_fitting/" + campaign +
+	string df_file_name = "../outputs/root/deconv_mc_data_energy_fitting/" + campaign +
                       "/EM_MC_fit_parameters_campaign_" + campaign +
                       "_event_" + str_stream_event +
                       "_timegrid_" + str_stream_timegrid +
@@ -2151,7 +2151,7 @@ auto start = std::chrono::system_clock::now();
 	}
 
 	//Archivo de entrada
-	string file_name_MC= "./deconv_data_rootfile/EM_MC_stop/"+campaign+
+	string file_name_MC= "../outputs/root/deconv_data_rootfile/EM_MC_stop/"+campaign+
 					 "/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+
 					 "_steps_0_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_MC_stop.root";
     // Se crea un RDataFrame a partir del árbol "em_loop_tree" del archivo ROOT.
@@ -2383,7 +2383,7 @@ void MakeHistograms_loop_bin_energy_single_pass_output_opt(string campaign, int 
 	else{campaign_path_new =campaign_path+"_"+neufield_type;}
 
   // Archivo de salida
-  string df_file_name = "./deconv_mc_data_energy_fitting/" +campaign_path_new+
+  string df_file_name = "../outputs/root/deconv_mc_data_energy_fitting/" +campaign_path_new+
                         "/EM_MC_fit_parameters_campaign_" + campaign +
                         "_event_" + str_stream_event +
                         "_timegrid_" + str_stream_timegrid +
@@ -2401,7 +2401,7 @@ void MakeHistograms_loop_bin_energy_single_pass_output_opt(string campaign, int 
   }
 
   // Archivo de entrada
-  string file_name_MC = "./deconv_data_rootfile/EM_MC_stop/" +campaign_path_new+
+  string file_name_MC = "../outputs/root/deconv_data_rootfile/EM_MC_stop/" +campaign_path_new+
                         "/EM_unfolding_loop_campaign_" + campaign + "_event_" + str_stream_event +
                         "_steps_0_timegrid_" + str_stream_timegrid + "_ndet_" + str_stream_ndet +
                         "_MC_stop.root";
@@ -2746,7 +2746,7 @@ void MakeHistograms_loop_bin_energy_single_pass(string campaign, int event, int 
 	string str_stream_ndet = stream_ndet.str();
 
 	// Archivo de entrada
-	string fileName= "./deconv_data_rootfile/EM_MC_stop/"+campaign+
+	string fileName= "../outputs/root/deconv_data_rootfile/EM_MC_stop/"+campaign+
 					 "/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+
 					 "_steps_0_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_MC_stop.root";
     // Se crea un RDataFrame a partir del árbol "em_loop_tree" del archivo ROOT.
@@ -3569,8 +3569,8 @@ l_q50->Draw("SAME");
 
 canvas_median->Draw();
 
-canvas_median->SaveAs(("./deconv_data_pdf/EM_MC_fitting/bin_fit_per_event/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+".pdf").c_str());
-canvas_median->SaveAs(("./deconv_data_pdf/EM_MC_fitting/bin_fit_per_event/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+".svg").c_str());
+canvas_median->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/bin_fit_per_event/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+".pdf").c_str());
+canvas_median->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/bin_fit_per_event/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+".svg").c_str());
 
     // Opcional: dibujar los 130 histogramas en un canvas dividido (por ejemplo, en 13 columnas x 10 filas)
     //~ TCanvas canvas("canvas", "Histogramas", 1200, 800);
@@ -3629,7 +3629,7 @@ void MakeHistograms_loop_bin_energy_single_pass_new(string campaign, int event, 
 	else{cout << "Physics list inexistente o incorrecta" << endl;}
 
 	// Archivo de entrada
-	string fileName= "./deconv_data_rootfile/EM_MC_stop/"+campaign_path+
+	string fileName= "../outputs/root/deconv_data_rootfile/EM_MC_stop/"+campaign_path+
 					 "/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+
 					 "_steps_0_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_MC_stop.root";
     // Se crea un RDataFrame a partir del árbol "em_loop_tree" del archivo ROOT.
@@ -4047,8 +4047,8 @@ void MakeHistograms_loop_bin_energy_single_pass_new(string campaign, int event, 
 
 	canvas_dist_integrals->Draw();
 
-	canvas_dist_integrals->SaveAs(("./deconv_data_pdf/EM_MC_fitting/bin_fit_per_event/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_IntgFluxDist.pdf").c_str());
-    canvas_dist_integrals->SaveAs(("./deconv_data_pdf/EM_MC_fitting/bin_fit_per_event/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_IntgFluxDist.svg").c_str());
+	canvas_dist_integrals->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/bin_fit_per_event/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_IntgFluxDist.pdf").c_str());
+    canvas_dist_integrals->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/bin_fit_per_event/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_IntgFluxDist.svg").c_str());
 
 
 
@@ -4374,8 +4374,8 @@ DrawBin(103);
 
 canvas_median->Draw();
 
-canvas_median->SaveAs(("./deconv_data_pdf/EM_MC_fitting/bin_fit_per_event/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+".pdf").c_str());
-canvas_median->SaveAs(("./deconv_data_pdf/EM_MC_fitting/bin_fit_per_event/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+".svg").c_str());
+canvas_median->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/bin_fit_per_event/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+".pdf").c_str());
+canvas_median->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/bin_fit_per_event/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+".svg").c_str());
 }
 
 
@@ -4449,7 +4449,7 @@ vector<Double_t> B; /*bins*/ /*matriz de bordes de bins*/
 vector<Double_t> E; /*bins*/ /*matriz de Energias*/
 
 
-string df_fit_mc_file = "./deconv_mc_data_energy_fitting/"+campaign+"/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+string df_fit_mc_file = "../outputs/root/deconv_mc_data_energy_fitting/"+campaign+"/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 //~ ROOT::RDataFrame df_fit_file("fit_loop_tree", df_fit_mc_file);
 
 TFile *event_file = new TFile(df_fit_mc_file.c_str(),"READ");
@@ -4470,7 +4470,7 @@ else{
 	ROOT::RDataFrame df_fit_file("fit_loop_tree", df_fit_mc_file);
 	
 	//~ string input_deconv_file= "./deconv_data_rootfile/EM_stop/"+campaign+"/em_stop_2_percent_criteria/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root"; //RetenDesierto
-	string input_deconv_file= "./deconv_data_rootfile/EM_stop/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_15_ndet_"+str_stream_ndet+".root";
+	string input_deconv_file= "../outputs/root/deconv_data_rootfile/EM_stop/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_15_ndet_"+str_stream_ndet+".root";
 	ROOT::RDataFrame df_event("em_loop_tree", input_deconv_file);
 
 	//~ string df_fit_mc_file = "./deconv_mc_data_energy_fitting/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_em_it_9.root";
@@ -4538,20 +4538,20 @@ else{
 
 				if(campaign=="LCO")
 					{
-						seed_flux_expacs_csv ="./EXPACS_Data/EXPACS_Calc_nflux_500/csv_files/LasCampanasAtacama_"+str_stream_vwc_file+".csv";
+						seed_flux_expacs_csv ="../data/external/EXPACS_Data/EXPACS_Calc_nflux_500/csv_files/LasCampanasAtacama_"+str_stream_vwc_file+".csv";
 					}
 
 				if(campaign=="Maricunga")
 					{
-						seed_flux_expacs_csv ="./EXPACS_Data/EXPACS_Calc_nflux_500/csv_files/PasoSanFcoAtacama_"+str_stream_vwc_file+".csv";
+						seed_flux_expacs_csv ="../data/external/EXPACS_Data/EXPACS_Calc_nflux_500/csv_files/PasoSanFcoAtacama_"+str_stream_vwc_file+".csv";
 					}
 				if(campaign=="RetenDesierto")
 					{
-						seed_flux_expacs_csv ="./EXPACS_Data/EXPACS_Calc_nflux_500/csv_files/DesiertoAtacama_"+str_stream_vwc_file+".csv";
+						seed_flux_expacs_csv ="../data/external/EXPACS_Data/EXPACS_Calc_nflux_500/csv_files/DesiertoAtacama_"+str_stream_vwc_file+".csv";
 					}
 				if(campaign=="Chapiquilta")
 					{
-						seed_flux_expacs_csv ="./EXPACS_Data/EXPACS_Calc_nflux_500/csv_files/LasCampanasAtacama_"+str_stream_vwc_file+".csv";
+						seed_flux_expacs_csv ="../data/external/EXPACS_Data/EXPACS_Calc_nflux_500/csv_files/LasCampanasAtacama_"+str_stream_vwc_file+".csv";
 					}
 			}
 			
@@ -4570,16 +4570,16 @@ else{
 				
 				if(campaign=="LCO")
 					{
-						seed_flux_expacs_csv ="./EXPACS_Data/EXPACS_Calc_nflux/csv_files/LasCampanasAtacama_"+str_stream_vwc_file+".csv";
+						seed_flux_expacs_csv ="../data/external/EXPACS_Data/EXPACS_Calc_nflux/csv_files/LasCampanasAtacama_"+str_stream_vwc_file+".csv";
 					}
 
 				if(campaign=="Maricunga")
 					{
-						seed_flux_expacs_csv ="./EXPACS_Data/EXPACS_Calc_nflux/csv_files/PasoSanFcoAtacama_"+str_stream_vwc_file+".csv";
+						seed_flux_expacs_csv ="../data/external/EXPACS_Data/EXPACS_Calc_nflux/csv_files/PasoSanFcoAtacama_"+str_stream_vwc_file+".csv";
 					}
 				if(campaign=="Chapiquilta")
 					{
-						seed_flux_expacs_csv ="./EXPACS_Data/EXPACS_Calc_nflux/csv_files/LasCampanasAtacama_"+str_stream_vwc_file+".csv";
+						seed_flux_expacs_csv ="../data/external/EXPACS_Data/EXPACS_Calc_nflux/csv_files/LasCampanasAtacama_"+str_stream_vwc_file+".csv";
 					}					
 			}
 			
@@ -5336,8 +5336,8 @@ else{
 	gPad->RedrawAxis();
 
 	canvas_error->Draw();
-	canvas_error->SaveAs(("./deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error.pdf").c_str());
-	canvas_error->SaveAs(("./deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error.svg").c_str());
+	canvas_error->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error.pdf").c_str());
+	canvas_error->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error.svg").c_str());
 	
 
 	TCanvas *canvas_compare = new TCanvas("Compare flux seed, flux deconv","Compare flux seed, flux decon",1920,1080);
@@ -5436,7 +5436,7 @@ else{
 	legend_c->Draw();
 
 	canvas_compare->Draw();
-	canvas_compare->SaveAs(("./deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error_compare.pdf").c_str());
+	canvas_compare->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error_compare.pdf").c_str());
 
 
 	/**update RDataframe**/
@@ -5563,7 +5563,7 @@ else{
 													return error_amb_dose_total;
 											});
 											
-	string fit_event_file_name ="./deconv_mc_data_energy_fitting/"+campaign+"/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_update.root";
+	string fit_event_file_name ="../outputs/root/deconv_mc_data_energy_fitting/"+campaign+"/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_update.root";
 	df_fit_file_update.Snapshot("fit_loop_tree_update",fit_event_file_name); /*Save selected columns to disk, in a new TTree treename in file filename*/
 
 
@@ -5594,7 +5594,7 @@ vector<Double_t> B; /*bins*/ /*matriz de bordes de bins*/
 vector<Double_t> E; /*bins*/ /*matriz de Energias*/
 
 
-string df_fit_mc_file = "./deconv_mc_data_energy_fitting/"+campaign+"/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+string df_fit_mc_file = "../outputs/root/deconv_mc_data_energy_fitting/"+campaign+"/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 //~ ROOT::RDataFrame df_fit_file("fit_loop_tree", df_fit_mc_file);
 
 TFile *event_file = new TFile(df_fit_mc_file.c_str(),"READ");
@@ -5615,7 +5615,7 @@ else{
 	ROOT::RDataFrame df_fit_file("fit_loop_tree", df_fit_mc_file);
 	
 	//~ string input_deconv_file= "./deconv_data_rootfile/EM_stop/"+campaign+"/em_stop_2_percent_criteria/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root"; //RetenDesierto
-	string input_deconv_file= "./deconv_data_rootfile/EM_stop/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_15_ndet_"+str_stream_ndet+".root";
+	string input_deconv_file= "../outputs/root/deconv_data_rootfile/EM_stop/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_15_ndet_"+str_stream_ndet+".root";
 	ROOT::RDataFrame df_event("em_loop_tree", input_deconv_file);
 
 	//~ string df_fit_mc_file = "./deconv_mc_data_energy_fitting/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_em_it_9.root";
@@ -5778,7 +5778,7 @@ else{
 
 	/****CARGAMOS SEMILLAS DE PARMA/EXPACS**********/
 	//~ string parma_file_path = "/home/flopez/Data/Dropbox/EXPACS/parma_cpp_flopez/"+campaign+"_parma_fluxes.root";
-	string parma_file_path = "./EXPACS_Data/parma_cpp_flopez/"+campaign+"_parma_fluxes.root";
+	string parma_file_path = "../data/external/EXPACS_Data/parma_cpp_flopez/"+campaign+"_parma_fluxes.root";
 	ROOT::RDataFrame df_parma_spectra("BkgNeutronSpectra", parma_file_path);
 
 	int year_input;
@@ -5871,7 +5871,7 @@ else{
 	char delimiter = ',';
 	char double_type ='D';
 	//~ string icrp116_binning_csv_path = "/home/flopez/Data/Dropbox/EXPACS/parma_cpp_flopez/ICRP116_binning_resume.csv";
-	string icrp116_binning_csv_path = "./EXPACS_Data/parma_cpp_flopez/ICRP116_binning_resume.csv";
+	string icrp116_binning_csv_path = "../data/external/EXPACS_Data/parma_cpp_flopez/ICRP116_binning_resume.csv";
 	std::unordered_map<std::string, char> icrp116_map = {{"Emid",double_type},{"Ewid", double_type},{"Elower", double_type},{"Eupper", double_type}}; // mapa de values (nombre de columna)-key (tipo de variable de la columna)
 	auto df_icrp116 = ROOT::RDF::FromCSV(icrp116_binning_csv_path,true,delimiter,-1, std::move(icrp116_map));
 
@@ -7026,9 +7026,9 @@ else{
 	gPad->RedrawAxis();
 
 	canvas_error->Draw();
-	canvas_error->SaveAs(("./deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error.pdf").c_str());
-	canvas_error->SaveAs(("./deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error.svg").c_str());
-	canvas_error->SaveAs(("./deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error.png").c_str());
+	canvas_error->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error.pdf").c_str());
+	canvas_error->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error.svg").c_str());
+	canvas_error->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error.png").c_str());
 	
 
 	TCanvas *canvas_compare = new TCanvas("Compare flux seed, flux deconv","Compare flux seed, flux decon",1920,1080);
@@ -7172,7 +7172,7 @@ else{
 	legend_c->Draw();
 
 	canvas_compare->Draw();
-	canvas_compare->SaveAs(("./deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error_compare.pdf").c_str());
+	canvas_compare->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error_compare.pdf").c_str());
 
 
 	/**update RDataframe**/
@@ -7403,7 +7403,7 @@ else{
 
 											
 											
-	string fit_event_file_name ="./deconv_mc_data_energy_fitting/"+campaign+"/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_update.root";
+	string fit_event_file_name ="../outputs/root/deconv_mc_data_energy_fitting/"+campaign+"/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_update.root";
 	df_fit_file_update.Snapshot("fit_loop_tree_update",fit_event_file_name); /*Save selected columns to disk, in a new TTree treename in file filename*/
 
 
@@ -7446,7 +7446,7 @@ if(physic_list=="FTFP_BERT")
 	 cout << physic_list+" Physic_list" << endl;}
 else{cout << "Physics list inexistente o incorrecta" << endl;}
 
-string df_fit_mc_file = "./deconv_mc_data_energy_fitting/"+campaign_path+"/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+string df_fit_mc_file = "../outputs/root/deconv_mc_data_energy_fitting/"+campaign_path+"/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 //~ ROOT::RDataFrame df_fit_file("fit_loop_tree", df_fit_mc_file);
 
 TFile *event_file = new TFile(df_fit_mc_file.c_str(),"READ");
@@ -7467,7 +7467,7 @@ else{
 	ROOT::RDataFrame df_fit_file("fit_loop_tree", df_fit_mc_file);
 	
 	//~ string input_deconv_file= "./deconv_data_rootfile/EM_stop/"+campaign+"/em_stop_2_percent_criteria/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root"; //RetenDesierto
-	string input_deconv_file= "./deconv_data_rootfile/EM_stop/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_15_ndet_"+str_stream_ndet+".root";
+	string input_deconv_file= "../outputs/root/deconv_data_rootfile/EM_stop/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_15_ndet_"+str_stream_ndet+".root";
 	ROOT::RDataFrame df_event("em_loop_tree", input_deconv_file);
 
 	//~ string df_fit_mc_file = "./deconv_mc_data_energy_fitting/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_em_it_9.root";
@@ -7631,7 +7631,7 @@ else{
 
 	/****CARGAMOS SEMILLAS DE PARMA/EXPACS**********/
 	//~ string parma_file_path = "/home/flopez/Data/Dropbox/EXPACS/parma_cpp_flopez/"+campaign+"_parma_fluxes.root";
-	string parma_file_path = "./EXPACS_Data/parma_cpp_flopez/"+campaign+"_parma_fluxes.root";
+	string parma_file_path = "../data/external/EXPACS_Data/parma_cpp_flopez/"+campaign+"_parma_fluxes.root";
 	ROOT::RDataFrame df_parma_spectra("BkgNeutronSpectra", parma_file_path);
 
 	int year_input;
@@ -7715,7 +7715,7 @@ else{
 	char delimiter = ',';
 	char double_type ='D';
 	//~ string icrp116_binning_csv_path = "/home/flopez/Data/Dropbox/EXPACS/parma_cpp_flopez/ICRP116_binning_resume.csv";
-	string icrp116_binning_csv_path = "./EXPACS_Data/parma_cpp_flopez/ICRP116_binning_resume.csv";
+	string icrp116_binning_csv_path = "../data/external/EXPACS_Data/parma_cpp_flopez/ICRP116_binning_resume.csv";
 	std::unordered_map<std::string, char> icrp116_map = {{"Emid",double_type},{"Ewid", double_type},{"Elower", double_type},{"Eupper", double_type}}; // mapa de values (nombre de columna)-key (tipo de variable de la columna)
 	auto df_icrp116 = ROOT::RDF::FromCSV(icrp116_binning_csv_path,true,delimiter,-1, std::move(icrp116_map));
 
@@ -8907,9 +8907,9 @@ else{
 	//~ canvas_error->SaveAs(("./deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign+"/"+campaign+"_paper"+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error.svg").c_str());
 	//~ canvas_error->SaveAs(("./deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign+"/"+campaign+"_paper"+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error.png").c_str());
 	
-	canvas_error->SaveAs(("./deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error.pdf").c_str());
-	canvas_error->SaveAs(("./deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error.svg").c_str());
-	canvas_error->SaveAs(("./deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error.png").c_str());
+	canvas_error->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error.pdf").c_str());
+	canvas_error->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error.svg").c_str());
+	canvas_error->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error.png").c_str());
 	
 
 	TCanvas *canvas_compare = new TCanvas("Compare flux seed, flux deconv","Compare flux seed, flux decon",1920,1080);
@@ -9054,7 +9054,7 @@ else{
 
 	canvas_compare->Draw();
 	//~ canvas_compare->SaveAs(("./deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign+"/"+campaign+"_paper"+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error_compare.pdf").c_str());
-	canvas_compare->SaveAs(("./deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error_compare.pdf").c_str());
+	canvas_compare->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error_compare.pdf").c_str());
 
 
 	/**update RDataframe**/
@@ -9286,7 +9286,7 @@ else{
 											
 											
 	//~ string fit_event_file_name ="./deconv_mc_data_energy_fitting/"+campaign+"/"+campaign+"_paper"+"/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_update.root";
-	string fit_event_file_name ="./deconv_mc_data_energy_fitting/"+campaign_path+"/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_update.root";
+	string fit_event_file_name ="../outputs/root/deconv_mc_data_energy_fitting/"+campaign_path+"/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_update.root";
 	df_fit_file_update.Snapshot("fit_loop_tree_update",fit_event_file_name); /*Save selected columns to disk, in a new TTree treename in file filename*/
 
 
@@ -9330,7 +9330,7 @@ if(physic_list=="FTFP_BERT")
 	 cout << physic_list+" Physic_list" << endl;}
 else{cout << "Physics list inexistente o incorrecta" << endl;}
 
-string df_fit_mc_file = "./deconv_mc_data_energy_fitting/"+campaign_path+"/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+string df_fit_mc_file = "../outputs/root/deconv_mc_data_energy_fitting/"+campaign_path+"/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 //~ ROOT::RDataFrame df_fit_file("fit_loop_tree", df_fit_mc_file);
 
 TFile *event_file = new TFile(df_fit_mc_file.c_str(),"READ");
@@ -9351,7 +9351,7 @@ else{
 	ROOT::RDataFrame df_fit_file("fit_loop_tree", df_fit_mc_file);
 	
 	//~ string input_deconv_file= "./deconv_data_rootfile/EM_stop/"+campaign+"/em_stop_2_percent_criteria/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root"; //RetenDesierto
-	string input_deconv_file= "./deconv_data_rootfile/EM_stop/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_15_ndet_"+str_stream_ndet+".root";
+	string input_deconv_file= "../outputs/root/deconv_data_rootfile/EM_stop/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_15_ndet_"+str_stream_ndet+".root";
 	ROOT::RDataFrame df_event("em_loop_tree", input_deconv_file);
 
 	//~ string df_fit_mc_file = "./deconv_mc_data_energy_fitting/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_em_it_9.root";
@@ -9515,7 +9515,7 @@ else{
 
 	/****CARGAMOS SEMILLAS DE PARMA/EXPACS**********/
 	//~ string parma_file_path = "/home/flopez/Data/Dropbox/EXPACS/parma_cpp_flopez/"+campaign+"_parma_fluxes.root";
-	string parma_file_path = "./EXPACS_Data/parma_cpp_flopez/"+campaign+"_parma_fluxes.root";
+	string parma_file_path = "../data/external/EXPACS_Data/parma_cpp_flopez/"+campaign+"_parma_fluxes.root";
 	ROOT::RDataFrame df_parma_spectra("BkgNeutronSpectra", parma_file_path);
 
 	int year_input;
@@ -9599,7 +9599,7 @@ else{
 	char delimiter = ',';
 	char double_type ='D';
 	//~ string icrp116_binning_csv_path = "/home/flopez/Data/Dropbox/EXPACS/parma_cpp_flopez/ICRP116_binning_resume.csv";
-	string icrp116_binning_csv_path = "./EXPACS_Data/parma_cpp_flopez/ICRP116_binning_resume.csv";
+	string icrp116_binning_csv_path = "../data/external/EXPACS_Data/parma_cpp_flopez/ICRP116_binning_resume.csv";
 	std::unordered_map<std::string, char> icrp116_map = {{"Emid",double_type},{"Ewid", double_type},{"Elower", double_type},{"Eupper", double_type}}; // mapa de values (nombre de columna)-key (tipo de variable de la columna)
 	auto df_icrp116 = ROOT::RDF::FromCSV(icrp116_binning_csv_path,true,delimiter,-1, std::move(icrp116_map));
 
@@ -10811,9 +10811,9 @@ else{
 	//~ canvas_error->SaveAs(("./deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign+"/"+campaign+"_paper"+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error.svg").c_str());
 	//~ canvas_error->SaveAs(("./deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign+"/"+campaign+"_paper"+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error.png").c_str());
 	
-	canvas_error->SaveAs(("./deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error.pdf").c_str());
-	canvas_error->SaveAs(("./deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error.svg").c_str());
-	canvas_error->SaveAs(("./deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error.png").c_str());
+	canvas_error->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error.pdf").c_str());
+	canvas_error->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error.svg").c_str());
+	canvas_error->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error.png").c_str());
 	
 
 	TCanvas *canvas_compare = new TCanvas("Compare flux seed, flux deconv","Compare flux seed, flux decon",1920,1080);
@@ -10965,7 +10965,7 @@ else{
 
 	canvas_compare->Draw();
 	//~ canvas_compare->SaveAs(("./deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign+"/"+campaign+"_paper"+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error_compare.pdf").c_str());
-	canvas_compare->SaveAs(("./deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error_compare.pdf").c_str());
+	canvas_compare->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error_compare.pdf").c_str());
 
 
 	/**update RDataframe**/
@@ -11197,7 +11197,7 @@ else{
 											
 											
 	//~ string fit_event_file_name ="./deconv_mc_data_energy_fitting/"+campaign+"/"+campaign+"_paper"+"/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_update.root";
-	string fit_event_file_name ="./deconv_mc_data_energy_fitting/"+campaign_path+"/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_update.root";
+	string fit_event_file_name ="../outputs/root/deconv_mc_data_energy_fitting/"+campaign_path+"/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_update.root";
 	df_fit_file_update.Snapshot("fit_loop_tree_update",fit_event_file_name); /*Save selected columns to disk, in a new TTree treename in file filename*/
 
 
@@ -11248,7 +11248,7 @@ string campaign_path_new;
 	else{campaign_path_new =campaign_path+"_"+neufield_type;}
 
 
-string df_fit_mc_file = "./deconv_mc_data_energy_fitting/"+campaign_path_new+"/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+string df_fit_mc_file = "../outputs/root/deconv_mc_data_energy_fitting/"+campaign_path_new+"/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 //~ ROOT::RDataFrame df_fit_file("fit_loop_tree", df_fit_mc_file);
 
 TFile *event_file = new TFile(df_fit_mc_file.c_str(),"READ");
@@ -11266,7 +11266,7 @@ else{
 	ROOT::RDataFrame df_fit_intg_file("fit_intg_tree", df_fit_mc_file); // Distribution per energy region 
 	
 	//~ string input_deconv_file= "./deconv_data_rootfile/EM_stop/"+campaign+"/em_stop_2_percent_criteria/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root"; //RetenDesierto
-	string input_deconv_file= "./deconv_data_rootfile/EM_stop/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_15_ndet_"+str_stream_ndet+".root";
+	string input_deconv_file= "../outputs/root/deconv_data_rootfile/EM_stop/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_15_ndet_"+str_stream_ndet+".root";
 	ROOT::RDataFrame df_event("em_loop_tree", input_deconv_file);
 
 
@@ -11309,7 +11309,7 @@ else{
 	int bin_cut = 130;
 
 	/****CARGAMOS SEMILLAS DE PARMA/EXPACS**********/
-	string parma_file_path = "./EXPACS_Data/parma_cpp_flopez/"+campaign+"_parma_fluxes.root";
+	string parma_file_path = "../data/external/EXPACS_Data/parma_cpp_flopez/"+campaign+"_parma_fluxes.root";
 	ROOT::RDataFrame df_parma_spectra("BkgNeutronSpectra", parma_file_path);
 
 	int year_input;
@@ -11391,7 +11391,7 @@ else{
 	char delimiter = ',';
 	char double_type ='D';
 	//~ string icrp116_binning_csv_path = "/home/flopez/Data/Dropbox/EXPACS/parma_cpp_flopez/ICRP116_binning_resume.csv";
-	string icrp116_binning_csv_path = "./EXPACS_Data/parma_cpp_flopez/ICRP116_binning_resume.csv";
+	string icrp116_binning_csv_path = "../data/external/EXPACS_Data/parma_cpp_flopez/ICRP116_binning_resume.csv";
 	std::unordered_map<std::string, char> icrp116_map = {{"Emid",double_type},{"Ewid", double_type},{"Elower", double_type},{"Eupper", double_type}}; // mapa de values (nombre de columna)-key (tipo de variable de la columna)
 	auto df_icrp116 = ROOT::RDF::FromCSV(icrp116_binning_csv_path,true,delimiter,-1, std::move(icrp116_map));
 
@@ -12681,9 +12681,9 @@ else{
 	//~ canvas_error->SaveAs(("./deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign+"/"+campaign+"_paper"+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error.svg").c_str());
 	//~ canvas_error->SaveAs(("./deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign+"/"+campaign+"_paper"+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error.png").c_str());
 	
-	canvas_error->SaveAs(("./deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign_path_new+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error.pdf").c_str());
-	canvas_error->SaveAs(("./deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign_path_new+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error.svg").c_str());
-	canvas_error->SaveAs(("./deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign_path_new+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error.png").c_str());
+	canvas_error->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign_path_new+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error.pdf").c_str());
+	canvas_error->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign_path_new+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error.svg").c_str());
+	canvas_error->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign_path_new+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error.png").c_str());
 	
 
 	TCanvas *canvas_compare = new TCanvas("Compare flux seed, flux deconv","Compare flux seed, flux decon",1920,1080);
@@ -12835,7 +12835,7 @@ else{
 
 	canvas_compare->Draw();
 	//~ canvas_compare->SaveAs(("./deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign+"/"+campaign+"_paper"+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error_compare.pdf").c_str());
-	canvas_compare->SaveAs(("./deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign_path_new+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error_compare.pdf").c_str());
+	canvas_compare->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign_path_new+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error_compare.pdf").c_str());
 
 
 	/**update RDataframe**/
@@ -13067,7 +13067,7 @@ else{
 											
 											
 	//~ string fit_event_file_name ="./deconv_mc_data_energy_fitting/"+campaign+"/"+campaign+"_paper"+"/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_update.root";
-	string fit_event_file_name ="./deconv_mc_data_energy_fitting/"+campaign_path_new+"/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_update.root";
+	string fit_event_file_name ="../outputs/root/deconv_mc_data_energy_fitting/"+campaign_path_new+"/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_update.root";
 	df_fit_file_update.Snapshot("fit_loop_tree_update",fit_event_file_name); /*Save selected columns to disk, in a new TTree treename in file filename*/
 
 
@@ -13115,7 +13115,7 @@ string campaign_path_new;
 	else{campaign_path_new =campaign_path+"_"+neufield_type;}
 
 
-string df_fit_mc_file = "./deconv_mc_data_energy_fitting/"+campaign_path_new+"/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+string df_fit_mc_file = "../outputs/root/deconv_mc_data_energy_fitting/"+campaign_path_new+"/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 //~ ROOT::RDataFrame df_fit_file("fit_loop_tree", df_fit_mc_file);
 
 TFile *event_file = new TFile(df_fit_mc_file.c_str(),"READ");
@@ -13166,7 +13166,7 @@ else{
 	char delimiter = ',';
 	char double_type ='D';
 	//~ string icrp116_binning_csv_path = "/home/flopez/Data/Dropbox/EXPACS/parma_cpp_flopez/ICRP116_binning_resume.csv";
-	string icrp116_binning_csv_path = "./EXPACS_Data/parma_cpp_flopez/ICRP116_binning_resume.csv";
+	string icrp116_binning_csv_path = "../data/external/EXPACS_Data/parma_cpp_flopez/ICRP116_binning_resume.csv";
 	std::unordered_map<std::string, char> icrp116_map = {{"Emid",double_type},{"Ewid", double_type},{"Elower", double_type},{"Eupper", double_type}}; // mapa de values (nombre de columna)-key (tipo de variable de la columna)
 	auto df_icrp116 = ROOT::RDF::FromCSV(icrp116_binning_csv_path,true,delimiter,-1, std::move(icrp116_map));
 
@@ -14022,7 +14022,7 @@ string campaign_path_new;
 	else{campaign_path_new =campaign_path+"_"+neufield_type;}
 
 
-string df_fit_mc_file = "./deconv_mc_data_energy_fitting/"+campaign_path_new+"/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+string df_fit_mc_file = "../outputs/root/deconv_mc_data_energy_fitting/"+campaign_path_new+"/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 //~ ROOT::RDataFrame df_fit_file("fit_loop_tree", df_fit_mc_file);
 
 TFile *event_file = new TFile(df_fit_mc_file.c_str(),"READ");
@@ -14073,7 +14073,7 @@ else{
 	char delimiter = ',';
 	char double_type ='D';
 	//~ string icrp116_binning_csv_path = "/home/flopez/Data/Dropbox/EXPACS/parma_cpp_flopez/ICRP116_binning_resume.csv";
-	string icrp116_binning_csv_path = "./EXPACS_Data/parma_cpp_flopez/ICRP116_binning_resume.csv";
+	string icrp116_binning_csv_path = "../data/external/EXPACS_Data/parma_cpp_flopez/ICRP116_binning_resume.csv";
 	std::unordered_map<std::string, char> icrp116_map = {{"Emid",double_type},{"Ewid", double_type},{"Elower", double_type},{"Eupper", double_type}}; // mapa de values (nombre de columna)-key (tipo de variable de la columna)
 	auto df_icrp116 = ROOT::RDF::FromCSV(icrp116_binning_csv_path,true,delimiter,-1, std::move(icrp116_map));
 
@@ -14893,7 +14893,7 @@ void Multiplot_1x3_Deconv(string campaign, int event, int steps, int time_grid, 
     //~ c->SaveAs(("./deconv_data_pdf/EM_MC_fitting/spectrum"+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+std::to_string(event)+"_steps_"+std::to_string(steps)+"_timegrid_"+std::to_string(time_grid)+"_ndet_"+std::to_string(ndet)+"_"+flux_representation+"_MC_stop_w_error_compare_ISO_MIX_BEAM.pdf").c_str());
     //~ c->SaveAs(("./deconv_data_pdf/EM_MC_fitting/spectrum"+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+std::to_string(event)+"_steps_"+std::to_string(steps)+"_timegrid_"+std::to_string(time_grid)+"_ndet_"+std::to_string(ndet)+"_"+flux_representation+"_MC_stop_w_error_compare_ISO_MIX_BEAM.svg").c_str());
 
-	const std::string outdir = "./deconv_data_pdf/EM_MC_fitting/spectrum/Comparison_"+campaign+"/";
+	const std::string outdir = "../outputs/pdf/deconv_data_pdf/EM_MC_fitting/spectrum/Comparison_"+campaign+"/";
     const std::string base =
         outdir +
         "EM_unfolding_loop_campaign_" + campaign +
@@ -14926,7 +14926,7 @@ vector<Double_t> B; /*bins*/ /*matriz de bordes de bins*/
 vector<Double_t> E; /*bins*/ /*matriz de Energias*/
 
 
-string input_deconv_file= "./deconv_data_rootfile/EM_stop/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_1_steps_0_timegrid_15_ndet_11.root";
+string input_deconv_file= "../outputs/root/deconv_data_rootfile/EM_stop/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_1_steps_0_timegrid_15_ndet_11.root";
 ROOT::RDataFrame df_event("em_loop_tree", input_deconv_file);
 
 /****Cargamos el flujo semilla*****/
@@ -14948,7 +14948,7 @@ if(bin_seed_new<=150)
 
 			if(campaign=="LCO")
 				{
-					seed_flux_expacs_csv ="./EXPACS_Data/EXPACS_Calc_nflux_500/csv_files/LasCampanasAtacama_"+str_stream_vwc_file+".csv";
+					seed_flux_expacs_csv ="../data/external/EXPACS_Data/EXPACS_Calc_nflux_500/csv_files/LasCampanasAtacama_"+str_stream_vwc_file+".csv";
 				}
 		}
 
@@ -14966,7 +14966,7 @@ if(bin_seed_new>150)
 			
 			if(campaign=="LCO")
 				{
-					seed_flux_expacs_csv ="./EXPACS_Data/EXPACS_Calc_nflux/csv_files/LasCampanasAtacama_"+str_stream_vwc_file+".csv";
+					seed_flux_expacs_csv ="../data/external/EXPACS_Data/EXPACS_Calc_nflux/csv_files/LasCampanasAtacama_"+str_stream_vwc_file+".csv";
 				}
 		}
 				 
@@ -15240,8 +15240,8 @@ cout << duration.count() << "min " << endl;
 
 void compare_sigma_perc(){
 
-string fit_1 = "./deconv_mc_data_energy_fitting/EM_MC_fit_parameters_campaign_LCO_event_41_5e05_it.root";
-string fit_2 = "./deconv_mc_data_energy_fitting/EM_MC_fit_parameters_campaign_LCO_event_41_2e04_it.root";
+string fit_1 = "../outputs/root/deconv_mc_data_energy_fitting/EM_MC_fit_parameters_campaign_LCO_event_41_5e05_it.root";
+string fit_2 = "../outputs/root/deconv_mc_data_energy_fitting/EM_MC_fit_parameters_campaign_LCO_event_41_2e04_it.root";
 ROOT::RDataFrame df_fit_1("fit_loop_tree", fit_1);
 ROOT::RDataFrame df_fit_2("fit_loop_tree", fit_2);
 
@@ -15254,7 +15254,7 @@ auto fit_2_vec_sigma = df_fit_2.Take<double>("sigma_perc").GetValue();
 //~ auto myProf1 = df_complete.Profile1D({"profName", "profTitle", 672, 0., 86400*7}, "rdfentry_", "NEUrate_D01");
 
 /**************Energy Bin********************/
-auto seed_flux_expacs_csv ="./EXPACS_Data/EXPACS_Calc_nflux/csv_files/LasCampanasAtacama_2.csv";
+auto seed_flux_expacs_csv ="../data/external/EXPACS_Data/EXPACS_Calc_nflux/csv_files/LasCampanasAtacama_2.csv";
 char delimiter = ',';
 char double_type ='D';
 std::unordered_map<std::string, char> msdata_map = {{"lower_edge_binvalue",double_type},{"bin_width", double_type},{"flux_value", double_type}}; // mapa de values (nombre de columna)-key (tipo de variable de la columna)
@@ -15424,7 +15424,7 @@ for(int i=1;i<=total_events;i++)
 		stream_event_i << i; 
 		string str_stream_event_i = stream_event_i.str();
 
-		string fit_event_file_name ="./deconv_mc_data_energy_fitting/"+campaign_path_new+"/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event_i+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_update.root";
+		string fit_event_file_name ="../outputs/root/deconv_mc_data_energy_fitting/"+campaign_path_new+"/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event_i+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_update.root";
 		
 		//~ TFile *event_file = TFile::Open(fit_event_file_name.c_str());
 		
@@ -16069,7 +16069,7 @@ auto  df_fit_file_update =  df_fit_file_new.Define("event_id",[&]() {
 
 
 										
-string fit_event_file_name ="./deconv_mc_data_energy_fitting/"+campaign_path_new+"/EM_MC_fit_parameters_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_update_merge.root";
+string fit_event_file_name ="../outputs/root/deconv_mc_data_energy_fitting/"+campaign_path_new+"/EM_MC_fit_parameters_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_update_merge.root";
 df_fit_file_update.Snapshot("fit_loop_tree_update",fit_event_file_name); /*Save selected columns to disk, in a new TTree treename in file filename*/
 
 cout << "----->FINISHED MERGE DATA<-----"<<endl;
@@ -16271,13 +16271,13 @@ string campaign_path_new;
 
 /****CARGAMOS SEMILLAS DE PARMA/EXPACS**********/
 	//~ string parma_file_path = "/home/flopez/Data/Dropbox/EXPACS/parma_cpp_flopez/"+campaign+"_parma_fluxes.root";
-	string parma_file_path = "./EXPACS_Data/parma_cpp_flopez/"+campaign+"_parma_fluxes.root";
+	string parma_file_path = "../data/external/EXPACS_Data/parma_cpp_flopez/"+campaign+"_parma_fluxes.root";
 	ROOT::RDataFrame df_parma_spectra("BkgNeutronSpectra", parma_file_path);
 /*************************Maricunga****************************/
 
 /*****Automatic selection of initial and final UTC time range of Campaign************/
 /*************************Maricunga****************************/
-string path_root_file="/home/flopez/Data/Dropbox/DOC_WORK/TESIS_DOC/Analysis/Counting_rates/Events_"+campaign+"_timegrid_"+std::to_string(time_grid)+"min_update_01.root";
+string path_root_file="../../Counting_rates/Events_"+campaign+"_timegrid_"+std::to_string(time_grid)+"min_update_01.root";
 auto file_exp_data = TFile::Open(path_root_file.c_str());
 ROOT::RDataFrame df_time("EventsTree", file_exp_data);
 
@@ -16369,7 +16369,7 @@ TDatime startDate(year_int,month_int,day_int,date_hh_int,date_min_int,date_ss_in
 /************************************************************************************/
 
 //~ string merge_data_file_name ="./deconv_mc_data_energy_fitting/"+campaign+"/EM_MC_fit_parameters_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_update_merge.root";
-string merge_data_file_name ="./deconv_mc_data_energy_fitting/"+campaign_path_new+"/EM_MC_fit_parameters_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_update_merge.root";
+string merge_data_file_name ="../outputs/root/deconv_mc_data_energy_fitting/"+campaign_path_new+"/EM_MC_fit_parameters_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_update_merge.root";
 ROOT::RDataFrame df_merge_data("fit_loop_tree_update", merge_data_file_name);
 
 auto Intg_total_error_vec = df_merge_data.Take<double>("err_intg_total").GetValue();
@@ -16677,7 +16677,7 @@ hist_intg_total->SetMarkerSize(1);
 
 //~ string counting_rate_campaign_path ="./deconv_mc_data_energy_fitting/"+campaign+"/3rd_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_data_complete_update.root";
 //~ string counting_rate_campaign_path ="./deconv_mc_data_energy_fitting/"+campaign+"/5th_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_data_complete_update.root";
-string counting_rate_campaign_path ="./CRNS_Data/"+campaign+"/"+campaign+"_data_"+str_stream_timegrid+"min_"+"complete.root";
+string counting_rate_campaign_path ="../data/external/CRNS_Data/"+campaign+"/"+campaign+"_data_"+str_stream_timegrid+"min_"+"complete.root";
 
 //~ string df_tree_name = campaign+"_data_tree";
 string df_tree_name = "CRNS_MSDATA"; //Chapiquilta
@@ -17342,10 +17342,10 @@ cout << " " << endl;
 	
 
 
-canvas_intg->SaveAs(("./deconv_data_pdf/EM_MC_fitting/integral_flux_relations/"+campaign_path_new+"/EM_integrales_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".pdf").c_str());
-canvas_intg->SaveAs(("./deconv_data_pdf/EM_MC_fitting/integral_flux_relations/"+campaign_path_new+"/EM_integrales_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".svg").c_str());
-canvas_intg->SaveAs(("./deconv_data_pdf/EM_MC_fitting/integral_flux_relations/"+campaign_path_new+"/EM_integrales_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".png").c_str());
-canvas_intg->SaveAs(("./deconv_data_pdf/EM_MC_fitting/integral_flux_relations/"+campaign_path_new+"/EM_integrales_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".eps").c_str());
+canvas_intg->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/integral_flux_relations/"+campaign_path_new+"/EM_integrales_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".pdf").c_str());
+canvas_intg->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/integral_flux_relations/"+campaign_path_new+"/EM_integrales_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".svg").c_str());
+canvas_intg->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/integral_flux_relations/"+campaign_path_new+"/EM_integrales_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".png").c_str());
+canvas_intg->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/integral_flux_relations/"+campaign_path_new+"/EM_integrales_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".eps").c_str());
 
 
 TCanvas *canvas_ratio_integrales = new TCanvas("Ratio_Integrales","Ratio_Integrales",786,927);
@@ -17439,7 +17439,7 @@ legend_c->AddEntry(hist_intg_ratio_th_total_clone,"Ratio #Phi_{th}/(#Phi_{total}
 legend_c->Draw();
 
 canvas_ratio_integrales->Draw();
-canvas_ratio_integrales->SaveAs(("./deconv_data_pdf/EM_MC_fitting/integral_flux_relations/"+campaign_path_new+"/EM_ratio_integrales_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".pdf").c_str());
+canvas_ratio_integrales->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/integral_flux_relations/"+campaign_path_new+"/EM_ratio_integrales_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".pdf").c_str());
 
 TCanvas *canvas_eta_integrales = new TCanvas("Eta_Integrales","#Eta Integrales",700,1027);
 canvas_eta_integrales->Divide(1,3);
@@ -17561,10 +17561,10 @@ legend_fs->AddEntry(hist_intg_eta_fs_clone,"Ratio #eta_{fs}","lep");
 legend_fs->Draw();
 
 canvas_eta_integrales->Draw();
-canvas_eta_integrales->SaveAs(("./deconv_data_pdf/EM_MC_fitting/integral_flux_relations/"+campaign_path_new+"/EM_eta_integrales_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".pdf").c_str());
+canvas_eta_integrales->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/integral_flux_relations/"+campaign_path_new+"/EM_eta_integrales_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".pdf").c_str());
 
 
-string fit_event_file_name ="./deconv_mc_data_energy_fitting/"+campaign_path_new	+"/EM_MC_fit_parameters_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_update_merge_02.root";
+string fit_event_file_name ="../outputs/root/deconv_mc_data_energy_fitting/"+campaign_path_new	+"/EM_MC_fit_parameters_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_update_merge_02.root";
 df_merge_data_new.Snapshot("EM_MC_tree", fit_event_file_name);
 
 }
@@ -17586,7 +17586,7 @@ else{cout << "Physics list inexistente o incorrecta" << endl;}
 
 /****CARGAMOS SEMILLAS DE PARMA/EXPACS**********/
 	//~ string parma_file_path = "/home/flopez/Data/Dropbox/EXPACS/parma_cpp_flopez/"+campaign+"_parma_fluxes.root";
-	string parma_file_path = "./EXPACS_Data/parma_cpp_flopez/"+campaign+"_parma_fluxes.root";
+	string parma_file_path = "../data/external/EXPACS_Data/parma_cpp_flopez/"+campaign+"_parma_fluxes.root";
 	ROOT::RDataFrame df_parma_spectra("BkgNeutronSpectra", parma_file_path);
 /*************************Maricunga****************************/
 
@@ -17598,10 +17598,10 @@ string campaign_path_new;
 
 /*Data para encontrar beta, usamos los espectros obtenidos cada 60min*/
 //~ string merge_data_file_name = "./deconv_mc_data_energy_fitting/"+campaign_path+"/"+campaign+"_timegrid_"+std::to_string(time_grid)+"_ndet_"+std::to_string(ndet)+"_data_complete_update.root";
-string merge_data_file_name = "./deconv_mc_data_energy_fitting/"+campaign_path+"/"+campaign+"_timegrid_60_ndet_"+std::to_string(ndet)+"_data_complete_update.root";
+string merge_data_file_name = "../outputs/root/deconv_mc_data_energy_fitting/"+campaign_path+"/"+campaign+"_timegrid_60_ndet_"+std::to_string(ndet)+"_data_complete_update.root";
 
 /*DATA PARA CORREGIR*/
-string merge_data_file_name_corr = "./deconv_mc_data_energy_fitting/"+campaign_path_new+"/"+campaign+"_timegrid_"+std::to_string(time_grid)+"_ndet_"+std::to_string(ndet)+"_data_complete_update.root";
+string merge_data_file_name_corr = "../outputs/root/deconv_mc_data_energy_fitting/"+campaign_path_new+"/"+campaign+"_timegrid_"+std::to_string(time_grid)+"_ndet_"+std::to_string(ndet)+"_data_complete_update.root";
 
 
 ROOT::RDataFrame df_merge_data((campaign+"_data_tree").c_str(), merge_data_file_name);
@@ -17802,7 +17802,7 @@ box_regre->DrawClone("");
 
 canvas_graph->Draw("");
 
-canvas_graph->SaveAs(("./deconv_data_pdf/atm_correction/Linear_regression_campaign_"+campaign_path+"_timegrid_"+std::to_string(time_grid)+"_ndet_"+std::to_string(ndet)+".pdf").c_str());
+canvas_graph->SaveAs(("../outputs/pdf/deconv_data_pdf/atm_correction/Linear_regression_campaign_"+campaign_path+"_timegrid_"+std::to_string(time_grid)+"_ndet_"+std::to_string(ndet)+".pdf").c_str());
 
 //Applied correction:
 
@@ -17816,7 +17816,7 @@ auto lambda_flux_atm_correction = [&](double &intg_flux, double &BP_mbar_correct
 
 
 /*************************Campaign****************************/
-string path_root_file="/home/flopez/Data/Dropbox/DOC_WORK/TESIS_DOC/Analysis/Counting_rates/Events_"+campaign+"_timegrid_"+std::to_string(time_grid)+"min_update_01.root";
+string path_root_file="../../Counting_rates/Events_"+campaign+"_timegrid_"+std::to_string(time_grid)+"min_update_01.root";
 auto file_exp_data = TFile::Open(path_root_file.c_str());
 ROOT::RDataFrame df_time("EventsTree", file_exp_data);
 
@@ -18846,9 +18846,9 @@ cout << " " << endl;
 	
 
 
-canvas_intg->SaveAs(("./deconv_data_pdf/EM_MC_fitting/integral_flux_relations/"+campaign_path_new+"/EM_integrales_campaign_"+campaign+"_timegrid_"+std::to_string(time_grid)+"_ndet_"+std::to_string(ndet)+"_corrected.pdf").c_str());
-canvas_intg->SaveAs(("./deconv_data_pdf/EM_MC_fitting/integral_flux_relations/"+campaign_path_new+"/EM_integrales_campaign_"+campaign+"_timegrid_"+std::to_string(time_grid)+"_ndet_"+std::to_string(ndet)+"_corrected.svg").c_str());
-canvas_intg->SaveAs(("./deconv_data_pdf/EM_MC_fitting/integral_flux_relations/"+campaign_path_new+"/EM_integrales_campaign_"+campaign+"_timegrid_"+std::to_string(time_grid)+"_ndet_"+std::to_string(ndet)+"_corrected.png").c_str());
+canvas_intg->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/integral_flux_relations/"+campaign_path_new+"/EM_integrales_campaign_"+campaign+"_timegrid_"+std::to_string(time_grid)+"_ndet_"+std::to_string(ndet)+"_corrected.pdf").c_str());
+canvas_intg->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/integral_flux_relations/"+campaign_path_new+"/EM_integrales_campaign_"+campaign+"_timegrid_"+std::to_string(time_grid)+"_ndet_"+std::to_string(ndet)+"_corrected.svg").c_str());
+canvas_intg->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/integral_flux_relations/"+campaign_path_new+"/EM_integrales_campaign_"+campaign+"_timegrid_"+std::to_string(time_grid)+"_ndet_"+std::to_string(ndet)+"_corrected.png").c_str());
 //~ canvas_intg->SaveAs(("./deconv_data_pdf/EM_MC_fitting/integral_flux_relations/"+campaign+"/EM_integrales_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".eps").c_str());
 
 }
@@ -18864,7 +18864,7 @@ string str_stream_timegrid = stream_timegrid.str();
 string str_stream_ndet = stream_ndet.str();
 
 //~ string input_file = "./deconv_mc_data_energy_fitting/"+campaign+"/3rd_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_data_complete_update.root";
-string input_file = "./deconv_mc_data_energy_fitting/"+campaign+"/"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_data_complete_update.root";
+string input_file = "../outputs/root/deconv_mc_data_energy_fitting/"+campaign+"/"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_data_complete_update.root";
 string df_tree_name = campaign+"_data_tree";
 //~ ROOT::RDataFrame df_data("LCO_data_tree", input_file );
 ROOT::RDataFrame df_data(df_tree_name, input_file );
@@ -19056,7 +19056,7 @@ auto canvas_scatter_plot = new TCanvas(("relations_scatter_plot_"+num).c_str(),(
    canvas_scatter_plot->Draw();
    
    //~ canvas_scatter_plot->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_MC_stop_relations/3rd_"+campaign+"_Campaign_relations_"+num+".pdf").c_str());
-   canvas_scatter_plot->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_MC_stop_relations/"+campaign+"_Campaign_relations_"+num+".pdf").c_str());
+   canvas_scatter_plot->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_MC_stop_relations/"+campaign+"_Campaign_relations_"+num+".pdf").c_str());
 
 	x_arr.clear();
 	y_arr.clear();
@@ -19100,8 +19100,8 @@ string campaign_path_new;
 //~ string input_complete_file = "./CRNS_Data/"+campaign+"/3rd_LCO_data_complete_15min.root";
 //~ string input_complete_file = "./CRNS_Data/"+campaign+"/3rd_"+campaign+"_data_complete_15min.root";
 //~ string input_complete_file = "./CRNS_Data/"+campaign+"/"+campaign+"_data_complete_15min.root"; //Chapiquilta
-string input_complete_file = "./CRNS_Data/"+campaign+"/"+campaign+"_data_"+str_stream_timegrid+"min_complete.root"; //SanPedrodeAtacama
-string fit_event_file_name ="./deconv_mc_data_energy_fitting/"+campaign_path_new+"/EM_MC_fit_parameters_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_update_merge_02.root";
+string input_complete_file = "../data/external/CRNS_Data/"+campaign+"/"+campaign+"_data_"+str_stream_timegrid+"min_complete.root"; //SanPedrodeAtacama
+string fit_event_file_name ="../outputs/root/deconv_mc_data_energy_fitting/"+campaign_path_new+"/EM_MC_fit_parameters_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_update_merge_02.root";
 
 TFile *file1 = TFile::Open(input_complete_file.c_str());
 TFile *file2 = TFile::Open(fit_event_file_name.c_str());
@@ -19117,7 +19117,7 @@ ROOT::RDataFrame df(*t1);
 string df_tree_name = campaign+"_data_tree";
 //~ df.Snapshot("LCO_data_tree", "./deconv_mc_data_energy_fitting/"+campaign+"/3rd_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_data_complete_update.root");
 //~ df.Snapshot(df_tree_name, "./deconv_mc_data_energy_fitting/"+campaign+"/3rd_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_data_complete_update.root");
-df.Snapshot(df_tree_name, "./deconv_mc_data_energy_fitting/"+campaign_path_new+"/"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_data_complete_update.root");
+df.Snapshot(df_tree_name, "../outputs/root/deconv_mc_data_energy_fitting/"+campaign_path_new+"/"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_data_complete_update.root");
 cout <<"Merging data complete" << endl;
 }
 
@@ -19152,7 +19152,7 @@ string campaign_path_new;
 //~ string counting_rate_campaign_path ="./deconv_mc_data_energy_fitting/"+campaign+"/3rd_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_data_complete_update.root";
 
 /***MERGED DATA, salida de relations_integral_local_variables_merge()***/
-string counting_rate_campaign_path ="./deconv_mc_data_energy_fitting/"+campaign_path_new+"/"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_data_complete_update.root";
+string counting_rate_campaign_path ="../outputs/root/deconv_mc_data_energy_fitting/"+campaign_path_new+"/"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_data_complete_update.root";
 
 string df_tree_name = campaign+"_data_tree";
 //~ ROOT::RDataFrame df_complete("LCO_data_tree", counting_rate_campaign_path);
@@ -19249,7 +19249,7 @@ auto df_complete_update_01 = df_complete.Define("BP_mbar_corrected",lambda_barom
 
 //~ df_complete_update_01.Snapshot("LCO_data_tree", "./deconv_mc_data_energy_fitting/"+campaign+"/3rd_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_data_complete_update.root");
 //~ df_complete_update_01.Snapshot(df_tree_name, "./deconv_mc_data_energy_fitting/"+campaign+"/3rd_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_data_complete_update.root");
-df_complete_update_01.Snapshot(df_tree_name, "./deconv_mc_data_energy_fitting/"+campaign_path_new+"/"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_data_complete_update.root");
+df_complete_update_01.Snapshot(df_tree_name, "../outputs/root/deconv_mc_data_energy_fitting/"+campaign_path_new+"/"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_data_complete_update.root");
 cout <<"Update of data complete" << endl;
 
 }
@@ -19266,7 +19266,7 @@ string str_stream_ndet = stream_ndet.str();
 string df_tree_name = campaign+"_data_tree";
 
 //~ string input_file = "./deconv_mc_data_energy_fitting/"+campaign+"/3rd_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_data_complete_update.root";
-string input_file = "./deconv_mc_data_energy_fitting/"+campaign+"/"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_data_complete_update.root";
+string input_file = "../outputs/root/deconv_mc_data_energy_fitting/"+campaign+"/"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_data_complete_update.root";
 //~ ROOT::RDataFrame df_data("LCO_data_tree", input_file);
 ROOT::RDataFrame df_data(df_tree_name, input_file);
 
@@ -19399,7 +19399,7 @@ tgraph_intg_he_vwc5cm_clone->DrawClone("AP");
 
 //~ canvas_intg_relations->Draw();
 //~ canvas_intg_relations->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_MC_stop_relations/3rd_"+campaign+"_Campaign_relations_intg_VWC_5cm.pdf").c_str());
-canvas_intg_relations->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_MC_stop_relations/"+campaign+"_Campaign_relations_intg_VWC_5cm.pdf").c_str());
+canvas_intg_relations->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_MC_stop_relations/"+campaign+"_Campaign_relations_intg_VWC_5cm.pdf").c_str());
 
 TCanvas *canvas_ratios_relations = new TCanvas("ratios_relations","ratios_relations",689,1040);
 
@@ -19493,7 +19493,7 @@ tgraph_intg_th_fsep_vwc5cm_clone->DrawClone("AP");
 
 //~ canvas_ratios_relations->Draw();
 //~ canvas_ratios_relations->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_MC_stop_relations/3rd_"+campaign+"_Campaign_relations_ratios_VWC_5cm.pdf").c_str());
-canvas_ratios_relations->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_MC_stop_relations/"+campaign+"_Campaign_relations_ratios_VWC_5cm.pdf").c_str());
+canvas_ratios_relations->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_MC_stop_relations/"+campaign+"_Campaign_relations_ratios_VWC_5cm.pdf").c_str());
 
 
 TCanvas *canvas_ratios_relations_airTC = new TCanvas("ratios_relations_airtc","ratios_relations_airtc",689,1040);
@@ -19588,7 +19588,7 @@ tgraph_intg_th_fsep_AirTC_Avg_clone->DrawClone("AP");
 
 //~ canvas_ratios_relations_airTC->Draw();
 //~ canvas_ratios_relations_airTC->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_MC_stop_relations/3rd_"+campaign+"_Campaign_relations_ratios_AirTC.pdf").c_str());
-canvas_ratios_relations_airTC->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_MC_stop_relations/"+campaign+"_Campaign_relations_ratios_AirTC.pdf").c_str());
+canvas_ratios_relations_airTC->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_MC_stop_relations/"+campaign+"_Campaign_relations_ratios_AirTC.pdf").c_str());
 
 
 TCanvas *canvas_ratios_relations_HR_Min = new TCanvas("ratios_relations_HR_Min","ratios_relations_HR_Min",689,1040);
@@ -19683,7 +19683,7 @@ tgraph_intg_th_fsep_RH_Min_clone->DrawClone("AP");
 
 //~ canvas_ratios_relations_HR_Min->Draw();
 //~ canvas_ratios_relations_HR_Min->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_MC_stop_relations/3rd_"+campaign+"_Campaign_relations_ratios_HR_min.pdf").c_str());
-canvas_ratios_relations_HR_Min->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_MC_stop_relations/"+campaign+"_Campaign_relations_ratios_HR_min.pdf").c_str());
+canvas_ratios_relations_HR_Min->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_MC_stop_relations/"+campaign+"_Campaign_relations_ratios_HR_min.pdf").c_str());
 
 /***********************************************************************/
 
@@ -19779,7 +19779,7 @@ tgraph_intg_th_fsep_SVPW_clone->DrawClone("AP");
 
 //~ canvas_ratios_relations_SVPW->Draw();
 //~ canvas_ratios_relations_SVPW->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_MC_stop_relations/3rd_"+campaign+"_Campaign_relations_ratios_SVPW.pdf").c_str());
-canvas_ratios_relations_SVPW->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_MC_stop_relations/"+campaign+"_Campaign_relations_ratios_SVPW.pdf").c_str());
+canvas_ratios_relations_SVPW->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_MC_stop_relations/"+campaign+"_Campaign_relations_ratios_SVPW.pdf").c_str());
 
 /*************************/
 
@@ -19875,7 +19875,7 @@ tgraph_intg_th_fsep_AH_clone->DrawClone("AP");
 
 //~ canvas_ratios_relations_AH->Draw();
 //~ canvas_ratios_relations_AH->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_MC_stop_relations/3rd_"+campaign+"_Campaign_relations_ratios_AH.pdf").c_str());
-canvas_ratios_relations_AH->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_MC_stop_relations/"+campaign+"_Campaign_relations_ratios_AH.pdf").c_str());
+canvas_ratios_relations_AH->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_MC_stop_relations/"+campaign+"_Campaign_relations_ratios_AH.pdf").c_str());
 
 /*************************/
 
@@ -19971,7 +19971,7 @@ tgraph_intg_th_fsep_SP_mbar_clone->DrawClone("AP");
 
 //~ canvas_ratios_relations_SP_mbar->Draw();
 //~ canvas_ratios_relations_SP_mbar->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_MC_stop_relations/3rd_"+campaign+"_Campaign_relations_ratios_SP_mbar.pdf").c_str());
-canvas_ratios_relations_SP_mbar->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_MC_stop_relations/"+campaign+"_Campaign_relations_ratios_SP_mbar.pdf").c_str());
+canvas_ratios_relations_SP_mbar->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_MC_stop_relations/"+campaign+"_Campaign_relations_ratios_SP_mbar.pdf").c_str());
 
 /*************************/
 
@@ -20067,7 +20067,7 @@ tgraph_intg_th_fsep_TC_5cm_clone->DrawClone("AP");
 
 //~ canvas_ratios_relations_TC_5cm->Draw();
 //~ canvas_ratios_relations_TC_5cm->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_MC_stop_relations/3rd_"+campaign+"_Campaign_relations_ratios_TC_5cm.pdf").c_str());
-canvas_ratios_relations_TC_5cm->SaveAs(("./deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_MC_stop_relations/"+campaign+"_Campaign_relations_ratios_TC_5cm.pdf").c_str());
+canvas_ratios_relations_TC_5cm->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_scatter_plots/"+campaign+"/EM_MC_stop_relations/"+campaign+"_Campaign_relations_ratios_TC_5cm.pdf").c_str());
 
 /******************Scatter PLOT*******************/
 
@@ -20107,13 +20107,13 @@ string str_stream_ndet = stream_ndet.str();
 
 /****CARGAMOS SEMILLAS DE PARMA/EXPACS**********/
 	//~ string parma_file_path = "/home/flopez/Data/Dropbox/EXPACS/parma_cpp_flopez/"+campaign+"_parma_fluxes.root";
-	string parma_file_path = "./EXPACS_Data/parma_cpp_flopez/"+campaign+"_parma_fluxes.root";
+	string parma_file_path = "../data/external/EXPACS_Data/parma_cpp_flopez/"+campaign+"_parma_fluxes.root";
 	ROOT::RDataFrame df_parma_spectra("BkgNeutronSpectra", parma_file_path);
 /*************************Maricunga****************************/
 
 /*****Automatic selection of initial and final UTC time range of Campaign************/
 /*************************Maricunga****************************/
-string path_root_file="/home/flopez/Data/Dropbox/DOC_WORK/TESIS_DOC/Analysis/Counting_rates/Events_"+campaign+"_timegrid_"+std::to_string(time_grid)+"min_update_01.root";
+string path_root_file="../../Counting_rates/Events_"+campaign+"_timegrid_"+std::to_string(time_grid)+"min_update_01.root";
 auto file_exp_data = TFile::Open(path_root_file.c_str());
 ROOT::RDataFrame df_time("EventsTree", file_exp_data);
 
@@ -20206,7 +20206,7 @@ TDatime startDate(year_int,month_int,day_int,date_hh_int,date_min_int,date_ss_in
 /************************************************************************************/
 
 //~ string merge_data_file_name ="./deconv_mc_data_energy_fitting/"+campaign+"/EM_MC_fit_parameters_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_update_merge.root";
-string merge_data_file_name ="./deconv_mc_data_energy_fitting/"+campaign+"/EM_MC_fit_parameters_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_update_merge.root";
+string merge_data_file_name ="../outputs/root/deconv_mc_data_energy_fitting/"+campaign+"/EM_MC_fit_parameters_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_update_merge.root";
 ROOT::RDataFrame df_merge_data("fit_loop_tree_update", merge_data_file_name);
 
 auto Intg_total_error_vec = df_merge_data.Take<double>("err_intg_total").GetValue();
@@ -20333,7 +20333,7 @@ auto df_merge_data_new_noZeros = df_merge_data_new.Filter("Intg_total != 0 && In
 
 /**************************************/
 
-string merge_data_file_name_msdata_update = "./deconv_mc_data_energy_fitting/"+campaign+"/"+campaign+"_timegrid_"+std::to_string(time_grid)+"_ndet_"+std::to_string(ndet)+"_data_complete_update.root";
+string merge_data_file_name_msdata_update = "../outputs/root/deconv_mc_data_energy_fitting/"+campaign+"/"+campaign+"_timegrid_"+std::to_string(time_grid)+"_ndet_"+std::to_string(ndet)+"_data_complete_update.root";
 ROOT::RDataFrame df_merge_data_msdata_update((campaign+"_data_tree").c_str(), merge_data_file_name_msdata_update);
 
 //Para graficar filtramos los valores nulos
@@ -20544,7 +20544,7 @@ hist_intg_total->SetMarkerSize(1);
 
 //~ string counting_rate_campaign_path ="./deconv_mc_data_energy_fitting/"+campaign+"/3rd_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_data_complete_update.root";
 //~ string counting_rate_campaign_path ="./deconv_mc_data_energy_fitting/"+campaign+"/5th_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_data_complete_update.root";
-string counting_rate_campaign_path ="./CRNS_Data/"+campaign+"/"+campaign+"_data_"+str_stream_timegrid+"min_"+"complete.root";
+string counting_rate_campaign_path ="../data/external/CRNS_Data/"+campaign+"/"+campaign+"_data_"+str_stream_timegrid+"min_"+"complete.root";
 
 //~ string df_tree_name = campaign+"_data_tree";
 string df_tree_name = "CRNS_MSDATA"; //Chapiquilta
@@ -21461,13 +21461,13 @@ string str_stream_ndet = stream_ndet.str();
 
 /****CARGAMOS SEMILLAS DE PARMA/EXPACS**********/
 	//~ string parma_file_path = "/home/flopez/Data/Dropbox/EXPACS/parma_cpp_flopez/"+campaign+"_parma_fluxes.root";
-	string parma_file_path = "./EXPACS_Data/parma_cpp_flopez/"+campaign+"_parma_fluxes.root";
+	string parma_file_path = "../data/external/EXPACS_Data/parma_cpp_flopez/"+campaign+"_parma_fluxes.root";
 	ROOT::RDataFrame df_parma_spectra("BkgNeutronSpectra", parma_file_path);
 /*************************Maricunga****************************/
 
 /*****Automatic selection of initial and final UTC time range of Campaign************/
 /*************************Maricunga****************************/
-string path_root_file="/home/flopez/Data/Dropbox/DOC_WORK/TESIS_DOC/Analysis/Counting_rates/Events_"+campaign+"_timegrid_"+std::to_string(time_grid)+"min_update_01.root";
+string path_root_file="../../Counting_rates/Events_"+campaign+"_timegrid_"+std::to_string(time_grid)+"min_update_01.root";
 auto file_exp_data = TFile::Open(path_root_file.c_str());
 ROOT::RDataFrame df_time("EventsTree", file_exp_data);
 
@@ -21560,7 +21560,7 @@ TDatime startDate(year_int,month_int,day_int,date_hh_int,date_min_int,date_ss_in
 /************************************************************************************/
 
 //~ string merge_data_file_name ="./deconv_mc_data_energy_fitting/"+campaign+"/EM_MC_fit_parameters_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_update_merge.root";
-string merge_data_file_name ="./deconv_mc_data_energy_fitting/"+campaign+"/EM_MC_fit_parameters_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_update_merge.root";
+string merge_data_file_name ="../outputs/root/deconv_mc_data_energy_fitting/"+campaign+"/EM_MC_fit_parameters_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_update_merge.root";
 ROOT::RDataFrame df_merge_data("fit_loop_tree_update", merge_data_file_name);
 
 auto Intg_total_error_vec = df_merge_data.Take<double>("err_intg_total").GetValue();
@@ -21647,7 +21647,7 @@ auto df_merge_data_new_noZeros = df_merge_data_new.Filter("Intg_total != 0 && In
 
 /**************************************/
 
-string merge_data_file_name_msdata_update = "./deconv_mc_data_energy_fitting/"+campaign+"/"+campaign+"_timegrid_"+std::to_string(time_grid)+"_ndet_"+std::to_string(ndet)+"_data_complete_update.root";
+string merge_data_file_name_msdata_update = "../outputs/root/deconv_mc_data_energy_fitting/"+campaign+"/"+campaign+"_timegrid_"+std::to_string(time_grid)+"_ndet_"+std::to_string(ndet)+"_data_complete_update.root";
 ROOT::RDataFrame df_merge_data_msdata_update((campaign+"_data_tree").c_str(), merge_data_file_name_msdata_update);
 
 //Para graficar filtramos los valores nulos
@@ -21702,7 +21702,7 @@ vect_graph_asymm.push_back(hist_intg_he);
 
 //~ string counting_rate_campaign_path ="./deconv_mc_data_energy_fitting/"+campaign+"/3rd_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_data_complete_update.root";
 //~ string counting_rate_campaign_path ="./deconv_mc_data_energy_fitting/"+campaign+"/5th_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_data_complete_update.root";
-string counting_rate_campaign_path ="./CRNS_Data/"+campaign+"/"+campaign+"_data_"+str_stream_timegrid+"min_"+"complete.root";
+string counting_rate_campaign_path ="../data/external/CRNS_Data/"+campaign+"/"+campaign+"_data_"+str_stream_timegrid+"min_"+"complete.root";
 
 //~ string df_tree_name = campaign+"_data_tree";
 string df_tree_name = "CRNS_MSDATA"; //Chapiquilta
@@ -22003,7 +22003,7 @@ return data_output;
 
 
 void dose_coeff_conversion(){
-string input_file = "/home/flopez/LIN/TESIS_DOC/Analysis/binning_E.csv";
+string input_file = "../configs/binning_E.csv";
 char delimiter = ',';
 char double_type ='D';
 std::unordered_map<std::string, char> msdata_map = {{"E_EXPACS_binning",double_type},{"E_ICRP116_binning", double_type},{"E_ICRP74_binning", double_type},{"E_TRS403_binning", double_type},{"E_ISO_ICRP116", double_type},{"E_ISO_ICRP74", double_type},{"E_ISO_TRS403", double_type},{"H10_ICRP74", double_type},{"H10_TRS403", double_type}}; // mapa de values (nombre de columna)-key (tipo de variable de la columna)
@@ -22169,7 +22169,7 @@ legend_c->Draw();
 
 void effective_dose_per_diff_flux_H(string campaign){
 	
-string input_file = "./deconv_mc_data_energy_fitting/"+campaign+"/3rd_"+campaign+"_data_complete_update.root";
+string input_file = "../outputs/root/deconv_mc_data_energy_fitting/"+campaign+"/3rd_"+campaign+"_data_complete_update.root";
 ROOT::RDataFrame df_data("LCO_data_tree", input_file);
 
 RVec<double> coeff_conver_fluence_to_dose_vec = interpolate_tgraph("E_ICRP116_ISO"); // C(E)
@@ -22259,9 +22259,9 @@ legend_c->Draw();
 
 void ambient_dose_per_diff_flux_H_new(string campaign,int timegrid, int ndet){
 	
-string input_file_iso = "./deconv_mc_data_energy_fitting/"+campaign+"_FTFP_BERT/"+campaign+"_timegrid_"+std::to_string(timegrid)+"_ndet_"+std::to_string(ndet)+"_data_complete_update.root";
-string input_file_mix = "./deconv_mc_data_energy_fitting/"+campaign+"_FTFP_BERT_MIX/"+campaign+"_timegrid_"+std::to_string(timegrid)+"_ndet_"+std::to_string(ndet)+"_data_complete_update.root";
-string input_file_beam = "./deconv_mc_data_energy_fitting/"+campaign+"_FTFP_BERT_BEAM/"+campaign+"_timegrid_"+std::to_string(timegrid)+"_ndet_"+std::to_string(ndet)+"_data_complete_update.root";
+string input_file_iso = "../outputs/root/deconv_mc_data_energy_fitting/"+campaign+"_FTFP_BERT/"+campaign+"_timegrid_"+std::to_string(timegrid)+"_ndet_"+std::to_string(ndet)+"_data_complete_update.root";
+string input_file_mix = "../outputs/root/deconv_mc_data_energy_fitting/"+campaign+"_FTFP_BERT_MIX/"+campaign+"_timegrid_"+std::to_string(timegrid)+"_ndet_"+std::to_string(ndet)+"_data_complete_update.root";
+string input_file_beam = "../outputs/root/deconv_mc_data_energy_fitting/"+campaign+"_FTFP_BERT_BEAM/"+campaign+"_timegrid_"+std::to_string(timegrid)+"_ndet_"+std::to_string(ndet)+"_data_complete_update.root";
 
 ROOT::RDataFrame df_data_iso("LCO_data_tree", input_file_iso);
 ROOT::RDataFrame df_data_mix("LCO_data_tree", input_file_mix);
@@ -22485,7 +22485,7 @@ string str_stream_timegrid = stream_timegrid.str();
 string str_stream_ndet = stream_ndet.str();
 
 //~ string input_complete_file = "/home/flopez/LIN/TESIS_DOC/Analysis/Counting_rates/LCO_1hr/3rd_LCO_data_complete.root";
-string input_complete_file = "./deconv_mc_data_energy_fitting/"+campaign+"/3rd_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_data_complete_update.root";
+string input_complete_file = "../outputs/root/deconv_mc_data_energy_fitting/"+campaign+"/3rd_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_data_complete_update.root";
 string df_tree_name = campaign+"_data_tree";
 
 ROOT::RDataFrame df_complete_lco(df_tree_name, input_complete_file);
@@ -22548,7 +22548,7 @@ string campaign = "Maricunga";
 string str_stream_timegrid = "15";
 string str_stream_ndet = "11";
 
-string input_complete_file = "./deconv_mc_data_energy_fitting/"+campaign+"/3rd_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_data_complete_update.root";
+string input_complete_file = "../outputs/root/deconv_mc_data_energy_fitting/"+campaign+"/3rd_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_data_complete_update.root";
 string df_tree_name = campaign+"_data_tree";
 
 ROOT::RDataFrame df_complete(df_tree_name, input_complete_file);
@@ -22588,7 +22588,7 @@ vector<double> neu_count_recalculate_err_lower;
 //~ ROOT::RDataFrame df_data(df_tree_name, input_file);
 
 string df_tree_complete_name = campaign+"_data_tree";
-string input_file_deconv = "./deconv_mc_data_energy_fitting/"+campaign+"/"+campaign+"_timegrid_"+std::to_string(timegrid)+"_ndet_"+std::to_string(11)+"_data_complete_update.root";
+string input_file_deconv = "../outputs/root/deconv_mc_data_energy_fitting/"+campaign+"/"+campaign+"_timegrid_"+std::to_string(timegrid)+"_ndet_"+std::to_string(11)+"_data_complete_update.root";
 ROOT::RDataFrame df_data_complete(df_tree_complete_name, input_file_deconv);
 
 /**Neutrones medidos*/
@@ -22984,7 +22984,7 @@ ofstream debug_chi2_deconv_fit("debug_chi2_deconv_fit.txt"); // archivo de salid
 //~ ROOT::RDataFrame df_data(df_tree_name, input_file);
 
 string df_tree_complete_name = campaign+"_data_tree";
-string input_file_deconv = "./deconv_mc_data_energy_fitting/"+campaign+"/"+campaign+"_timegrid_"+std::to_string(timegrid)+"_ndet_"+std::to_string(11)+"_data_complete_update.root";
+string input_file_deconv = "../outputs/root/deconv_mc_data_energy_fitting/"+campaign+"/"+campaign+"_timegrid_"+std::to_string(timegrid)+"_ndet_"+std::to_string(11)+"_data_complete_update.root";
 ROOT::RDataFrame df_data_complete(df_tree_complete_name, input_file_deconv);
 
 /**Neutrones medidos*/
@@ -23234,11 +23234,11 @@ vector< vector<Double_t>> R_NM;   /*matriz de funciones respuesta NM64 & NM2023*
 
 string df_tree_name = "CRNS_MSDATA";
 
-string input_file = "./CRNS_Data/"+campaign+"/"+campaign+"_data_"+std::to_string(timegrid)+"min_complete.root";
+string input_file = "../data/external/CRNS_Data/"+campaign+"/"+campaign+"_data_"+std::to_string(timegrid)+"min_complete.root";
 ROOT::RDataFrame df_data(df_tree_name, input_file);
 
 string df_tree_complete_name = campaign+"_data_tree";
-string input_file_deconv = "./deconv_mc_data_energy_fitting/"+campaign+"/"+campaign+"_timegrid_"+std::to_string(timegrid)+"_ndet_"+std::to_string(11)+"_data_complete_update.root";
+string input_file_deconv = "../outputs/root/deconv_mc_data_energy_fitting/"+campaign+"/"+campaign+"_timegrid_"+std::to_string(timegrid)+"_ndet_"+std::to_string(11)+"_data_complete_update.root";
 ROOT::RDataFrame df_data_complete(df_tree_complete_name, input_file_deconv);
 
 /**Neutrones medidos*/
@@ -23688,11 +23688,11 @@ vector< vector<Double_t>> R;   /*matriz de funciones respuesta del espectrometro
 
 string df_tree_name = "CRNS_MSDATA";
 
-string input_file = "./CRNS_Data/"+campaign+"/"+campaign+"_data_"+std::to_string(timegrid)+"min_complete.root";
+string input_file = "../data/external/CRNS_Data/"+campaign+"/"+campaign+"_data_"+std::to_string(timegrid)+"min_complete.root";
 ROOT::RDataFrame df_data(df_tree_name, input_file);
 
 string df_tree_complete_name = campaign+"_data_tree";
-string input_file_deconv = "./deconv_mc_data_energy_fitting/"+campaign+"/"+campaign+"_timegrid_"+std::to_string(timegrid)+"_ndet_"+std::to_string(11)+"_data_complete_update.root";
+string input_file_deconv = "../outputs/root/deconv_mc_data_energy_fitting/"+campaign+"/"+campaign+"_timegrid_"+std::to_string(timegrid)+"_ndet_"+std::to_string(11)+"_data_complete_update.root";
 ROOT::RDataFrame df_data_complete(df_tree_complete_name, input_file_deconv);
 
 /**Neutrones medidos*/
@@ -24395,9 +24395,9 @@ legend_intg_total->Draw();
 
 
 canvas_cr->Draw();
-canvas_cr->SaveAs(("./deconv_data_pdf/error_comparations/"+campaign+"/neutron_count_diff_rel_"+campaign+"_Campaign_"+"timgegrid_"+std::to_string(timegrid)+"_ndet_"+std::to_string(ndet)+".pdf").c_str());
-canvas_cr->SaveAs(("./deconv_data_pdf/error_comparations/"+campaign+"/neutron_count_diff_rel_"+campaign+"_Campaign_"+"timgegrid_"+std::to_string(timegrid)+"_ndet_"+std::to_string(ndet)+".svg").c_str());
-canvas_cr->SaveAs(("./deconv_data_pdf/error_comparations/"+campaign+"/neutron_count_diff_rel_"+campaign+"_Campaign_"+"timgegrid_"+std::to_string(timegrid)+"_ndet_"+std::to_string(ndet)+".png").c_str());
+canvas_cr->SaveAs(("../outputs/pdf/deconv_data_pdf/error_comparations/"+campaign+"/neutron_count_diff_rel_"+campaign+"_Campaign_"+"timgegrid_"+std::to_string(timegrid)+"_ndet_"+std::to_string(ndet)+".pdf").c_str());
+canvas_cr->SaveAs(("../outputs/pdf/deconv_data_pdf/error_comparations/"+campaign+"/neutron_count_diff_rel_"+campaign+"_Campaign_"+"timgegrid_"+std::to_string(timegrid)+"_ndet_"+std::to_string(ndet)+".svg").c_str());
+canvas_cr->SaveAs(("../outputs/pdf/deconv_data_pdf/error_comparations/"+campaign+"/neutron_count_diff_rel_"+campaign+"_Campaign_"+"timgegrid_"+std::to_string(timegrid)+"_ndet_"+std::to_string(ndet)+".png").c_str());
 
 }
 
@@ -24432,11 +24432,11 @@ vector< vector<Double_t>> R;   /*matriz de funciones respuesta del espectrometro
 
 string df_tree_name = "CRNS_MSDATA";
 
-string input_file = "./CRNS_Data/"+campaign+"/"+campaign+"_data_"+std::to_string(timegrid)+"min_complete.root";
+string input_file = "../data/external/CRNS_Data/"+campaign+"/"+campaign+"_data_"+std::to_string(timegrid)+"min_complete.root";
 ROOT::RDataFrame df_data(df_tree_name, input_file);
 
 string df_tree_complete_name = campaign+"_data_tree";
-string input_file_deconv = "./deconv_mc_data_energy_fitting/"+campaign+"/"+campaign+"_timegrid_"+std::to_string(timegrid)+"_ndet_"+std::to_string(11)+"_data_complete_update.root";
+string input_file_deconv = "../outputs/root/deconv_mc_data_energy_fitting/"+campaign+"/"+campaign+"_timegrid_"+std::to_string(timegrid)+"_ndet_"+std::to_string(11)+"_data_complete_update.root";
 ROOT::RDataFrame df_data_complete(df_tree_complete_name, input_file_deconv);
 
 /**Neutrones medidos*/
@@ -25938,14 +25938,14 @@ void LowScatteringFacilityPlots_02(){
 /**MEDIDAS CON EL DETECTOR 01, 12 cm HDPE**/
 
 /*Medidas angulares a 0, 30, 45, 60 y 90 deg con Fuente AmBe 1Ci y medidas a Distancias desde 4.25m a 2.75m, */
-TFile *LSF_file_01 = new TFile("/home/flopez/Data/Dropbox/DOC_WORK/TESIS_DOC/Low_Scattering_Facility_Measurements/rootfiles/141125_AmBe_1Ci_Det01_12cmHDPE_03.root");
+TFile *LSF_file_01 = new TFile("../../../Low_Scattering_Facility_Measurements/rootfiles/141125_AmBe_1Ci_Det01_12cmHDPE_03.root");
 
 /*Medida con Fuente AmBe 1Ci, Distancias desde 2.5m a 0.5m*/
-TFile *LSF_file_02 = new TFile("/home/flopez/Data/Dropbox/DOC_WORK/TESIS_DOC/Low_Scattering_Facility_Measurements/rootfiles/141125_AmBe_1Ci_Det01_12cmHDPE_06.root");
+TFile *LSF_file_02 = new TFile("../../../Low_Scattering_Facility_Measurements/rootfiles/141125_AmBe_1Ci_Det01_12cmHDPE_06.root");
 
 
 /*Medida con cono de sombra parar el detector 01 (3m)*/
-TFile *LSF_file_03 = new TFile("/home/flopez/Data/Dropbox/DOC_WORK/TESIS_DOC/Low_Scattering_Facility_Measurements/rootfiles/211125_AmBe_1Ci_Det08_07.root");
+TFile *LSF_file_03 = new TFile("../../../Low_Scattering_Facility_Measurements/rootfiles/211125_AmBe_1Ci_Det08_07.root");
 
 
 
@@ -26799,7 +26799,7 @@ void LowScatteringFacilityPlots_01(){
 
 //~ /*Medida con Fuente AmBe 1Ci, Distancias desde 4.25m a 2.75m*/
 //~ TFile *LSF_file_01 = new TFile("/home/flopez/Data/Dropbox/DOC_WORK/TESIS_DOC/Low_Scattering_Facility_Measurements/rootfiles/201125_AmBe_1Ci_Det08_06.root");
-TFile *LSF_file_01 = new TFile("/home/flopez/Data/Dropbox/DOC_WORK/TESIS_DOC/Low_Scattering_Facility_Measurements/rootfiles/241125_AmBe_1Ci_Det08_10.root");
+TFile *LSF_file_01 = new TFile("../../../Low_Scattering_Facility_Measurements/rootfiles/241125_AmBe_1Ci_Det08_10.root");
 
 //~ /*Medida con Fuente AmBe 1Ci, Distancias desde 2.5m a 0.5m*/
 //~ TFile *LSF_file_02 = new TFile("/home/flopez/Data/Dropbox/DOC_WORK/TESIS_DOC/Low_Scattering_Facility_Measurements/rootfiles/141125_AmBe_1Ci_Det01_12cmHDPE_06.root");
@@ -27513,7 +27513,7 @@ double neu_dir_sigma = sqrt(pow(sigma_cono_01[1],2)+pow(sigma_cono_01[0],2));
 /**MEDIDAS CON EL DETECTOR 02 10cmHDPE**/
 
 
-TFile *LSF_file_01 = new TFile("/home/flopez/Data/Dropbox/DOC_WORK/TESIS_DOC/Low_Scattering_Facility_Measurements/rootfiles/251125_AmBe_1Ci_Det08_12.root");
+TFile *LSF_file_01 = new TFile("../../../Low_Scattering_Facility_Measurements/rootfiles/251125_AmBe_1Ci_Det08_12.root");
 
 
 TH1F *h_crp1s = (TH1F*)LSF_file_01->Get("Ch01_CR_1sec");
@@ -28307,8 +28307,8 @@ std::vector<TH1F*> vec_hist_cr_ang1;   // set A (solo det==1)
 
 
 if (det == 1) {
-  LSF_file_01 = TFile::Open("/home/flopez/Data/Dropbox/DOC_WORK/TESIS_DOC/Low_Scattering_Facility_Measurements/rootfiles/141125_AmBe_1Ci_Det01_12cmHDPE_03.root");
-  LSF_file_02 = TFile::Open("/home/flopez/Data/Dropbox/DOC_WORK/TESIS_DOC/Low_Scattering_Facility_Measurements/rootfiles/141125_AmBe_1Ci_Det01_12cmHDPE_06.root");
+  LSF_file_01 = TFile::Open("../../../Low_Scattering_Facility_Measurements/rootfiles/141125_AmBe_1Ci_Det01_12cmHDPE_03.root");
+  LSF_file_02 = TFile::Open("../../../Low_Scattering_Facility_Measurements/rootfiles/141125_AmBe_1Ci_Det01_12cmHDPE_06.root");
 
   vec_hist_cr    = LoadCRHists(LSF_file_01, "det01_A"); // A = _03.root
   vec_hist_cr_02 = LoadCRHists(LSF_file_02, "det01_B"); // B = _06.root
@@ -28316,29 +28316,29 @@ if (det == 1) {
 }
 
 else if(det==8){
-	LSF_file_det8 = TFile::Open("/home/flopez/Data/Dropbox/DOC_WORK/TESIS_DOC/Low_Scattering_Facility_Measurements/rootfiles/241125_AmBe_1Ci_Det08_10.root");
+	LSF_file_det8 = TFile::Open("../../../Low_Scattering_Facility_Measurements/rootfiles/241125_AmBe_1Ci_Det08_10.root");
 	vec_hist_cr    = LoadCRHists(LSF_file_det8, "det08"); 
 }
 
 else if(det==16 && orientation=="perpendicular"){
   //Distances & angles = 0,15,30 
-  LSF_file_01 = TFile::Open("/home/flopez/Data/Dropbox/DOC_WORK/TESIS_DOC/Low_Scattering_Facility_Measurements/rootfiles/010126_AmBe_1Ci_Det16_53.root");
+  LSF_file_01 = TFile::Open("../../../Low_Scattering_Facility_Measurements/rootfiles/010126_AmBe_1Ci_Det16_53.root");
   // angles 45, 60 & L=350 at 90
-  LSF_file_02 = TFile::Open("/home/flopez/Data/Dropbox/DOC_WORK/TESIS_DOC/Low_Scattering_Facility_Measurements/rootfiles/060126_AmBe_1Ci_Det03_62.root");
+  LSF_file_02 = TFile::Open("../../../Low_Scattering_Facility_Measurements/rootfiles/060126_AmBe_1Ci_Det03_62.root");
 
   vec_hist_cr    = LoadCRHists(LSF_file_01, "det16_A"); 
   vec_hist_cr_02  = LoadCRHists(LSF_file_02, "det16_B"); 
 }
 
 else if(det==16 && orientation=="axial"){
-  LSF_file_01 = TFile::Open("/home/flopez/Data/Dropbox/DOC_WORK/TESIS_DOC/Low_Scattering_Facility_Measurements/rootfiles/090126_AmBe_1Ci_Det03_65.root");
+  LSF_file_01 = TFile::Open("../../../Low_Scattering_Facility_Measurements/rootfiles/090126_AmBe_1Ci_Det03_65.root");
   vec_hist_cr    = LoadCRHists(LSF_file_01, "det16_A"); 
 }
 
 
 else {
   // tu lógica actual para otros detectores:
-  LSF_file_main = TFile::Open("/home/flopez/Data/Dropbox/DOC_WORK/TESIS_DOC/Low_Scattering_Facility_Measurements/rootfiles/291225_AmBe_1Ci_Det10_46.root");
+  LSF_file_main = TFile::Open("../../../Low_Scattering_Facility_Measurements/rootfiles/291225_AmBe_1Ci_Det10_46.root");
   //~ LSF_file_main = TFile::Open("/home/flopez/Data/Dropbox/DOC_WORK/TESIS_DOC/Low_Scattering_Facility_Measurements/rootfiles/010126_AmBe_1Ci_Det16_53.root"); //medida que contiene el fondo del detector desnudo
   vec_hist_cr = LoadCRHists(LSF_file_main, Form("det%i", det));
 }
@@ -28777,8 +28777,8 @@ auto DrawHistVectorGrid =
   }
 
   c->Update();
-  c->SaveAs(("/home/flopez/Data/Dropbox/DOC_WORK/TESIS_DOC/Low_Scattering_Facility_Measurements/pdf_files/"+cname+".pdf").c_str());
-  c->SaveAs(("/home/flopez/Data/Dropbox/DOC_WORK/TESIS_DOC/Low_Scattering_Facility_Measurements/pdf_files/"+cname+".svg").c_str());
+  c->SaveAs(("../../../Low_Scattering_Facility_Measurements/pdf_files/"+cname+".pdf").c_str());
+  c->SaveAs(("../../../Low_Scattering_Facility_Measurements/pdf_files/"+cname+".svg").c_str());
 };
 
 
@@ -29486,8 +29486,8 @@ cr_proj_ang->SetLogy();
 
 gr_ang->Draw("AP");
 cr_proj_ang->Draw();
-cr_proj_ang->SaveAs(("/home/flopez/Data/Dropbox/DOC_WORK/TESIS_DOC/Low_Scattering_Facility_Measurements/pdf_files/"+ang_tgraph_name+".pdf").c_str());
-cr_proj_ang->SaveAs(("/home/flopez/Data/Dropbox/DOC_WORK/TESIS_DOC/Low_Scattering_Facility_Measurements/pdf_files/"+ang_tgraph_name+".svg").c_str());
+cr_proj_ang->SaveAs(("../../../Low_Scattering_Facility_Measurements/pdf_files/"+ang_tgraph_name+".pdf").c_str());
+cr_proj_ang->SaveAs(("../../../Low_Scattering_Facility_Measurements/pdf_files/"+ang_tgraph_name+".svg").c_str());
 /************************************************/
 
 //~ reverse(angles_values.begin(),angles_values.end());
@@ -29795,8 +29795,8 @@ cr_proj_ang->SetLogy();
 
 gr_ang->Draw("AP");
 cr_proj_ang->Draw();
-cr_proj_ang->SaveAs(("/home/flopez/Data/Dropbox/DOC_WORK/TESIS_DOC/Low_Scattering_Facility_Measurements/pdf_files/"+ang_tgraph_name+".pdf").c_str());
-cr_proj_ang->SaveAs(("/home/flopez/Data/Dropbox/DOC_WORK/TESIS_DOC/Low_Scattering_Facility_Measurements/pdf_files/"+ang_tgraph_name+".svg").c_str());
+cr_proj_ang->SaveAs(("../../../Low_Scattering_Facility_Measurements/pdf_files/"+ang_tgraph_name+".pdf").c_str());
+cr_proj_ang->SaveAs(("../../../Low_Scattering_Facility_Measurements/pdf_files/"+ang_tgraph_name+".svg").c_str());
 /************************************************/
 
 
@@ -30049,8 +30049,8 @@ gStyle->SetLineScalePS(1); // Para que guardar correctamente el canvas (lineas d
               << f_scat*100.0 << " %\n";
 
 	c_fit->Draw();
-	c_fit->SaveAs(("/home/flopez/Data/Dropbox/DOC_WORK/TESIS_DOC/Low_Scattering_Facility_Measurements/pdf_files/"+fit1_name+".pdf").c_str());
-	c_fit->SaveAs(("/home/flopez/Data/Dropbox/DOC_WORK/TESIS_DOC/Low_Scattering_Facility_Measurements/pdf_files/"+fit1_name+".svg").c_str());
+	c_fit->SaveAs(("../../../Low_Scattering_Facility_Measurements/pdf_files/"+fit1_name+".pdf").c_str());
+	c_fit->SaveAs(("../../../Low_Scattering_Facility_Measurements/pdf_files/"+fit1_name+".svg").c_str());
 	
 
 /******************************SECOND FIT****************************/
@@ -30139,8 +30139,8 @@ gStyle->SetLineScalePS(1); // Para que guardar correctamente el canvas (lineas d
               << f_scat_2*100.0 << " %\n";
 
 	c_fit_2->Draw();
-	c_fit_2->SaveAs(("/home/flopez/Data/Dropbox/DOC_WORK/TESIS_DOC/Low_Scattering_Facility_Measurements/pdf_files/"+fit2_name+".pdf").c_str());
-	c_fit_2->SaveAs(("/home/flopez/Data/Dropbox/DOC_WORK/TESIS_DOC/Low_Scattering_Facility_Measurements/pdf_files/"+fit2_name+".svg").c_str());
+	c_fit_2->SaveAs(("../../../Low_Scattering_Facility_Measurements/pdf_files/"+fit2_name+".pdf").c_str());
+	c_fit_2->SaveAs(("../../../Low_Scattering_Facility_Measurements/pdf_files/"+fit2_name+".svg").c_str());
 
 	
 /*****************************************************************************/
@@ -30179,15 +30179,15 @@ std::vector<TH1F*> vec_hist_cr;      // set A
 std::vector<TH1F*> vec_hist_cr_02;   // set B (solo det==1)
 
 if (det == 1) {
-  LSF_file_01 = TFile::Open("/home/flopez/Data/Dropbox/DOC_WORK/TESIS_DOC/Low_Scattering_Facility_Measurements/rootfiles/141125_AmBe_1Ci_Det01_12cmHDPE_03.root");
-  LSF_file_02 = TFile::Open("/home/flopez/Data/Dropbox/DOC_WORK/TESIS_DOC/Low_Scattering_Facility_Measurements/rootfiles/141125_AmBe_1Ci_Det01_12cmHDPE_06.root");
+  LSF_file_01 = TFile::Open("../../../Low_Scattering_Facility_Measurements/rootfiles/141125_AmBe_1Ci_Det01_12cmHDPE_03.root");
+  LSF_file_02 = TFile::Open("../../../Low_Scattering_Facility_Measurements/rootfiles/141125_AmBe_1Ci_Det01_12cmHDPE_06.root");
 
   vec_hist_cr    = LoadCRHists(LSF_file_01, "det01_A"); // A = _03.root
   vec_hist_cr_02 = LoadCRHists(LSF_file_02, "det01_B"); // B = _06.root
 }
 else {
   // tu lógica actual para otros detectores:
-  LSF_file_main = TFile::Open("/home/flopez/Data/Dropbox/DOC_WORK/TESIS_DOC/Low_Scattering_Facility_Measurements/rootfiles/291225_AmBe_1Ci_Det10_46.root");
+  LSF_file_main = TFile::Open("../../../Low_Scattering_Facility_Measurements/rootfiles/291225_AmBe_1Ci_Det10_46.root");
   vec_hist_cr = LoadCRHists(LSF_file_main, Form("det%i", det));
 }
 
@@ -30611,8 +30611,8 @@ auto DrawHistVectorGrid =
   }
 
   c->Update();
-  c->SaveAs(("/home/flopez/Data/Dropbox/DOC_WORK/TESIS_DOC/Low_Scattering_Facility_Measurements/pdf_files/"+cname+".pdf").c_str());
-  c->SaveAs(("/home/flopez/Data/Dropbox/DOC_WORK/TESIS_DOC/Low_Scattering_Facility_Measurements/pdf_files/"+cname+".svg").c_str());
+  c->SaveAs(("../../../Low_Scattering_Facility_Measurements/pdf_files/"+cname+".pdf").c_str());
+  c->SaveAs(("../../../Low_Scattering_Facility_Measurements/pdf_files/"+cname+".svg").c_str());
 };
 
 
@@ -31434,8 +31434,8 @@ cr_proj_ang->SetLogy();
 
 gr_ang->Draw("AP");
 cr_proj_ang->Draw();
-cr_proj_ang->SaveAs(("/home/flopez/Data/Dropbox/DOC_WORK/TESIS_DOC/Low_Scattering_Facility_Measurements/pdf_files/"+ang_tgraph_name+".pdf").c_str());
-cr_proj_ang->SaveAs(("/home/flopez/Data/Dropbox/DOC_WORK/TESIS_DOC/Low_Scattering_Facility_Measurements/pdf_files/"+ang_tgraph_name+".svg").c_str());
+cr_proj_ang->SaveAs(("../../../Low_Scattering_Facility_Measurements/pdf_files/"+ang_tgraph_name+".pdf").c_str());
+cr_proj_ang->SaveAs(("../../../Low_Scattering_Facility_Measurements/pdf_files/"+ang_tgraph_name+".svg").c_str());
 /************************************************/
 
 
@@ -31688,8 +31688,8 @@ gStyle->SetLineScalePS(1); // Para que guardar correctamente el canvas (lineas d
               << f_scat*100.0 << " %\n";
 
 	c_fit->Draw();
-	c_fit->SaveAs(("/home/flopez/Data/Dropbox/DOC_WORK/TESIS_DOC/Low_Scattering_Facility_Measurements/pdf_files/"+fit1_name+".pdf").c_str());
-	c_fit->SaveAs(("/home/flopez/Data/Dropbox/DOC_WORK/TESIS_DOC/Low_Scattering_Facility_Measurements/pdf_files/"+fit1_name+".svg").c_str());
+	c_fit->SaveAs(("../../../Low_Scattering_Facility_Measurements/pdf_files/"+fit1_name+".pdf").c_str());
+	c_fit->SaveAs(("../../../Low_Scattering_Facility_Measurements/pdf_files/"+fit1_name+".svg").c_str());
 	
 
 /******************************SECOND FIT****************************/
@@ -31778,8 +31778,8 @@ gStyle->SetLineScalePS(1); // Para que guardar correctamente el canvas (lineas d
               << f_scat_2*100.0 << " %\n";
 
 	c_fit_2->Draw();
-	c_fit_2->SaveAs(("/home/flopez/Data/Dropbox/DOC_WORK/TESIS_DOC/Low_Scattering_Facility_Measurements/pdf_files/"+fit2_name+".pdf").c_str());
-	c_fit_2->SaveAs(("/home/flopez/Data/Dropbox/DOC_WORK/TESIS_DOC/Low_Scattering_Facility_Measurements/pdf_files/"+fit2_name+".svg").c_str());
+	c_fit_2->SaveAs(("../../../Low_Scattering_Facility_Measurements/pdf_files/"+fit2_name+".pdf").c_str());
+	c_fit_2->SaveAs(("../../../Low_Scattering_Facility_Measurements/pdf_files/"+fit2_name+".svg").c_str());
 
 	
 /*****************************************************************************/
@@ -31801,8 +31801,8 @@ void knee_plots_rdf(
     int event_first = 1,
     int event_last  = 289,
     int max_steps_x = 200,               // binning X: 1..max_steps
-    std::string input_dir  = "./deconv_data_rootfile/Knee/",
-    std::string output_dir = "./deconv_data_pdf/Knee/",
+    std::string input_dir  = "../outputs/root/deconv_data_rootfile/Knee/",
+    std::string output_dir = "../outputs/pdf/deconv_data_pdf/Knee/",
     bool save_hists_root = true
 ){
     // ---------------- campaign_path (igual tu convención)
@@ -32162,7 +32162,7 @@ void MakeHist_Chi2_EmIt_SingleFunction(
   //~ std::string fileName = "./deconv_data_rootfile/EM_MC_stop/LCO_FTFP_BERT/EM_unfolding_loop_campaign_LCO_event_2_steps_0_timegrid_15_ndet_11_MC_stop_backup_02.root", //DET12 con el factor 5/4 (backup_02) y todos los demás con el factor 1/4
   //~ std::string fileName = "./deconv_data_rootfile/EM_MC_stop/LCO_FTFP_BERT/EM_unfolding_loop_campaign_LCO_event_2_steps_0_timegrid_15_ndet_11_MC_stop_backup_0.root", //DET12 sin el factor 1/4 (backup_0) y todos los demás sin el factor 1/4
   //~ std::string fileName = "./deconv_data_rootfile/EM_MC_stop/LCO_FTFP_BERT/EM_unfolding_loop_campaign_LCO_event_2_steps_0_timegrid_15_ndet_11_MC_stop_backup_03.root", //MIX
-  std::string fileName = "./deconv_data_rootfile/EM_MC_stop/LCO_FTFP_BERT/EM_unfolding_loop_campaign_LCO_event_2_steps_0_timegrid_15_ndet_11_MC_stop.root", //DET12 sin el factor 1/4 (backup_0) y todos los demás sin el factor 1/4
+  std::string fileName = "../outputs/root/deconv_data_rootfile/EM_MC_stop/LCO_FTFP_BERT/EM_unfolding_loop_campaign_LCO_event_2_steps_0_timegrid_15_ndet_11_MC_stop.root", //DET12 sin el factor 1/4 (backup_0) y todos los demás sin el factor 1/4
   std::string outBase  = "Chi2_EmIt_Distributions"
 )
 {
@@ -32474,7 +32474,7 @@ void plot_neutron_count_comparison_event(string campaign, int event, int ch, str
   //==================== Abrir RDataFrame ====================
   std::string df_tree_complete_name = campaign + "_data_tree";
   std::string input_file_deconv =
-      "./deconv_mc_data_energy_fitting/" + campaign_path + "/" + campaign +
+      "../outputs/root/deconv_mc_data_energy_fitting/" + campaign_path + "/" + campaign +
       "_timegrid_" + std::to_string(timegrid) + "_ndet_" + std::to_string(11) +
       "_data_complete_update.root";
 
@@ -32527,7 +32527,7 @@ void plot_neutron_count_comparison_event(string campaign, int event, int ch, str
 //                         "_timegrid_" +  std::to_string(timegrid) +
 //                         "_ndet_" + std::to_string(11) + "_update_backup.root";
 
-  string df_file_name = "./deconv_mc_data_energy_fitting/" +campaign_path_new+
+  string df_file_name = "../outputs/root/deconv_mc_data_energy_fitting/" +campaign_path_new+
                         "/EM_MC_fit_parameters_campaign_" + campaign +
                         "_event_" + std::to_string(event) +
                         "_timegrid_" +  std::to_string(timegrid) +
@@ -32926,7 +32926,7 @@ void plot_neutron_count_comparison_event_3files(std::string campaign,
   //==================== Abrir RDataFrame (data_complete) ====================
   std::string df_tree_complete_name = campaign + "_data_tree";
   std::string input_file_deconv =
-      "./deconv_mc_data_energy_fitting/" + campaign_path + "/" + campaign +
+      "../outputs/root/deconv_mc_data_energy_fitting/" + campaign_path + "/" + campaign +
       "_timegrid_" + std::to_string(timegrid) + "_ndet_" + std::to_string(11) +
       "_data_complete_update.root";
 
@@ -33051,7 +33051,7 @@ auto process_one_solution = [&](const SolutionSpec& spec) -> SolutionResult {
   out.label = spec.label;
 
   out.file =
-    "./deconv_mc_data_energy_fitting/" + spec.campaign_path_new +
+    "../outputs/root/deconv_mc_data_energy_fitting/" + spec.campaign_path_new +
     "/EM_MC_fit_parameters_campaign_" + campaign +
     "_event_" + std::to_string(event) +
     "_timegrid_" + std::to_string(timegrid) +
@@ -33337,7 +33337,7 @@ auto process_one_solution = [&](const SolutionSpec& spec) -> SolutionResult {
   canvas->cd();
   canvas->Update();
 
-  const std::string outdir = "./deconv_data_pdf/EM_MC_fitting/spectrum/Comparison_Counts/"+campaign+"/";
+  const std::string outdir = "../outputs/pdf/deconv_data_pdf/EM_MC_fitting/spectrum/Comparison_Counts/"+campaign+"/";
   const std::string base = outdir +
         "EM_unfolding_campaign_" + campaign +
         "_event_"   + std::to_string(event) +
@@ -33386,7 +33386,7 @@ void DrawCountsComparisonIntoPads(TPad* padTop, TPad* padBot,
   std::string df_tree_complete_name = campaign + "_data_tree";
    
   std::string input_file_deconv =
-      "./deconv_mc_data_energy_fitting/" + campaign_path + "/" + campaign +
+      "../outputs/root/deconv_mc_data_energy_fitting/" + campaign_path + "/" + campaign +
       "_timegrid_" + std::to_string(timegrid) + "_ndet_" + std::to_string(ndet_file) +
       "_data_complete_update.root";
 
@@ -33533,7 +33533,7 @@ void DrawCountsComparisonIntoPads(TPad* padTop, TPad* padBot,
     out.label = spec.label;
 
     out.file =
-      "./deconv_mc_data_energy_fitting/" + spec.campaign_path_new +
+      "../outputs/root/deconv_mc_data_energy_fitting/" + spec.campaign_path_new +
       "/EM_MC_fit_parameters_campaign_" + campaign +
       "_event_" + std::to_string(event) +
       "_timegrid_" + std::to_string(timegrid) +
@@ -33956,7 +33956,7 @@ void Multiplot_CountsPlusSpectra(std::string campaign,
   c->Update();
 
   // ---- Save (opcional) ----
-  const std::string outdir = "./deconv_data_pdf/EM_MC_fitting/spectrum/Comparison_Full/" + campaign + "/";
+  const std::string outdir = "../outputs/pdf/deconv_data_pdf/EM_MC_fitting/spectrum/Comparison_Full/" + campaign + "/";
   const std::string base =
       outdir +
       "CountsPlusSpectra_campaign_" + campaign +
