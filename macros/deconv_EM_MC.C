@@ -11920,21 +11920,42 @@ else{
 	// Double_t integral_flux_deconv_MC_total = flux_deconv_integral->Integral(flux_deconv_integral->FindBin(1e-09),flux_deconv_integral->FindBin(7.6*1e+03)); // ya no es necesario sacar el ultimo bin
 	
 	// Double_t integral_flux_deconv_MC_th = flux_deconv_integral->Integral(flux_deconv_integral->FindBin(1e-09),flux_deconv_integral->FindBin(1.9*1e-07));
-	cout << "Thermal region: " << "1e-09 MeV" << "(bin: " << flux_deconv_integral->FindBin(1e-09) <<")" << " " << "1.9*1e-07 MeV" << "(bin: "<< flux_deconv_integral->FindBin(1.9*1e-07) <<")" << endl;
-	cout << "Thermal region: " << "LowEdge: " << flux_deconv_integral->GetXaxis()->GetBinLowEdge(bin_thi) << " MeV " << "(bin: " << bin_thi << ")" << " - " <<" UpEdge: " <<flux_deconv_integral->GetXaxis()->GetBinUpEdge(bin_thf) << " MeV"  << "(bin: " << bin_thf <<")" << endl;
+	cout  << setprecision(7)  << "Thermal region: " << "1e-09 MeV" << "(bin: " << flux_deconv_integral->FindBin(1e-09) <<")" << " " << "1.9*1e-07 MeV" << "(bin: "<< flux_deconv_integral->FindBin(1.9*1e-07) <<")" << endl;
+	cout  << setprecision(7) << "Thermal region: " << "LowEdge: " << flux_deconv_integral->GetXaxis()->GetBinLowEdge(bin_thi) << " MeV " << "(bin: " << bin_thi << ")" << " - " <<" UpEdge: " <<flux_deconv_integral->GetXaxis()->GetBinUpEdge(bin_thf) << " MeV"  << "(bin: " << bin_thf <<")" << endl;
+	cout << "Thermal Integral: " <<  flux_deconv_integral->Integral(bin_thi, bin_thf) << endl;
+	cout << scientific << setprecision(1) << "Thermal Integral: " <<  flux_deconv_integral->Integral(bin_thi, bin_thf) << endl;
+	cout << " " << endl;
 
 	// Double_t integral_flux_deconv_MC_ep = flux_deconv_integral->Integral(flux_deconv_integral->FindBin(2.2*1e-07),flux_deconv_integral->FindBin(0.9*1e-02));
 	cout << "Epithermal region: " << "2.2*1e-07 MeV" << "(bin: "<< flux_deconv_integral->FindBin(2.2*1e-07)<<")" << " " << "0.9*1e-02 MeV" << "(bin: "<< flux_deconv_integral->FindBin(0.9*1e-02) <<")" << endl;
 	cout << "Epithermal region: " << "LowEdge: " << flux_deconv_integral->GetXaxis()->GetBinLowEdge(bin_epi) << " MeV " << "(bin: " << bin_epi << ")" << " - " <<" UpEdge: " <<flux_deconv_integral->GetXaxis()->GetBinUpEdge(bin_epf) << " MeV"  << "(bin: " << bin_epf <<")" << endl;
+	cout << "Epithermal Integral: " <<  flux_deconv_integral->Integral(bin_epi, bin_epf) << endl;
+	cout <<  scientific << setprecision(1) << "Epithermal Integral: " <<  flux_deconv_integral->Integral(bin_epi, bin_epf) << endl;
+
+	cout << " " << endl;
 
 	// Double_t integral_flux_deconv_MC_fs = flux_deconv_integral->Integral(flux_deconv_integral->FindBin(1.1*1e-02),flux_deconv_integral->FindBin(0.89*1e+01));
 	cout << "Fast region: " << "1.1*1e-02 MeV" << "(bin: "<< flux_deconv_integral->FindBin(1.1*1e-02)<<")" << " " << "0.89*1e+01 MeV" << "(bin: "<<flux_deconv_integral->FindBin(0.89*1e+01)<<")" << endl;
 	cout << "Fast region: " << "LowEdge: " << flux_deconv_integral->GetXaxis()->GetBinLowEdge(bin_fsi) << " MeV " << "(bin: " << bin_fsi << ")" << " - " <<" UpEdge: " <<flux_deconv_integral->GetXaxis()->GetBinUpEdge(bin_fsf) << " MeV"  << "(bin: " << bin_fsf <<")" << endl;
 	// Double_t integral_flux_deconv_MC_he = flux_deconv_integral->Integral(flux_deconv_integral->FindBin(1.05*1e+01),flux_deconv_integral->FindBin(7.6*1e+03)-1.);  // sacamos el ultimo bin: 129 ya que generalmente se fitea mal (da un valor negativo)
+	cout << "Fast Integral: " <<  flux_deconv_integral->Integral(bin_fsi, bin_fsf) << endl;
+	cout <<  scientific << setprecision(1) << "Fast Integral: " <<  flux_deconv_integral->Integral(bin_fsi, bin_fsf) << endl;
 	
+	cout << " " << endl;
+
 	// Double_t integral_flux_deconv_MC_he = flux_deconv_integral->Integral(flux_deconv_integral->FindBin(1.05*1e+01),flux_deconv_integral->FindBin(7.6*1e+03));  // ya no es necesario sacar el ultimo bin
 	cout << "High energy region: " << "1.05*1e+01 MeV" << "(bin: "<<flux_deconv_integral->FindBin(1.05*1e+01)<<")" << " " << "7.6*1e+03 MeV" <<"(bin: "<<flux_deconv_integral->FindBin(7.6*1e+03)<<")" << endl;
 	cout << "High energy region: " << "LowEdge: " << flux_deconv_integral->GetXaxis()->GetBinLowEdge(bin_hei) << " MeV " << "(bin: " << bin_hei << ")" << " - " <<" UpEdge: " <<flux_deconv_integral->GetXaxis()->GetBinUpEdge(bin_hef) << " MeV"  << "(bin: " << bin_hef <<")" << endl;	
+	cout << "High energy Integral: " <<  flux_deconv_integral->Integral(bin_hei, bin_hef) << endl;
+	cout <<  scientific << setprecision(1) << "High energy Integral: " <<  flux_deconv_integral->Integral(bin_hei, bin_hef) << endl;
+
+	cout << " " << endl;
+
+	cout << "Total Integral: " <<  flux_deconv_integral->Integral(flux_deconv_integral->FindBin(1e-09),flux_deconv_integral->FindBin(7.6*1e+03)); // ya no es necesario sacar el ultimo bin
+	cout << scientific << setprecision(1) << "Total Integral: " <<  flux_deconv_integral->Integral(flux_deconv_integral->FindBin(1e-09),flux_deconv_integral->FindBin(7.6*1e+03)); // ya no es necesario sacar el ultimo bin
+	
+	cout << " " << endl;
+
 
 /***************INTEGRAL FLUXES PER ENERGY REGION********************/
 
@@ -12117,13 +12138,27 @@ else{
 		//~ error_amb_dose_total_lower += sum_error_partial_lower;
 	//~ }
 
+	/*COMPARACION de calculos de integrales, distribucion de integrales por region de energia por replica vs integral a partir del histograma de distribucion de fluj por bin por replica (verlogseq)*/
+	// cout << "integral_flux_deconv_MC_th " <<  setprecision(7)<< integral_flux_deconv_MC_th << " error_th_region " << error_MC_th << endl;
+	// cout << "integral_flux_deconv_MC_ep " <<  setprecision(7) << integral_flux_deconv_MC_ep <<  " error_ep_region " << error_MC_ep << endl;
+	// cout << "integral_flux_deconv_MC_fs " <<  setprecision(7) << integral_flux_deconv_MC_fs <<  " error_fs_region " << error_MC_fs << endl;
+	// cout << "integral_flux_deconv_MC_he " <<  setprecision(7) << integral_flux_deconv_MC_he <<  " error_he_region " << error_MC_he << endl;
+	// cout << "integral_flux_deconv_MC_total " <<   setprecision(7) << integral_flux_deconv_MC_total << " error_total " << error_MC_total << endl;
+    // cout << " " << endl;
+	// cout << "th diff %" << 100*(integral_flux_deconv_MC_th-flux_deconv_integral->Integral(bin_thi, bin_thf))/integral_flux_deconv_MC_th << endl;
+	// cout << "ep diff %" << 100*(integral_flux_deconv_MC_ep-flux_deconv_integral->Integral(bin_epi, bin_epf))/integral_flux_deconv_MC_ep << endl;
+	// cout << "fs diff %" << 100*(integral_flux_deconv_MC_fs-flux_deconv_integral->Integral(bin_fsi, bin_fsf))/integral_flux_deconv_MC_fs << endl;
+	// cout << "he diff %" << 100*(integral_flux_deconv_MC_he-flux_deconv_integral->Integral(bin_hei, bin_hef))/integral_flux_deconv_MC_he << endl;
+	// cout << "tot diff %" << 100*(integral_flux_deconv_MC_total-flux_deconv_integral->Integral(bin_thi, bin_hef))/integral_flux_deconv_MC_total << endl;
+    // cout << " " << endl;
+
 	cout << "integral_flux_deconv_MC_th " << scientific << setprecision(1)<< integral_flux_deconv_MC_th << " error_th_region " << error_MC_th << endl;
 	cout << "integral_flux_deconv_MC_ep " << scientific << setprecision(1) << integral_flux_deconv_MC_ep <<  " error_ep_region " << error_MC_ep << endl;
 	cout << "integral_flux_deconv_MC_fs " << scientific << setprecision(1) << integral_flux_deconv_MC_fs <<  " error_fs_region " << error_MC_fs << endl;
 	cout << "integral_flux_deconv_MC_he " << scientific << setprecision(1) << integral_flux_deconv_MC_he <<  " error_he_region " << error_MC_he << endl;
 	//~ cout << "integral_flux_deconv_MC_total " <<  scientific << setprecision(1) << integral_flux_deconv_MC_total << " error_total " << error_MC_total << " error_total lower " << error_MC_total_lower << " error_total upper " << error_MC_total_upper << endl;
 	cout << "integral_flux_deconv_MC_total " <<  scientific << setprecision(2) << integral_flux_deconv_MC_total << " error_total " << error_MC_total << " error_total lower " << error_MC_total_lower << " error_total upper " << error_MC_total_upper << endl;
-
+	cout << " " << endl;
 
 	/***********************RATIOS *************************/
 
@@ -12526,15 +12561,12 @@ else{
 					//~ deconv_flux_asymmetric->SetMaximum(0.005);
 					//~ flux_deconv_2->SetMaximum(0.005);
 
-					//~ deconv_flux_asymmetric->SetMaximum(0.017);
-					//~ flux_deconv_2->SetMaximum(0.017);
-					
-					//~ deconv_flux_asymmetric->SetMaximum(0.006);
-					//~ flux_deconv_2->SetMaximum(0.006);
+					 deconv_flux_asymmetric->SetMaximum(0.017);
+					 flux_deconv_2->SetMaximum(0.017);
 					
 					//BEAM 15 min
-					deconv_flux_asymmetric->SetMaximum(0.007);
-					flux_deconv_2->SetMaximum(0.007);
+					// deconv_flux_asymmetric->SetMaximum(0.007);
+					// flux_deconv_2->SetMaximum(0.007);
 				}
 				if(campaign=="Maricunga"){
 					//~ deconv_flux_asymmetric->SetMaximum(0.005);
@@ -13438,8 +13470,8 @@ else{
 	// int bin_hef = flux_deconv_integral->FindBin(7.6*1e+03);
 
 	// // Double_t integral_flux_deconv_MC_th = flux_deconv_integral->Integral(flux_deconv_integral->FindBin(1e-09),flux_deconv_integral->FindBin(1.9*1e-07));
-	// cout << "Thermal region: " << "1e-09 MeV" << "(bin: " << flux_deconv_integral->FindBin(1e-09) <<")" << " " << "1.9*1e-07 MeV" << "(bin: "<< flux_deconv_integral->FindBin(1.9*1e-07) <<")" << endl;
-	// cout << "Thermal region: " << "LowEdge: " << flux_deconv_integral->GetXaxis()->GetBinLowEdge(bin_thi) << " MeV " << "(bin: " << bin_thi << ")" << " - " <<" UpEdge: " <<flux_deconv_integral->GetXaxis()->GetBinUpEdge(bin_thf) << " MeV"  << "(bin: " << bin_thf <<")" << endl;
+	// cout << setprecision(7) << "Thermal region: " << "1e-09 MeV" << "(bin: " << flux_deconv_integral->FindBin(1e-09) <<")" << " " << "1.9*1e-07 MeV" << "(bin: "<< flux_deconv_integral->FindBin(1.9*1e-07) <<")" << endl;
+	// cout << setprecision(7) << "Thermal region: " << "LowEdge: " << flux_deconv_integral->GetXaxis()->GetBinLowEdge(bin_thi) << " MeV " << "(bin: " << bin_thi << ")" << " - " <<" UpEdge: " <<flux_deconv_integral->GetXaxis()->GetBinUpEdge(bin_thf) << " MeV"  << "(bin: " << bin_thf <<")" << endl;
 
 	// // Double_t integral_flux_deconv_MC_ep = flux_deconv_integral->Integral(flux_deconv_integral->FindBin(2.2*1e-07),flux_deconv_integral->FindBin(0.9*1e-02));
 	// cout << "Epithermal region: " << "2.2*1e-07 MeV" << "(bin: "<< flux_deconv_integral->FindBin(2.2*1e-07)<<")" << " " << "0.9*1e-02 MeV" << "(bin: "<< flux_deconv_integral->FindBin(0.9*1e-02) <<")" << endl;

@@ -9491,6 +9491,619 @@ return em_vec_output;
 
 }
 
+vector<double> deconv_em_output_MC_update_refactor(string campaign, int event, int steps, int vwc_seed, vector<double> diff_flux, vector<double> emid, vector<double> ewid, vector<double> elower, int crptime, string flux_type, int norm, int max_steps,string cut, string physic_list, string scale_factor, string neufield_type){
+
+//~ const int ndet = 16; // numero de detectores //
+int ndet = 16; /*numero de detectores*/
+int binnum = 0; /*numero de bines*/
+vector<Double_t> Seed; /*vector de flujo semilla*/
+vector<Double_t> Flux; /*vector de flujo deconvolucionado*/
+vector<Double_t> FluxNext; /*vector de flujo de salida por cada iteracion en algoritmo EM*/
+vector<Double_t> FluxMin_diff; /* vector del ultimo flujo diff deconvolucionado*/
+vector<Double_t> FluxMin_Intg; /* vector del ultimo flujo integral deconvolucionado*/
+vector<Double_t> N(ndet,0); /*vector de neutrones medidos*/
+vector<Double_t> dN(ndet,0); /*vector de errores de neutrones medidos*/
+vector<Double_t> perc_e_N(ndet,0); /*vector de errores porcentuales de neutrones medidos*/
+vector<Double_t> CR(ndet,0); /*vector de counting rate de neutrones medidos*/
+vector<Double_t> dCR(ndet,0); /*vector de errores de counting rate de neutrones medidos*/ 
+vector<Double_t> CR_rec(ndet,0); /*vector de counting rates recalculados*/ 
+vector<Double_t> dE; /*Vector de anchos de energia*/
+vector< vector<Double_t>> R;   /*matriz de funciones respuesta del espectrometro*/
+//vector<Double_t> B; /*bins*/ /*matriz de bordes de bins*/
+//vector<Double_t> E; /*bins*/ /*matriz de bordes inferiores de Energias*/
+//vector<Double_t> Emid; /*bins*/ /*matriz de Energias centrales*/
+
+vector<Double_t> em_vec_output;
+
+//~ ofstream Chi2("Stat_Estimators.txt"); // archivo de salida de Chi2
+//~ ofstream debug_em("debug_em.txt"); // archivo de salida de Chi2
+
+/****Cargamos el flujo semilla*****/
+
+string str_stream_vwc;
+string seed_flux_expacs_csv;
+
+/**********************************************************************************************************************/
+/**********************************************************************************************************************/
+
+/************Cargamos el flujo semilla a partir del vector de entrada******************/
+Seed = diff_flux; //Flujo semilla
+//~ binnum = Seed.size()-1;
+binnum = Seed.size(); //129
+//~ cout << "binnum: Seed vec size=" << binnum  << endl;
+
+/*Generamos el vector de bordes de bin*/
+//B = elower;
+//~ cout << "B: elower vec size=" << B.size() << endl;
+
+/*Generamos el vector de ancho de energias*/
+dE = ewid;
+//~ cout << "dE: Ewid vec size=" << dE.size() << endl;
+
+//~ auto df_E_vec = seed_ref_cut_LCO.Take<double>("lower_edge_binvalue").GetValue();
+//~ E = df_E_vec;
+//E = elower;
+// cout << "E: df_E_vec " << B.size() << endl;
+
+//**Inicializamos los vectores**/
+// for (int i = 0; i < Seed.size(); i++) /*Llenamos los vectores de flujo deconv y flujo deconv min con ceros*/
+// {
+// 	Flux.push_back(0) ;
+// 	FluxMin_diff.push_back(0);
+// 	FluxMin_Intg.push_back(0);
+// } 
+
+Flux.resize(binnum, 0.0);
+FluxMin_diff.resize(binnum, 0.0);
+FluxMin_Intg.resize(binnum, 0.0);      // luego agregamos +13 con push_back
+FluxMin_Intg.reserve(binnum + 13);     // evita realloc en los push_back finales
+
+/****Definimos los histogramas****/
+
+/*borde de bines como array*/
+//double *bins = B.data();
+//~ TCanvas *canvas_expacs = new TCanvas("Expacs_flux","Expacs_flux");
+
+//Emid = emid;
+//~ cout << "Emid size " <<  Emid.size() << endl;
+
+
+for (int i = 0; i < binnum; i++) /*Llenamos los vectores de flujo deconv y flujo deconv min con ceros*/
+{
+	Flux[i] = Seed[i];
+} 
+
+//~ cout << "Flux seed size="<<Flux.size() << endl;
+
+/**************************************************************************************/
+/**************************************************************************************/
+/**************************************************************************************/
+
+/***Llenamos el vector de neutrones y de errores de neutrones aleatorios gausianos****/
+N = neutron_count_vector_gauss_MC(campaign,event-1,crptime,cut);
+//~ N = neutron_count_vector_poisson_MC(campaign,event-1,crptime,cut);
+
+//N protection
+for (int i = 0; i < (int)N.size();i++) {
+    if (N[i] < 0) N[i] = 0;
+    dN[i] = sqrt(N[i]);
+}
+
+//~ for(int i=0;i<N.size();i++)
+	//~ {
+		//~ cout <<  "dN_gauss " <<dN[i] << endl;
+	//~ }
+/***Llenamos el vector de CR de neutrones aleatorios gaussianos: N/T ****/
+
+for(int i=0;i<N.size();i++)
+	{
+		double r;
+		if(crptime==15){r=900;}
+		if(crptime==60){r=3600;}
+		CR[i]=N[i]/r;
+	}
+//~ for(int i=0;i<CR.size();i++)
+	//~ {
+		//~ cout << " CR Gauss " << CR[i] << endl;
+	//~ };
+
+//~ cout << "Neutrons percentage error vector filled: dN[i]/N[i]" << endl;
+
+//perc con proteccion
+for (int i = 0; i < (int)N.size(); i++) {
+    perc_e_N[i] = (N[i] > 0 ? dN[i]/N[i] : 0.0);
+	//~ cout << "i " << i <<  " dN[i]/N[i] " << perc_e_N[i] << endl;
+}
+    
+//~ cout << "CR [cps] vector: CR[i]" << " Time " << crptime << " min "  << endl;
+//~ for(int i=0; i<CR.size(); i++)
+	//~ {
+		//~ cout << "i " << i <<  " CR[i] " << CR[i] << endl;
+    //~ }
+/***Llenamos el vector de dCR***/
+//~ cout << " dCR[i] vector "  << endl;  
+for(int i=0; i<N.size(); i++)
+	{
+		dCR[i] = CR[i]*perc_e_N[i];
+		//~ cout << "i " << i <<  " dCR[i] " << dCR[i] << endl;
+    }
+
+//proteccion para no dividir por cero en chisquare
+const double eps_cr = 1e-12; // cps
+for (int i = 0; i < (int)dCR.size(); ++i)
+	{
+		dCR[i] = std::max(dCR[i], eps_cr);
+	}
+
+/**********Matrix de funciones respuesta*****/
+//~ R = Response_function_matrix_fm(); /*matriz de funciones respuesta del espectrometro*/
+//~ vector< vector<double>> R_fm = Response_function_matrix_lin_spec_2023(); /*matriz de funciones respuesta del espectrometro*/
+//~ R = Response_function_matrix_lin_spec_2023(); /*matriz de funciones respuesta del espectrometro*/
+//~ R = Response_function_matrix_lin_spec_2023_fix_active_volume_more_statistics_smooth();  /*matriz de funciones respuesta del espectrometro 2023 con un smooth SG y smooth de root (factor 15) LCO*/ 
+
+//~ R = Response_function_matrix_lin_spec_2023_fix_active_volume_more_statistics_smooth("FTFP_BERT","wos");  /*matriz de funciones respuesta del espectrometro 2023 con un smooth SG y smooth de root (factor 15) LCO*/ 
+//R = Response_function_matrix_lin_spec_2023_fix_active_volume_more_statistics_smooth("FTFP_BERT","ws","iso");  /*Con el factor 1/4. matriz de funciones respuesta del espectrometro 2023 con un smooth SG y smooth de root (factor 15) LCO*/ 
+
+/********************************************************/
+R = Response_function_matrix_lin_spec_2023_fix_active_volume_more_statistics_smooth(physic_list,scale_factor,neufield_type);  /*Con el factor 1/4. matriz de funciones respuesta del espectrometro 2023 con un smooth SG y smooth de root (factor 15) LCO*/ 
+/*********************************************************/
+
+//~ R = Response_function_matrix_lin_spec_2024_fix_active_volume_more_statistics(); /*matriz de funciones respuesta del espectrometro 2024*/
+//~ R = Response_function_matrix_lin_spec_2024_fix_active_volume_more_statistics_smooth();  /*matriz de funciones respuesta del espectrometro 2024 con un smooth SG y smooth de root (factor 15)*/
+
+//~ cout << "Response Function matrix filled: R " << endl;
+
+
+/****************ACTIVACION/DESACTIVACION DE DETECTORES*************/
+
+vector< vector<Double_t>> R_new;   /*matriz de funciones respuesta del espectrometro redefinida*/
+vector<Double_t> N_new;   /*vector de CR redefinido*/
+vector<Double_t> perc_e_N_new;
+vector<Double_t> CR_new;
+vector<Double_t> dCR_new;
+
+vector<string> det_names{"D01","D02","D03","D04","D05","D06","D07","D08","D09","D10","D11","D12","D13","D14","D15","D16"}; /*vector de nombres de detectores activados*/
+vector<string> det_names_act;
+
+//~ vector<int> des_vector(ndet,0);
+vector<int> act_vector(ndet,1);
+
+
+vector<int> vec_test{1,1,1,1,1,0,0,0,1,1,1,1,1,0,0,1}; //LCO, Maricunga, RetenDesierto
+//~ vector<int> vec_test{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
+//~ vector<int> vec_test{1,1,1,1,1,0,0,0,1,1,1,1,1,0,0,1}; // Chapiquilta tes1
+//~ vector<int> vec_test{1,1,1,0,1,1,0,0,1,1,1,1,1,0,0,1}; //  Chapiquilta, SanPedro
+
+/*Redefinimos la matriz de funcion respuesta*/
+for(int i=0; i<ndet; i++)
+{
+	 if(act_vector[i] == vec_test[i])
+		{
+			R_new.push_back(R[i]);
+		}
+	else{}
+}
+
+/**Inspeccionamos la matriz****/
+//~ cout << " matrix size: " << R.size() << endl;
+
+//~ for(int i = 0; i<R_new.size();i++){
+	//~ cout << " row " << i << " ";
+	//~ for (int j=0; j <R_new[0].size(); j++){
+
+		 //~ cout <<  R_new[i][j] << " ";
+	//~ }
+   //~ cout << endl;
+//~ }
+
+
+/*Redefinimos el vector de CR*/
+for(int i=0; i<ndet; i++)
+{
+	 if(act_vector[i] == vec_test[i])
+		{
+			N_new.push_back(N[i]);
+		}
+	else{}
+}
+
+/*Redefinimos el vector de perc_e_N*/
+for(int i=0; i<ndet; i++)
+{
+	 if(act_vector[i] == vec_test[i])
+		{
+			perc_e_N_new.push_back(perc_e_N[i]);
+		}
+	else{}
+}
+
+/*Redefinimos el vector de CR*/
+for(int i=0; i<ndet; i++)
+{
+	 if(act_vector[i] == vec_test[i])
+		{
+			CR_new.push_back(CR[i]);
+		}
+	else{}
+}
+
+/*Redefinimos el vector dCR*/
+for(int i=0; i<ndet; i++)
+{
+	 if(act_vector[i] == vec_test[i])
+		{
+			dCR_new.push_back(dCR[i]);
+		}
+	else{}
+}
+
+/*Vect de nombres*/
+for(int i=0; i<ndet; i++)
+{
+	 if(act_vector[i] == vec_test[i])
+		{
+			det_names_act.push_back(det_names[i]);
+		}
+	else{}
+}
+
+/*Redefinimos ndet*/
+
+int ndet_new = R_new.size();
+ndet = ndet_new;
+//~ cout << "ndet " << ndet << endl;
+/*Redefinimos R*/
+R = R_new;
+
+
+
+//~ cout << " matrix size: " << R.size() << endl;
+//~ for(int i = 0; i<R.size();i++){
+	//~ cout << " row " << i << " ";
+	//~ for (int j=0; j <R[0].size(); j++){
+
+		 //~ cout <<  R[i][j] << " ";
+	//~ }
+   //~ cout << endl;
+//~ }
+perc_e_N.resize(ndet);
+CR.resize(ndet);
+dCR.resize(ndet);
+
+perc_e_N = perc_e_N_new;
+CR = CR_new;
+dCR = dCR_new;
+
+
+/*Redefinimos N*/
+N.resize(ndet);
+N = N_new;
+
+//~ cout << " matrix size: " << N.size() << endl;
+
+//~ for(int i = 0; i<N.size();i++){
+	//~ cout << " row " << i << " " << N[i] << endl;
+//~ }
+
+/*******************************************************************/
+
+if (norm==1){
+
+double integral_flux_seed = 0.0;
+for (int i = 0; i < binnum; ++i) integral_flux_seed += Seed[i];
+
+/********Flujo semilla diferencial normalizado************/
+for (int i = 0; i <binnum; i++)
+	{
+		Flux[i] = Flux[i]/integral_flux_seed; //Normalizamos el flujo semilla
+		// cout << i << " " << Flux[i] << endl;
+	}
+
+}
+else {}
+
+
+
+/*************************************************************/
+/**************Algoritmo de deconvolucion EM******************/
+/*************************************************************/
+
+//~ cout << "Inicia Deconvolucion" << endl;
+	/***Definimos e inicializamos los estimadres estadisticos***/
+	//~ double_t chi2 = Chi_Square(N, N_rec, ndet);
+	//~ double_t chi2 = Chi_Square(N, N_rec, ndet);
+	double chi2 = 30.;
+	//~ double_t  chi2_red = Chi_Square_red(N, N_rec, ndet);
+	//~ double_t  chi2_red = Chi_Square_red(N, N_rec, ndet,crptime);
+	double_t  chi2_red = Chi_Square_red(CR,dCR, CR_rec, ndet,crptime);
+	double xi2_estimator;
+	double barDelta_estimator;
+	double STD_cr_estimator;
+	
+	//~ cout << "Chi2 inicial: " << chi2 << endl;
+	//~ cout << "Chi2red inicial: "<< chi2_red << endl;
+	
+//~ /*contador em*/
+int em_it = 0;
+double diff_criteria = 10.;
+double diff_criteria_cota = 0.02;
+
+	 //~ Chi2 <<setw(5) << setfill(' ') << "it" << " "
+		 //~ <<setw(15) << setfill(' ') << "chi2" << " "
+		 //~ <<setw(25) << setfill(' ') << "chi2_red"  << " "
+		 //~ <<setw(25) << setfill(' ') << "xi2"  << " "
+		 //~ <<setw(25) << setfill(' ') << "barDelta"  << " "
+		 //~ <<setw(25) << setfill(' ') << "STD_cr" << endl;  
+
+	//~ Chi2 <<setw(5) << setfill(' ') << "Init" << " "
+				 //~ <<setw(15) << setfill(' ') << chi2 << " "
+				 //~ <<setw(25) << setfill(' ') << chi2_red << endl;
+
+// Paso 0: semilla en representación integral por bin
+vector<double> prev_Intg(binnum, 0.0);
+	for (int i = 0; i < binnum; i++) {
+		prev_Intg[i] = Seed[i]*dE[i];   // Seed es diferencial
+	}
+
+const double eps = 1e-300;
+// Precompute once (outside iterations): SumR[b] = Σ_r R[r][b]
+vector<double> SumR(binnum, 0.0); 
+	for (int b = 0; b < binnum; b++) {
+		double s = 0.0;
+		for (int r = 0; r < ndet; r++) s += R[r][b];
+		SumR[b] = s;
+}
+
+vector<double> Den(ndet, 0.0);
+vector<double> w(ndet, 0.0);
+
+
+if(steps==0)
+{				 
+	//~ while(diff_criteria>0.01 || chi2>ndet )
+	while(diff_criteria>diff_criteria_cota || chi2>ndet )
+	{
+
+		if(em_it>max_steps)
+			{
+				//~ std::cout << " Maximum iteration limit reached." << std::endl;
+				//~ std::cout << " Maximum iteration limit reached. ";
+				break;
+			}
+
+
+		FluxNext = Flux;
+
+		// 1) Denominadores por detector: Den[r] = Σ_k R[r][k] * Flux[k] * dE[k]
+		for (int r = 0; r < ndet; r++) {
+				double den = 0.0;
+				for (int k = 0; k < binnum; k++) {
+					den += R[r][k] * Flux[k] * dE[k];
+		}
+			Den[r] = den;
+
+			// w = CR/Den (protección mínima division por cero)
+			w[r] = CR[r] / (Den[r] > eps ? Den[r] : eps);
+		}
+
+		// 2) Update por bin: FluxNext[b] = Flux[b] * (Σ_r R[r][b] * w[r]) / (Σ_r R[r][b])
+		for (int b = 0; b < binnum; b++) {
+		double num = 0.0;
+		for (int r = 0; r < ndet; r++) {
+			num += R[r][b] * w[r];
+		}
+
+		//(protección mínima division por cero)
+		const double sb = (SumR[b] > eps ? SumR[b] : eps);
+		FluxNext[b] = Flux[b] * (num / sb);
+		}
+				
+		Flux=FluxNext; /*flujo deconvolucionado*/
+		
+		//Llenamos el vector de vectores de fluxnext
+		 for (int i = 0; i < binnum; i++) 
+		 {
+			FluxMin_diff[i] = Flux[i]; // flujo diferencial
+			FluxMin_Intg[i] = Flux[i]*dE[i]; //integral
+		 }
+
+		
+		// ===== Diferencia de flujos consecutivos sin ROOT =====
+		// diff = sum |curr-prev| / sum(prev), con curr = Flux*dE
+		double integral_prev = 0.0;
+		double sum_abs = 0.0;
+
+		for (int i = 0; i < binnum; i++) {
+			// const double curr = Flux[i] * dE[i]; //flujo integral deconv
+			const double curr = FluxMin_Intg[i]; //flujo integral deconv
+			integral_prev += prev_Intg[i];
+			sum_abs       += std::abs(curr - prev_Intg[i]);
+			prev_Intg[i] = curr; // actualiza "paso anterior" para la próxima iteración
+		}
+
+
+		diff_criteria = sum_abs / (integral_prev > eps ? integral_prev : eps);
+	
+		/*Counting rate recalculado*/
+		CR_rec = Recalculate(R, FluxMin_diff, dE, ndet); // CR recalculado
+
+		/***Calculamos los estimadores estadisticos***/
+		chi2 = Chi_Square(CR,dCR, CR_rec, ndet, crptime);
+		chi2_red = Chi_Square_red(CR,dCR, CR_rec, ndet, crptime);
+		xi2_estimator = Xi_Square(CR, CR_rec, ndet, crptime);
+		barDelta_estimator = bar_delta(CR, CR_rec, ndet, crptime);
+		STD_cr_estimator = STD_cr(CR, CR_rec, ndet, crptime);
+
+		em_it++;
+		//~ cout << "\r " << " em_it " << em_it;
+		
+		//~ cout << it << "  "  << " chi2: " << chi2   << "  "  << " chi2 red: " << chi2_red <<" " << " xi2: " << xi2_estimator << " barDelta: " << " " << barDelta_estimator << " " << "STD_cr: " << STD_cr_estimator<< endl;
+		
+		 //~ Chi2<<setw(5) << setfill(' ') << it << " "
+			 //~ <<setw(15) << setfill(' ') << chi2 << " "
+			 //~ <<setw(25) << setfill(' ') << chi2_red  << " "
+			 //~ <<setw(25) << setfill(' ') << xi2_estimator  << " "
+			 //~ <<setw(25) << setfill(' ') << barDelta_estimator  << " "
+			 //~ <<setw(25) << setfill(' ') << STD_cr_estimator << endl;  
+	}
+
+}
+
+else
+{				 
+	for(int it = 0; it<steps ; it++)
+	{
+		FluxNext = Flux;
+
+		// 1) Denominadores por detector: Den[r] = Σ_k R[r][k] * Flux[k] * dE[k]
+		for (int r = 0; r < ndet; r++) {
+				double den = 0.0;
+				for (int k = 0; k < binnum; k++) {
+					den += R[r][k] * Flux[k] * dE[k];
+		}
+			Den[r] = den;
+
+			// w = CR/Den (protección mínima division por cero)
+			w[r] = CR[r] / (Den[r] > eps ? Den[r] : eps);
+		}
+
+		// 2) Update por bin: FluxNext[b] = Flux[b] * (Σ_r R[r][b] * w[r]) / (Σ_r R[r][b])
+		for (int b = 0; b < binnum; b++) {
+		double num = 0.0;
+		for (int r = 0; r < ndet; r++) {
+			num += R[r][b] * w[r];
+		}
+
+		//(protección mínima division por cero)
+		const double sb = (SumR[b] > eps ? SumR[b] : eps);
+		FluxNext[b] = Flux[b] * (num / sb);
+		}
+				
+		Flux=FluxNext; /*flujo deconvolucionado*/
+		
+		//Llenamos el vector de vectores de fluxnext
+		 for (int i = 0; i < binnum; i++) 
+		 {
+			FluxMin_diff[i] = Flux[i]; // flujo diferencial
+			FluxMin_Intg[i] = Flux[i]*dE[i]; //integral
+		 }
+
+		//~ TH1D *hist_step_diff = new TH1D(TString::Format("h0_diff_%d", it),"Flujo diferencial de neutrones deconvolucionado", binnum, bins);
+		//~ for (int i = 0; i <Seed.size(); i++)
+				//~ {
+					//~ hist_step_diff->SetBinContent(i+1,FluxMin_diff[i]);
+				//~ }
+		//~ TH1D *hist_step_Intg = new TH1D(TString::Format("h0_Intg_%d", it),"Flujo Integral de neutrones deconvolucionado", binnum, bins);
+		//~ for (int i = 0; i <Seed.size(); i++)
+				//~ {
+					//~ hist_step_Intg->SetBinContent(i+1,FluxMin_Intg[i]);
+				//~ }
+				
+		//~ double_t integral_flux_deconv_diff = hist_step_diff->Integral();
+		//~ double_t integral_flux_deconv_Intg = hist_step_Intg->Integral();
+		//~ cout << "Integral del flujo deconvolucionado diferencial: " << integral_flux_deconv_diff << endl;
+		//~ cout << "Integral del flujo deconvolucionado diferencial: " << integral_flux_deconv_Intg << endl;
+		
+		/*Llenamos el vector de flujos deconvolucionados por paso*/
+		//~ vec_fluxnext_diff.push_back(FluxMin_diff);
+		//~ vec_fluxnext_Intg.push_back(FluxMin_Intg);
+
+		/*Counting rate recalculado*/
+		CR_rec = Recalculate(R, FluxMin_diff, dE, ndet); // CR recalculado
+
+		/***Calculamos los estimadores estadisticos***/
+		chi2 = Chi_Square(CR,dCR, CR_rec, ndet, crptime);
+		chi2_red = Chi_Square_red(CR,dCR, CR_rec, ndet, crptime);
+		xi2_estimator = Xi_Square(CR, CR_rec, ndet, crptime);
+		barDelta_estimator = bar_delta(CR, CR_rec, ndet, crptime);
+		STD_cr_estimator = STD_cr(CR, CR_rec, ndet, crptime);
+
+		
+		em_it++;
+		
+		//~ cout << it << "  "  << " chi2: " << chi2   << "  "  << " chi2 red: " << chi2_red <<" " << " xi2: " << xi2_estimator << " barDelta: " << " " << barDelta_estimator << " " << "STD_cr: " << STD_cr_estimator<< endl;
+		
+		 //~ Chi2<<setw(5) << setfill(' ') << it << " "
+			 //~ <<setw(15) << setfill(' ') << chi2 << " "
+			 //~ <<setw(25) << setfill(' ') << chi2_red  << " "
+			 //~ <<setw(25) << setfill(' ') << xi2_estimator  << " "
+			 //~ <<setw(25) << setfill(' ') << barDelta_estimator  << " "
+			 //~ <<setw(25) << setfill(' ') << STD_cr_estimator << endl;  
+	}
+}
+
+/****************************************************************************************************/
+/*********************************Output*************************************************************/
+/****************************************************************************************************/
+
+/****SALIDA DEL EM******/
+// -------------------------
+// Integrales por región (por índices) 
+// -------------------------
+constexpr int r0_lo = 0,   r0_hi = 23;
+constexpr int r1_lo = 23,  r1_hi = 70;
+constexpr int r2_lo = 70,  r2_hi = 100;
+constexpr int r3_lo = 100, r3_hi = 129;
+
+double integral_flux_deconv_total_Intg = 0.0;
+double integral_flux_deconv_th = 0.0;
+double integral_flux_deconv_ep = 0.0;
+double integral_flux_deconv_fs = 0.0;
+double integral_flux_deconv_he = 0.0;
+
+for (int i = 0; i < binnum; ++i) {
+    const double v = FluxMin_Intg[i];
+    integral_flux_deconv_total_Intg += v;
+
+    if      (i >= r0_lo && i < r0_hi) integral_flux_deconv_th += v;
+    else if (i >= r1_lo && i < r1_hi) integral_flux_deconv_ep += v;
+    else if (i >= r2_lo && i < r2_hi) integral_flux_deconv_fs += v;
+    else if (i >= r3_lo && i < r3_hi) integral_flux_deconv_he += v;
+}
+
+// cout << "Integrals from sum in vector" << endl;
+// cout << "Integral total flux deconv integral: " <<  setprecision(7) << integral_flux_deconv_total_Intg << endl;
+// cout << "Integral thermal flux deconv integral: " <<  setprecision(7) << integral_flux_deconv_th << endl;
+// cout << "Integral epithermal flux deconv integral: " <<  setprecision(7) << integral_flux_deconv_ep << endl;
+// cout << "Integral fast flux deconv integral: " <<  setprecision(7) << integral_flux_deconv_fs << endl;
+// cout << "Integral high energy flux deconv integral: " <<  setprecision(7) << integral_flux_deconv_he << endl;
+// cout << " " <<endl;
+
+
+
+
+//~ /***Llenamos en las dos ultima entradas del vector deconvolucionado, con el chi2 y chi2_red***/
+//~ cout << "FluxMin size: " << FluxMin_Intg.size() << endl;
+
+FluxMin_Intg.push_back(ndet);
+FluxMin_Intg.push_back(integral_flux_deconv_total_Intg);
+FluxMin_Intg.push_back(integral_flux_deconv_th);
+FluxMin_Intg.push_back(integral_flux_deconv_ep);
+FluxMin_Intg.push_back(integral_flux_deconv_fs);
+FluxMin_Intg.push_back(integral_flux_deconv_he);
+FluxMin_Intg.push_back(chi2);
+FluxMin_Intg.push_back(chi2_red);
+FluxMin_Intg.push_back(diff_criteria);
+FluxMin_Intg.push_back(xi2_estimator);
+FluxMin_Intg.push_back(barDelta_estimator);
+FluxMin_Intg.push_back(STD_cr_estimator);
+FluxMin_Intg.push_back(em_it);
+
+
+em_vec_output = FluxMin_Intg;
+//~ cout << "em_vec_output size: " << em_vec_output.size() << endl;
+//~ for (int i=0; i<FluxMin_Intg.size();i++)
+	//~ {
+		//~ cout <<"i " << i << " FluxMin_Intg[i] "<< FluxMin_Intg[i] << endl;
+	//~ }
+
+
+vector<double>().swap(FluxMin_Intg); //liberamos el vector de la memoria
+return em_vec_output;
+
+}
+
+
 void neutron_flux_plots(int vwc_seed){
 
 int binnum = 0; /*numero de bines*/
@@ -12027,8 +12640,11 @@ void em_loop_MC_opt_new_update(string campaign,int event,int steps,int time_grid
 
         // Ejecuta el algoritmo EM y obtiene los resultados
         //~ auto vec_event_MC_loop_element = deconv_em_output_MC_update(campaign, event, steps, bin_seed_new, time_grid, "Intg", 0, max_steps_em, cut);
-        auto vec_event_MC_loop_element = deconv_em_output_MC_update(campaign, event, steps, rand_num_flux, diff_flux_bin_seed_new, emid_icrp116_vec, ewid_icrp116_vec, elower_icrp116_vec, time_grid, "Intg", 0, max_steps_em, cut, physic_list, scale_factor, neufield_type);
+        
+		//auto vec_event_MC_loop_element = deconv_em_output_MC_update(campaign, event, steps, rand_num_flux, diff_flux_bin_seed_new, emid_icrp116_vec, ewid_icrp116_vec, elower_icrp116_vec, time_grid, "Intg", 0, max_steps_em, cut, physic_list, scale_factor, neufield_type);
+		auto vec_event_MC_loop_element = deconv_em_output_MC_update_refactor(campaign, event, steps, rand_num_flux, diff_flux_bin_seed_new, emid_icrp116_vec, ewid_icrp116_vec, elower_icrp116_vec, time_grid, "Intg", 0, max_steps_em, cut, physic_list, scale_factor, neufield_type);
 		
+
 
         // Extrae valores relevantes del resultado
         double em_it_value = vec_event_MC_loop_element.back(); // Número de pasos realizados (em_it)
@@ -12063,10 +12679,22 @@ void em_loop_MC_opt_new_update(string campaign,int event,int steps,int time_grid
 			}
 
 					event_mc_info.seekp(0); // Move file pointer to the beginning of the file
-					event_mc_info << " EM unfolding MC " << " Campaign: "<< campaign << " Event:" << setw(3) << event << " Steps: " << steps << " Time grid: " << time_grid << " Seed: " << setw(3) << rand_num_flux  << setw(3) << " MC iteration: " << setw(3) << k << std::fixed << std::setprecision(2) << " ("<< (k/(double)N)*100 <<")% " <<  setw(3) << " Starting ... "<< endl;
-					event_mc_info << " em_it: " << em_it_value << " chi^2: " << chi_square << " diff: " << diff <<  endl;
-					event_mc_info << " Accepted: " << mc_it <<"/" <<max_em_mc_it << setw(2) << " ("  << std::fixed << std::setprecision(2) <<(mc_it/(double) max_em_mc_it)*100. << setw(2) << ")%"<< " Rejected: " << mc_it_rejected << " Elapsed time: " << (elapsed_seconds.count())/60. << " min" << endl;
-					
+					// event_mc_info << " EM unfolding MC " << " Campaign: "<< campaign << " Event:" << setw(3) << event << " Steps: " << steps << " Time grid: " << time_grid << " Seed: " << setw(3) << rand_num_flux  << setw(3) << " MC iteration: " << setw(3) << k << std::fixed << std::setprecision(2) << " ("<< (k/(double)N)*100 <<")% " <<  setw(3) << " Starting ... "<< endl;
+					// event_mc_info << " em_it: " << em_it_value << " chi^2: " << chi_square << " diff: " << diff <<  endl;
+					// event_mc_info << " Accepted: " << mc_it <<"/" <<max_em_mc_it << setw(2) << " ("  << std::fixed << std::setprecision(2) <<(mc_it/(double) max_em_mc_it)*100. << setw(2) << ")%"<< " Rejected: " << mc_it_rejected << " Elapsed time: " << (elapsed_seconds.count())/60. << " min" << endl;
+					// event_mc_info << " " << endl;
+
+					std::ostringstream oss;
+					oss  << " EM unfolding MC " << " Campaign: "<< campaign << " Event:" << setw(3) << event << " Steps: " << steps << " Time grid: " << time_grid << " Seed: " << setw(3) << rand_num_flux  << setw(3) << " MC iteration: " << setw(3) << k << std::fixed << std::setprecision(2) << " ("<< (k/(double)N)*100 <<")% " <<  setw(3) << " Starting ... " << "\n"
+				 		 << " em_it: " << em_it_value << " chi^2: " << chi_square << " diff: " << diff << "\n"
+					 	 << " Accepted: " << mc_it <<"/" <<max_em_mc_it << setw(2) << " ("  << std::fixed << std::setprecision(2) <<(mc_it/(double) max_em_mc_it)*100. << setw(2) << ")%"<< " Rejected: " << mc_it_rejected << " Elapsed time: " << (elapsed_seconds.count())/60. << " min"  << "\n";
+
+					std::string s = oss.str();
+					event_mc_info << s;
+
+					// “borra” cola: escribe un bloque grande de espacios y vuelve a inicio
+					event_mc_info << std::string(200, ' ') << "\n";
+					event_mc_info.flush();
 
 	}
 				
