@@ -14,6 +14,26 @@ using namespace std;
 using namespace ROOT::VecOps; // para definir vectores como  RVec<double>>("vecCol");
 namespace fs = std::filesystem;
 
+const std::array<int,16>& Detectors_Array(const std::string& campaign)
+{
+    static const std::array<int,16> array_lco = {1,1,1,1,1,0,0,0,1,1,1,1,1,0,0,1};
+	static const std::array<int,16> array_chapiquilta = {1,1,1,0,1,1,0,0,1,1,1,1,1,0,0,1};
+    static const std::array<int,16> array_all = {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
+
+    if (campaign=="PUC" || campaign=="UTFSM" || campaign=="LCO" || campaign == "Maricunga" || campaign == "RetenDesierto" || campaign == "UDA" || campaign == "ULS"|| campaign == "JuanSoldado"){
+        return array_lco;
+	}
+
+    else if (campaign == "Chapiquilta" || campaign == "SanPedro") {
+        return array_chapiquilta;
+    }
+    else if (campaign == "AllActive") {
+        return array_all;
+    }
+
+    throw std::runtime_error("Unknown campaign: " + campaign);
+}
+
 void Response_function_matrix_lin_spec_2023_plot(){
 
 
@@ -781,10 +801,10 @@ return R;
 
 }
 
-/**Matriz de funciones respuesta para los experimentos de 2023 (LCO, MAR, etc) donde se permite seleccionar la libreria
+/**Matriz de funciones respuesta para los experimentos de 2023 (LCO, MAR, etc) y posteriores (cambio det #4 por #17) donde se permite seleccionar la libreria
 fisica usada en geant4, ya sea la QGSP_BERT o la FTFP_BERT, ademas del factor de escalimamiento de 1/4**/
 
-vector<vector<double_t> > Response_function_matrix_lin_spec_2023_fix_active_volume_more_statistics_smooth(string physic_list, string scale_factor, string neufield_type){
+vector<vector<double_t> > Response_function_matrix_lin_spec_2023_fix_active_volume_more_statistics_smooth(string physic_list, string scale_factor, string neufield_type, string campaign){
 	
 vector< vector<Double_t>> R; /*matriz de eficiencias absolutas (viene de la funcion respuesta)*/
 
@@ -808,6 +828,14 @@ else if(physic_list=="FTFP_BERT")
 	 phylst_name = "FTFP_BERT";
 	 cout << physic_list+" Physic_list" << endl;}
 else{cout << "Physics list inexistente o incorrecta" << endl;}
+
+//Cambio de detector #4 de Efi_4_CylinderHDPE (PUC, UTFSM, LCO, Maricunga, RetenDesierto, UDA, ULS, JuanSoldado) a Efi_7_20cmHDPE (desde Campania sur Nov 2023 en adelante)
+string det_change;
+
+if(campaign=="PUC" || campaign=="UTFSM" || campaign=="LCO" || campaign == "Maricunga" || campaign == "RetenDesierto" || campaign == "UDA" || campaign == "ULS"|| campaign == "JuanSoldado"){
+	det_change = (path+"/Efi_4_CylinderHDPE_"+phylst_name+"_VV_smooth_smooth_root_15_"+scale_factor+".root");
+}
+else{det_change = ("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/"+scale_path+"/Efi_17_Cylinder_HDPE_10cm_plus_5cm_BHDPE_VV_smooth_smooth_root_15.root");}
 
 //~ TFile *E01_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_1_12cmHDPE_NEW_VV_smooth_smooth_root_15.root");
 //~ TFile *E02_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_2_10cmHDPE_NEW_VV_smooth_smooth_root_15.root");
@@ -848,7 +876,10 @@ else{cout << "Physics list inexistente o incorrecta" << endl;}
 TFile *E01_file = new TFile((path+"/Efi_1_12cmHDPE_"+phylst_name+"_VV_smooth_smooth_root_15_"+scale_factor+".root").c_str());
 TFile *E02_file = new TFile((path+"/Efi_2_10cmHDPE_"+phylst_name+"_VV_smooth_smooth_root_15_"+scale_factor+".root").c_str());
 TFile *E03_file = new TFile((path+"/Efi_3_4cmHDPE_"+phylst_name+"_VV_smooth_smooth_root_15_"+scale_factor+".root").c_str());
-TFile *E04_file = new TFile((path+"/Efi_4_CylinderHDPE_"+phylst_name+"_VV_smooth_smooth_root_15_"+scale_factor+".root").c_str());
+
+//TFile *E04_file = new TFile((path+"/Efi_4_CylinderHDPE_"+phylst_name+"_VV_smooth_smooth_root_15_"+scale_factor+".root").c_str());
+TFile *E04_file = new TFile(det_change.c_str());
+
 TFile *E05_file = new TFile((path+"/Efi_5_Cylinder7mmAl_1.8cmBHDPECore_"+phylst_name+"_VV_smooth_smooth_root_15_"+scale_factor+".root").c_str());
 TFile *E06_file = new TFile((path+"/Efi_6_18cmHDPE_"+phylst_name+"_VV_smooth_smooth_root_15_"+scale_factor+".root").c_str());
 TFile *E07_file = new TFile((path+"/Efi_7_20cmHDPE_"+phylst_name+"_VV_smooth_smooth_root_15_"+scale_factor+".root").c_str());
@@ -885,35 +916,35 @@ TFile *E16_file = new TFile((path+"/Efi_16_Naked_1inch_"+phylst_name+"_VV_smooth
 //~ TH1D *h_d16 = (TH1D*)E16_file->Get("E16_Naked_1inch_NEW_smooth_smooth_root_15");
 //~ TH1D *h_d17 = (TH1D*)E17_file->Get("E17_Cylinder_HDPE_10cm_plus_5cm_BHDPE_smooth_smooth_root_15");
 
-TH1D *h_d01 = (TH1D*)E01_file->Get((string("E1_12cmHDPE_")+phylst_name+"_smooth_smooth_root_15").c_str());
-TH1D *h_d02 = (TH1D*)E02_file->Get((string("E2_10cmHDPE_")+phylst_name+"_smooth_smooth_root_15").c_str());
+TH1D *h_d01 = (TH1D*)E01_file->Get((string("E1_12cmHDPE_")+phylst_name+"_smooth_smooth_root_15"+"_"+scale_factor).c_str());
+TH1D *h_d02 = (TH1D*)E02_file->Get((string("E2_10cmHDPE_")+phylst_name+"_smooth_smooth_root_15"+"_"+scale_factor).c_str());
 
 //~ TH1D *h_d03 = (TH1D*)E03_file->Get((string("E3_4cmHDPE_smooth_smooth_root_15").c_str());
-TH1D *h_d03 = (TH1D*)E03_file->Get((string("E3_4cmHDPE_")+phylst_name+"_smooth_smooth_root_15").c_str());
+TH1D *h_d03 = (TH1D*)E03_file->Get((string("E3_4cmHDPE_")+phylst_name+"_smooth_smooth_root_15"+"_"+scale_factor).c_str());
 
-TH1D *h_d04 = (TH1D*)E04_file->Get((string("E4_CylinderHDPE_")+phylst_name+"_smooth_smooth_root_15").c_str());
+TH1D *h_d04 = (TH1D*)E04_file->Get((string("E4_CylinderHDPE_")+phylst_name+"_smooth_smooth_root_15"+"_"+scale_factor).c_str());
 
 //~ TH1D *h_d05 = (TH1D*)E05_file->Get((string("E5_Cylinder7mmAl_1.8cmBHDPECore_smooth_smooth_root_15").c_str());
-TH1D *h_d05 = (TH1D*)E05_file->Get((string("E5_Cylinder7mmAl_1.8cmBHDPECore_")+phylst_name+"_smooth_smooth_root_15").c_str());
+TH1D *h_d05 = (TH1D*)E05_file->Get((string("E5_Cylinder7mmAl_1.8cmBHDPECore_")+phylst_name+"_smooth_smooth_root_15"+"_"+scale_factor).c_str());
 
-TH1D *h_d06 = (TH1D*)E06_file->Get((string("E6_18cmHDPE_")+phylst_name+"_smooth_smooth_root_15").c_str());
-TH1D *h_d07 = (TH1D*)E07_file->Get((string("E7_20cmHDPE_")+phylst_name+"_smooth_smooth_root_15").c_str());
+TH1D *h_d06 = (TH1D*)E06_file->Get((string("E6_18cmHDPE_")+phylst_name+"_smooth_smooth_root_15"+"_"+scale_factor).c_str());
+TH1D *h_d07 = (TH1D*)E07_file->Get((string("E7_20cmHDPE_")+phylst_name+"_smooth_smooth_root_15"+"_"+scale_factor).c_str());
 
 //~ TH1D *h_d08 = (TH1D*)E08_file->Get((string("E8_1inchBHDPE_10cmHDPE_smooth_smooth_root_15").c_str());
 //~ TH1D *h_d09 = (TH1D*)E09_file->Get((string("E9_20cmBHDPE_1.0inch_smooth_smooth_root_15").c_str());
 
-TH1D *h_d08 = (TH1D*)E08_file->Get((string("E8_1inchBHDPE_10cmHDPE_")+phylst_name+"_smooth_smooth_root_15").c_str());
-TH1D *h_d09 = (TH1D*)E09_file->Get((string("E9_20cmBHDPE_1.0inch_")+phylst_name+"_smooth_smooth_root_15").c_str());
+TH1D *h_d08 = (TH1D*)E08_file->Get((string("E8_1inchBHDPE_10cmHDPE_")+phylst_name+"_smooth_smooth_root_15"+"_"+scale_factor).c_str());
+TH1D *h_d09 = (TH1D*)E09_file->Get((string("E9_20cmBHDPE_1.0inch_")+phylst_name+"_smooth_smooth_root_15"+"_"+scale_factor).c_str());
 
-TH1D *h_d10 = (TH1D*)E10_file->Get((string("E10_Cylinder_4cm_")+phylst_name+"_smooth_smooth_root_15").c_str());
-TH1D *h_d11 = (TH1D*)E11_file->Get((string("E11_Cylinder_3cm_")+phylst_name+"_smooth_smooth_root_15").c_str());
+TH1D *h_d10 = (TH1D*)E10_file->Get((string("E10_Cylinder_4cm_")+phylst_name+"_smooth_smooth_root_15"+"_"+scale_factor).c_str());
+TH1D *h_d11 = (TH1D*)E11_file->Get((string("E11_Cylinder_3cm_")+phylst_name+"_smooth_smooth_root_15"+"_"+scale_factor).c_str());
 
-TH1D *h_d12 = (TH1D*)E12_file->Get((string("E12_Pb_10cmBHDPEcore_")+phylst_name+"_smooth_smooth_root_15").c_str());
+TH1D *h_d12 = (TH1D*)E12_file->Get((string("E12_Pb_10cmBHDPEcore_")+phylst_name+"_smooth_smooth_root_15"+"_"+scale_factor).c_str());
 
-TH1D *h_d13 = (TH1D*)E13_file->Get((string("E13_1inchBHDPE_15cmGraphite_")+phylst_name+"_smooth_smooth_root_15").c_str());
-TH1D *h_d14 = (TH1D*)E14_file->Get((string("E14_inchBHDPE_15cmHDPE_")+phylst_name+"_smooth_smooth_root_15").c_str());
-TH1D *h_d15 = (TH1D*)E15_file->Get((string("E15_24cmHDPE_")+phylst_name+"_smooth_smooth_root_15").c_str());
-TH1D *h_d16 = (TH1D*)E16_file->Get((string("E16_Naked_1inch_")+phylst_name+"_smooth_smooth_root_15").c_str());
+TH1D *h_d13 = (TH1D*)E13_file->Get((string("E13_1inchBHDPE_15cmGraphite_")+phylst_name+"_smooth_smooth_root_15"+"_"+scale_factor).c_str());
+TH1D *h_d14 = (TH1D*)E14_file->Get((string("E14_inchBHDPE_15cmHDPE_")+phylst_name+"_smooth_smooth_root_15"+"_"+scale_factor).c_str());
+TH1D *h_d15 = (TH1D*)E15_file->Get((string("E15_24cmHDPE_")+phylst_name+"_smooth_smooth_root_15"+"_"+scale_factor).c_str());
+TH1D *h_d16 = (TH1D*)E16_file->Get((string("E16_Naked_1inch_")+phylst_name+"_smooth_smooth_root_15"+"_"+scale_factor).c_str());
 //~ TH1D *h_d17 = (TH1D*)E17_file->Get("E17_Cylinder_HDPE_10cm_plus_5cm_BHDPE_smooth_smooth_root_15");
 
 
@@ -939,48 +970,6 @@ vector<double> RF_d13_vec;
 vector<double> RF_d14_vec;
 vector<double> RF_d15_vec;
 vector<double> RF_d16_vec;
-
-
-// std::vector<std::pair<int,double>> sfp = {
-//     {1, 1.38},
-//     {2, 1.37},
-//     {3, 1.28},
-//     {4, 1.42},
-//     {5, 1.37},
-//     {6, 1.37},
-//     {7, 1.36},
-//     {8, 2.33},
-//     {9, 1.29},
-//     {10, 1.43},
-//     {11, 1.41},
-//     {12, 5.00},
-//     {13, 1.80},
-//     {14, 1.96},
-//     {15, 1.30},
-//     {16, 1.15},
-// };
-
-// vector<double> sf;
-// sf.reserve(16);
-
-// if(neufield_type=="mix"){
-// 	//R_beam mix: 
-// 	//Usar r_beam para funciones respuesta cuyo peak de respuesta se encuentre en la region  mayor a 1>MeV (ademas del factor 1/4)  y usar 1/4 para el caso contrario.
-// 	//1>1MeV: Det05, Det06, Det07, Det08, Det09, Det12, Det13, Det14, Det15
-// 	vector<double> sf_new ={1.,1.,1.,1.,sfp[4].second,sfp[5].second,sfp[6].second,sfp[7].second,sfp[8].second,1.,1.,sfp[11].second,sfp[12].second,sfp[13].second,sfp[14].second,1.};
-// 	std::copy(sf_new.begin(), sf_new.end(), std::back_inserter(sf));
-// }
-// else if(neufield_type=="beam"){
-// //R_beam full
-//  vector<double> sf_new ={sfp[0].second,sfp[1].second,sfp[2].second,sfp[3].second,sfp[4].second,sfp[5].second,sfp[6].second,sfp[7].second,sfp[8].second,sfp[9].second,sfp[10].second,sfp[11].second,sfp[12].second,sfp[13].second,sfp[14].second,sfp[15].second};
-//  std::copy(sf_new.begin(), sf_new.end(), std::back_inserter(sf));
-// }
-
-// else{
-// 	//R_iso, RF se queda solo con el factor 1/4 previamente seteado en el smooth
-// 	vector<double> sf_new ={1.,1.,1.,1.,1.,1.,1.,1.,1.,1.,1.,1.,1.,1.,1.,1.};
-// 	std::copy(sf_new.begin(), sf_new.end(), std::back_inserter(sf));
-// }
 
 
 constexpr int NDET = 16;
@@ -1441,13 +1430,13 @@ void Response_function_matrix_lin_spec_2024_fix_active_volume_plot(){
 
 
 		vector<int> vec_test{1,1,1,0,1,1,0,0,1,1,1,1,1,0,0,1};; //detectores activados en deconv_em_ouput
-		vector<int> act_vector(vec_test.size(),1);
+		// vector<int> act_vector(vec_test.size(),1);
 		vector<int> vec_pos;
 		
 		/*Redefinimos la activacion*/
 		for(int i=0; i<vec_test.size(); i++)
 			{
-				if(act_vector[i] == vec_test[i])
+				if(vec_test[i]==1)
 					{
 						vec_pos.push_back(i+1);
 					}
@@ -4097,7 +4086,7 @@ return R;
 	
 	}
 /**Funcion que calcula el Resolving Power del espectrometro**/
-void BackusGilbert_ResolutionPower(){
+void BackusGilbert_ResolutionPower(string campaign){
 
      //~ int n; // Número de detectores
     //~ const int m = 150; // Número de puntos de discretización para la integral
@@ -4193,7 +4182,7 @@ void BackusGilbert_ResolutionPower(){
 //~ R = Response_function_matrix_lin_spec_2024_fix_active_volume_more_statistics(); /*matriz de funciones respuesta del espectrometro 2024 region activa arreglada y mas estadistica, considerando el nuevo detecto d04*/
 cout << "Cargamos la matriz de funcion respuesta" << endl;
 //~ R = Response_function_matrix_lin_spec_2023_fix_active_volume_more_statistics_smooth();  /*matriz de funciones respuesta del espectrometro 2023 con un smooth SG y smooth de root (factor 15) LCO*/ 
-R = Response_function_matrix_lin_spec_2023_fix_active_volume_more_statistics_smooth("FTFP_BERT","ws","iso");  /*matriz de funciones respuesta del espectrometro 2023 con un smooth SG y smooth de root (factor 15) LCO*/ 
+R = Response_function_matrix_lin_spec_2023_fix_active_volume_more_statistics_smooth("FTFP_BERT","ws","iso",campaign);  /*matriz de funciones respuesta del espectrometro 2023 con un smooth SG y smooth de root (factor 15) LCO*/ 
 
 
 //~ R = Response_function_matrix_lin_spec_2024_fix_active_volume_more_statistics_smooth();  /*matriz de funciones respuesta del espectrometro 2024 con un smooth SG y smooth de root (factor 15) SanPedro y Chapiquilta*/ 
@@ -4219,9 +4208,10 @@ vector< vector<Double_t>> RjValues_new;   /*matriz de funciones respuesta del es
 vector<string> det_names{"D01","D02","D03","D04","D05","D06","D07","D08","D09","D10","D11","D12","D13","D14","D15","D16"}; /*vector de nombres de detectores activados*/
 vector<string> det_names_act;
 
-vector<int> act_vector(ndet,1);
+// vector<int> act_vector(ndet,1);
 
-vector<int> vec_test{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}; //Todos los detectores activados
+// vector<int> vec_test{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}; //Todos los detectores activados
+const auto& vec_test = Detectors_Array("AllActive");
 
 //~ vector<int> vec_test{1,1,1,1,1,0,0,0,1,1,1,1,1,0,0,1}; //LCO, MARICUNGA, RETEN DESIERTO
 
@@ -4234,7 +4224,7 @@ vector<int> vec_test{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}; //Todos los detectores ac
 /*Redefinimos la matriz de funcion respuesta*/
 for(int i=0; i<ndet; i++)
 {
-	 if(act_vector[i] == vec_test[i])
+	 if(vec_test[i]==1)
 		{
 			RjValues_new.push_back(RjValues[i]);
 		}
@@ -4244,7 +4234,7 @@ for(int i=0; i<ndet; i++)
 /*Redefinimos Vect de nombres*/
 for(int i=0; i<ndet; i++)
 {
-	 if(act_vector[i] == vec_test[i])
+	 if(vec_test[i]==1)
 		{
 			det_names_act.push_back(det_names[i]);
 		}
@@ -4417,7 +4407,7 @@ histograma->Draw();
     //~ return 0;
 }
 
-TH1D* BackusGilbert_ResolutionPower_TH1D(double Eo_input){
+TH1D* BackusGilbert_ResolutionPower_TH1D(double Eo_input, string campaign){
      //~ int n; // Número de detectores
     //~ const int m = 150; // Número de puntos de discretización para la integral
     //~ double Eo; // Energía a evaluar en MeV
@@ -4516,7 +4506,7 @@ TH1D* BackusGilbert_ResolutionPower_TH1D(double Eo_input){
 //~ R = Response_function_matrix_lin_spec_2024_fix_active_volume_more_statistics(); /*matriz de funciones respuesta del espectrometro 2024 region activa arreglada y mas estadistica, considerando el nuevo detecto d04*/
 cout << "Cargamos la matriz de funcion respuesta" << endl;
 //~ R = Response_function_matrix_lin_spec_2023_fix_active_volume_more_statistics_smooth();  /*matriz de funciones respuesta del espectrometro 2023 con un smooth SG y smooth de root (factor 15) LCO*/ 
-R = Response_function_matrix_lin_spec_2023_fix_active_volume_more_statistics_smooth("FTFP_BERT","ws","iso");;  /*matriz de funciones respuesta del espectrometro 2023 con un smooth SG y smooth de root (factor 15) LCO*/ 
+R = Response_function_matrix_lin_spec_2023_fix_active_volume_more_statistics_smooth("FTFP_BERT","ws","iso",campaign);  /*matriz de funciones respuesta del espectrometro 2023 con un smooth SG y smooth de root (factor 15) LCO*/ 
 
 
 //~ R = Response_function_matrix_lin_spec_2024_fix_active_volume_more_statistics_smooth();  /*matriz de funciones respuesta del espectrometro 2024 con un smooth SG y smooth de root (factor 15) SanPedro y Chapiquilta*/ 
@@ -4542,9 +4532,10 @@ vector< vector<Double_t>> RjValues_new;   /*matriz de funciones respuesta del es
 vector<string> det_names{"D01","D02","D03","D04","D05","D06","D07","D08","D09","D10","D11","D12","D13","D14","D15","D16"}; /*vector de nombres de detectores activados*/
 vector<string> det_names_act;
 
-vector<int> act_vector(ndet,1);
+// vector<int> act_vector(ndet,1);
 
- vector<int> vec_test{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}; //Todos los detectores activados
+//  vector<int> vec_test{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}; //Todos los detectores activados
+const auto& vec_test = Detectors_Array("AllActive");
 
 // vector<int> vec_test{1,1,1,1,1,0,0,0,1,1,1,1,1,0,0,1}; //LCO, MARICUNGA, RETEN DESIERTO
 
@@ -4557,7 +4548,7 @@ vector<int> act_vector(ndet,1);
 /*Redefinimos la matriz de funcion respuesta*/
 for(int i=0; i<ndet; i++)
 {
-	 if(act_vector[i] == vec_test[i])
+	 if(vec_test[i]==1)
 		{
 			RjValues_new.push_back(RjValues[i]);
 		}
@@ -4567,7 +4558,7 @@ for(int i=0; i<ndet; i++)
 /*Redefinimos Vect de nombres*/
 for(int i=0; i<ndet; i++)
 {
-	 if(act_vector[i] == vec_test[i])
+	 if(vec_test[i]==1)
 		{
 			det_names_act.push_back(det_names[i]);
 		}
@@ -4744,7 +4735,7 @@ archivo->Close();
     //~ return 0;
 }
 
-void drawHistograms_ResolvingPower(){
+void drawHistograms_ResolvingPower(string campaign){
     // Abre el archivo ROOT
     //~ TFile* rootFile = new TFile(rootFileName);
 
@@ -4789,7 +4780,7 @@ void drawHistograms_ResolvingPower(){
 
 	for(int i=0; i<n_decades; i++){
 			double dec = pow(10,i-8);
-			vec_resolving_hist.push_back(BackusGilbert_ResolutionPower_TH1D(dec));
+			vec_resolving_hist.push_back(BackusGilbert_ResolutionPower_TH1D(dec,campaign));
 			cout << "Integral: " <<  vec_resolving_hist[i]->Integral() << endl;
 	}
 
@@ -5998,17 +5989,19 @@ vector<string> det_names{"D01","D02","D03","D04","D05","D06","D07","D08","D09","
 vector<string> det_names_act;
 
 //~ vector<int> des_vector(ndet,0);
-vector<int> act_vector(ndet,1);
+//vector<int> act_vector(ndet,1);
 
 //~ vector<int> vec_test{0,1,1,1,1,0,0,1,1,1,1,1,0,0,0,1};
 //~ vector<int> vec_test{1,1,1,1,0,1,0,0,1,1,1,1,1,1,0,1};
 //~ vector<int> vec_test{1,1,1,1,0,1,1,0,1,1,1,1,1,1,0,1};
-vector<int> vec_test{1,1,1,1,1,0,0,0,1,1,1,1,1,0,0,1};
+
+//vector<int> vec_test{1,1,1,1,1,0,0,0,1,1,1,1,1,0,0,1};
+const auto& vec_test = Detectors_Array(campaign);
 
 /*Redefinimos la matriz de funcion respuesta*/
 for(int i=0; i<ndet; i++)
 {
-	 if(act_vector[i] == vec_test[i])
+	if(vec_test[i]==1)
 		{
 			R_new.push_back(R[i]);
 		}
@@ -6018,7 +6011,7 @@ for(int i=0; i<ndet; i++)
 //*Redefinimos el vector de CR*/
 for(int i=0; i<ndet; i++)
 {
-	 if(act_vector[i] == vec_test[i])
+	if(vec_test[i]==1)
 		{
 			N_new.push_back(N[i]);
 		}
@@ -6028,7 +6021,7 @@ for(int i=0; i<ndet; i++)
 /*Redefinimos el vector de perc_e_N*/
 for(int i=0; i<ndet; i++)
 {
-	 if(act_vector[i] == vec_test[i])
+	if(vec_test[i]==1)
 		{
 			perc_e_N_new.push_back(perc_e_N[i]);
 		}
@@ -6038,7 +6031,7 @@ for(int i=0; i<ndet; i++)
 /*Redefinimos el vector de CR*/
 for(int i=0; i<ndet; i++)
 {
-	 if(act_vector[i] == vec_test[i])
+	if(vec_test[i]==1)
 		{
 			CR_new.push_back(CR[i]);
 		}
@@ -6048,7 +6041,7 @@ for(int i=0; i<ndet; i++)
 /*Redefinimos el vector dCR*/
 for(int i=0; i<ndet; i++)
 {
-	 if(act_vector[i] == vec_test[i])
+	if(vec_test[i]==1)
 		{
 			dCR_new.push_back(dCR[i]);
 		}
@@ -6058,7 +6051,7 @@ for(int i=0; i<ndet; i++)
 /*Vect de nombres*/
 for(int i=0; i<ndet; i++)
 {
-	 if(act_vector[i] == vec_test[i])
+	if(vec_test[i]==1)
 		{
 			det_names_act.push_back(det_names[i]);
 		}
@@ -6617,7 +6610,7 @@ for(int i=0; i<N.size(); i++)
 //~ R = Response_function_matrix_lin_spec_2024_fix_active_volume_more_statistics(); /*matriz de funciones respuesta del espectrometro 2024 region activa arreglada y mas estadistica, considerando el nuevo detecto d04*/
 
 //~ R = Response_function_matrix_lin_spec_2024_fix_active_volume_more_statistics_smooth();  /*matriz de funciones respuesta del espectrometro 2024 con un smooth SG y smooth de root (factor 15)*/
-R = Response_function_matrix_lin_spec_2023_fix_active_volume_more_statistics_smooth("FTFP","ws","iso");  /*matriz de funciones respuesta del espectrometro 2023 usando FTFP_BERT en root con un smooth SG y smooth de root (factor 15)*/
+R = Response_function_matrix_lin_spec_2023_fix_active_volume_more_statistics_smooth("FTFP","ws","iso",campaign);  /*matriz de funciones respuesta del espectrometro 2023 usando FTFP_BERT en root con un smooth SG y smooth de root (factor 15)*/
 
 //~ cout << "Response Function matrix filled: R " << endl;
 
@@ -6634,7 +6627,7 @@ vector<string> det_names{"D01","D02","D03","D04","D05","D06","D07","D08","D09","
 vector<string> det_names_act;
 
 //~ vector<int> des_vector(ndet,0);
-vector<int> act_vector(ndet,1);
+// vector<int> act_vector(ndet,1);
 
 //~ vector<int> vec_test{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}; //Todos los detectores activados
 
@@ -6642,12 +6635,15 @@ vector<int> act_vector(ndet,1);
 //~ vector<int> vec_test{1,1,1,0,1,0,0,0,1,1,1,1,1,1,0,1}; // Chapiquilta prueba
 //~ vector<int> vec_test{1,1,1,0,1,1,0,0,1,1,1,1,1,0,0,1}; // Chapiquilta prueba
 //~ vector<int> vec_test{1,1,1,1,1,0,0,0,1,1,1,1,1,0,0,1}; // Chapiquilta prueba
-vector<int> vec_test{1,1,1,0,1,1,0,0,1,1,1,1,1,0,0,1}; //  Chapiquilta tes2
+
+// vector<int> vec_test{1,1,1,0,1,1,0,0,1,1,1,1,1,0,0,1}; //  Chapiquilta test2
+const auto& vec_test = Detectors_Array(campaign);
+vector<int> vec_test_new(vec_test.begin(),vec_test.end());
 
 /*Redefinimos la matriz de funcion respuesta*/
 for(int i=0; i<ndet; i++)
 {
-	 if(act_vector[i] == vec_test[i])
+	 if(vec_test[i]==1)
 		{
 			R_new.push_back(R[i]);
 		}
@@ -6670,7 +6666,7 @@ for(int i=0; i<ndet; i++)
 /*Redefinimos el vector de CR*/
 for(int i=0; i<ndet; i++)
 {
-	 if(act_vector[i] == vec_test[i])
+	 if(vec_test[i]==1)
 		{
 			N_new.push_back(N[i]);
 		}
@@ -6680,7 +6676,7 @@ for(int i=0; i<ndet; i++)
 /*Redefinimos el vector de perc_e_N*/
 for(int i=0; i<ndet; i++)
 {
-	 if(act_vector[i] == vec_test[i])
+	 if(vec_test[i]==1)
 		{
 			perc_e_N_new.push_back(perc_e_N[i]);
 		}
@@ -6690,7 +6686,7 @@ for(int i=0; i<ndet; i++)
 /*Redefinimos el vector de CR*/
 for(int i=0; i<ndet; i++)
 {
-	 if(act_vector[i] == vec_test[i])
+	 if(vec_test[i]==1)
 		{
 			CR_new.push_back(CR[i]);
 		}
@@ -6700,7 +6696,7 @@ for(int i=0; i<ndet; i++)
 /*Redefinimos el vector dCR*/
 for(int i=0; i<ndet; i++)
 {
-	 if(act_vector[i] == vec_test[i])
+	 if(vec_test[i]==1)
 		{
 			dCR_new.push_back(dCR[i]);
 		}
@@ -6710,7 +6706,7 @@ for(int i=0; i<ndet; i++)
 /*Vect de nombres*/
 for(int i=0; i<ndet; i++)
 {
-	 if(act_vector[i] == vec_test[i])
+	 if(vec_test[i]==1)
 		{
 			det_names_act.push_back(det_names[i]);
 		}
@@ -7056,7 +7052,7 @@ else
 
 		/***Calculamos los estimadores estadisticos***/
 		//~ chi2 = Chi_Square(CR,dCR, CR_rec, ndet, crptime);
-		chi2 = Chi_Square_debug(CR,dCR, CR_rec, ndet, crptime,debug_em,vec_test); //Chi^2 con debug
+		chi2 = Chi_Square_debug(CR,dCR, CR_rec, ndet, crptime,debug_em,vec_test_new); //Chi^2 con debug
 		chi2_red = Chi_Square_red(CR,dCR, CR_rec, ndet, crptime);
 		xi2_estimator = Xi_Square(CR, CR_rec, ndet, crptime);
 		barDelta_estimator = bar_delta(CR, CR_rec, ndet, crptime);
@@ -7291,7 +7287,7 @@ for(int i=0; i<N.size(); i++)
 //~ R = Response_function_matrix_lin_spec_2024_fix_active_volume_more_statistics(); /*matriz de funciones respuesta del espectrometro 2024 region activa arreglada y mas estadistica, considerando el nuevo detecto d04*/
 cout << "Cargamos la matriz de funcion respuesta" << endl;
 //~ R = Response_function_matrix_lin_spec_2023_fix_active_volume_more_statistics_smooth();  /*matriz de funciones respuesta del espectrometro 2023 con un smooth SG y smooth de root (factor 15) LCO*/ 
-R = Response_function_matrix_lin_spec_2023_fix_active_volume_more_statistics_smooth(phylist,"ws","iso");  /*matriz de funciones respuesta del espectrometro 2023 con un smooth SG y smooth de root (factor 15) LCO*/ 
+R = Response_function_matrix_lin_spec_2023_fix_active_volume_more_statistics_smooth(phylist,"ws","iso",campaign);  /*matriz de funciones respuesta del espectrometro 2023 con un smooth SG y smooth de root (factor 15) LCO*/ 
 
 
 //~ R = Response_function_matrix_lin_spec_2024_fix_active_volume_more_statistics_smooth();  /*matriz de funciones respuesta del espectrometro 2024 con un smooth SG y smooth de root (factor 15) SanPedro y Chapiquilta*/ 
@@ -7311,11 +7307,14 @@ vector<string> det_names{"D01","D02","D03","D04","D05","D06","D07","D08","D09","
 vector<string> det_names_act;
 
 //~ vector<int> des_vector(ndet,0);
-vector<int> act_vector(ndet,1);
+// vector<int> act_vector(ndet,1);
 
 //~ vector<int> vec_test{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}; //Todos los detectores activados
 
-vector<int> vec_test{1,1,1,1,1,0,0,0,1,1,1,1,1,0,0,1}; //LCO, MARICUNGA, RETEN DESIERTO
+//vector<int> vec_test{1,1,1,1,1,0,0,0,1,1,1,1,1,0,0,1}; //LCO, MARICUNGA, RETEN DESIERTO
+const auto& vec_test = Detectors_Array(campaign);
+vector<int> vec_test_new(vec_test.begin(),vec_test.end());
+
 //~ vector<int> vec_test{1,1,1,0,1,0,0,0,1,1,1,1,1,1,0,1}; // Chapiquilta prueba
 //~ vector<int> vec_test{1,1,1,0,1,1,0,0,1,1,1,1,1,0,0,1}; // Chapiquilta prueba
 //~ vector<int> vec_test{1,1,1,1,1,0,0,0,1,1,1,1,1,0,0,1}; // Chapiquilta prueba
@@ -7325,7 +7324,7 @@ vector<int> vec_test{1,1,1,1,1,0,0,0,1,1,1,1,1,0,0,1}; //LCO, MARICUNGA, RETEN D
 /*Redefinimos la matriz de funcion respuesta*/
 for(int i=0; i<ndet; i++)
 {
-	 if(act_vector[i] == vec_test[i])
+	 if(vec_test[i]==1)
 		{
 			R_new.push_back(R[i]);
 		}
@@ -7348,7 +7347,7 @@ for(int i=0; i<ndet; i++)
 /*Redefinimos el vector de CR*/
 for(int i=0; i<ndet; i++)
 {
-	 if(act_vector[i] == vec_test[i])
+	 if(vec_test[i]==1)
 		{
 			N_new.push_back(N[i]);
 		}
@@ -7358,7 +7357,7 @@ for(int i=0; i<ndet; i++)
 /*Redefinimos el vector de perc_e_N*/
 for(int i=0; i<ndet; i++)
 {
-	 if(act_vector[i] == vec_test[i])
+	if(vec_test[i]==1)
 		{
 			perc_e_N_new.push_back(perc_e_N[i]);
 		}
@@ -7368,7 +7367,7 @@ for(int i=0; i<ndet; i++)
 /*Redefinimos el vector de CR*/
 for(int i=0; i<ndet; i++)
 {
-	 if(act_vector[i] == vec_test[i])
+	 if(vec_test[i]==1)
 		{
 			CR_new.push_back(CR[i]);
 		}
@@ -7378,7 +7377,7 @@ for(int i=0; i<ndet; i++)
 /*Redefinimos el vector dCR*/
 for(int i=0; i<ndet; i++)
 {
-	 if(act_vector[i] == vec_test[i])
+	 if(vec_test[i]==1)
 		{
 			dCR_new.push_back(dCR[i]);
 		}
@@ -7388,7 +7387,7 @@ for(int i=0; i<ndet; i++)
 /*Vect de nombres*/
 for(int i=0; i<ndet; i++)
 {
-	 if(act_vector[i] == vec_test[i])
+	 if(vec_test[i]==1)
 		{
 			det_names_act.push_back(det_names[i]);
 		}
@@ -7736,7 +7735,7 @@ else
 
 		/***Calculamos los estimadores estadisticos***/
 		//~ chi2 = Chi_Square(CR,dCR, CR_rec, ndet, crptime);
-		chi2 = Chi_Square_debug(CR,dCR, CR_rec, ndet, crptime,debug_em,vec_test); //Chi^2 con debug
+		chi2 = Chi_Square_debug(CR,dCR, CR_rec, ndet, crptime,debug_em,vec_test_new); //Chi^2 con debug
 		chi2_red = Chi_Square_red(CR,dCR, CR_rec, ndet, crptime);
 		xi2_estimator = Xi_Square(CR, CR_rec, ndet, crptime);
 		barDelta_estimator = bar_delta(CR, CR_rec, ndet, crptime);
@@ -7954,17 +7953,20 @@ void deconv_em_event_write_singlefile(
 
     std::cout << "Cargamos RF matrix...\n";
     std::vector<std::vector<double>> R =
-        Response_function_matrix_lin_spec_2023_fix_active_volume_more_statistics_smooth(physic_list, scale_factor,"iso");
+        Response_function_matrix_lin_spec_2023_fix_active_volume_more_statistics_smooth(physic_list, scale_factor,"iso",campaign);
 
     // selección detectores (tu vec_test)
-    std::vector<int> vec_test{1,1,1,1,1,0,0,0,1,1,1,1,1,0,0,1};
-    std::vector<int> act_vector(ndet,1);
+    // std::vector<int> vec_test{1,1,1,1,1,0,0,0,1,1,1,1,1,0,0,1};
+	const auto& vec_test = Detectors_Array(campaign);
+   
+	// std::vector<int> act_vector(ndet,1);
+
 
     std::vector<std::vector<double>> R_new;
     std::vector<double> CR_new, dCR_new;
 
     for(int i=0;i<ndet;i++){
-        if(act_vector[i]==vec_test[i]){
+        if(vec_test[i]==1){
             R_new.push_back(R[i]);
             CR_new.push_back(CR[i]);
             dCR_new.push_back(dCR[i]);
@@ -8086,7 +8088,8 @@ void deconv_em_event_write_singlefile(
         // prev para diff_criteria (primera referencia)
         std::vector<double> prev_flux_intg(binnum,0.0);
         for(int i=0;i<binnum;i++){
-            prev_flux_intg[i] = (Flux[i]/emid[i]) * ewid[i];  // como tu seed_integral_representation
+            // prev_flux_intg[i] = (Flux[i]/emid[i]) * ewid[i];  // como tu seed_integral_representation
+			   prev_flux_intg[i] = Flux[i]*ewid[i];   // Seed es diferencial
         }
 
         Chi2 = 30.0; Chi2red = 0.0; diff_criteria = 10.0;
@@ -8397,18 +8400,19 @@ vector<string> det_names{"D01","D02","D03","D04","D05","D06","D07","D08","D09","
 vector<string> det_names_act;
 
 //~ vector<int> des_vector(ndet,0);
-vector<int> act_vector(ndet,1);
+// vector<int> act_vector(ndet,1);
 
 
 //~ vector<int> vec_test{1,1,1,1,1,0,0,0,1,1,1,1,1,0,0,1}; //LCO, Maricunga, RetenDesierto
 //~ vector<int> vec_test{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
 //~ vector<int> vec_test{1,1,1,1,1,0,0,0,1,1,1,1,1,0,0,1}; // Chapiquilta tes1
-vector<int> vec_test{1,1,1,0,1,1,0,0,1,1,1,1,1,0,0,1}; //  Chapiquilta tes2
+// vector<int> vec_test{1,1,1,0,1,1,0,0,1,1,1,1,1,0,0,1}; //  Chapiquilta tes2
+const auto& vec_test = Detectors_Array(campaign);
 
 /*Redefinimos la matriz de funcion respuesta*/
 for(int i=0; i<ndet; i++)
 {
-	 if(act_vector[i] == vec_test[i])
+	  if(vec_test[i]==1)
 		{
 			R_new.push_back(R[i]);
 		}
@@ -8431,7 +8435,7 @@ for(int i=0; i<ndet; i++)
 /*Redefinimos el vector de CR*/
 for(int i=0; i<ndet; i++)
 {
-	 if(act_vector[i] == vec_test[i])
+	  if(vec_test[i]==1)
 		{
 			N_new.push_back(N[i]);
 		}
@@ -8441,7 +8445,7 @@ for(int i=0; i<ndet; i++)
 /*Redefinimos el vector de perc_e_N*/
 for(int i=0; i<ndet; i++)
 {
-	 if(act_vector[i] == vec_test[i])
+	  if(vec_test[i]==1)
 		{
 			perc_e_N_new.push_back(perc_e_N[i]);
 		}
@@ -8451,7 +8455,7 @@ for(int i=0; i<ndet; i++)
 /*Redefinimos el vector de CR*/
 for(int i=0; i<ndet; i++)
 {
-	 if(act_vector[i] == vec_test[i])
+	  if(vec_test[i]==1)
 		{
 			CR_new.push_back(CR[i]);
 		}
@@ -8461,7 +8465,7 @@ for(int i=0; i<ndet; i++)
 /*Redefinimos el vector dCR*/
 for(int i=0; i<ndet; i++)
 {
-	 if(act_vector[i] == vec_test[i])
+	  if(vec_test[i]==1)
 		{
 			dCR_new.push_back(dCR[i]);
 		}
@@ -8471,7 +8475,7 @@ for(int i=0; i<ndet; i++)
 /*Vect de nombres*/
 for(int i=0; i<ndet; i++)
 {
-	 if(act_vector[i] == vec_test[i])
+	 if(vec_test[i]==1)
 		{
 			det_names_act.push_back(det_names[i]);
 		}
@@ -8546,7 +8550,9 @@ else {}
 	for (int i = 0; i<Seed.size(); i++)
 	{
 		double E_mid = E[i]+(dE[i]/2.); // bin: [Elow,Eup], luego E[i] =Elow y Eup-Elow = dE[i], entonces, Emid = Elow + dE/2.
-		seed_integral_representation[i] = (Seed[i]/E_mid)*dE[i]; /*expacs entrega el flujo letargico, para pasarlo a flujo diff dividimos por E_mid*/
+		// seed_integral_representation[i] = (Seed[i]/E_mid)*dE[i]; /*expacs entrega el flujo letargico, para pasarlo a flujo diff dividimos por E_mid*/
+		seed_integral_representation[i] = Seed[i]*dE[i]; /*expacs entrega el flujo diferencial, para pasarlo a flujo diff integral multiplicamos por dE*/
+
 	}
 	matrix_fluxnext_Intg.push_back(seed_integral_representation);
 	/***Definimos e inicializamos los estimadres estadisticos***/
@@ -9011,7 +9017,7 @@ for(int i=0; i<N.size(); i++)
 //R = Response_function_matrix_lin_spec_2023_fix_active_volume_more_statistics_smooth("FTFP_BERT","ws","iso");  /*Con el factor 1/4. matriz de funciones respuesta del espectrometro 2023 con un smooth SG y smooth de root (factor 15) LCO*/ 
 
 /********************************************************/
-R = Response_function_matrix_lin_spec_2023_fix_active_volume_more_statistics_smooth(physic_list,scale_factor,neufield_type);  /*Con el factor 1/4. matriz de funciones respuesta del espectrometro 2023 con un smooth SG y smooth de root (factor 15) LCO*/ 
+R = Response_function_matrix_lin_spec_2023_fix_active_volume_more_statistics_smooth(physic_list,scale_factor,neufield_type,campaign);  /*Con el factor 1/4. matriz de funciones respuesta del espectrometro 2023 con un smooth SG y smooth de root (factor 15) LCO*/ 
 /*********************************************************/
 
 //~ R = Response_function_matrix_lin_spec_2024_fix_active_volume_more_statistics(); /*matriz de funciones respuesta del espectrometro 2024*/
@@ -9032,10 +9038,11 @@ vector<string> det_names{"D01","D02","D03","D04","D05","D06","D07","D08","D09","
 vector<string> det_names_act;
 
 //~ vector<int> des_vector(ndet,0);
-vector<int> act_vector(ndet,1);
+// vector<int> act_vector(ndet,1);
 
 
-vector<int> vec_test{1,1,1,1,1,0,0,0,1,1,1,1,1,0,0,1}; //LCO, Maricunga, RetenDesierto
+// vector<int> vec_test{1,1,1,1,1,0,0,0,1,1,1,1,1,0,0,1}; //LCO, Maricunga, RetenDesierto
+const auto& vec_test = Detectors_Array(campaign);
 //~ vector<int> vec_test{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
 //~ vector<int> vec_test{1,1,1,1,1,0,0,0,1,1,1,1,1,0,0,1}; // Chapiquilta tes1
 //~ vector<int> vec_test{1,1,1,0,1,1,0,0,1,1,1,1,1,0,0,1}; //  Chapiquilta, SanPedro
@@ -9043,7 +9050,7 @@ vector<int> vec_test{1,1,1,1,1,0,0,0,1,1,1,1,1,0,0,1}; //LCO, Maricunga, RetenDe
 /*Redefinimos la matriz de funcion respuesta*/
 for(int i=0; i<ndet; i++)
 {
-	 if(act_vector[i] == vec_test[i])
+	  if(vec_test[i]==1)
 		{
 			R_new.push_back(R[i]);
 		}
@@ -9066,7 +9073,7 @@ for(int i=0; i<ndet; i++)
 /*Redefinimos el vector de CR*/
 for(int i=0; i<ndet; i++)
 {
-	 if(act_vector[i] == vec_test[i])
+	  if(vec_test[i]==1)
 		{
 			N_new.push_back(N[i]);
 		}
@@ -9076,7 +9083,7 @@ for(int i=0; i<ndet; i++)
 /*Redefinimos el vector de perc_e_N*/
 for(int i=0; i<ndet; i++)
 {
-	 if(act_vector[i] == vec_test[i])
+	 if(vec_test[i]==1)
 		{
 			perc_e_N_new.push_back(perc_e_N[i]);
 		}
@@ -9086,7 +9093,7 @@ for(int i=0; i<ndet; i++)
 /*Redefinimos el vector de CR*/
 for(int i=0; i<ndet; i++)
 {
-	 if(act_vector[i] == vec_test[i])
+	  if(vec_test[i]==1)
 		{
 			CR_new.push_back(CR[i]);
 		}
@@ -9096,7 +9103,7 @@ for(int i=0; i<ndet; i++)
 /*Redefinimos el vector dCR*/
 for(int i=0; i<ndet; i++)
 {
-	 if(act_vector[i] == vec_test[i])
+	  if(vec_test[i]==1)
 		{
 			dCR_new.push_back(dCR[i]);
 		}
@@ -9106,7 +9113,7 @@ for(int i=0; i<ndet; i++)
 /*Vect de nombres*/
 for(int i=0; i<ndet; i++)
 {
-	 if(act_vector[i] == vec_test[i])
+	 if(vec_test[i]==1){
 		{
 			det_names_act.push_back(det_names[i]);
 		}
@@ -9645,7 +9652,7 @@ for (int i = 0; i < (int)dCR.size(); ++i)
 //R = Response_function_matrix_lin_spec_2023_fix_active_volume_more_statistics_smooth("FTFP_BERT","ws","iso");  /*Con el factor 1/4. matriz de funciones respuesta del espectrometro 2023 con un smooth SG y smooth de root (factor 15) LCO*/ 
 
 /********************************************************/
-R = Response_function_matrix_lin_spec_2023_fix_active_volume_more_statistics_smooth(physic_list,scale_factor,neufield_type);  /*Con el factor 1/4. matriz de funciones respuesta del espectrometro 2023 con un smooth SG y smooth de root (factor 15) LCO*/ 
+R = Response_function_matrix_lin_spec_2023_fix_active_volume_more_statistics_smooth(physic_list,scale_factor,neufield_type,campaign);  /*Con el factor 1/4. matriz de funciones respuesta del espectrometro 2023 con un smooth SG y smooth de root (factor 15) LCO*/ 
 /*********************************************************/
 
 //~ R = Response_function_matrix_lin_spec_2024_fix_active_volume_more_statistics(); /*matriz de funciones respuesta del espectrometro 2024*/
@@ -9666,18 +9673,22 @@ vector<string> det_names{"D01","D02","D03","D04","D05","D06","D07","D08","D09","
 vector<string> det_names_act;
 
 //~ vector<int> des_vector(ndet,0);
-vector<int> act_vector(ndet,1);
+//vector<int> act_vector(ndet,1);
 
 
-vector<int> vec_test{1,1,1,1,1,0,0,0,1,1,1,1,1,0,0,1}; //LCO, Maricunga, RetenDesierto
+//vector<int> vec_test{1,1,1,1,1,0,0,0,1,1,1,1,1,0,0,1}; //LCO, Maricunga, RetenDesierto
 //~ vector<int> vec_test{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
 //~ vector<int> vec_test{1,1,1,1,1,0,0,0,1,1,1,1,1,0,0,1}; // Chapiquilta tes1
 //~ vector<int> vec_test{1,1,1,0,1,1,0,0,1,1,1,1,1,0,0,1}; //  Chapiquilta, SanPedro
 
+const auto& vec_test = Detectors_Array(campaign);
+
+
 /*Redefinimos la matriz de funcion respuesta*/
 for(int i=0; i<ndet; i++)
 {
-	 if(act_vector[i] == vec_test[i])
+	 //if(act_vector[i] == vec_test[i])
+	 if(vec_test[i]==1)
 		{
 			R_new.push_back(R[i]);
 		}
@@ -9700,7 +9711,8 @@ for(int i=0; i<ndet; i++)
 /*Redefinimos el vector de CR*/
 for(int i=0; i<ndet; i++)
 {
-	 if(act_vector[i] == vec_test[i])
+	//  if(act_vector[i] == vec_test[i])
+	 if(vec_test[i]==1)
 		{
 			N_new.push_back(N[i]);
 		}
@@ -9710,7 +9722,8 @@ for(int i=0; i<ndet; i++)
 /*Redefinimos el vector de perc_e_N*/
 for(int i=0; i<ndet; i++)
 {
-	 if(act_vector[i] == vec_test[i])
+	//  if(act_vector[i] == vec_test[i])
+	 if(vec_test[i]==1)
 		{
 			perc_e_N_new.push_back(perc_e_N[i]);
 		}
@@ -9720,7 +9733,8 @@ for(int i=0; i<ndet; i++)
 /*Redefinimos el vector de CR*/
 for(int i=0; i<ndet; i++)
 {
-	 if(act_vector[i] == vec_test[i])
+	//  if(act_vector[i] == vec_test[i])
+	 if(vec_test[i]==1)
 		{
 			CR_new.push_back(CR[i]);
 		}
@@ -9730,7 +9744,8 @@ for(int i=0; i<ndet; i++)
 /*Redefinimos el vector dCR*/
 for(int i=0; i<ndet; i++)
 {
-	 if(act_vector[i] == vec_test[i])
+	//  if(act_vector[i] == vec_test[i])
+	 if(vec_test[i]==1)
 		{
 			dCR_new.push_back(dCR[i]);
 		}
@@ -9740,7 +9755,8 @@ for(int i=0; i<ndet; i++)
 /*Vect de nombres*/
 for(int i=0; i<ndet; i++)
 {
-	 if(act_vector[i] == vec_test[i])
+	//  if(act_vector[i] == vec_test[i])
+	 if(vec_test[i]==1)
 		{
 			det_names_act.push_back(det_names[i]);
 		}
