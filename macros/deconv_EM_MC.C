@@ -17648,6 +17648,9 @@ auto df_merge_data_new_noZeros_corr = df_merge_data_corr.Filter("Intg_total != 0
 //Calculamos P mean
 double bp_mean = df_merge_data_new_noZeros.Mean("BP_mbar_corrected").GetValue();
 double bp_mean_std = df_merge_data_new_noZeros.StdDev("BP_mbar_corrected").GetValue();
+double sp_mean = df_merge_data_new_noZeros.Mean("SP_mbar").GetValue();
+double sp_mean_std = df_merge_data_new_noZeros.StdDev("SP_mbar").GetValue();
+
 //~ double bp_mean = 2000.;
 
 //Calculamos he integral flux mean
@@ -17655,14 +17658,19 @@ double intg_flux_he_mean = df_merge_data_new_noZeros.Mean("Intg_he").GetValue();
 double intg_flux_total_mean = df_merge_data_new_noZeros.Mean("Intg_total").GetValue();
 double count_d12_mean = df_merge_data_new_noZeros.Mean("NEUrate_D12").GetValue();
 
+double count_d01_mean = df_merge_data_new_noZeros.Mean("NEUrate_D01").GetValue();
+
 
 auto Intg_he_vec = df_merge_data.Take<double>("Intg_he").GetValue();
 
 cout << "BP_mbar_corrected mean= "<< bp_mean << endl;
 cout << "BP_mbar_corrected mean std= "<< bp_mean_std << endl;
+cout << "SP_mbar mean= "<< sp_mean << endl;
+cout << "SP_mbar mean std= "<< sp_mean_std << endl;
 cout << "High-Energy Integral flux mean= "<< intg_flux_he_mean << endl;
 cout << "Total Integral flux mean= "<< intg_flux_total_mean << endl;
 cout << "Det12 count mean= "<< count_d12_mean << endl;
+cout << "Det01 count mean= "<< count_d01_mean << endl;
 
 auto lambda_ln = [&](double &Intg_he)
 	{
@@ -17691,8 +17699,10 @@ auto lambda_ln_count_lineal = [&](int &count_he)
 auto lambda_ln_count = [&](int &count_he)
 	{
       //~ Double_t ln_ratio = log(count_he)-log(count_d12_mean); // i * 15 minutes in seconds
-      Double_t ln_ratio = log(count_he)-log(count_d12_mean); // i * 15 minutes in seconds
-      //~ double count_d = (double)count_he;
+     Double_t ln_ratio = log(count_he)-log(count_d12_mean); // i * 15 minutes in seconds
+     //Double_t ln_ratio = log(count_he)-log(count_d01_mean); // i * 15 minutes in seconds
+      
+	  //~ double count_d = (double)count_he;
       //~ Double_t ln_ratio = log((double)count_d/count_he); // i * 15 minutes in seconds
       //~ Double_t ln_ratio = Intg_he/intg_flux_he_mean; // i * 15 minutes in seconds
       return ln_ratio;
@@ -17704,13 +17714,22 @@ auto lambda_p = [&](double &BP_mbar_corrected)
       return diff;
 };
 
+auto lambda_sp = [&](double &sp_mbar)
+	{
+      Double_t diff = sp_mbar-sp_mean; // i * 15 minutes in seconds
+      return diff;
+};
+
 auto df_merge_data_new = df_merge_data_new_noZeros.Define("ln_flux",lambda_ln,{"Intg_he"})
 												  .Define("ln_flux_total",lambda_ln_total,{"Intg_total"})
 												  .Define("ln_count",lambda_ln_count,{"NEUrate_D12"})
+												  .Define("ln_count_D01",lambda_ln_count,{"NEUrate_D01"})
 												  .Define("ln_count_lineal",lambda_ln_count_lineal,{"NEUrate_D12"})
+												  .Define("diff_sp_sp0",lambda_sp,{"SP_mbar"})
 												  .Define("diff_p_p0",lambda_p,{"BP_mbar_corrected"});
 
 auto df_merge_data_new_corr = df_merge_data_new_noZeros_corr.Define("diff_p_p0",lambda_p,{"BP_mbar_corrected"});
+//auto df_merge_data_new_corr = df_merge_data_new_noZeros_corr.Define("diff_sp_sp0",lambda_sp,{"SP_mbar"});
 
 //~ df_merge_data_new.Display({"diff_p_p0"},30)->Print();
 
@@ -17724,10 +17743,22 @@ auto canvas_graph = new TCanvas("atm correction","atm correction",1400, 1000);
 
 
 //~ auto graph_atm_corr = df_merge_data_new.Graph("BP_mbar_corrected", "Intg_total");
-//~ auto graph_atm_corr = df_merge_data_new.Graph("diff_p_p0", "ln_flux");
+//auto graph_atm_corr = df_merge_data_new.Graph("diff_p_p0", "ln_flux");
+//auto graph_atm_corr = df_merge_data_new.Graph("diff_sp_sp0", "ln_flux");
+
 auto graph_atm_corr = df_merge_data_new.Graph("diff_p_p0", "ln_flux_total");
+//auto graph_atm_corr = df_merge_data_new.Graph("diff_sp_sp0", "ln_flux_total");
+
 //~ auto graph_atm_corr = df_merge_data_new.Graph("diff_p_p0","ln_count_lineal");
-//~ auto graph_atm_corr = df_merge_data_new.Graph("diff_p_p0","ln_count");
+//auto graph_atm_corr = df_merge_data_new.Graph("diff_p_p0","ln_count");
+
+//auto graph_atm_corr = df_merge_data_new.Graph("diff_sp_sp0","ln_count_D01");
+//auto graph_atm_corr = df_merge_data_new.Graph("diff_p_p0","ln_count_D01");
+
+//auto graph_atm_corr = df_merge_data_new.Graph("diff_sp_sp0","ln_count");
+//auto graph_atm_corr = df_merge_data_new.Graph("diff_p_p0","ln_count");
+
+
 //~ auto graph_atm_corr = df_merge_data_new.Graph("BP_mbar_corrected","ln_flux_total");
 //~ auto graph_atm_corr = df_merge_data_new.Graph("SP_mbar","NEUrate_D12");
 
@@ -17762,10 +17793,14 @@ TF1 *myfunc = graph_atm_corr->GetFunction("pol1");
 double r = graph_atm_corr->GetCorrelationFactor();
 
 double p_0 = myfunc->GetParameter(0); //intercepto
-double p_1 = myfunc->GetParameter(1); //pendiente
-
 double err_p0 = myfunc->GetParError(0);     // 1-sigma error on intercept
-double err_p1 = myfunc->GetParError(1);     // 1-sigma error on slope
+
+// double p_1 = myfunc->GetParameter(1); //pendiente
+// double err_p1 = myfunc->GetParError(1);     // 1-sigma error on slope
+
+/*Paper 1 values */
+double p_1 = 0.00694 ;  //pendiente
+double err_p1 = 0.00026  ; //err pendiente
 
 // Get the chi2/ndf
 double chi2 = myfunc->GetChisquare();
@@ -17777,6 +17812,7 @@ double r2 = r*r;
 
 cout << "P_0 intercept=" << p_0 << " Std=" << err_p0 << endl;
 cout << "P_1 slope=" << p_1 << " Std=" << err_p1 <<endl;
+//cout << "P_1_fit slope=" << p_1_fit << " Std=" << err_p1 <<endl;
 
 cout << "Correlation coefficient =" << r << endl;
 cout << "R-square =" << r2 << endl;
@@ -17845,6 +17881,12 @@ auto lambda_flux_atm_correction = [&](double &intg_flux, double &BP_mbar_correct
         return corrected_flux;
 };
 
+auto lambda_flux_atm_correction_sp = [&](double &intg_flux, double &SP_mbar)
+	{
+		double beta = abs(p_1);
+		double corrected_flux = intg_flux*exp(-beta*(sp_mean-SP_mbar));
+        return corrected_flux;
+};
 
 
 /*************************Campaign****************************/
@@ -17939,11 +17981,11 @@ TDatime startDate(year_int,month_int,day_int,date_hh_int,date_min_int,date_ss_in
 
 
 //antes
-//~ auto df_merge_data_corrected = df_merge_data_new.Define("Intg_he_corrected",lambda_flux_atm_correction,{"Intg_he","BP_mbar_corrected"})
-												//~ .Define("Intg_th_corrected",lambda_flux_atm_correction,{"Intg_th","BP_mbar_corrected"})
-												//~ .Define("Intg_ep_corrected",lambda_flux_atm_correction,{"Intg_ep","BP_mbar_corrected"})
-												//~ .Define("Intg_fs_corrected",lambda_flux_atm_correction,{"Intg_fs","BP_mbar_corrected"})
-												//~ .Define("Intg_total_corrected",lambda_flux_atm_correction,{"Intg_total","BP_mbar_corrected"});
+// ~ auto df_merge_data_corrected = df_merge_data_new.Define("Intg_he_corrected",lambda_flux_atm_correction,{"Intg_he","BP_mbar_corrected"})
+// 												~ .Define("Intg_th_corrected",lambda_flux_atm_correction,{"Intg_th","BP_mbar_corrected"})
+// 												~ .Define("Intg_ep_corrected",lambda_flux_atm_correction,{"Intg_ep","BP_mbar_corrected"})
+// 												~ .Define("Intg_fs_corrected",lambda_flux_atm_correction,{"Intg_fs","BP_mbar_corrected"})
+// 												~ .Define("Intg_total_corrected",lambda_flux_atm_correction,{"Intg_total","BP_mbar_corrected"});
 
 //ahora
 auto df_merge_data_corrected = df_merge_data_new_corr.Define("Intg_he_corrected",lambda_flux_atm_correction,{"Intg_he","BP_mbar_corrected"})
@@ -17951,6 +17993,12 @@ auto df_merge_data_corrected = df_merge_data_new_corr.Define("Intg_he_corrected"
 												.Define("Intg_ep_corrected",lambda_flux_atm_correction,{"Intg_ep","BP_mbar_corrected"})
 												.Define("Intg_fs_corrected",lambda_flux_atm_correction,{"Intg_fs","BP_mbar_corrected"})
 												.Define("Intg_total_corrected",lambda_flux_atm_correction,{"Intg_total","BP_mbar_corrected"});
+
+// auto df_merge_data_corrected = df_merge_data_new_corr.Define("Intg_he_corrected",lambda_flux_atm_correction_sp,{"Intg_he","SP_mbar"})
+// 												.Define("Intg_th_corrected",lambda_flux_atm_correction_sp,{"Intg_th","SP_mbar"})
+// 												.Define("Intg_ep_corrected",lambda_flux_atm_correction_sp,{"Intg_ep","SP_mbar"})
+// 												.Define("Intg_fs_corrected",lambda_flux_atm_correction_sp,{"Intg_fs","SP_mbar"})
+// 												.Define("Intg_total_corrected",lambda_flux_atm_correction_sp,{"Intg_total","SP_mbar"});
 
 
 /*Propagacion de incertezas a flujo integral corregidos*/
@@ -17960,6 +18008,17 @@ auto lambda_flux_atm_correction_err = [&](double &intg_flux_corrected, double &i
 		double ratio_flux = intg_flux_err/intg_flux;
 		double prod_1 = diff_p_p0*err_p1;
 		double prod_2 = p_1*bp_mean_std;
+
+		double sigma_correc = intg_flux_corrected*sqrt(pow(ratio_flux,2) + pow(prod_1,2) + pow(prod_2,2));
+		return sigma_correc;
+};
+
+auto lambda_flux_atm_correction_sp_err = [&](double &intg_flux_corrected, double &intg_flux, double &intg_flux_err, double &SP_mbar, double &diff_sp_sp0 )
+	{
+
+		double ratio_flux = intg_flux_err/intg_flux;
+		double prod_1 = diff_sp_sp0*err_p1;
+		double prod_2 = p_1*sp_mean_std;
 
 		double sigma_correc = intg_flux_corrected*sqrt(pow(ratio_flux,2) + pow(prod_1,2) + pow(prod_2,2));
 		return sigma_correc;
@@ -17976,6 +18035,19 @@ auto df_merge_data_corrected_new =  df_merge_data_corrected.Define("err_intg_he_
 														   .Define("err_intg_fs_corrected_upper",lambda_flux_atm_correction_err,{"Intg_fs_corrected","Intg_fs","err_intg_fs_upper","BP_mbar_corrected","diff_p_p0"})
 														   .Define("err_intg_total_corrected_lower",lambda_flux_atm_correction_err,{"Intg_total_corrected","Intg_total","err_intg_total_lower","BP_mbar_corrected","diff_p_p0"})
 														   .Define("err_intg_total_corrected_upper",lambda_flux_atm_correction_err,{"Intg_total_corrected","Intg_total","err_intg_total_upper","BP_mbar_corrected","diff_p_p0"});
+
+
+
+// auto df_merge_data_corrected_new =  df_merge_data_corrected.Define("err_intg_he_corrected_lower",lambda_flux_atm_correction_sp_err,{"Intg_he_corrected","Intg_he","err_intg_he_lower","SP_mbar","diff_sp_sp0"})
+// 														   .Define("err_intg_he_corrected_upper",lambda_flux_atm_correction_sp_err,{"Intg_he_corrected","Intg_he","err_intg_he_upper","SP_mbar","diff_sp_sp0"})
+// 														   .Define("err_intg_th_corrected_lower",lambda_flux_atm_correction_sp_err,{"Intg_th_corrected","Intg_th","err_intg_th_lower","SP_mbar","diff_sp_sp0"})
+// 														   .Define("err_intg_th_corrected_upper",lambda_flux_atm_correction_sp_err,{"Intg_th_corrected","Intg_th","err_intg_th_upper","SP_mbar","diff_sp_sp0"})
+// 														   .Define("err_intg_ep_corrected_lower",lambda_flux_atm_correction_sp_err,{"Intg_ep_corrected","Intg_ep","err_intg_ep_lower","SP_mbar","diff_sp_sp0"})
+// 														   .Define("err_intg_ep_corrected_upper",lambda_flux_atm_correction_sp_err,{"Intg_ep_corrected","Intg_ep","err_intg_ep_upper","SP_mbar","diff_sp_sp0"})
+// 														   .Define("err_intg_fs_corrected_lower",lambda_flux_atm_correction_sp_err,{"Intg_fs_corrected","Intg_fs","err_intg_fs_lower","SP_mbar","diff_sp_sp0"})
+// 														   .Define("err_intg_fs_corrected_upper",lambda_flux_atm_correction_sp_err,{"Intg_fs_corrected","Intg_fs","err_intg_fs_upper","SP_mbar","diff_sp_sp0"})
+// 														   .Define("err_intg_total_corrected_lower",lambda_flux_atm_correction_sp_err,{"Intg_total_corrected","Intg_total","err_intg_total_lower","SP_mbar","diff_sp_sp0"})
+// 														   .Define("err_intg_total_corrected_upper",lambda_flux_atm_correction_sp_err,{"Intg_total_corrected","Intg_total","err_intg_total_upper","SP_mbar","diff_sp_sp0"});
 
 
 
@@ -18664,192 +18736,223 @@ latex_he.SetTextSize(hist_intg_total->GetXaxis()->GetTitleSize());
 latex_he.DrawLatexNDC(0.95, 0.0001, "#splitline{#bf{Time}}{#bf{(UTC)}}");
 
 
-/***************INTEGRALES*********************/
+// /***************INTEGRALES*********************/
+
+//Helper robusto para notación científica (mantisa + exponente int)
+auto SciMantExp = [&](double x, int prec = 1) -> std::pair<std::string,int> {
+std::ostringstream ss;
+ss << std::scientific << std::setprecision(prec) << x;
+std::string s = ss.str();              // ej: "1.2e-09"
+auto pos = s.find('e');
+std::string mant = (pos==std::string::npos) ? s : s.substr(0,pos);
+int exp = (pos==std::string::npos) ? 0 : std::stoi(s.substr(pos+1)); // ej: -9
+return {mant, exp};
+};
+
+
 vector<double> vec_mean;
 vector<double> vec_err_up;
 vector<double> vec_err_min;
 
-for(int j=0;j<vect_graph_asymm_corrected.size();j++){
-	int N = vect_graph_asymm_corrected[j]->GetN();
-	auto eyLow  = vect_graph_asymm_corrected[j]->GetEYlow();
-	auto eyHigh = vect_graph_asymm_corrected[j]->GetEYhigh();
+auto process_ranges = [&](TGraphAsymmErrors* gr,
+                          const double* eyLow,
+                          const double* eyHigh,
+                          int N,
+                          const std::vector<std::pair<int,int>>& ranges,
+                          bool collect_vals = true) -> RegionResult
+{
+  RegionResult out;
 
-	int N_1;
-	int N_2;
+  double sumY = 0.0;
+  double sumVarLow = 0.0;
+  double sumVarHigh = 0.0;
+  int count = 0;
 
-	if((campaign=="LCO") & (time_grid==15)){
-		 N_1 = 184;
-		 N_2 = 197;
-	}
-	if((campaign=="LCO") & (time_grid==60)){
-		 N_1 = 46;
-		 N_2 = 49;
-	}
+  std::vector<double> valsY;
+  if (collect_vals) valsY.reserve(N);
 
-	double sumY       = 0;
-	double sumVarLow  = 0;
-	double sumVarHigh = 0;
-	//~ double sumSTDLow  = 0;
-	//~ double sumSTDHigh = 0;
-	int    count      = 0;
+  auto clamp_pair = [&](int& a, int& b){
+    a = std::max(a, 0);
+    b = std::min(b, N);
+    if (b < a) std::swap(a, b);
+  };
 
-	if(campaign=="LCO"){
-			//~ for (int i = 0; i < N_1; ++i) {
-			for (int i = N_2; i < N; ++i) {
-			double x, y;
-			vect_graph_asymm_corrected[j]->GetPoint(i, x, y);
-			// Descartar puntos con y == 0
-			if (y == 0) continue; //doblle check ya que en principio se decartan de RDataframe
+  for (auto [i0, i1] : ranges) {
+    clamp_pair(i0, i1);
+    for (int i = i0; i < i1; ++i) {
+      double x, y;
+      gr->GetPoint(i, x, y);
+      if (y == 0.0) continue;
 
-			double s_low  = eyLow[i];
-			double s_high = eyHigh[i];
+      // Opción A (tu modo actual):
+      const double s_low  = eyLow[i];
+      const double s_high = eyHigh[i];
 
-			sumY += y;
-			sumVarLow  += s_low  * s_low;
-			sumVarHigh += s_high * s_high;
-			//~ sumSTDLow  += s_low ;
-			//~ sumSTDHigh += s_high ;
-			++count;
-		}
+      // Opción B (más robusta; si la usas, puedes borrar eyLow/eyHigh):
+      // const double s_low  = gr->GetErrorYlow(i);
+      // const double s_high = gr->GetErrorYhigh(i);
 
-		if (count == 0) {
-		std::cerr << "No hay puntos no nulos para estadística." << std::endl;
-		//~ return;
-		}
+      sumY += y;
+      sumVarLow  += s_low  * s_low;
+      sumVarHigh += s_high * s_high;
+      ++count;
 
-		double mean     = sumY/count;
-		double err_low  = std::sqrt(sumVarLow)  / count;
-		double err_high = std::sqrt(sumVarHigh) / count;
-		//~ double err_low  = sumSTDLow  / count;
-		//~ double err_high = sumSTDHigh / count;
+      if (collect_vals) valsY.push_back(y);
+    }
+  }
 
+  if (count == 0) {
+    std::cerr << "No hay puntos no nulos para estadística en rangos.\n";
+    return out; // ok=false
+  }
 
-		vec_mean.push_back(mean);
-		vec_err_up.push_back(err_high);
-		vec_err_min.push_back(err_low);
-		
-		if(j==0){
-			cout << "Integral total flux:"  << endl;
-			//~ std::cout << "Mean = " <<  scientific << setprecision(3) << mean << "  +" << err_high  << "  −" << err_low  << std::endl;	
-			std::cout << "Mean = " << mean*1e+04 << "  +" << err_high*1e+04  << "  −" << err_low*1e+04  << " (10E-04 cm^{-2}s^{-1})" << std::endl;	
-			//~ auto [mean_intg, exp_intg] = SciMantExp(mean, 1);
-			//~ cout<< "#Phi_{total}="+mean_intg+"^{("+uncertainty_value(mean,err_high)+")}_{("+uncertainty_value(mean,err_low)+")}#times10^{"+std::to_string(exp_intg)+"} cm^{-2}s^{-1}";
-			
-		}
-		if(j==1){
-			cout << "Integral thermal flux:"  << endl;
-			//~ std::cout << "Mean = " <<  scientific << setprecision(3) << mean << "  +" << err_high  << "  −" << err_low  << std::endl;	
-			std::cout << "Mean = " << mean*1e+04 << "  +" << err_high*1e+04  << "  −" << err_low*1e+04  << " (10E-04 cm^{-2}s^{-1})" << std::endl;	
-			//~ auto [mean_intg, exp_intg] = SciMantExp(mean, 1);
-			//~ cout<< "#Phi_{total}="+mean_intg+"^{("+uncertainty_value(mean,err_high)+")}_{("+uncertainty_value(mean,err_low)+")}#times10^{"+std::to_string(exp_intg)+"} cm^{-2}s^{-1}";
-		}
-		if(j==2){
-			cout << "Integral epithermal flux:"  << endl;
-			//~ std::cout << "Mean = " <<  scientific << setprecision(3) << mean << "  +" << err_high  << "  −" << err_low  << std::endl;	
-			std::cout << "Mean = " << mean*1e+04 << "  +" << err_high*1e+04  << "  −" << err_low*1e+04  << " (10E-04 cm^{-2}s^{-1})" << std::endl;	
-			//~ auto [mean_intg, exp_intg] = SciMantExp(mean, 1);
-			//~ cout<< "#Phi_{total}="+mean_intg+"^{("+uncertainty_value(mean,err_high)+")}_{("+uncertainty_value(mean,err_low)+")}#times10^{"+std::to_string(exp_intg)+"} cm^{-2}s^{-1}";
-		}
-		if(j==3){
-			cout << "Integral fast flux:"  << endl;
-			//~ std::cout << "Mean = " <<  scientific << setprecision(3) << mean << "  +" << err_high  << "  −" << err_low  << std::endl;	
-			std::cout << "Mean = " << mean*1e+04 << "  +" << err_high*1e+04  << "  −" << err_low*1e+04  << " (10E-04 cm^{-2}s^{-1})" << std::endl;	
-			//~ auto [mean_intg, exp_intg] = SciMantExp(mean, 1);
-			//~ cout<< "#Phi_{total}="+mean_intg+"^{("+uncertainty_value(mean,err_high)+")}_{("+uncertainty_value(mean,err_low)+")}#times10^{"+std::to_string(exp_intg)+"} cm^{-2}s^{-1}";
-		}
-		if(j==4){
-			cout << "Integral high-energy flux:"  << endl;
-			//~ std::cout << "Mean = " <<  scientific << setprecision(3) << mean << "  +" << err_high  << "  −" << err_low  << std::endl;	
-			std::cout << "Mean = " << mean*1e+04 << "  +" << err_high*1e+04  << "  −" << err_low*1e+04  << " (10E-04 cm^{-2}s^{-1})" << std::endl;	
-			//~ auto [mean_intg, exp_intg] = SciMantExp(mean, 1);
-			//~ cout<< "#Phi_{total}="+mean_intg+"^{("+uncertainty_value(mean,err_high)+")}_{("+uncertainty_value(mean,err_low)+")}#times10^{"+std::to_string(exp_intg)+"} cm^{-2}s^{-1}";
-		}
-		cout  << "   [N = " << count << "]" << endl;
+  out.ok = true;
+  out.count = count;
+  out.mean = sumY / count;
+  out.err_low  = std::sqrt(sumVarLow)  / count;
+  out.err_high = std::sqrt(sumVarHigh) / count;
 
-	}
-	
+  if (collect_vals) {
+    out.iqr = compute_iqr_stats(valsY);
+    out.summary = compute_stats_summary(valsY);
+  }
 
+  return out;
+};
 
-	else{
-		for (int i = 0; i < N; ++i) {
-				double x, y;
-				vect_graph_asymm_corrected[j]->GetPoint(i, x, y);
-				// Descartar puntos con y == 0
-				if (y == 0) continue; //doblle check ya que en principio se decartan de RDataframe
+static const char* kFluxName[] = {
+  "Integral total flux:",
+  "Integral thermal flux:",
+  "Integral epithermal flux:",
+  "Integral fast flux:",
+  "Integral high-energy flux:"
+};
 
-				double s_low  = eyLow[i];
-				double s_high = eyHigh[i];
+for (int j = 0; j < (int)vect_graph_asymm_corrected.size(); ++j) {
+  auto* gr = vect_graph_asymm_corrected[j];
+  const int N = gr->GetN();
 
-				sumY       += y;
-				sumVarLow  += s_low  * s_low;
-				sumVarHigh += s_high * s_high;
-				//~ sumSTDLow  += s_low  ;
-				//~ sumSTDHigh += s_high ;
-				++count;
-			}
-			if (count == 0) {
-				std::cerr << "No hay puntos no nulos para estadística." << std::endl;
-				//~ return;
-			}
+  auto eyLow  = gr->GetEYlow();
+  auto eyHigh = gr->GetEYhigh();
 
-			double mean     = sumY/count;
-			double err_low  = std::sqrt(sumVarLow)  / count;
-			double err_high = std::sqrt(sumVarHigh) / count;
-			//~ double err_low  = sumSTDLow  / count;
-			//~ double err_high = sumSTDHigh / count;
+  int N_1 = 0, N_2 = 0;
 
-			vec_mean.push_back(mean);
-			vec_err_up.push_back(err_high);
-			vec_err_min.push_back(err_low);
-			
-		if(j==0){
-			cout << "Integral total flux:"  << endl;
-			//~ std::cout << "Mean = " <<  scientific << setprecision(3) << mean << "  +" << err_high  << "  −" << err_low  << std::endl;	
-			std::cout << "Mean = " << mean*1e+04 << "  +" << err_high*1e+04  << "  −" << err_low*1e+04  << " (10E-04 cm^{-2}s^{-1})" << std::endl;	
-			//~ auto [mean_intg, exp_intg] = SciMantExp(mean, 1);
-			//~ cout<< "#Phi_{total}="+mean_intg+"^{("+uncertainty_value(mean,err_high)+")}_{("+uncertainty_value(mean,err_low)+")}#times10^{"+std::to_string(exp_intg)+"} cm^{-2}s^{-1}";
-			
-		}
-		if(j==1){
-			cout << "Integral thermal flux:"  << endl;
-			//~ std::cout << "Mean = " <<  scientific << setprecision(3) << mean << "  +" << err_high  << "  −" << err_low  << std::endl;	
-			std::cout << "Mean = " << mean*1e+04 << "  +" << err_high*1e+04  << "  −" << err_low*1e+04  << " (10E-04 cm^{-2}s^{-1})" << std::endl;	
-			//~ auto [mean_intg, exp_intg] = SciMantExp(mean, 1);
-			//~ cout<< "#Phi_{total}="+mean_intg+"^{("+uncertainty_value(mean,err_high)+")}_{("+uncertainty_value(mean,err_low)+")}#times10^{"+std::to_string(exp_intg)+"} cm^{-2}s^{-1}";
-		}
-		if(j==2){
-			cout << "Integral epithermal flux:"  << endl;
-			//~ std::cout << "Mean = " <<  scientific << setprecision(3) << mean << "  +" << err_high  << "  −" << err_low  << std::endl;	
-			std::cout << "Mean = " << mean*1e+04 << "  +" << err_high*1e+04  << "  −" << err_low*1e+04  << " (10E-04 cm^{-2}s^{-1})" << std::endl;	
-			//~ auto [mean_intg, exp_intg] = SciMantExp(mean, 1);
-			//~ cout<< "#Phi_{total}="+mean_intg+"^{("+uncertainty_value(mean,err_high)+")}_{("+uncertainty_value(mean,err_low)+")}#times10^{"+std::to_string(exp_intg)+"} cm^{-2}s^{-1}";
-		}
-		if(j==3){
-			cout << "Integral fast flux:"  << endl;
-			//~ std::cout << "Mean = " <<  scientific << setprecision(3) << mean << "  +" << err_high  << "  −" << err_low  << std::endl;	
-			std::cout << "Mean = " << mean*1e+04 << "  +" << err_high*1e+04  << "  −" << err_low*1e+04  << " (10E-04 cm^{-2}s^{-1})" << std::endl;	
-			//~ auto [mean_intg, exp_intg] = SciMantExp(mean, 1);
-			//~ cout<< "#Phi_{total}="+mean_intg+"^{("+uncertainty_value(mean,err_high)+")}_{("+uncertainty_value(mean,err_low)+")}#times10^{"+std::to_string(exp_intg)+"} cm^{-2}s^{-1}";
-		}
-		if(j==4){
-			cout << "Integral high-energy flux:"  << endl;
-			//~ std::cout << "Mean = " <<  scientific << setprecision(3) << mean << "  +" << err_high  << "  −" << err_low  << std::endl;	
-			std::cout << "Mean = " << mean*1e+04 << "  +" << err_high*1e+04  << "  −" << err_low*1e+04  << " (10E-04 cm^{-2}s^{-1})" << std::endl;	
-			//~ auto [mean_intg, exp_intg] = SciMantExp(mean, 1);
-			//~ cout<< "#Phi_{total}="+mean_intg+"^{("+uncertainty_value(mean,err_high)+")}_{("+uncertainty_value(mean,err_low)+")}#times10^{"+std::to_string(exp_intg)+"} cm^{-2}s^{-1}";
-		}
-		cout  << "   [N = " << count << "]" << endl;
+  // OJO: usa && (no &)
+  if ((campaign == "LCO") && (time_grid == 15)) { N_1 = 184; N_2 = 197; }
+  if ((campaign == "LCO") && (time_grid == 60)) { N_1 = 46;  N_2 = 49;  }
 
-		}
+  std::vector<std::pair<int,int>> ranges;
 
+  if (campaign == "LCO") {
+    // elige UNA de estas dos estrategias:
 
+    // (A) Solo región 2 (lo que haces ahora):
+    //   ranges = { {0, N_1} };
+    ranges = { {N_2, N} };
+
+    // (B) Ambas regiones en un solo cálculo (si eso es lo que quieres):
+   //~ ranges = { {0, N_1}, {N_2, N} };
+  } else {
+    ranges = { {0, N} };
+  }
+
+  auto res = process_ranges(gr, eyLow, eyHigh, N, ranges, /*collect_vals=*/true);
+
+  if (!res.ok) {
+    std::cout << kFluxName[j] << "\n   [N = 0]\n";
+    continue;
+  }
+
+  vec_mean.push_back(res.mean);
+  vec_err_up.push_back(res.err_high);
+  vec_err_min.push_back(res.err_low);
+
+  std::cout << kFluxName[j] << "\n";
+  std::cout << "Mean = " << res.mean*1e4
+            << "  +" << res.err_high*1e4
+            << " -"  << res.err_low*1e4
+            << " (10E-04 cm^{-2}s^{-1})\n";
+
+  // stats robustos
+  const auto& statsu = res.summary;
+  std::cout << "Temporal variability (IQR):\n";
+  std::cout << "Q25=" << statsu.q25*1e4
+            << ", Median=" << statsu.q50*1e4
+            << ", Q75=" << statsu.q75*1e4
+            << ", IQR=" << statsu.iqr*1e4
+            << " (10E-04 cm^{-2}s^{-1})\n";
+
+  std::cout << "(16-84) Median= " << statsu.q50*1e4
+            << "  +" << statsu.err_high_16_84*1e4
+            << "  -" << statsu.err_low_16_84*1e4
+            << " (10E-04 cm^{-2}s^{-1})\n";
+
+  std::cout << "(25-75) Median= " << statsu.q50*1e4
+            << "  +" << statsu.err_high_25_75*1e4
+            << "  -" << statsu.err_low_25_75*1e4
+            << " (10E-04 cm^{-2}s^{-1})\n";
+
+  std::cout << "        Mean = " << statsu.mean*1e4
+            << "  +-" << statsu.std*1e4
+            << " (10E-04 cm^{-2}s^{-1})\n";
+
+  std::cout << "   [N = " << res.count << "]\n";
 }
+
+cout << " " << endl;
+
+for (int j = 0; j < (int)vect_graph_asymm_corrected.size(); ++j) {
+  auto* gr = vect_graph_asymm_corrected[j];
+  const int N = gr->GetN();
+
+  auto eyLow  = gr->GetEYlow();
+  auto eyHigh = gr->GetEYhigh();
+
+  int N_1 = 0, N_2 = 0;
+
+  // OJO: usa && (no &)
+  if ((campaign == "LCO") && (time_grid == 15)) { N_1 = 184; N_2 = 197; }
+  if ((campaign == "LCO") && (time_grid == 60)) { N_1 = 46;  N_2 = 49;  }
+
+  std::vector<std::pair<int,int>> ranges;
+
+  if (campaign == "LCO") {
+    // elige UNA de estas dos estrategias:
+
+    // (A) Solo región 2 (lo que haces ahora):
+    //   ranges = { {0, N_1} };
+    ranges = { {N_2, N} };
+
+    // (B) Ambas regiones en un solo cálculo (si eso es lo que quieres):
+   //~ ranges = { {0, N_1}, {N_2, N} };
+  } else {
+    ranges = { {0, N} };
+  }
+
+  auto res = process_ranges(gr, eyLow, eyHigh, N, ranges, /*collect_vals=*/true);
+
+  if (!res.ok) {
+    std::cout << kFluxName[j] << "\n   [N = 0]\n";
+    continue;
+  }
+
+  vec_mean.push_back(res.mean);
+  vec_err_up.push_back(res.err_high);
+  vec_err_min.push_back(res.err_low);
+
+  std::cout << kFluxName[j] << "\n";
+  std::cout << "Mean = " << res.mean*1e4
+            << "  +" << res.err_high*1e4
+            << " -"  << res.err_low*1e4
+            << " (10E-04 cm^{-2}s^{-1})\n";
+}
+
 
 cout << "mean " << endl;
 cout  << "[" ;
 for(int j=0;j<vect_graph_asymm_corrected.size();j++){
 
-		cout << vec_mean[j]*1E+04 << ",";
+		cout << vec_mean[j] << ",";
 		
 }
 cout << "]" << endl;
@@ -18859,7 +18962,7 @@ cout << "mean up " << endl;
 cout  << "[" ;
 for(int j=0;j<vect_graph_asymm_corrected.size();j++){
 
-		cout  <<vec_err_up[j]*1E+04 << ",";
+		cout  <<vec_err_up[j] << ",";
 		
 }
 cout << "]" << endl;
@@ -18869,7 +18972,7 @@ cout << "mean min " << endl;
 cout  << "[" ;
 for(int j=0;j<vect_graph_asymm_corrected.size();j++){
 
-		cout  <<vec_err_min[j]*1E+04 << ",";
+		cout  <<vec_err_min[j] << ",";
 		
 }
 cout << "]" << endl;
@@ -22449,13 +22552,13 @@ double err_high_h10_beam = std::sqrt(sumVarHigh_beam) / vec_h10_beam_size;
 		//~ vec_err_min.push_back(err_low);
 		
 		cout << "H*(10) ISO:"  << endl;
-		std::cout << "Mean = " <<  mean_h10_iso<< "  +" << err_high_h10_iso  << "  −" << err_low_h10_iso  << " (nSv/hr)" << std::endl;	
+		std::cout << "Mean = " <<  mean_h10_iso<< "  +" << err_high_h10_iso  << " " << err_low_h10_iso  << " (nSv/hr)" << std::endl;	
 		cout <<" "<< endl;
 		cout << "H*(10) MIX:"  << endl;
-		std::cout << "Mean = " <<  mean_h10_mix<< "  +" << err_high_h10_mix  << "  −" << err_low_h10_mix  << " (nSv/hr)" << std::endl;	
+		std::cout << "Mean = " <<  mean_h10_mix<< "  +" << err_high_h10_mix  << " " << err_low_h10_mix  << " (nSv/hr)" << std::endl;	
 		cout <<" "<< endl;
 		cout << "H*(10) BEAM:"  << endl;
-		std::cout << "Mean = " <<  mean_h10_beam<< "  +" << err_high_h10_beam  << "  −" << err_low_h10_beam  << " (nSv/hr)" << std::endl;	
+		std::cout << "Mean = " <<  mean_h10_beam<< "  +" << err_high_h10_beam  << " " << err_low_h10_beam  << " (nSv/hr)" << std::endl;	
 
 // ---------------- Variabilidad temporal (IQR) ----------------
 auto stats_iso  = compute_iqr_stats(h10_iso);
@@ -22599,9 +22702,9 @@ cout << "AH max (g/m^3) " << ah_max << endl;
 /**Funcion que compara los CR meedidos por cada detector con los CR recalculados a partir del espectro deconvolucionado. Genera
  * 2 canvas, en uno se comparan todos los CR en una serie temporal (es decir) se muestran todos los eventos. En el otro canvas se
  * comparan los cuentas para el mismo detector pero de un evento en particular**/
-void plot_neutron_count_comparison(int event, int ch){
+void plot_neutron_count_comparison(string campaign, int event, int ch){
 //~ string campaign = "Chapiquilta";
-string campaign = "LCO";
+// string campaign = "LCO";
 //~ string campaign = "SanPedrodeAtacama";
 int timegrid = 15;
 //~ int ndet = 16;
@@ -22709,9 +22812,10 @@ vector<Double_t> N_new;   /*vector de neu_count redefinido*/
 vector<string> det_names{"D01","D02","D03","D04","D05","D06","D07","D08","D09","D10","D11","D12","D13","D14","D15","D16"}; /*vector de nombres de detectores activados*/
 vector<string> det_names_act;
 
-vector<int> act_vector(ndet,1);
+// vector<int> act_vector(ndet,1);
 
-vector<int> vec_test{1,1,1,1,1,0,0,0,1,1,1,1,1,0,0,1}; //LCO, Maricunga, RetenDesierto
+// vector<int> vec_test{1,1,1,1,1,0,0,0,1,1,1,1,1,0,0,1}; //LCO, Maricunga, RetenDesierto
+const auto& vec_test = Detectors_Array(campaign);
 //~ vector<int> vec_test{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
 //~ vector<int> vec_test{1,1,1,1,1,0,0,0,1,1,1,1,1,0,0,1}; // Chapiquilta tes1
 //~ vector<int> vec_test{1,1,1,0,1,1,0,0,1,1,1,1,1,0,0,1}; //  Chapiquilta, SanPedro
@@ -22719,7 +22823,7 @@ vector<int> vec_test{1,1,1,1,1,0,0,0,1,1,1,1,1,0,0,1}; //LCO, Maricunga, RetenDe
 /*Redefinimos la matriz de funcion respuesta*/
 for(int i=0; i<ndet; i++)
 {
-	 if(act_vector[i] == vec_test[i])
+	 if(vec_test[i]==1)
 		{
 			R_new.push_back(R[i]);
 		}
@@ -22742,7 +22846,7 @@ for(int i=0; i<ndet; i++)
 /*Redefinimos el vector de CR*/
 for(int i=0; i<ndet; i++)
 {
-	 if(act_vector[i] == vec_test[i])
+	 if(vec_test[i]==1)
 		{
 			N_new.push_back(neu_count_event[i]);
 		}
@@ -22754,7 +22858,7 @@ for(int i=0; i<ndet; i++)
 /*Vect de nombres*/
 for(int i=0; i<ndet; i++)
 {
-	 if(act_vector[i] == vec_test[i])
+	 if(vec_test[i]==1)
 		{
 			det_names_act.push_back(det_names[i]);
 		}
@@ -22998,8 +23102,8 @@ canvas_cr_by_event->Draw();
 }
 
 /**Funcion que compara los CR meedidos por cada detector con los CR recalculados a partir del espectro deconvolucionado**/
-void plot_neutron_count_comparison_chi2(int ch){
-string campaign = "Chapiquilta";
+void plot_neutron_count_comparison_chi2(string campaign, int ch){
+// string campaign = "Chapiquilta";
 //~ string campaign = "SanPedrodeAtacama";
 
 int timegrid = 15;
@@ -23046,18 +23150,20 @@ R = Response_function_matrix_lin_spec_2024_fix_active_volume_more_statistics_smo
 /****************ACTIVACION/DESACTIVACION DE DETECTORES*************/
 
 vector< vector<Double_t>> R_new;   /*matriz de funciones respuesta del espectrometro redefinida*/
-vector<int> act_vector(ndet,1);
+// vector<int> act_vector(ndet,1);
 
 //~ vector<int> vec_test{1,1,1,1,1,0,0,0,1,1,1,1,1,0,0,1}; //LCO, Maricunga, RetenDesierto
 //~ vector<int> vec_test{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
 //~ vector<int> vec_test{1,1,1,1,1,0,0,0,1,1,1,1,1,0,0,1}; // Chapiquilta tes1
-vector<int> vec_test{1,1,1,0,1,1,0,0,1,1,1,1,1,0,0,1}; //  Chapiquilta, SanPedro
-										//det11			
+
+// vector<int> vec_test{1,1,1,0,1,1,0,0,1,1,1,1,1,0,0,1}; //  Chapiquilta, SanPedro
+const auto& vec_test = Detectors_Array(campaign);
+											
 
 /*Redefinimos la matriz de funcion respuesta*/
 for(int i=0; i<ndet; i++)
 {
-	 if(act_vector[i] == vec_test[i])
+	 if(vec_test[i]==1)
 		{
 			R_new.push_back(R[i]);
 		}
@@ -23122,7 +23228,7 @@ vector<double> dE(flux_deconv_size,1.0);
 /*Redefinimos el vector de CR*/
 for(int i=0; i<ndet; i++)
 {
-	 if(act_vector[i] == vec_test[i])
+	 if(vec_test[i]==1)
 		{
 			N_new.push_back(neu_count_event[i]);
 		}
@@ -23134,7 +23240,7 @@ for(int i=0; i<ndet; i++)
 /*Vect de nombres*/
 for(int i=0; i<ndet; i++)
 {
-	 if(act_vector[i] == vec_test[i])
+	 if(vec_test[i]==1)
 		{
 			det_names_act.push_back(det_names[i]);
 		}
@@ -23330,7 +23436,7 @@ vector<double> dE(flux_deconv_size,1.0);
 
 /**Funcion respuesta**/
 //~ R = Response_function_matrix_lin_spec_2024_fix_active_volume_more_statistics_smooth();  /*matriz de funciones respuesta del espectrometro 2024 con un smooth SG y smooth de root (factor 15)*/
-R = Response_function_matrix_lin_spec_2023_fix_active_volume_more_statistics_smooth("FTFP_BERT","ws","ISO");  /*matriz de funciones respuesta del espectrometro para LCO, ya sea usando FTFP_BERT o QGSP_BERT, con un smooth SG y smooth de root (factor 15) y con y sin factor de escalamiento*/
+R = Response_function_matrix_lin_spec_2023_fix_active_volume_more_statistics_smooth("FTFP_BERT","ws","ISO",campaign);  /*matriz de funciones respuesta del espectrometro para LCO, ya sea usando FTFP_BERT o QGSP_BERT, con un smooth SG y smooth de root (factor 15) y con y sin factor de escalamiento*/
 
 R_NM = Response_function_matrix_NM();  /*matriz de funciones respuesta NM, 0: 6NM64, 1: NM2023*/
 
@@ -23342,9 +23448,11 @@ vector<string> det_names{"D01","D02","D03","D04","D05","D06","D07","D08","D09","
 vector<string> det_names_NM{"6NM64","NM2023"}; /*vector de nombres de detectores activados*/
 vector<string> det_names_act;
 
-vector<int> act_vector(ndet,1);
+// vector<int> act_vector(ndet,1);
 
-vector<int> vec_test{1,1,1,1,1,0,0,0,1,1,1,1,1,0,0,1}; //LCO, Maricunga, RetenDesierto
+//vector<int> vec_test{1,1,1,1,1,0,0,0,1,1,1,1,1,0,0,1}; //LCO, Maricunga, RetenDesierto
+const auto& vec_test = Detectors_Array(campaign);
+
 //~ vector<int> vec_test{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
 //~ vector<int> vec_test{1,1,1,1,1,0,0,0,1,1,1,1,1,0,0,1}; // Chapiquilta tes1
 //~ vector<int> vec_test{1,1,1,0,1,1,0,0,1,1,1,1,1,0,0,1}; //  Chapiquilta, SanPedro
@@ -23352,7 +23460,7 @@ vector<int> vec_test{1,1,1,1,1,0,0,0,1,1,1,1,1,0,0,1}; //LCO, Maricunga, RetenDe
 /*Redefinimos la matriz de funcion respuesta*/
 for(int i=0; i<ndet; i++)
 {
-	 if(act_vector[i] == vec_test[i])
+	 if(vec_test[i]==1)
 		{
 			R_new.push_back(R[i]);
 		}
@@ -23387,7 +23495,7 @@ for(int i=0; i<ndet; i++)
 /*Vect de nombres*/
 for(int i=0; i<ndet; i++)
 {
-	 if(act_vector[i] == vec_test[i])
+	 if(vec_test[i]==1)
 		{
 			det_names_act.push_back(det_names[i]);
 		}
@@ -23780,17 +23888,18 @@ vector<Double_t> N_new;   /*vector de neu_count redefinido*/
 vector<string> det_names{"D01","D02","D03","D04","D05","D06","D07","D08","D09","D10","D11","D12","D13","D14","D15","D16"}; /*vector de nombres de detectores activados*/
 vector<string> det_names_act;
 
-vector<int> act_vector(ndet,1);
+// vector<int> act_vector(ndet,1);
 
 //~ vector<int> vec_test{1,1,1,1,1,0,0,0,1,1,1,1,1,0,0,1}; //LCO, Maricunga, RetenDesierto
 //~ vector<int> vec_test{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
 //~ vector<int> vec_test{1,1,1,1,1,0,0,0,1,1,1,1,1,0,0,1}; // Chapiquilta tes1
-vector<int> vec_test{1,1,1,0,1,1,0,0,1,1,1,1,1,0,0,1}; //  Chapiquilta, SanPedro
+//vector<int> vec_test{1,1,1,0,1,1,0,0,1,1,1,1,1,0,0,1}; //  Chapiquilta, SanPedro
+const auto& vec_test = Detectors_Array(campaign);
 
 /*Redefinimos la matriz de funcion respuesta*/
 for(int i=0; i<ndet; i++)
 {
-	 if(act_vector[i] == vec_test[i])
+	 if(vec_test[i]==1)
 		{
 			R_new.push_back(R[i]);
 		}
@@ -23825,7 +23934,7 @@ for(int i=0; i<ndet; i++)
 /*Vect de nombres*/
 for(int i=0; i<ndet; i++)
 {
-	 if(act_vector[i] == vec_test[i])
+	 if(vec_test[i]==1)
 		{
 			det_names_act.push_back(det_names[i]);
 		}
@@ -24524,17 +24633,19 @@ vector<Double_t> N_new;   /*vector de neu_count redefinido*/
 vector<string> det_names{"D01","D02","D03","D04","D05","D06","D07","D08","D09","D10","D11","D12","D13","D14","D15","D16"}; /*vector de nombres de detectores activados*/
 vector<string> det_names_act;
 
-vector<int> act_vector(ndet,1);
+//vector<int> act_vector(ndet,1);
 
 //~ vector<int> vec_test{1,1,1,1,1,0,0,0,1,1,1,1,1,0,0,1}; //LCO, Maricunga, RetenDesierto
 //~ vector<int> vec_test{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
 //~ vector<int> vec_test{1,1,1,1,1,0,0,0,1,1,1,1,1,0,0,1}; // Chapiquilta tes1
-vector<int> vec_test{1,1,1,0,1,1,0,0,1,1,1,1,1,0,0,1}; //  Chapiquilta, SanPedro
+// vector<int> vec_test{1,1,1,0,1,1,0,0,1,1,1,1,1,0,0,1}; //  Chapiquilta, SanPedro
+const auto& vec_test = Detectors_Array(campaign);
+
 
 /*Redefinimos la matriz de funcion respuesta*/
 for(int i=0; i<ndet; i++)
 {
-	 if(act_vector[i] == vec_test[i])
+	 if(vec_test[i]==1)
 		{
 			R_new.push_back(R[i]);
 		}
@@ -32591,21 +32702,22 @@ void plot_neutron_count_comparison_event(string campaign, int event, int ch, str
   //==================== Matriz respuesta (completa) ====================
   //~ vector<vector<Double_t> > R =  Response_function_matrix_lin_spec_2024_fix_active_volume_more_statistics_smooth();
  // vector<vector<Double_t> > R =  Response_function_matrix_lin_spec_2023_fix_active_volume_more_statistics_smooth("FTFP_BERT","ws","ISO");
-  vector<vector<Double_t> > R =  Response_function_matrix_lin_spec_2023_fix_active_volume_more_statistics_smooth(physic_list,"ws",neufield_type);
+  vector<vector<Double_t> > R =  Response_function_matrix_lin_spec_2023_fix_active_volume_more_statistics_smooth(physic_list,"ws",neufield_type,campaign);
 
   //==================== Activación de detectores (como tu macro) ====================
   std::vector<std::string> det_names{"D01","D02","D03","D04","D05","D06","D07","D08",
                                      "D09","D10","D11","D12","D13","D14","D15","D16"};
   std::vector<std::string> det_names_act;
 
-  std::vector<int> act_vector(ndet, 1);
-  std::vector<int> vec_test{1,1,1,1,1,0,0,0,1,1,1,1,1,0,0,1}; // LCO, Maricunga, RetenDesierto
+  //std::vector<int> act_vector(ndet, 1);
+  //std::vector<int> vec_test{1,1,1,1,1,0,0,0,1,1,1,1,1,0,0,1}; // LCO, Maricunga, RetenDesierto
+  const auto& vec_test = Detectors_Array(campaign);
 
   std::vector< std::vector<Double_t> > R_new;
   std::vector<Double_t> N_new;
 
   for (int i = 0; i < ndet; ++i) {
-    if (act_vector[i] == vec_test[i]) {
+    if (vec_test[i]==1) {
       R_new.push_back(R[i]);
       N_new.push_back(neu_count_event_full[i]);
       det_names_act.push_back(det_names[i]);
@@ -33010,21 +33122,22 @@ void plot_neutron_count_comparison_event_3files(std::string campaign,
 
   //==================== Matriz respuesta (completa) ====================
   std::vector<std::vector<Double_t>> R =
-      Response_function_matrix_lin_spec_2023_fix_active_volume_more_statistics_smooth(physic_list, "ws", neufield_type_base);
+      Response_function_matrix_lin_spec_2023_fix_active_volume_more_statistics_smooth(physic_list, "ws", neufield_type_base,campaign);
 
   //==================== Activación de detectores ====================
   std::vector<std::string> det_names{"D01","D02","D03","D04","D05","D06","D07","D08",
                                      "D09","D10","D11","D12","D13","D14","D15","D16"};
   std::vector<std::string> det_names_act;
 
-  std::vector<int> act_vector(ndet_full, 1);
-  std::vector<int> vec_test{1,1,1,1,1,0,0,0,1,1,1,1,1,0,0,1};
+//std::vector<int> act_vector(ndet_full, 1);
+//std::vector<int> vec_test{1,1,1,1,1,0,0,0,1,1,1,1,1,0,0,1};
+  const auto& vec_test = Detectors_Array(campaign); 
 
   std::vector<std::vector<Double_t>> R_new;
   std::vector<Double_t> N_new;
 
   for (int i = 0; i < ndet_full; ++i) {
-    if (act_vector[i] == vec_test[i]) {
+    if (vec_test[i]==1) {
       R_new.push_back(R[i]);
       N_new.push_back(neu_count_event_full[i]);
       det_names_act.push_back(det_names[i]);
@@ -33109,7 +33222,7 @@ auto process_one_solution = [&](const SolutionSpec& spec) -> SolutionResult {
   // === AQUÍ: matriz R específica del caso ISO/MIX/BEAM ===
   std::vector<std::vector<Double_t>> Rk =
     Response_function_matrix_lin_spec_2023_fix_active_volume_more_statistics_smooth(
-      physic_list, "ws", spec.neufield_type);
+      physic_list, "ws", spec.neufield_type,campaign);
 
   // === aplica MISMA máscara de detectores a Rk ===
   std::vector<std::vector<Double_t>> Rk_new;
@@ -33485,21 +33598,22 @@ void DrawCountsComparisonIntoPads(TPad* padTop, TPad* padBot,
   // (solo se usa para construir la máscara / consistencia; cada solución usa su propio Rk)
   std::vector<std::vector<Double_t>> R_full =
       Response_function_matrix_lin_spec_2023_fix_active_volume_more_statistics_smooth(
-          physic_list, "ws", neufield_type_base);
+          physic_list, "ws", neufield_type_base,campaign);
 
   //==================== Activación de detectores ====================
   std::vector<std::string> det_names{"D01","D02","D03","D04","D05","D06","D07","D08",
                                      "D09","D10","D11","D12","D13","D14","D15","D16"};
   std::vector<std::string> det_names_act;
 
-  std::vector<int> act_vector(ndet_full, 1);
-  std::vector<int> vec_test{1,1,1,1,1,0,0,0,1,1,1,1,1,0,0,1};
+//   std::vector<int> act_vector(ndet_full, 1);
+//   std::vector<int> vec_test{1,1,1,1,1,0,0,0,1,1,1,1,1,0,0,1};
+  const auto& vec_test = Detectors_Array(campaign); 
 
   std::vector<std::vector<Double_t>> R_masked;
   std::vector<Double_t> N_masked;
 
   for (int i = 0; i < ndet_full; ++i) {
-    if (act_vector[i] == vec_test[i]) {
+    if (vec_test[i]==1) {
       R_masked.push_back(R_full[i]);
       N_masked.push_back(neu_count_event_full[i]);
       det_names_act.push_back(det_names[i]);
@@ -33603,7 +33717,7 @@ void DrawCountsComparisonIntoPads(TPad* padTop, TPad* padBot,
     // Matriz R específica del caso ISO/MIX/BEAM
     std::vector<std::vector<Double_t>> Rk =
       Response_function_matrix_lin_spec_2023_fix_active_volume_more_statistics_smooth(
-        physic_list, "ws", spec.neufield_type);
+        physic_list, "ws", spec.neufield_type,campaign);
 
     // Aplica MISMA máscara de detectores a Rk
     std::vector<std::vector<Double_t>> Rk_new;
