@@ -9113,7 +9113,7 @@ for(int i=0; i<ndet; i++)
 /*Vect de nombres*/
 for(int i=0; i<ndet; i++)
 {
-	 if(vec_test[i]==1){
+	 if(vec_test[i]==1)
 		{
 			det_names_act.push_back(det_names[i]);
 		}
@@ -12589,17 +12589,17 @@ void em_loop_MC_opt_new_update(string campaign,int event,int steps,int time_grid
 	/******CREAMOS LA CARPETA DE SALIDA******/
 	//~ fs::path outdir = PrepareOutputDir(campaign_path);
 	
-	string campaign_path_new;
-	if(neufield_type=="ISO"){
-		campaign_path_new = campaign_path;
-	}
-	else{campaign_path_new =campaign_path+"_"+neufield_type;}
+	string campaign_path_new = campaign_path+"_"+neufield_type;
+	// if(neufield_type=="ISO"){
+	// 	campaign_path_new = campaign_path;
+	// }
+	// else{campaign_path_new = campaign_path+"_"+neufield_type;}
 
 	// Reserva memoria para mejorar el rendimiento
     std::vector<std::vector<Double_t>> vec_event_MC_loop;
     vec_event_MC_loop.reserve(max_em_mc_it); // Solo almacenarás hasta max_em_mc_it eventos aceptados
 
-    std::ofstream event_mc_info("../outputs/root/deconv_data_rootfile/EM_MC_stop/" + campaign_path_new + "/event_" + std::to_string(event) + "_stat.txt", std::ofstream::trunc);
+    std::ofstream event_mc_info("../outputs/root/deconv_data_rootfile/EM_MC_stop/" + campaign + "/" + campaign_path_new + "/event_" + std::to_string(event) + "_stat.txt", std::ofstream::trunc);
 
 	/****CARGAMOS EL BINEADO ICRP116**********/
 	//~ string icrp116_file_path = "/home/flopez/Data/Dropbox/EXPACS/parma_cpp_flopez/icrp116_binning_resume.csv";
@@ -12838,7 +12838,7 @@ void em_loop_MC_opt_new_update(string campaign,int event,int steps,int time_grid
 	string df_file_name;
 	if(steps==0)
 		{
-			df_file_name =  "../outputs/root/deconv_data_rootfile/EM_MC_stop/" + campaign_path_new +
+			df_file_name =  "../outputs/root/deconv_data_rootfile/EM_MC_stop/" + campaign + "/" + campaign_path_new +
                               "/EM_unfolding_loop_campaign_" + campaign +
                               "_event_" + std::to_string(event) +
                               "_steps_" + std::to_string(steps) +
@@ -12846,7 +12846,7 @@ void em_loop_MC_opt_new_update(string campaign,int event,int steps,int time_grid
                               "_ndet_" + std::to_string(ndet) + "_MC_stop.root";
         }
 	else{	
-			df_file_name =  "../outputs/root/deconv_data_rootfile/EM_MC/" + campaign_path_new +
+			df_file_name =  "../outputs/root/deconv_data_rootfile/EM_MC/" + campaign + "/" + campaign_path_new +
                               "/EM_unfolding_loop_campaign_" + campaign +
                               "_event_" + std::to_string(event) +
                               "_steps_" + std::to_string(steps) +
@@ -13202,7 +13202,7 @@ string campaign_phylst = campaign+"_FTFP_BERT";
 //~ string campaign_phylst = campaign; //QGSP_BERT (primer analisis)
 
     // --- 1) Nombre de ficheros old & new ---
-    std::string old_root = "../outputs/root/deconv_data_rootfile/EM_MC_stop/" + campaign_phylst
+    std::string old_root = "../outputs/root/deconv_data_rootfile/EM_MC_stop/" + campaign + "/" + campaign_phylst
         + "/EM_unfolding_loop_campaign_" + campaign
         + "_event_" + std::to_string(event)
         + "_steps_" + std::to_string(steps)
@@ -13210,7 +13210,7 @@ string campaign_phylst = campaign+"_FTFP_BERT";
         + "_ndet_" + std::to_string(ndet)
         + "_MC_stop.root";
 
-    std::string new_root = "../outputs/root/deconv_data_rootfile/EM_MC_stop/" + campaign_phylst
+    std::string new_root = "../outputs/root/deconv_data_rootfile/EM_MC_stop/" + campaign + "/" + campaign_phylst
         + "/EM_unfolding_loop_campaign_" + campaign
         + "_event_" + std::to_string(event)
         + "_steps_" + std::to_string(steps)
@@ -13218,7 +13218,7 @@ string campaign_phylst = campaign+"_FTFP_BERT";
         + "_ndet_" + std::to_string(ndet)
         + "append_MC_stop.root";
 
-    std::string stat_txt = "../outputs/root/deconv_data_rootfile/EM_MC_stop/" + campaign_phylst
+    std::string stat_txt = "../outputs/root/deconv_data_rootfile/EM_MC_stop/" + campaign + "/" + campaign_phylst
         + "/event_" + std::to_string(event) + "_stat_append.txt";
 
     // --- 2) Cuenta cuántos ya hay en el ROOT viejo ---
@@ -13489,7 +13489,7 @@ string campaign_phylst = campaign+"_FTFP_BERT";
     //~ auto df_concat = df_old_simple.Concatenate(df1);
     //~ df_concat.Snapshot("em_loop_tree", new_root);
 
-	std::string new_root_final = "../outputs/root/deconv_data_rootfile/EM_MC_stop/" + campaign_phylst
+	std::string new_root_final = "../outputs/root/deconv_data_rootfile/EM_MC_stop/" + campaign + "/" + campaign_phylst
         + "/EM_unfolding_loop_campaign_" + campaign
         + "_event_" + std::to_string(event)
         + "_steps_" + std::to_string(steps)

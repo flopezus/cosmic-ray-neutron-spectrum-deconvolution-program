@@ -2368,7 +2368,7 @@ void MakeHistograms_loop_bin_energy_single_pass_output_opt(string campaign, int 
 
 	if(physic_list=="QGSP_BERT")
 		{
-		campaign_path = campaign;
+		campaign_path = campaign+"_QGSP_BERT";
 		cout << physic_list+" Physic_list" << endl;}
 	else if(physic_list=="FTFP_BERT")
 		{
@@ -2376,14 +2376,14 @@ void MakeHistograms_loop_bin_energy_single_pass_output_opt(string campaign, int 
 		cout << physic_list+" Physic_list" << endl;}
 	else{cout << "Physics list inexistente o incorrecta" << endl;}
 	
-   string campaign_path_new;
-	if(neufield_type=="ISO"){
-		campaign_path_new = campaign_path;
-	}
-	else{campaign_path_new =campaign_path+"_"+neufield_type;}
+   string campaign_path_new = campaign_path+"_"+neufield_type;
+	// if(neufield_type=="ISO"){
+	// 	campaign_path_new = campaign_path;
+	// }
+	// else{campaign_path_new =campaign_path+"_"+neufield_type;}
 
   // Archivo de salida
-  string df_file_name = "../outputs/root/deconv_mc_data_energy_fitting/" +campaign_path_new+
+  string df_file_name = "../outputs/root/deconv_mc_data_energy_fitting/" + campaign + "/"+campaign_path_new+
                         "/EM_MC_fit_parameters_campaign_" + campaign +
                         "_event_" + str_stream_event +
                         "_timegrid_" + str_stream_timegrid +
@@ -2401,7 +2401,7 @@ void MakeHistograms_loop_bin_energy_single_pass_output_opt(string campaign, int 
   }
 
   // Archivo de entrada
-  string file_name_MC = "../outputs/root/deconv_data_rootfile/EM_MC_stop/" +campaign_path_new+
+  string file_name_MC = "../outputs/root/deconv_data_rootfile/EM_MC_stop/" + campaign + "/" +campaign_path_new+
                         "/EM_unfolding_loop_campaign_" + campaign + "_event_" + str_stream_event +
                         "_steps_0_timegrid_" + str_stream_timegrid + "_ndet_" + str_stream_ndet +
                         "_MC_stop.root";
@@ -7438,15 +7438,15 @@ string campaign_path;
 
 if(physic_list=="QGSP_BERT")
 	{
-	  campaign_path = "LCO";
+	  campaign_path = campaign+"_QGSP_BERT";
 	  cout << physic_list+" Physic_list" << endl;}
 if(physic_list=="FTFP_BERT")
 	{
-	 campaign_path = "LCO_FTFP_BERT";
+	 campaign_path =  campaign+"_FTFP_BERT";
 	 cout << physic_list+" Physic_list" << endl;}
 else{cout << "Physics list inexistente o incorrecta" << endl;}
 
-string df_fit_mc_file = "../outputs/root/deconv_mc_data_energy_fitting/"+campaign_path+"/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+string df_fit_mc_file = "../outputs/root/deconv_mc_data_energy_fitting/"+campaign+"/"+campaign_path+"/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 //~ ROOT::RDataFrame df_fit_file("fit_loop_tree", df_fit_mc_file);
 
 TFile *event_file = new TFile(df_fit_mc_file.c_str(),"READ");
@@ -7467,7 +7467,7 @@ else{
 	ROOT::RDataFrame df_fit_file("fit_loop_tree", df_fit_mc_file);
 	
 	//~ string input_deconv_file= "./deconv_data_rootfile/EM_stop/"+campaign+"/em_stop_2_percent_criteria/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root"; //RetenDesierto
-	string input_deconv_file= "../outputs/root/deconv_data_rootfile/EM_stop/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_15_ndet_"+str_stream_ndet+".root";
+	string input_deconv_file= "../outputs/root/deconv_data_rootfile/EM_stop/"+campaign+"/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_15_ndet_"+str_stream_ndet+".root";
 	ROOT::RDataFrame df_event("em_loop_tree", input_deconv_file);
 
 	//~ string df_fit_mc_file = "./deconv_mc_data_energy_fitting/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_em_it_9.root";
@@ -8907,9 +8907,9 @@ else{
 	//~ canvas_error->SaveAs(("./deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign+"/"+campaign+"_paper"+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error.svg").c_str());
 	//~ canvas_error->SaveAs(("./deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign+"/"+campaign+"_paper"+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error.png").c_str());
 	
-	canvas_error->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error.pdf").c_str());
-	canvas_error->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error.svg").c_str());
-	canvas_error->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error.png").c_str());
+	canvas_error->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign+"/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error.pdf").c_str());
+	canvas_error->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign+"/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error.svg").c_str());
+	canvas_error->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign+"/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error.png").c_str());
 	
 
 	TCanvas *canvas_compare = new TCanvas("Compare flux seed, flux deconv","Compare flux seed, flux decon",1920,1080);
@@ -9054,7 +9054,7 @@ else{
 
 	canvas_compare->Draw();
 	//~ canvas_compare->SaveAs(("./deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign+"/"+campaign+"_paper"+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error_compare.pdf").c_str());
-	canvas_compare->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error_compare.pdf").c_str());
+	canvas_compare->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign+"/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error_compare.pdf").c_str());
 
 
 	/**update RDataframe**/
@@ -9286,7 +9286,7 @@ else{
 											
 											
 	//~ string fit_event_file_name ="./deconv_mc_data_energy_fitting/"+campaign+"/"+campaign+"_paper"+"/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_update.root";
-	string fit_event_file_name ="../outputs/root/deconv_mc_data_energy_fitting/"+campaign_path+"/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_update.root";
+	string fit_event_file_name ="../outputs/root/deconv_mc_data_energy_fitting/"+campaign+"/"+campaign_path+"/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_update.root";
 	df_fit_file_update.Snapshot("fit_loop_tree_update",fit_event_file_name); /*Save selected columns to disk, in a new TTree treename in file filename*/
 
 
@@ -9330,7 +9330,7 @@ if(physic_list=="FTFP_BERT")
 	 cout << physic_list+" Physic_list" << endl;}
 else{cout << "Physics list inexistente o incorrecta" << endl;}
 
-string df_fit_mc_file = "../outputs/root/deconv_mc_data_energy_fitting/"+campaign_path+"/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+string df_fit_mc_file = "../outputs/root/deconv_mc_data_energy_fitting/"+campaign+"/"+campaign_path+"/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 //~ ROOT::RDataFrame df_fit_file("fit_loop_tree", df_fit_mc_file);
 
 TFile *event_file = new TFile(df_fit_mc_file.c_str(),"READ");
@@ -9351,7 +9351,7 @@ else{
 	ROOT::RDataFrame df_fit_file("fit_loop_tree", df_fit_mc_file);
 	
 	//~ string input_deconv_file= "./deconv_data_rootfile/EM_stop/"+campaign+"/em_stop_2_percent_criteria/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root"; //RetenDesierto
-	string input_deconv_file= "../outputs/root/deconv_data_rootfile/EM_stop/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_15_ndet_"+str_stream_ndet+".root";
+	string input_deconv_file= "../outputs/root/deconv_data_rootfile/EM_stop/"+campaign+"/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_15_ndet_"+str_stream_ndet+".root";
 	ROOT::RDataFrame df_event("em_loop_tree", input_deconv_file);
 
 	//~ string df_fit_mc_file = "./deconv_mc_data_energy_fitting/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_em_it_9.root";
@@ -10811,9 +10811,9 @@ else{
 	//~ canvas_error->SaveAs(("./deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign+"/"+campaign+"_paper"+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error.svg").c_str());
 	//~ canvas_error->SaveAs(("./deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign+"/"+campaign+"_paper"+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error.png").c_str());
 	
-	canvas_error->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error.pdf").c_str());
-	canvas_error->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error.svg").c_str());
-	canvas_error->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error.png").c_str());
+	canvas_error->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign+"/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error.pdf").c_str());
+	canvas_error->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign+"/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error.svg").c_str());
+	canvas_error->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign+"/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error.png").c_str());
 	
 
 	TCanvas *canvas_compare = new TCanvas("Compare flux seed, flux deconv","Compare flux seed, flux decon",1920,1080);
@@ -10965,7 +10965,7 @@ else{
 
 	canvas_compare->Draw();
 	//~ canvas_compare->SaveAs(("./deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign+"/"+campaign+"_paper"+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error_compare.pdf").c_str());
-	canvas_compare->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error_compare.pdf").c_str());
+	canvas_compare->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign+"/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error_compare.pdf").c_str());
 
 
 	/**update RDataframe**/
@@ -11197,7 +11197,7 @@ else{
 											
 											
 	//~ string fit_event_file_name ="./deconv_mc_data_energy_fitting/"+campaign+"/"+campaign+"_paper"+"/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_update.root";
-	string fit_event_file_name ="../outputs/root/deconv_mc_data_energy_fitting/"+campaign_path+"/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_update.root";
+	string fit_event_file_name ="../outputs/root/deconv_mc_data_energy_fitting/"+campaign+"/"+campaign_path+"/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_update.root";
 	df_fit_file_update.Snapshot("fit_loop_tree_update",fit_event_file_name); /*Save selected columns to disk, in a new TTree treename in file filename*/
 
 
@@ -11233,7 +11233,7 @@ string campaign_path;
 
 if(physic_list=="QGSP_BERT")
 	{
-	campaign_path = campaign;
+	campaign_path = campaign+"_QGSP_BERT";
 	cout << physic_list+" Physic_list" << endl;}
 else if(physic_list=="FTFP_BERT")
 	{
@@ -11241,14 +11241,14 @@ else if(physic_list=="FTFP_BERT")
 	cout << physic_list+" Physic_list" << endl;}
 else{cout << "Physics list inexistente o incorrecta" << endl;}
 
-string campaign_path_new;
-	if(neufield_type=="ISO"){
-		campaign_path_new = campaign_path;
-	}
-	else{campaign_path_new =campaign_path+"_"+neufield_type;}
+string campaign_path_new = campaign_path+"_"+neufield_type;
+	// if(neufield_type=="ISO"){
+	// 	campaign_path_new = campaign_path;
+	// }
+	// else{campaign_path_new =campaign_path+"_"+neufield_type;}
 
 
-string df_fit_mc_file = "../outputs/root/deconv_mc_data_energy_fitting/"+campaign_path_new+"/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+string df_fit_mc_file = "../outputs/root/deconv_mc_data_energy_fitting/"+campaign+"/"+campaign_path_new+"/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 //~ ROOT::RDataFrame df_fit_file("fit_loop_tree", df_fit_mc_file);
 
 TFile *event_file = new TFile(df_fit_mc_file.c_str(),"READ");
@@ -11266,7 +11266,7 @@ else{
 	ROOT::RDataFrame df_fit_intg_file("fit_intg_tree", df_fit_mc_file); // Distribution per energy region 
 	
 	//~ string input_deconv_file= "./deconv_data_rootfile/EM_stop/"+campaign+"/em_stop_2_percent_criteria/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root"; //RetenDesierto
-	string input_deconv_file= "../outputs/root/deconv_data_rootfile/EM_stop/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_15_ndet_"+str_stream_ndet+".root";
+	string input_deconv_file= "../outputs/root/deconv_data_rootfile/EM_stop/"+campaign+"/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_15_ndet_"+str_stream_ndet+".root";
 	ROOT::RDataFrame df_event("em_loop_tree", input_deconv_file);
 
 
@@ -12713,9 +12713,9 @@ else{
 	//~ canvas_error->SaveAs(("./deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign+"/"+campaign+"_paper"+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error.svg").c_str());
 	//~ canvas_error->SaveAs(("./deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign+"/"+campaign+"_paper"+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error.png").c_str());
 	
-	canvas_error->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign_path_new+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error.pdf").c_str());
-	canvas_error->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign_path_new+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error.svg").c_str());
-	canvas_error->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign_path_new+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error.png").c_str());
+	canvas_error->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign+"/"+campaign_path_new+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error.pdf").c_str());
+	canvas_error->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign+"/"+campaign_path_new+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error.svg").c_str());
+	canvas_error->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign+"/"+campaign_path_new+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error.png").c_str());
 	
 
 	TCanvas *canvas_compare = new TCanvas("Compare flux seed, flux deconv","Compare flux seed, flux decon",1920,1080);
@@ -12867,7 +12867,7 @@ else{
 
 	canvas_compare->Draw();
 	//~ canvas_compare->SaveAs(("./deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign+"/"+campaign+"_paper"+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error_compare.pdf").c_str());
-	canvas_compare->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign_path_new+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error_compare.pdf").c_str());
+	canvas_compare->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/spectrum/"+campaign+"/"+campaign_path_new+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+flux_representation+"_MC_stop_w_error_compare.pdf").c_str());
 
 
 	/**update RDataframe**/
@@ -13099,7 +13099,7 @@ else{
 											
 											
 	//~ string fit_event_file_name ="./deconv_mc_data_energy_fitting/"+campaign+"/"+campaign+"_paper"+"/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_update.root";
-	string fit_event_file_name ="../outputs/root/deconv_mc_data_energy_fitting/"+campaign_path_new+"/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_update.root";
+	string fit_event_file_name ="../outputs/root/deconv_mc_data_energy_fitting/"+campaign+"/"+campaign_path_new+"/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_update.root";
 	df_fit_file_update.Snapshot("fit_loop_tree_update",fit_event_file_name); /*Save selected columns to disk, in a new TTree treename in file filename*/
 
 
@@ -13132,7 +13132,7 @@ string campaign_path;
 
 if(physic_list=="QGSP_BERT")
 	{
-	campaign_path = campaign;
+	campaign_path = campaign+"_QGSP_BERT";
 	cout << physic_list+" Physic_list" << endl;}
 else if(physic_list=="FTFP_BERT")
 	{
@@ -13140,14 +13140,14 @@ else if(physic_list=="FTFP_BERT")
 	cout << physic_list+" Physic_list" << endl;}
 else{cout << "Physics list inexistente o incorrecta" << endl;}
 
-string campaign_path_new;
-	if(neufield_type=="ISO"){
-		campaign_path_new = campaign_path;
-	}
-	else{campaign_path_new =campaign_path+"_"+neufield_type;}
+string campaign_path_new=campaign_path+"_"+neufield_type;;
+	// if(neufield_type=="ISO"){
+	// 	campaign_path_new = campaign_path;
+	// }
+	// else{campaign_path_new =campaign_path+"_"+neufield_type;}
 
 
-string df_fit_mc_file = "../outputs/root/deconv_mc_data_energy_fitting/"+campaign_path_new+"/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+string df_fit_mc_file = "../outputs/root/deconv_mc_data_energy_fitting/"+campaign+"/"+campaign_path_new+"/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 //~ ROOT::RDataFrame df_fit_file("fit_loop_tree", df_fit_mc_file);
 
 TFile *event_file = new TFile(df_fit_mc_file.c_str(),"READ");
@@ -14039,7 +14039,7 @@ string campaign_path;
 
 if(physic_list=="QGSP_BERT")
 	{
-	campaign_path = campaign;
+	campaign_path = campaign+"_QGSP_BERT";
 	cout << physic_list+" Physic_list" << endl;}
 else if(physic_list=="FTFP_BERT")
 	{
@@ -14047,14 +14047,14 @@ else if(physic_list=="FTFP_BERT")
 	cout << physic_list+" Physic_list" << endl;}
 else{cout << "Physics list inexistente o incorrecta" << endl;}
 
-string campaign_path_new;
-	if(neufield_type=="ISO"){
-		campaign_path_new = campaign_path;
-	}
-	else{campaign_path_new =campaign_path+"_"+neufield_type;}
+string campaign_path_new=campaign_path+"_"+neufield_type;
+	// if(neufield_type=="ISO"){
+	// 	campaign_path_new = campaign_path;
+	// }
+	// else{campaign_path_new =campaign_path+"_"+neufield_type;}
 
 
-string df_fit_mc_file = "../outputs/root/deconv_mc_data_energy_fitting/"+campaign_path_new+"/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+string df_fit_mc_file = "../outputs/root/deconv_mc_data_energy_fitting/"+campaign+"/"+campaign_path_new+"/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 //~ ROOT::RDataFrame df_fit_file("fit_loop_tree", df_fit_mc_file);
 
 TFile *event_file = new TFile(df_fit_mc_file.c_str(),"READ");
@@ -15435,7 +15435,7 @@ string campaign_path;
 
 if(physic_list=="QGSP_BERT")
 	{
-	campaign_path = campaign;
+	campaign_path = campaign+"_QGSP_BERT";
 	cout << physic_list+" Physic_list" << endl;}
 else if(physic_list=="FTFP_BERT")
 	{
@@ -15443,11 +15443,11 @@ else if(physic_list=="FTFP_BERT")
 	cout << physic_list+" Physic_list" << endl;}
 else{cout << "Physics list inexistente o incorrecta" << endl;}
 
-string campaign_path_new;
-	if(neufield_type=="ISO"){
-		campaign_path_new = campaign_path;
-	}
-	else{campaign_path_new =campaign_path+"_"+neufield_type;}
+string campaign_path_new =campaign_path+"_"+neufield_type;
+	// if(neufield_type=="ISO"){
+	// 	campaign_path_new = campaign_path;
+	// }
+	// else{campaign_path_new =campaign_path+"_"+neufield_type;}
 
 //~ for(int i=1;i<=289;i++) //LCO
 for(int i=1;i<=total_events;i++) 
@@ -15456,7 +15456,7 @@ for(int i=1;i<=total_events;i++)
 		stream_event_i << i; 
 		string str_stream_event_i = stream_event_i.str();
 
-		string fit_event_file_name ="../outputs/root/deconv_mc_data_energy_fitting/"+campaign_path_new+"/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event_i+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_update.root";
+		string fit_event_file_name ="../outputs/root/deconv_mc_data_energy_fitting/"+campaign+"/"+campaign_path_new+"/EM_MC_fit_parameters_campaign_"+campaign+"_event_"+str_stream_event_i+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_update.root";
 		
 		//~ TFile *event_file = TFile::Open(fit_event_file_name.c_str());
 		
@@ -16101,7 +16101,7 @@ auto  df_fit_file_update =  df_fit_file_new.Define("event_id",[&]() {
 
 
 										
-string fit_event_file_name ="../outputs/root/deconv_mc_data_energy_fitting/"+campaign_path_new+"/EM_MC_fit_parameters_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_update_merge.root";
+string fit_event_file_name ="../outputs/root/deconv_mc_data_energy_fitting/"+campaign+"/"+campaign_path_new+"/EM_MC_fit_parameters_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_update_merge.root";
 df_fit_file_update.Snapshot("fit_loop_tree_update",fit_event_file_name); /*Save selected columns to disk, in a new TTree treename in file filename*/
 
 cout << "----->FINISHED MERGE DATA<-----"<<endl;
@@ -16286,7 +16286,7 @@ string campaign_path;
 
 if(physic_list=="QGSP_BERT")
 	{
-	campaign_path = campaign;
+	campaign_path = campaign+"_QGSP_BERT";
 	cout << physic_list+" Physic_list" << endl;}
 else if(physic_list=="FTFP_BERT")
 	{
@@ -16294,11 +16294,11 @@ else if(physic_list=="FTFP_BERT")
 	cout << physic_list+" Physic_list" << endl;}
 else{cout << "Physics list inexistente o incorrecta" << endl;}
 
-string campaign_path_new;
-	if(neufield_type=="ISO"){
-		campaign_path_new = campaign_path;
-	}
-	else{campaign_path_new =campaign_path+"_"+neufield_type;}
+string campaign_path_new=campaign_path+"_"+neufield_type;
+	// if(neufield_type=="ISO"){
+	// 	campaign_path_new = campaign_path;
+	// }
+	// else{campaign_path_new =campaign_path+"_"+neufield_type;}
 
 
 /****CARGAMOS SEMILLAS DE PARMA/EXPACS**********/
@@ -16401,7 +16401,7 @@ TDatime startDate(year_int,month_int,day_int,date_hh_int,date_min_int,date_ss_in
 /************************************************************************************/
 
 //~ string merge_data_file_name ="./deconv_mc_data_energy_fitting/"+campaign+"/EM_MC_fit_parameters_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_update_merge.root";
-string merge_data_file_name ="../outputs/root/deconv_mc_data_energy_fitting/"+campaign_path_new+"/EM_MC_fit_parameters_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_update_merge.root";
+string merge_data_file_name ="../outputs/root/deconv_mc_data_energy_fitting/"+campaign+"/"+campaign_path_new+"/EM_MC_fit_parameters_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_update_merge.root";
 ROOT::RDataFrame df_merge_data("fit_loop_tree_update", merge_data_file_name);
 
 auto Intg_total_error_vec = df_merge_data.Take<double>("err_intg_total").GetValue();
@@ -17374,10 +17374,10 @@ cout << " " << endl;
 	
 
 
-canvas_intg->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/integral_flux_relations/"+campaign_path_new+"/EM_integrales_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".pdf").c_str());
-canvas_intg->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/integral_flux_relations/"+campaign_path_new+"/EM_integrales_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".svg").c_str());
-canvas_intg->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/integral_flux_relations/"+campaign_path_new+"/EM_integrales_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".png").c_str());
-canvas_intg->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/integral_flux_relations/"+campaign_path_new+"/EM_integrales_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".eps").c_str());
+canvas_intg->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/integral_flux_relations/"+campaign+"/"+campaign_path_new+"/EM_integrales_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".pdf").c_str());
+canvas_intg->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/integral_flux_relations/"+campaign+"/"+campaign_path_new+"/EM_integrales_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".svg").c_str());
+canvas_intg->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/integral_flux_relations/"+campaign+"/"+campaign_path_new+"/EM_integrales_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".png").c_str());
+canvas_intg->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/integral_flux_relations/"+campaign+"/"+campaign_path_new+"/EM_integrales_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".eps").c_str());
 
 
 TCanvas *canvas_ratio_integrales = new TCanvas("Ratio_Integrales","Ratio_Integrales",786,927);
@@ -17471,7 +17471,7 @@ legend_c->AddEntry(hist_intg_ratio_th_total_clone,"Ratio #Phi_{th}/(#Phi_{total}
 legend_c->Draw();
 
 canvas_ratio_integrales->Draw();
-canvas_ratio_integrales->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/integral_flux_relations/"+campaign_path_new+"/EM_ratio_integrales_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".pdf").c_str());
+canvas_ratio_integrales->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/integral_flux_relations/"+campaign+"/"+campaign_path_new+"/EM_ratio_integrales_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".pdf").c_str());
 
 TCanvas *canvas_eta_integrales = new TCanvas("Eta_Integrales","#Eta Integrales",700,1027);
 canvas_eta_integrales->Divide(1,3);
@@ -17593,10 +17593,10 @@ legend_fs->AddEntry(hist_intg_eta_fs_clone,"Ratio #eta_{fs}","lep");
 legend_fs->Draw();
 
 canvas_eta_integrales->Draw();
-canvas_eta_integrales->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/integral_flux_relations/"+campaign_path_new+"/EM_eta_integrales_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".pdf").c_str());
+canvas_eta_integrales->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/integral_flux_relations/"+campaign+"/"+campaign_path_new+"/EM_eta_integrales_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".pdf").c_str());
 
 
-string fit_event_file_name ="../outputs/root/deconv_mc_data_energy_fitting/"+campaign_path_new	+"/EM_MC_fit_parameters_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_update_merge_02.root";
+string fit_event_file_name ="../outputs/root/deconv_mc_data_energy_fitting/"+campaign+"/"+campaign_path_new+"/EM_MC_fit_parameters_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_update_merge_02.root";
 df_merge_data_new.Snapshot("EM_MC_tree", fit_event_file_name);
 
 }
@@ -17608,7 +17608,7 @@ string campaign_path;
 
 if(physic_list=="QGSP_BERT")
 	{
-	campaign_path = campaign;
+	campaign_path = campaign+"_QGSP_BERT";
 	cout << physic_list+" Physic_list" << endl;}
 else if(physic_list=="FTFP_BERT")
 	{
@@ -17622,18 +17622,18 @@ else{cout << "Physics list inexistente o incorrecta" << endl;}
 	ROOT::RDataFrame df_parma_spectra("BkgNeutronSpectra", parma_file_path);
 /*************************Maricunga****************************/
 
-string campaign_path_new;
-	if(neufield_type=="ISO"){
-		campaign_path_new = campaign_path;
-	}
-	else{campaign_path_new =campaign_path+"_"+neufield_type;}
+string campaign_path_new=campaign_path+"_"+neufield_type;
+	// if(neufield_type=="ISO"){
+	// 	campaign_path_new = campaign_path;
+	// }
+	// else{campaign_path_new =campaign_path+"_"+neufield_type;}
 
 /*Data para encontrar beta, usamos los espectros obtenidos cada 60min*/
 //~ string merge_data_file_name = "./deconv_mc_data_energy_fitting/"+campaign_path+"/"+campaign+"_timegrid_"+std::to_string(time_grid)+"_ndet_"+std::to_string(ndet)+"_data_complete_update.root";
-string merge_data_file_name = "../outputs/root/deconv_mc_data_energy_fitting/"+campaign_path+"/"+campaign+"_timegrid_60_ndet_"+std::to_string(ndet)+"_data_complete_update.root";
+string merge_data_file_name = "../outputs/root/deconv_mc_data_energy_fitting/"+campaign+"/"+campaign_path+"/"+campaign+"_timegrid_60_ndet_"+std::to_string(ndet)+"_data_complete_update.root";
 
 /*DATA PARA CORREGIR*/
-string merge_data_file_name_corr = "../outputs/root/deconv_mc_data_energy_fitting/"+campaign_path_new+"/"+campaign+"_timegrid_"+std::to_string(time_grid)+"_ndet_"+std::to_string(ndet)+"_data_complete_update.root";
+string merge_data_file_name_corr = "../outputs/root/deconv_mc_data_energy_fitting/"+campaign+"/"+campaign_path_new+"/"+campaign+"_timegrid_"+std::to_string(time_grid)+"_ndet_"+std::to_string(ndet)+"_data_complete_update.root";
 
 
 ROOT::RDataFrame df_merge_data((campaign+"_data_tree").c_str(), merge_data_file_name);
@@ -18981,9 +18981,9 @@ cout << " " << endl;
 	
 
 
-canvas_intg->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/integral_flux_relations/"+campaign_path_new+"/EM_integrales_campaign_"+campaign+"_timegrid_"+std::to_string(time_grid)+"_ndet_"+std::to_string(ndet)+"_corrected.pdf").c_str());
-canvas_intg->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/integral_flux_relations/"+campaign_path_new+"/EM_integrales_campaign_"+campaign+"_timegrid_"+std::to_string(time_grid)+"_ndet_"+std::to_string(ndet)+"_corrected.svg").c_str());
-canvas_intg->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/integral_flux_relations/"+campaign_path_new+"/EM_integrales_campaign_"+campaign+"_timegrid_"+std::to_string(time_grid)+"_ndet_"+std::to_string(ndet)+"_corrected.png").c_str());
+canvas_intg->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/integral_flux_relations/"+campaign+"/"+campaign_path_new+"/EM_integrales_campaign_"+campaign+"_timegrid_"+std::to_string(time_grid)+"_ndet_"+std::to_string(ndet)+"_corrected.pdf").c_str());
+canvas_intg->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/integral_flux_relations/"+campaign+"/"+campaign_path_new+"/EM_integrales_campaign_"+campaign+"_timegrid_"+std::to_string(time_grid)+"_ndet_"+std::to_string(ndet)+"_corrected.svg").c_str());
+canvas_intg->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/integral_flux_relations/"+campaign+"/"+campaign_path_new+"/EM_integrales_campaign_"+campaign+"_timegrid_"+std::to_string(time_grid)+"_ndet_"+std::to_string(ndet)+"_corrected.png").c_str());
 //~ canvas_intg->SaveAs(("./deconv_data_pdf/EM_MC_fitting/integral_flux_relations/"+campaign+"/EM_integrales_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".eps").c_str());
 
 }
@@ -19217,7 +19217,7 @@ string campaign_path;
 
 if(physic_list=="QGSP_BERT")
 	{
-	campaign_path = campaign;
+	campaign_path = campaign+"_QGSP_BERT";
 	cout << physic_list+" Physic_list" << endl;}
 else if(physic_list=="FTFP_BERT")
 	{
@@ -19225,18 +19225,18 @@ else if(physic_list=="FTFP_BERT")
 	cout << physic_list+" Physic_list" << endl;}
 else{cout << "Physics list inexistente o incorrecta" << endl;}
 
-string campaign_path_new;
-	if(neufield_type=="ISO"){
-		campaign_path_new = campaign_path;
-	}
-	else{campaign_path_new =campaign_path+"_"+neufield_type;}
+string campaign_path_new=campaign_path+"_"+neufield_type;
+	// if(neufield_type=="ISO"){
+	// 	campaign_path_new = campaign_path;
+	// }
+	// else{campaign_path_new =campaign_path+"_"+neufield_type;}
 
 /*MSDATA*/
 //~ string input_complete_file = "./CRNS_Data/"+campaign+"/3rd_LCO_data_complete_15min.root";
 //~ string input_complete_file = "./CRNS_Data/"+campaign+"/3rd_"+campaign+"_data_complete_15min.root";
 //~ string input_complete_file = "./CRNS_Data/"+campaign+"/"+campaign+"_data_complete_15min.root"; //Chapiquilta
 string input_complete_file = "../data/external/CRNS_Data/"+campaign+"/"+campaign+"_data_"+str_stream_timegrid+"min_complete.root"; //SanPedrodeAtacama
-string fit_event_file_name ="../outputs/root/deconv_mc_data_energy_fitting/"+campaign_path_new+"/EM_MC_fit_parameters_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_update_merge_02.root";
+string fit_event_file_name ="../outputs/root/deconv_mc_data_energy_fitting/"+campaign+"/"+campaign_path_new+"/EM_MC_fit_parameters_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_update_merge_02.root";
 
 TFile *file1 = TFile::Open(input_complete_file.c_str());
 TFile *file2 = TFile::Open(fit_event_file_name.c_str());
@@ -19252,7 +19252,7 @@ ROOT::RDataFrame df(*t1);
 string df_tree_name = campaign+"_data_tree";
 //~ df.Snapshot("LCO_data_tree", "./deconv_mc_data_energy_fitting/"+campaign+"/3rd_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_data_complete_update.root");
 //~ df.Snapshot(df_tree_name, "./deconv_mc_data_energy_fitting/"+campaign+"/3rd_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_data_complete_update.root");
-df.Snapshot(df_tree_name, "../outputs/root/deconv_mc_data_energy_fitting/"+campaign_path_new+"/"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_data_complete_update.root");
+df.Snapshot(df_tree_name, "../outputs/root/deconv_mc_data_energy_fitting/"+campaign+"/"+campaign_path_new+"/"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_data_complete_update.root");
 cout <<"Merging data complete" << endl;
 }
 
@@ -19268,7 +19268,7 @@ string campaign_path;
 
 if(physic_list=="QGSP_BERT")
 	{
-	campaign_path = campaign;
+	campaign_path = campaign+"_QGSP_BERT";
 	cout << physic_list+" Physic_list" << endl;}
 else if(physic_list=="FTFP_BERT")
 	{
@@ -19276,18 +19276,18 @@ else if(physic_list=="FTFP_BERT")
 	cout << physic_list+" Physic_list" << endl;}
 else{cout << "Physics list inexistente o incorrecta" << endl;}
 
-string campaign_path_new;
-	if(neufield_type=="ISO"){
-		campaign_path_new = campaign_path;
-	}
-	else{campaign_path_new =campaign_path+"_"+neufield_type;}
+string campaign_path_new=campaign_path+"_"+neufield_type;
+	// if(neufield_type=="ISO"){
+	// 	campaign_path_new = campaign_path;
+	// }
+	// else{campaign_path_new =campaign_path+"_"+neufield_type;}
 
 
 /*MSDATA*/
 //~ string counting_rate_campaign_path ="./deconv_mc_data_energy_fitting/"+campaign+"/3rd_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_data_complete_update.root";
 
 /***MERGED DATA, salida de relations_integral_local_variables_merge()***/
-string counting_rate_campaign_path ="../outputs/root/deconv_mc_data_energy_fitting/"+campaign_path_new+"/"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_data_complete_update.root";
+string counting_rate_campaign_path ="../outputs/root/deconv_mc_data_energy_fitting/"+campaign+"/"+campaign_path_new+"/"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_data_complete_update.root";
 
 string df_tree_name = campaign+"_data_tree";
 //~ ROOT::RDataFrame df_complete("LCO_data_tree", counting_rate_campaign_path);
@@ -19344,7 +19344,7 @@ auto lambda_saturation_vapor_pressure_water = [&](double &airTC){
 /**Ambient Humidity or Absolute Humidity**/
 auto lambda_ambient_humidity = [&](double &AirTC, double &RH, double &WVP){
 		//~ return (RH*WVP/(8.314*(AirTC+273.15)))*18.016;
-		double R =  8.314; // constante de los gases J/(mol*K)
+		double R =  8.314; // constante de los gases Pa*m^3/(mol*K)
 		double M_w = 18.01528; // masa molar del agua en g/mol
 		double T_k = AirTC + 273.15; // Temperatura en kelvin
 		double P_s = WVP;// presion de vapor de agua en mbar
@@ -19384,7 +19384,7 @@ auto df_complete_update_01 = df_complete.Define("BP_mbar_corrected",lambda_barom
 
 //~ df_complete_update_01.Snapshot("LCO_data_tree", "./deconv_mc_data_energy_fitting/"+campaign+"/3rd_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_data_complete_update.root");
 //~ df_complete_update_01.Snapshot(df_tree_name, "./deconv_mc_data_energy_fitting/"+campaign+"/3rd_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_data_complete_update.root");
-df_complete_update_01.Snapshot(df_tree_name, "../outputs/root/deconv_mc_data_energy_fitting/"+campaign_path_new+"/"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_data_complete_update.root");
+df_complete_update_01.Snapshot(df_tree_name, "../outputs/root/deconv_mc_data_energy_fitting/"+campaign+"/"+campaign_path_new+"/"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_data_complete_update.root");
 cout <<"Update of data complete" << endl;
 
 }
@@ -22394,9 +22394,9 @@ legend_c->Draw();
 
 void ambient_dose_per_diff_flux_H_new(string campaign,int timegrid, int ndet){
 	
-string input_file_iso = "../outputs/root/deconv_mc_data_energy_fitting/"+campaign+"_FTFP_BERT/"+campaign+"_timegrid_"+std::to_string(timegrid)+"_ndet_"+std::to_string(ndet)+"_data_complete_update.root";
-string input_file_mix = "../outputs/root/deconv_mc_data_energy_fitting/"+campaign+"_FTFP_BERT_MIX/"+campaign+"_timegrid_"+std::to_string(timegrid)+"_ndet_"+std::to_string(ndet)+"_data_complete_update.root";
-string input_file_beam = "../outputs/root/deconv_mc_data_energy_fitting/"+campaign+"_FTFP_BERT_BEAM/"+campaign+"_timegrid_"+std::to_string(timegrid)+"_ndet_"+std::to_string(ndet)+"_data_complete_update.root";
+string input_file_iso = "../outputs/root/deconv_mc_data_energy_fitting/"+campaign+"/"+campaign+"_FTFP_BERT_ISO/"+campaign+"_timegrid_"+std::to_string(timegrid)+"_ndet_"+std::to_string(ndet)+"_data_complete_update.root";
+string input_file_mix = "../outputs/root/deconv_mc_data_energy_fitting/"+campaign+"/"+campaign+"_FTFP_BERT_MIX/"+campaign+"_timegrid_"+std::to_string(timegrid)+"_ndet_"+std::to_string(ndet)+"_data_complete_update.root";
+string input_file_beam = "../outputs/root/deconv_mc_data_energy_fitting/"+campaign+"/"+campaign+"_FTFP_BERT_BEAM/"+campaign+"_timegrid_"+std::to_string(timegrid)+"_ndet_"+std::to_string(ndet)+"_data_complete_update.root";
 
 ROOT::RDataFrame df_data_iso("LCO_data_tree", input_file_iso);
 ROOT::RDataFrame df_data_mix("LCO_data_tree", input_file_mix);
@@ -23650,7 +23650,7 @@ canvas_cr->Divide(4,4);
 
 for(int i=0;i<vec_prof_cr.size();i++){
 
-	 if(act_vector[i] == vec_test[i]){
+	 if(vec_test[i]==1){
 	cout <<"Detector Act: " << i+1 << endl;
 	canvas_cr->cd(i+1);
 	//~ gPad->SetLogz();
@@ -24680,7 +24680,7 @@ for(int i=0; i<ndet; i++)
 /*Vect de nombres*/
 for(int i=0; i<ndet; i++)
 {
-	 if(act_vector[i] == vec_test[i])
+	 if(vec_test[i]==1)
 		{
 			det_names_act.push_back(det_names[i]);
 		}
@@ -31950,7 +31950,7 @@ void knee_plots_rdf(
 ){
     // ---------------- campaign_path (igual tu convención)
     std::string campaign_path;
-    if(physic_list=="QGSP_BERT") campaign_path = campaign;
+    if(physic_list=="QGSP_BERT") campaign_path = campaign+"_QGSP_BERT";
     else if(physic_list=="FTFP_BERT") campaign_path = campaign + "_FTFP_BERT";
     else { std::cout << "Physics list inexistente\n"; return; }
 
@@ -32305,7 +32305,7 @@ void MakeHist_Chi2_EmIt_SingleFunction(
   //~ std::string fileName = "./deconv_data_rootfile/EM_MC_stop/LCO_FTFP_BERT/EM_unfolding_loop_campaign_LCO_event_2_steps_0_timegrid_15_ndet_11_MC_stop_backup_02.root", //DET12 con el factor 5/4 (backup_02) y todos los demás con el factor 1/4
   //~ std::string fileName = "./deconv_data_rootfile/EM_MC_stop/LCO_FTFP_BERT/EM_unfolding_loop_campaign_LCO_event_2_steps_0_timegrid_15_ndet_11_MC_stop_backup_0.root", //DET12 sin el factor 1/4 (backup_0) y todos los demás sin el factor 1/4
   //~ std::string fileName = "./deconv_data_rootfile/EM_MC_stop/LCO_FTFP_BERT/EM_unfolding_loop_campaign_LCO_event_2_steps_0_timegrid_15_ndet_11_MC_stop_backup_03.root", //MIX
-  std::string fileName = "../outputs/root/deconv_data_rootfile/EM_MC_stop/LCO_FTFP_BERT/EM_unfolding_loop_campaign_LCO_event_2_steps_0_timegrid_15_ndet_11_MC_stop.root", //DET12 sin el factor 1/4 (backup_0) y todos los demás sin el factor 1/4
+  std::string fileName = "../outputs/root/deconv_data_rootfile/EM_MC_stop/LCO_FTFP_BERT_ISO/EM_unfolding_loop_campaign_LCO_event_2_steps_0_timegrid_15_ndet_11_MC_stop.root", //DET12 sin el factor 1/4 (backup_0) y todos los demás sin el factor 1/4
   std::string outBase  = "Chi2_EmIt_Distributions"
 )
 {
@@ -32593,7 +32593,7 @@ void plot_neutron_count_comparison_event(string campaign, int event, int ch, str
 
 	if(physic_list=="QGSP_BERT")
 		{
-		campaign_path = campaign;
+		campaign_path = campaign+"_QGSP_BERT";
 		cout << physic_list+" Physic_list" << endl;}
 	else if(physic_list=="FTFP_BERT")
 		{
@@ -32601,11 +32601,11 @@ void plot_neutron_count_comparison_event(string campaign, int event, int ch, str
 		cout << physic_list+" Physic_list" << endl;}
 	else{cout << "Physics list inexistente o incorrecta" << endl;}
 
-	string campaign_path_new;
-	if(neufield_type=="ISO"){
-		campaign_path_new = campaign_path;
-	}
-	else{campaign_path_new =campaign_path+"_"+neufield_type;}
+	string campaign_path_new=campaign_path+"_"+neufield_type;
+	// if(neufield_type=="ISO"){
+	// 	campaign_path_new = campaign_path;
+	// }
+	// else{campaign_path_new =campaign_path+"_"+neufield_type;}
 
   (void)ch; // no usado en esta versión
 
@@ -32617,7 +32617,7 @@ void plot_neutron_count_comparison_event(string campaign, int event, int ch, str
   //==================== Abrir RDataFrame ====================
   std::string df_tree_complete_name = campaign + "_data_tree";
   std::string input_file_deconv =
-      "../outputs/root/deconv_mc_data_energy_fitting/" + campaign_path + "/" + campaign +
+      "../outputs/root/deconv_mc_data_energy_fitting/" + campaign + "/" + campaign_path + "/" + campaign +
       "_timegrid_" + std::to_string(timegrid) + "_ndet_" + std::to_string(11) +
       "_data_complete_update.root";
 
@@ -32670,7 +32670,7 @@ void plot_neutron_count_comparison_event(string campaign, int event, int ch, str
 //                         "_timegrid_" +  std::to_string(timegrid) +
 //                         "_ndet_" + std::to_string(11) + "_update_backup.root";
 
-  string df_file_name = "../outputs/root/deconv_mc_data_energy_fitting/" +campaign_path_new+
+  string df_file_name = "../outputs/root/deconv_mc_data_energy_fitting/" + campaign + "/" +campaign_path_new+
                         "/EM_MC_fit_parameters_campaign_" + campaign +
                         "_event_" + std::to_string(event) +
                         "_timegrid_" +  std::to_string(timegrid) +
@@ -33053,7 +33053,7 @@ void plot_neutron_count_comparison_event_3files(std::string campaign,
   //==================== campaign_path ====================
   std::string campaign_path;
   if (physic_list == "QGSP_BERT") {
-    campaign_path = campaign;
+    campaign_path = campaign+"_QGSP_BERT";
     std::cout << physic_list + " Physic_list" << std::endl;
   } else if (physic_list == "FTFP_BERT") {
     campaign_path = campaign + "_FTFP_BERT";
@@ -33070,7 +33070,7 @@ void plot_neutron_count_comparison_event_3files(std::string campaign,
   //==================== Abrir RDataFrame (data_complete) ====================
   std::string df_tree_complete_name = campaign + "_data_tree";
   std::string input_file_deconv =
-      "../outputs/root/deconv_mc_data_energy_fitting/" + campaign_path + "/" + campaign +
+      "../outputs/root/deconv_mc_data_energy_fitting/" + campaign + "/" + campaign_path + "/" + campaign +
       "_timegrid_" + std::to_string(timegrid) + "_ndet_" + std::to_string(11) +
       "_data_complete_update.root";
 
@@ -33172,7 +33172,7 @@ void plot_neutron_count_comparison_event_3files(std::string campaign,
   // 3 DIR distintas
   // - Ajusta aquí a tus 3 casos reales (ISO/MIX/BEAM, o 3 seeds, o 3 versiones update_X, etc.)
 std::vector<SolutionSpec> sols = {
-  {"ISO", (campaign_path), "ISO"},
+  {"ISO", (campaign_path+ "_ISO")},
   {"MIX", (campaign_path + "_MIX"),  "MIX"},
   {"BEAM",(campaign_path + "_BEAM"), "BEAM"}
 };
@@ -33196,7 +33196,7 @@ auto process_one_solution = [&](const SolutionSpec& spec) -> SolutionResult {
   out.label = spec.label;
 
   out.file =
-    "../outputs/root/deconv_mc_data_energy_fitting/" + spec.campaign_path_new +
+    "../outputs/root/deconv_mc_data_energy_fitting/"+ campaign + "/" + spec.campaign_path_new +
     "/EM_MC_fit_parameters_campaign_" + campaign +
     "_event_" + std::to_string(event) +
     "_timegrid_" + std::to_string(timegrid) +
@@ -33228,7 +33228,7 @@ auto process_one_solution = [&](const SolutionSpec& spec) -> SolutionResult {
   std::vector<std::vector<Double_t>> Rk_new;
   Rk_new.reserve(ndet_full);
   for (int i = 0; i < ndet_full; ++i) {
-    if (act_vector[i] == vec_test[i]) Rk_new.push_back(Rk[i]);
+    if (vec_test[i]==1) Rk_new.push_back(Rk[i]);
   }
   Rk = std::move(Rk_new);
 
@@ -33512,7 +33512,7 @@ void DrawCountsComparisonIntoPads(TPad* padTop, TPad* padBot,
   //==================== campaign_path ====================
   std::string campaign_path;
   if (physic_list == "QGSP_BERT") {
-    campaign_path = campaign;
+    campaign_path = campaign+"_QGSP_BERT";
     std::cout << physic_list + " Physic_list" << std::endl;
   } else if (physic_list == "FTFP_BERT") {
     campaign_path = campaign + "_FTFP_BERT";
@@ -33521,6 +33521,8 @@ void DrawCountsComparisonIntoPads(TPad* padTop, TPad* padBot,
     std::cout << "Physics list inexistente o incorrecta" << std::endl;
     return;
   }
+
+  string campaign_path_new_base =campaign_path+"_"+neufield_type_base;
 
   //==================== Config fija ====================
   int timegrid   = 15;   // min
@@ -33531,7 +33533,7 @@ void DrawCountsComparisonIntoPads(TPad* padTop, TPad* padBot,
   std::string df_tree_complete_name = campaign + "_data_tree";
    
   std::string input_file_deconv =
-      "../outputs/root/deconv_mc_data_energy_fitting/" + campaign_path + "/" + campaign +
+      "../outputs/root/deconv_mc_data_energy_fitting/"+ campaign + "/" + campaign_path_new_base + "/" + campaign +
       "_timegrid_" + std::to_string(timegrid) + "_ndet_" + std::to_string(ndet_file) +
       "_data_complete_update.root";
 
@@ -33645,7 +33647,7 @@ void DrawCountsComparisonIntoPads(TPad* padTop, TPad* padBot,
   };
 
   std::vector<SolutionSpec> sols = {
-    {"ISO",  (campaign_path),          "ISO"},
+    {"ISO",  (campaign_path + "_ISO"), "ISO"},
     {"MIX",  (campaign_path + "_MIX"), "MIX"},
     {"BEAM", (campaign_path + "_BEAM"),"BEAM"}
   };
@@ -33679,7 +33681,7 @@ void DrawCountsComparisonIntoPads(TPad* padTop, TPad* padBot,
     out.label = spec.label;
 
     out.file =
-      "../outputs/root/deconv_mc_data_energy_fitting/" + spec.campaign_path_new +
+      "../outputs/root/deconv_mc_data_energy_fitting/" + campaign +"/"+ spec.campaign_path_new +
       "/EM_MC_fit_parameters_campaign_" + campaign +
       "_event_" + std::to_string(event) +
       "_timegrid_" + std::to_string(timegrid) +
@@ -33723,7 +33725,7 @@ void DrawCountsComparisonIntoPads(TPad* padTop, TPad* padBot,
     std::vector<std::vector<Double_t>> Rk_new;
     Rk_new.reserve(ndet_full);
     for (int i = 0; i < ndet_full; ++i) {
-      if (act_vector[i] == vec_test[i]) Rk_new.push_back(Rk[i]);
+      if (vec_test[i]==1) Rk_new.push_back(Rk[i]);
     }
     Rk = std::move(Rk_new);
 
