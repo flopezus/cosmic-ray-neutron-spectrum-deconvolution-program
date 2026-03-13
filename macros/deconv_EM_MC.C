@@ -11266,7 +11266,7 @@ else{
 	ROOT::RDataFrame df_fit_intg_file("fit_intg_tree", df_fit_mc_file); // Distribution per energy region 
 	
 	//~ string input_deconv_file= "./deconv_data_rootfile/EM_stop/"+campaign+"/em_stop_2_percent_criteria/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root"; //RetenDesierto
-	string input_deconv_file= "../outputs/root/deconv_data_rootfile/EM_stop/"+campaign+"/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_15_ndet_"+str_stream_ndet+".root";
+	string input_deconv_file= "../outputs/root/deconv_data_rootfile/EM_stop/"+campaign+"/"+campaign_path_new+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_15_ndet_"+str_stream_ndet+".root";
 	ROOT::RDataFrame df_event("em_loop_tree", input_deconv_file);
 
 
