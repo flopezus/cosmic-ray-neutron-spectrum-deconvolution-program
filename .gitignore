@@ -74,3 +74,22 @@ data/external/CRNS_Data/**/old/**
 !data/external/CRNS_Data/RetenDesierto/*.root
 !data/external/CRNS_Data/Maricunga/*.root
 
+############################################################
+###############Response Functions FILES#####################
+############################################################
+
+# Allow only selected spectrometer ROOT files
+!data/external/Response_Functions_CEFNEN_Spectrometer/
+data/external/Response_Functions_CEFNEN_Spectrometer/**
+
+!data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/
+!data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/wos_factor/
+!data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/ws_factor/
+!data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/wos_factor/*smooth_smooth_root_15*.root
+!data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2025_FTFP/ws_factor/*smooth_smooth_root_15*.root
+
+!data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/
+!data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/wos_factor/
+!data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/ws_factor/
+!data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/wos_factor/*smooth_smooth_root_15*.root
+!data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/ws_factor/*smooth_smooth_root_15*.root
