@@ -32,9 +32,6 @@ outputs/log/*
 data/external/*
 data/sample/*
 
-# Allow placeholders
-!data/external/.keep_dir
-!data/sample/.keep_dir
 
 ############################################
 # Large binaries anywhere
@@ -53,3 +50,27 @@ data/sample/*
 *.err
 *~
 .DS_Store
+
+############################################
+# External data
+############################################
+
+# Allow selected CRNS ROOT files
+!data/external/CRNS_Data/
+!data/external/CRNS_Data/SanPedrodeAtacama/
+!data/external/CRNS_Data/Chapiquilta/
+!data/external/CRNS_Data/LCO/
+!data/external/CRNS_Data/RetenDesierto/
+!data/external/CRNS_Data/Maricunga/
+
+# Keep any folder named "old" ignored
+data/external/CRNS_Data/**/old/
+data/external/CRNS_Data/**/old/**
+
+# Unignore only the ROOT files we want to track
+!data/external/CRNS_Data/SanPedrodeAtacama/*.root
+!data/external/CRNS_Data/Chapiquilta/*.root
+!data/external/CRNS_Data/LCO/*.root
+!data/external/CRNS_Data/RetenDesierto/*.root
+!data/external/CRNS_Data/Maricunga/*.root
+
