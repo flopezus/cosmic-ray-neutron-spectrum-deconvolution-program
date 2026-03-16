@@ -74,6 +74,17 @@ data/external/CRNS_Data/**/old/**
 !data/external/CRNS_Data/RetenDesierto/*.root
 !data/external/CRNS_Data/Maricunga/*.root
 
+# Allow selected PARMA flux ROOT files
+!data/external/EXPACS_Data/
+data/external/EXPACS_Data/**
+
+!data/external/EXPACS_Data/parma_cpp_flopez/
+!data/external/EXPACS_Data/parma_cpp_flopez/Chapiquilta_parma_fluxes.root
+!data/external/EXPACS_Data/parma_cpp_flopez/LCO_parma_fluxes.root
+!data/external/EXPACS_Data/parma_cpp_flopez/Maricunga_parma_fluxes.root
+!data/external/EXPACS_Data/parma_cpp_flopez/RetenDesierto_parma_fluxes.root
+!data/external/EXPACS_Data/parma_cpp_flopez/SanPedrodeAtacama_parma_fluxes.root
+
 ############################################################
 ###############Response Functions FILES#####################
 ############################################################
