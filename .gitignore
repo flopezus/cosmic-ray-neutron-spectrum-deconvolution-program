@@ -84,6 +84,7 @@ data/external/EXPACS_Data/**
 !data/external/EXPACS_Data/parma_cpp_flopez/Maricunga_parma_fluxes.root
 !data/external/EXPACS_Data/parma_cpp_flopez/RetenDesierto_parma_fluxes.root
 !data/external/EXPACS_Data/parma_cpp_flopez/SanPedrodeAtacama_parma_fluxes.root
+!data/external/EXPACS_Data/parma_cpp_flopez/ICRP116_binning_resume.csv
 
 ############################################################
 ###############Response Functions FILES#####################
