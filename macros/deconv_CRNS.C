@@ -7136,7 +7136,7 @@ return em_vec_output;
 
 }
 /*Algoritmo EM que entrega como salida un vector (considerando un archivo .root de flujos EXPACS): */
-vector<double> deconv_em_output_update(string campaign, int event, int steps, int vwc_seed, vector<double> diff_flux, vector<double> emid, vector<double> ewid, vector<double> elower, int crptime, string flux_type, int norm, int max_steps, string cut, string phylist){
+vector<double> deconv_em_output_update(string campaign, int event, int steps, int vwc_seed, vector<double> diff_flux, vector<double> emid, vector<double> ewid, vector<double> elower, int crptime, string flux_type, int norm, int max_steps, string cut, string physic_list, string scale_factor, string neufield_type){
 
 //~ const int ndet = 16; // numero de detectores //
 int ndet = 16; /*numero de detectores*/
@@ -7287,7 +7287,7 @@ for(int i=0; i<N.size(); i++)
 //~ R = Response_function_matrix_lin_spec_2024_fix_active_volume_more_statistics(); /*matriz de funciones respuesta del espectrometro 2024 region activa arreglada y mas estadistica, considerando el nuevo detecto d04*/
 cout << "Cargamos la matriz de funcion respuesta" << endl;
 //~ R = Response_function_matrix_lin_spec_2023_fix_active_volume_more_statistics_smooth();  /*matriz de funciones respuesta del espectrometro 2023 con un smooth SG y smooth de root (factor 15) LCO*/ 
-R = Response_function_matrix_lin_spec_2023_fix_active_volume_more_statistics_smooth(phylist,"ws","iso",campaign);  /*matriz de funciones respuesta del espectrometro 2023 con un smooth SG y smooth de root (factor 15) LCO*/ 
+R = Response_function_matrix_lin_spec_2023_fix_active_volume_more_statistics_smooth(physic_list,scale_factor,neufield_type,campaign);  /*matriz de funciones respuesta del espectrometro 2023 con un smooth SG y smooth de root (factor 15) LCO*/ 
 
 
 //~ R = Response_function_matrix_lin_spec_2024_fix_active_volume_more_statistics_smooth();  /*matriz de funciones respuesta del espectrometro 2024 con un smooth SG y smooth de root (factor 15) SanPedro y Chapiquilta*/ 
@@ -7467,7 +7467,7 @@ cout << "Inicia Deconvolucion" << endl;
 	for (int i = 0; i<Seed.size(); i++)
 	{
 		//~ double E_mid = E[i]+(dE[i]/2.); // bin: [Elow,Eup], luego E[i] =Elow y Eup-Elow = dE[i], entonces, Emid = Elow + dE/2.
-		seed_integral_representation[i] = (Seed[i]/Emid[i])*dE[i]; /*expacs entrega el flujo letargico, para pasarlo a flujo diff dividimos por E_mid*/
+		seed_integral_representation[i] = Seed[i]*dE[i]; /*expacs entrega el flujo diferencial, para pasarlo a flujo integral dividimos por E_mid*/
 	}
 	matrix_fluxnext_Intg.push_back(seed_integral_representation); //Llenamos la matrix de flujo deconvolucionados integral por paso con e valor de semilla inicial
 	vec_fluxnext_Intg.push_back(seed_integral_representation); //Llenamos la matrix de flujo deconvolucionados integral por paso con e valor de semilla inicial
@@ -11401,7 +11401,7 @@ df_seed_loop.Snapshot("em_loop_tree",df_file_name); /*Save selected columns to d
 }
 
 /***Funcion que itera sobre todos los distintos valores de semilla sobre deconv_em_output_update() para un evento determinado, para esto usamos como input un archivo .root con los flujos calculados con EXPACS***/
-void em_loop_seed_update(string campaign,int event,int steps,int time_grid, int max_steps,string cut, string physic_list){
+void em_loop_seed_update(string campaign,int event,int steps,int time_grid, int max_steps,string cut, string physic_list, string scale_factor, string neufield_type){
 
 ostringstream stream_steps, stream_event, stream_timegrid, stream_em_it;
 stream_steps << steps;
@@ -11416,7 +11416,7 @@ string campaign_path;
 
 if(physic_list=="QGSP_BERT")
 	{
-	  campaign_path = campaign; //Ex: LCO
+	  campaign_path = campaign+"_QGSP_BERT"; //Ex: LCO
 	  //~ cout << physic_list+" Physic_list" << endl;}
 	}
 if(physic_list=="FTFP_BERT")
@@ -11425,6 +11425,8 @@ if(physic_list=="FTFP_BERT")
 	 //~ cout << physic_list+" Physic_list" << endl;}
     }
 else{cout << "Physics list inexistente o incorrecta" << endl;}
+
+string campaign_path_new = campaign_path+"_"+neufield_type;
 
 /*****************************************************************************************************/
 /********************************CARGAMOS EL BINEADO ICRP116*****************************************/
@@ -11537,7 +11539,7 @@ for(int i=0; i<number_of_seeds;i++)
 		
 		cout << "EM unfolding " << " Campaign: "<< campaign << " Event: "<< event << " Steps: " << steps << " Time grid: " << time_grid << " Seed: " << i+1  << " Starting ... "<< endl;
 		//~ vec_loop_seed.push_back(deconv_em_output_update(campaign,event,steps,i,time_grid,"Intg",0,max_steps,cut));
-		vec_loop_seed.push_back(deconv_em_output_update(campaign,event,steps,i,diff_flux_bin_seed_new,emid_icrp116_vec, ewid_icrp116_vec, elower_icrp116_vec,time_grid,"Intg",0,max_steps,cut,physic_list));
+		vec_loop_seed.push_back(deconv_em_output_update(campaign,event,steps,i,diff_flux_bin_seed_new,emid_icrp116_vec, ewid_icrp116_vec, elower_icrp116_vec,time_grid,"Intg",0,max_steps,cut,physic_list,scale_factor,neufield_type));
 		cout << "EM unfolding " << " Campaign: "<< campaign << " Event: "<< event << " Steps: " << steps << " Time grid: " << time_grid << " Seed: " << i+1  << " Finished. "<< endl;
 		cout << " " << endl;
     }
@@ -11724,11 +11726,11 @@ string df_file_name;
 if(steps==0)
 	{
 		//~ df_file_name = "./deconv_data_rootfile/EM_stop/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_0"+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
-		df_file_name = "../outputs/root/deconv_data_rootfile/EM_stop/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_0"+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+		df_file_name = "../outputs/root/deconv_data_rootfile/EM_stop/"+campaign+"/"+campaign_path_new+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_0"+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 	}
 else{	
 		//~ df_file_name = "./deconv_data_rootfile/EM/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
-		df_file_name = "../outputs/root/deconv_data_rootfile/EM/"+campaign_path+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
+		df_file_name = "../outputs/root/deconv_data_rootfile/EM/"+campaign+"/"+campaign_path_new+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_steps_"+str_stream_steps+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".root";
 	}
 
 df_seed_loop.Snapshot("em_loop_tree",df_file_name); /*Save selected columns to disk, in a new TTree treename in file filename*/
