@@ -20026,12 +20026,12 @@ else
 
 }
 
-void em_loop_steps_update(string campaign,int event,int steps,int time_grid, int ndet, int max_steps, string cut, string physics_list){
+void em_loop_steps_update(string campaign,int event,int steps,int time_grid, int ndet, int max_steps, string cut, string physic_list, string scale_factor, string neufield_type){
 
 /*Criterio de stop*/
 if(steps==0)
 	{
-		em_loop_seed_update(campaign,event,steps,time_grid,max_steps,cut,physics_list);
+		em_loop_seed_update(campaign,event,steps,time_grid,max_steps,cut,physic_list,scale_factor,neufield_type);
 	}
 
 else
@@ -20040,7 +20040,7 @@ else
 		for(int i=1; i<=steps; i++)
 			{
 				cout << "Number of steps: " << i << endl;
-				em_loop_seed_update(campaign,event,i,time_grid,max_steps,cut,physics_list);
+				em_loop_seed_update(campaign,event,i,time_grid,max_steps,cut,physic_list,scale_factor,neufield_type);
 			}
 	}
 
