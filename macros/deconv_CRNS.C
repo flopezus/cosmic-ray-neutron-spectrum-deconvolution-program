@@ -12588,7 +12588,7 @@ void em_loop_MC_opt_new_update(string campaign,int event,int steps,int time_grid
     std::vector<std::vector<Double_t>> vec_event_MC_loop;
     vec_event_MC_loop.reserve(max_em_mc_it); // Solo almacenarás hasta max_em_mc_it eventos aceptados
 
-    std::ofstream event_mc_info("../outputs/root/deconv_data_rootfile/EM_MC_stop/" + campaign + "/" + campaign_path_new + "/event_" + std::to_string(event) + "_stat.txt", std::ofstream::trunc);
+    std::ofstream event_mc_info("../outputs/root/deconv_data_rootfile/EM_MC_stop/" + campaign + "/" + campaign_path_new + "/"+ campaign +"_event_" + std::to_string(event) + "_" + std::to_string(time_grid) +"min_"+ "stat.txt", std::ofstream::trunc);
 
 	/****CARGAMOS EL BINEADO ICRP116**********/
 	//~ string icrp116_file_path = "/home/flopez/Data/Dropbox/EXPACS/parma_cpp_flopez/icrp116_binning_resume.csv";
@@ -12636,6 +12636,7 @@ void em_loop_MC_opt_new_update(string campaign,int event,int steps,int time_grid
 								diff_flux_bin_seed_new[j] =  diff_flux_parma[rand_num_flux][j];
 							}
 			}
+			
 		else{
 				for(int j = 0; j<bin_cut-1;j++)
 							{
