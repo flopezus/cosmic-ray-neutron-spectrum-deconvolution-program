@@ -1,13 +1,29 @@
 #!/usr/bin/env bash
 
-./merge_files_stats.sh
-
 set -euo pipefail
 
-file="${1:-}"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
 
-if [[ -z "$file" || ! -f "$file" ]]; then
-  echo "Usage: $0 <input_file>" >&2
+if [ $# -lt 3 ]; then
+  echo "Uso: $0 CAMPAIGN TIME_GRID NEUFTY" >&2
+  echo "Ejemplo: $0 LCO 15 BEAM" >&2
+  exit 1
+fi
+
+CAMPAIGN="$1"
+TIME_GRID="$2"
+NEUFTY="$3"
+PHYLST="FTFP_BERT"
+
+# Ejecuta la concatenación previa
+"${SCRIPT_DIR}/merge_files_stats.sh" "$CAMPAIGN" "$TIME_GRID" "$NEUFTY"
+
+# Archivo generado por merge_files_stats.sh
+file="${REPO_DIR}/outputs/root/deconv_data_rootfile/EM_MC_stop/${CAMPAIGN}/${CAMPAIGN}_${PHYLST}_${NEUFTY}/${CAMPAIGN}_${TIME_GRID}min_stat.txt"
+
+if [[ ! -f "$file" ]]; then
+  echo "Error: no existe el archivo de entrada: $file" >&2
   exit 1
 fi
 
@@ -35,10 +51,12 @@ awk '
     countNot = 0
     missingCount = 0
     total_range = max - min + 1
+
     for (i = min; i <= max; i++) {
       if (i in acc) {
         sumAcc += acc[i]
       }
+
       if (i in events) {
         if (i in acc) {
           if (acc[i] == 100) {
@@ -47,21 +65,22 @@ awk '
             countNot++
             notItems[countNot] = i " (" sprintf("%.1f", acc[i]) "%)"
           }
-        } else {
+	} else {
           countNot++
           notItems[countNot] = i " (NA)"
           missingAcc++
         }
       } else {
-        missingCount++
+	missingCount++
         missingList = missingList (missingList ? ", " : "") i
       }
     }
 
+    print "Archivo analizado: " FILENAME
     print "Eventos totales (rango): " total_range " (del " min " al " max ")"
+
     pct100 = (total_range > 0) ? (count100 * 100 / total_range) : 0
     pctNot = (total_range > 0) ? (countNot * 100 / total_range) : 0
-
     globalPct = (total_range > 0) ? (sumAcc / total_range) : 0
     globalRem = 100 - globalPct
 
@@ -91,3 +110,7 @@ awk '
     print "Avance global (incluye parciales): " sprintf("%.1f", globalPct) "%, restante: " sprintf("%.1f", globalRem) "%"
   }
 ' "$file"
+
+
+
+
