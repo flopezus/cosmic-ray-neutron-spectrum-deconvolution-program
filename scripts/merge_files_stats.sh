@@ -1,4 +1,3 @@
-  GNU nano 5.6.1                                              merge_files_stats.sh                                                        
 #!/usr/bin/env bash
 
 set -euo pipefail
@@ -27,10 +26,12 @@ if [ ! -d "$INPUT_DIR" ]; then
     exit 1
 fi
 
-mapfile -t files < <(find "$INPUT_DIR" -maxdepth 1 -type f -name '*_event_*.txt' | sort -V)
+pattern="${CAMPAIGN}_event_*_${TIME_GRID}min_stat.txt"
+
+mapfile -t files < <(find "$INPUT_DIR" -maxdepth 1 -type f -name "$pattern" | sort -V)
 
 if [ ${#files[@]} -eq 0 ]; then
-    echo "Error: no se encontraron archivos '*_event_*.txt' en:"
+    echo "Error: no se encontraron archivos '$pattern' en:"
     echo "  $INPUT_DIR"
     exit 1
 fi
