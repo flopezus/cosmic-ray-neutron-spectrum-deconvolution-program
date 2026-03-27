@@ -24,7 +24,7 @@ const std::array<int,16>& Detectors_Array(const std::string& campaign)
         return array_lco;
 	}
 
-    else if (campaign == "Chapiquilta" || campaign == "SanPedro") {
+    else if (campaign == "Chapiquilta" || campaign == "SanPedrodeAtacama") {
         return array_chapiquilta;
     }
     else if (campaign == "AllActive") {
