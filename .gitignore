@@ -26,6 +26,11 @@ outputs/log/*
 !outputs/log/.keep_dir
 
 ############################################
+# Local scripts (never track)
+############################################
+local_scripts/*
+
+############################################
 # External data (downloaded, not tracked)
 ############################################
 # Ignore everything under data/external/ and data/sample/
