@@ -837,7 +837,7 @@ string det_change;
 if(campaign=="PUC" || campaign=="UTFSM" || campaign=="LCO" || campaign == "Maricunga" || campaign == "RetenDesierto" || campaign == "UDA" || campaign == "ULS"|| campaign == "JuanSoldado"){
 	det_change = (path+"/Efi_4_CylinderHDPE_"+phylst_name+"_VV_smooth_smooth_root_15_"+scale_factor+".root");
 }
-else{det_change = ("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/"+scale_path+"/Efi_17_Cylinder_HDPE_10cm_plus_5cm_BHDPE_VV_smooth_smooth_root_15.root");}
+else{det_change = ("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/"+scale_path+"/Efi_17_Cylinder_HDPE_10cm_plus_5cm_BHDPE_QGSP_BERT_VV_smooth_smooth_root_15_"+scale_factor+".root");}
 
 //~ TFile *E01_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_1_12cmHDPE_NEW_VV_smooth_smooth_root_15.root");
 //~ TFile *E02_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_2_10cmHDPE_NEW_VV_smooth_smooth_root_15.root");
