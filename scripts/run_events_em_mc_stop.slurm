@@ -4,7 +4,7 @@ set -euo pipefail
 
 #------------------------------------------------------
 # Uso:
-#   bash run_events_em_mc_stop.slurm configs/config_LCO_15m_BEAM.sh
+#   bash run_events_em_mc_stop.slurm configs/config_EM_MC_stop_LCO_15min_BEAM.sh
 #------------------------------------------------------
 
 # Verifica que se entregue un archivo de configuración
