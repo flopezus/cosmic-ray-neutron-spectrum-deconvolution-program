@@ -833,11 +833,19 @@ else{cout << "Physics list inexistente o incorrecta" << endl;}
 
 //Cambio de detector #4 de Efi_4_CylinderHDPE (PUC, UTFSM, LCO, Maricunga, RetenDesierto, UDA, ULS, JuanSoldado) a Efi_7_20cmHDPE (desde Campania sur Nov 2023 en adelante)
 string det_change;
+string det_change_hist;
 
 if(campaign=="PUC" || campaign=="UTFSM" || campaign=="LCO" || campaign == "Maricunga" || campaign == "RetenDesierto" || campaign == "UDA" || campaign == "ULS"|| campaign == "JuanSoldado"){
 	det_change = (path+"/Efi_4_CylinderHDPE_"+phylst_name+"_VV_smooth_smooth_root_15_"+scale_factor+".root");
+	det_change_hist = (string("E4_CylinderHDPE_")+phylst_name+"_smooth_smooth_root_15"+"_"+scale_factor);
 }
-else{det_change = ("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/"+scale_path+"/Efi_17_Cylinder_HDPE_10cm_plus_5cm_BHDPE_QGSP_BERT_VV_smooth_smooth_root_15_"+scale_factor+".root");}
+else{
+	
+	det_change = ("../data/external/Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/"+scale_path+"/Efi_17_Cylinder_HDPE_10cm_plus_5cm_BHDPE_QGSP_BERT_VV_smooth_smooth_root_15_"+scale_factor+".root");
+	det_change_hist = (string("E17_Cylinder_HDPE_10cm_plus_5cm_BHDPE_QGSP_BERT_smooth_smooth_root_15")+"_"+scale_factor);
+}
+
+
 
 //~ TFile *E01_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_1_12cmHDPE_NEW_VV_smooth_smooth_root_15.root");
 //~ TFile *E02_file = new TFile("./Response_Functions_CEFNEN_Spectrometer/LIN_Spectrometer_2024_active_vol_fix/Efi_2_10cmHDPE_NEW_VV_smooth_smooth_root_15.root");
@@ -906,7 +914,9 @@ TH1D *h_d02 = (TH1D*)E02_file->Get((string("E2_10cmHDPE_")+phylst_name+"_smooth_
 // TH1D *h_d03 = (TH1D*)E03_file->Get((string("E3_4cmHDPE_smooth_smooth_root_15").c_str());
 TH1D *h_d03 = (TH1D*)E03_file->Get((string("E3_4cmHDPE_")+phylst_name+"_smooth_smooth_root_15"+"_"+scale_factor).c_str());
 
-TH1D *h_d04 = (TH1D*)E04_file->Get((string("E4_CylinderHDPE_")+phylst_name+"_smooth_smooth_root_15"+"_"+scale_factor).c_str());
+//TH1D *h_d04 = (TH1D*)E04_file->Get((string("E4_CylinderHDPE_")+phylst_name+"_smooth_smooth_root_15"+"_"+scale_factor).c_str());
+TH1D *h_d04 = (TH1D*)E04_file->Get(det_change_hist.c_str());
+
 
 // TH1D *h_d05 = (TH1D*)E05_file->Get((string("E5_Cylinder7mmAl_1.8cmBHDPECore_smooth_smooth_root_15").c_str());
 TH1D *h_d05 = (TH1D*)E05_file->Get((string("E5_Cylinder7mmAl_1.8cmBHDPECore_")+phylst_name+"_smooth_smooth_root_15"+"_"+scale_factor).c_str());
