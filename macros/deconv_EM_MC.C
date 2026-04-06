@@ -12560,19 +12560,31 @@ else{
 				if(campaign=="LCO"){
 					//~ deconv_flux_asymmetric->SetMaximum(0.005);
 					//~ flux_deconv_2->SetMaximum(0.005);
-
-					 deconv_flux_asymmetric->SetMaximum(0.017);
-					 flux_deconv_2->SetMaximum(0.017);
-					
-					//BEAM 15 min
-					// deconv_flux_asymmetric->SetMaximum(0.007);
-					// flux_deconv_2->SetMaximum(0.007);
+					if (neufield_type=="ISO"){
+						deconv_flux_asymmetric->SetMaximum(0.017);
+						flux_deconv_2->SetMaximum(0.017);
+					}
+					else if (neufield_type=="MIX" || neufield_type=="BEAM" ){
+						//BEAM 15 min
+						deconv_flux_asymmetric->SetMaximum(0.007);
+						flux_deconv_2->SetMaximum(0.007);
+					}
 				}
 				if(campaign=="Maricunga"){
 					//~ deconv_flux_asymmetric->SetMaximum(0.005);
 					//~ flux_deconv_2->SetMaximum(0.005);
-					deconv_flux_asymmetric->SetMaximum(0.01);
-					flux_deconv_2->SetMaximum(0.01);
+
+					//deconv_flux_asymmetric->SetMaximum(0.01);
+					//flux_deconv_2->SetMaximum(0.01);
+					if (neufield_type=="ISO"){
+						deconv_flux_asymmetric->SetMaximum(0.035);
+						flux_deconv_2->SetMaximum(0.035);
+					}
+					else if (neufield_type=="MIX"){
+						deconv_flux_asymmetric->SetMaximum(0.015);
+						flux_deconv_2->SetMaximum(0.015);
+					}
+					
 				}
 				/*LCO*/
 				//~ deconv_flux_asymmetric->SetMaximum(0.005);
