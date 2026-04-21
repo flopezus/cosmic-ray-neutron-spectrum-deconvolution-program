@@ -208,7 +208,7 @@ echo "Array specification  : $ARRAY_SPEC"
 sbatch \
   --chdir="${REPO_DIR}/local_scripts" \
   -J "EM_MC_stop_${CAMPAIGN}_${TIME_GRID}_min_${NEUFTY}" \
-  -o "${LOGDIR}/em_mc_stop_%A_%a.out" \
+  -o "/dev/null" \
   -e "${LOGDIR}/em_mc_stop_%A_%a.err" \
   --array="${ARRAY_SPEC}" \
   --export=ALL,CONFIG_FILE="${CONFIG_FILE}",LOGDIR="${LOGDIR}",REPO_DIR="${REPO_DIR}" \
