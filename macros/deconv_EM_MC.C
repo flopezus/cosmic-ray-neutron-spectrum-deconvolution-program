@@ -2352,7 +2352,7 @@ else{
 
 
 
-void MakeHistograms_loop_bin_energy_single_pass_output_opt(string campaign, int event, int timegrid, int ndet, string physic_list, string neufield_type)
+void MakeHistograms_loop_bin_energy_single_pass_output_opt(string campaign, int event, int timegrid, int ndet, string physic_list, string neufield_type, Long64_t min_entries)
 {
   auto start = std::chrono::system_clock::now();
 
@@ -2413,7 +2413,32 @@ void MakeHistograms_loop_bin_energy_single_pass_output_opt(string campaign, int 
     return;
   }
 
-  cout << "Event: " << event << endl;
+//cout << "Event: " << event << endl;
+
+// Verificar número de entries antes de procesar
+TTree* input_tree = (TTree*)event_file->Get("em_loop_tree");
+
+if (!input_tree) {
+  cout << "No se encontró el árbol em_loop_tree en el archivo de entrada" << endl;
+  delete event_file;
+  return;
+}
+
+Long64_t n_entries = input_tree->GetEntries();
+
+cout << "Event: " << event 
+     << " | Entries en em_loop_tree: " << n_entries 
+     << " | Mínimo requerido: " << min_entries << endl;
+
+if (n_entries < min_entries) {
+  cout << "Se salta el event " << event
+       << " porque tiene " << n_entries
+       << " entries, menor que el mínimo requerido: "
+       << min_entries << endl;
+
+  delete event_file;
+  return;
+}
 
   // -------------------------
   // Config general
@@ -3605,7 +3630,7 @@ struct HistoStats {
 /**Funcion que genera 2 canvas con los resultados del EM_MC_stop: 
  * 1) grafica la distribucion en 4 bines de energia, esto es, uno por region de energia (bin=7,40,90,103)
  * 2) grafica las distribuciones por region de energia (th,ep,fs,he,total) **/
-void MakeHistograms_loop_bin_energy_single_pass_new(string campaign, int event, int timegrid, int ndet, string physic_list){
+void MakeHistograms_loop_bin_energy_single_pass_new(string campaign, int event, int timegrid, int ndet, string physic_list, string neufield_type){
 
 	ostringstream  stream_event, stream_timegrid, stream_ndet;
 	stream_event << event;
@@ -3628,11 +3653,40 @@ void MakeHistograms_loop_bin_energy_single_pass_new(string campaign, int event, 
 		cout << physic_list+" Physic_list" << endl;}
 	else{cout << "Physics list inexistente o incorrecta" << endl;}
 
+	string campaign_path_new = campaign_path+"_"+neufield_type;
+
 	// Archivo de entrada
-	string fileName= "../outputs/root/deconv_data_rootfile/EM_MC_stop/"+campaign_path+
+	string fileName= "../outputs/root/deconv_data_rootfile/EM_MC_stop/"+campaign+"/"+campaign_path_new+
 					 "/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+
 					 "_steps_0_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_MC_stop.root";
-    // Se crea un RDataFrame a partir del árbol "em_loop_tree" del archivo ROOT.
+
+	TFile *event_file = new TFile(fileName.c_str());
+	if (event_file->IsZombie()) {
+		cout << "There is no input .root file" << endl;
+		delete event_file;
+		return;
+	}
+
+	// Verificar número de entries antes de procesar
+	TTree* input_tree = (TTree*)event_file->Get("em_loop_tree");
+
+	if (!input_tree) {
+	cout << "No se encontró el árbol em_loop_tree en el archivo de entrada" << endl;
+	delete event_file;
+	return;
+	}
+
+	Long64_t n_entries = input_tree->GetEntries();
+    
+	std::string unique_tag =
+    campaign + "_event_" + str_stream_event +
+    "_tg_" + str_stream_timegrid +
+    "_ndet_" + str_stream_ndet +
+    "_" + physic_list +
+    "_" + neufield_type;
+
+	
+					 // Se crea un RDataFrame a partir del árbol "em_loop_tree" del archivo ROOT.
     ROOT::RDataFrame df("em_loop_tree", fileName);
 
     // Parámetros para los histogramas (ajústalos según el rango esperado de tus datos)
@@ -3761,11 +3815,21 @@ void MakeHistograms_loop_bin_energy_single_pass_new(string campaign, int event, 
 	const double mu3 = *m3, sig3 = *s3;
 	const double muAll = *mall, sigAll = *sall;
 
-	auto h0 = dfS.Histo1D({"h0","Sum range 0", nbins, mu0-4*sig0, mu0+4*sig0}, "IntgThFlux");
-	auto h1 = dfS.Histo1D({"h1","Sum range 1", nbins, mu1-4*sig1, mu1+4*sig1}, "IntgEpFlux");
-	auto h2 = dfS.Histo1D({"h2","Sum range 2", nbins, mu2-4*sig2, mu2+4*sig2}, "IntgFsFlux");
-	auto h3 = dfS.Histo1D({"h3","Sum range 3", nbins, mu3-4*sig3, mu3+4*sig3}, "IntgHeFlux");
-	auto h4 = dfS.Histo1D({"h4","Sum range 4", nbins, muAll-4*sigAll, muAll+4*sigAll}, "IntgTotalFlux");
+//	auto h0 = dfS.Histo1D({"h0","Sum range 0", nbins, mu0-4*sig0, mu0+4*sig0}, "IntgThFlux");
+//	auto h1 = dfS.Histo1D({"h1","Sum range 1", nbins, mu1-4*sig1, mu1+4*sig1}, "IntgEpFlux");
+//	auto h2 = dfS.Histo1D({"h2","Sum range 2", nbins, mu2-4*sig2, mu2+4*sig2}, "IntgFsFlux");
+//	auto h3 = dfS.Histo1D({"h3","Sum range 3", nbins, mu3-4*sig3, mu3+4*sig3}, "IntgHeFlux");
+//	auto h4 = dfS.Histo1D({"h4","Sum range 4", nbins, muAll-4*sigAll, muAll+4*sigAll}, "IntgTotalFlux");
+
+	auto h0 = dfS.Histo1D({("h0_" + unique_tag).c_str(), "Sum range 0", nbins, mu0-4*sig0, mu0+4*sig0},"IntgThFlux");
+
+	auto h1 = dfS.Histo1D({("h1_" + unique_tag).c_str(), "Sum range 1", nbins, mu1-4*sig1, mu1+4*sig1},"IntgEpFlux");
+
+	auto h2 = dfS.Histo1D({("h2_" + unique_tag).c_str(), "Sum range 2", nbins, mu2-4*sig2, mu2+4*sig2},"IntgFsFlux");
+
+	auto h3 = dfS.Histo1D({("h3_" + unique_tag).c_str(), "Sum range 3", nbins, mu3-4*sig3, mu3+4*sig3},"IntgHeFlux");
+
+	auto h4 = dfS.Histo1D({("h4_" + unique_tag).c_str(), "Sum range 4", nbins, muAll-4*sigAll, muAll+4*sigAll},"IntgTotalFlux");
 
 	h0->Rebin(100);
 	h1->Rebin(100);
@@ -3880,7 +3944,15 @@ void MakeHistograms_loop_bin_energy_single_pass_new(string campaign, int event, 
 	};
 
 /******Distribution of Integral flux per energy region******/
- 	TCanvas *canvas_dist_integrals = new TCanvas("Dist_Integral_Fluxes","Dist_Integral_Fluxes",878,985);
+ 	//TCanvas *canvas_dist_integrals = new TCanvas("Dist_Integral_Fluxes","Dist_Integral_Fluxes",878,985);
+
+	TCanvas *canvas_dist_integrals =
+    new TCanvas(
+        ("Dist_Integral_Fluxes_" + unique_tag).c_str(),
+        "Dist_Integral_Fluxes",
+        878,
+        985
+    );
 
 	double x_title_size = 0.05;
 	double y_title_size = 0.05;
@@ -4031,7 +4103,11 @@ void MakeHistograms_loop_bin_energy_single_pass_new(string campaign, int event, 
 
 
 	canvas_dist_integrals->cd(1);
-  	DrawIntg(0); // Thermal
+	DrawIntg(0); // Thermal
+	TLatex *n_ent = new TLatex(0.718588, 0.8910,  Form("Samples: %lld", static_cast<long long>(n_entries)));
+	n_ent->SetNDC();
+	n_ent->SetTextSize(0.04);
+	n_ent->Draw("SAME");
 	canvas_dist_integrals->cd(2);
 	DrawIntg(1); // Epithermal
 	canvas_dist_integrals->cd(3);
@@ -4040,15 +4116,15 @@ void MakeHistograms_loop_bin_energy_single_pass_new(string campaign, int event, 
 	DrawIntg(3); // High-E
 	canvas_dist_integrals->cd(5);
 	DrawIntg(4); // Total
-	canvas_dist_integrals->cd(6);
+	canvas_dist_integrals->cd();
 
 	canvas_dist_integrals->Modified();
 	canvas_dist_integrals->Update();   // <- esto suele “hacer aparecer” el último
 
-	canvas_dist_integrals->Draw();
+	//canvas_dist_integrals->Draw();
 
-	canvas_dist_integrals->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/bin_fit_per_event/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_IntgFluxDist.pdf").c_str());
-    canvas_dist_integrals->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/bin_fit_per_event/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_IntgFluxDist.svg").c_str());
+	canvas_dist_integrals->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/bin_fit_per_event/"+campaign+"/"+neufield_type+"/"+"EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_"+physic_list+"_"+neufield_type+"_IntgFluxDist.pdf").c_str());
+    canvas_dist_integrals->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/bin_fit_per_event/"+campaign+"/"+neufield_type+"/"+"EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_"+physic_list+"_"+neufield_type+"_IntgFluxDist.svg").c_str());
 
 
 
@@ -4148,7 +4224,7 @@ void MakeHistograms_loop_bin_energy_single_pass_new(string campaign, int event, 
 
 //~ TCanvas *canvas_median = new TCanvas("median","median",1920,1080);
 //~ TCanvas *canvas_median = new TCanvas("median","median",863,724);
-TCanvas *canvas_median = new TCanvas("Dist_Flux_per_Bin","Dist_Flux_per_Bin",694,591);
+TCanvas *canvas_median = new TCanvas(("Dist_Flux_per_Bin" + unique_tag).c_str(),"Dist_Flux_per_Bin",694,591);
 //~ canvas_deconv_error->SetSupportGL(true);
 //~ gStyle->SetPadLeftMargin(0);
 //~ gStyle->SetPadRightMargin(0);
@@ -4359,6 +4435,10 @@ canvas_median->cd(1);
 //~ gPad->SetLeftMargin(0.09);
 
 DrawBin(7);
+TLatex *n_ent_2 = new TLatex(0.718588, 0.8910,  Form("Samples: %lld", static_cast<long long>(n_entries)));
+n_ent_2->SetNDC();
+n_ent_2->SetTextSize(0.035		);
+n_ent_2->Draw("SAME");
 
 canvas_median->cd(2);
 
@@ -4372,10 +4452,10 @@ canvas_median->cd(4);
 
 DrawBin(103);
 
-canvas_median->Draw();
+//canvas_median->Draw();
 
-canvas_median->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/bin_fit_per_event/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+".pdf").c_str());
-canvas_median->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/bin_fit_per_event/"+campaign+"/EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+".svg").c_str());
+canvas_median->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/bin_fit_per_event/"+campaign+"/"+neufield_type+"/"+"EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_"+physic_list+"_"+neufield_type+"_PerBinDist.pdf").c_str());
+canvas_median->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/bin_fit_per_event/"+campaign+"/"+neufield_type+"/"+"EM_unfolding_loop_campaign_"+campaign+"_event_"+str_stream_event+"_"+physic_list+"_"+neufield_type+"_PerBinDist.svg").c_str());
 }
 
 
@@ -4416,7 +4496,7 @@ void loop_fit_over_events(int timegrid, int ndet)
 	    }
 }
 
-void loop_fit_over_events_range(string campaign, int event_inf, int event_sup, int timegrid, int ndet, string physics_list, string neufield_type)
+void loop_fit_over_events_range(string campaign, int event_inf, int event_sup, int timegrid, int ndet, string physics_list, string neufield_type,Long64_t min_entries)
 {
 	for(int i=event_inf;i<=event_sup;i++)
 		{
@@ -4425,7 +4505,15 @@ void loop_fit_over_events_range(string campaign, int event_inf, int event_sup, i
 		 //~ fit_loop_bin_energy(campaign,i,timegrid,ndet,21); //Chapiquilta
 		  //~ MakeHistograms_loop_bin_energy_single_pass_ouput(campaign,i,timegrid,ndet); //Chapiquilta
 		  //~ MakeHistograms_loop_bin_energy_single_pass_output(campaign,i,timegrid,ndet); //SanPedrodeAtacama
-		  MakeHistograms_loop_bin_energy_single_pass_output_opt(campaign,i,timegrid,ndet,physics_list, neufield_type); //LCO
+		  MakeHistograms_loop_bin_energy_single_pass_output_opt(campaign,i,timegrid,ndet,physics_list, neufield_type,min_entries); //LCO
+	    }      
+}
+
+void loop_plot_fit_over_events_range(string campaign, int event_inf, int event_sup, int timegrid, int ndet, string physics_list, string neufield_type)
+{
+	for(int i=event_inf;i<=event_sup;i++)
+		{
+		   MakeHistograms_loop_bin_energy_single_pass_new(campaign,i,timegrid,ndet,physics_list, neufield_type);
 	    }      
 }
 
