@@ -4105,9 +4105,17 @@ void MakeHistograms_loop_bin_energy_single_pass_new(string campaign, int event, 
 	canvas_dist_integrals->cd(1);
 	DrawIntg(0); // Thermal
 	TLatex *n_ent = new TLatex(0.718588, 0.8910,  Form("Samples: %lld", static_cast<long long>(n_entries)));
+	TLatex *n_event = new TLatex(0.718588, 0.8610,  Form("Event: %03lld", static_cast<long long>(event)));
+	TLatex *n_field = new TLatex(0.718588, 0.8310, Form("Neu_field: %s", neufield_type.c_str()));
 	n_ent->SetNDC();
+	n_event->SetNDC();
+	n_field->SetNDC();
 	n_ent->SetTextSize(0.04);
+	n_event->SetTextSize(0.04);
+	n_field->SetTextSize(0.04);
 	n_ent->Draw("SAME");
+	n_event->Draw("SAME");
+	n_field->Draw("SAME");
 	canvas_dist_integrals->cd(2);
 	DrawIntg(1); // Epithermal
 	canvas_dist_integrals->cd(3);
@@ -4436,9 +4444,17 @@ canvas_median->cd(1);
 
 DrawBin(7);
 TLatex *n_ent_2 = new TLatex(0.718588, 0.8910,  Form("Samples: %lld", static_cast<long long>(n_entries)));
+TLatex *n_event_2 = new TLatex(0.728588, 0.8610,  Form("Event: %03lld", static_cast<long long>(event)));
+TLatex *n_field_2 = new TLatex(0.728588, 0.8310, Form("Neu_field: %s", neufield_type.c_str()));
 n_ent_2->SetNDC();
-n_ent_2->SetTextSize(0.035		);
+n_event_2->SetNDC();
+n_field_2->SetNDC();
+n_ent_2->SetTextSize(0.035);
+n_event_2->SetTextSize(0.035);
+n_field_2->SetTextSize(0.035);
 n_ent_2->Draw("SAME");
+n_event_2->Draw("SAME");
+n_field_2->Draw("SAME");
 
 canvas_median->cd(2);
 
@@ -11753,7 +11769,8 @@ else{
 				}
 			if(flux_representation=="Lethargy")
 				{
-					flux_deconv->GetYaxis()->SetTitle("#bf{#phi(u)=E#times#phi(E) [cm^{-2} s^{-1} lethargy^{-1}]}");
+					flux_deconv->GetYaxis()->SetTitle("#bf{E#timesd#Phi(E)/dE [cm^{-2} s^{-1} lethargy^{-1}]}");
+					//flux_deconv->GetYaxis()->SetTitle("#bf{#phi(u)=E#times#phi(E) (cm^{-2} s^{-1} lethargy^{-1})}");
 					flux_deconv->GetYaxis()->SetTitleOffset(1.7);
 				}
 			if(flux_representation=="Differential")
@@ -11875,7 +11892,8 @@ else{
 				}
 			if(flux_representation=="Lethargy")
 				{
-					flux_deconv_2->GetYaxis()->SetTitle("#bf{#phi(u)=E#times#phi(E) (cm^{-2} s^{-1} lethargy^{-1})}");
+					//flux_deconv_2->GetYaxis()->SetTitle("#bf{#phi(u)=E#times#phi(E) (cm^{-2} s^{-1} lethargy^{-1})}");
+					flux_deconv_2->GetYaxis()->SetTitle("#bf{E#timesd#Phi(E)/dE [cm^{-2} s^{-1} lethargy^{-1}]}");
 					//~ flux_deconv_2->GetYaxis()->SetTitleOffset(1.7);
 					flux_deconv_2->GetYaxis()->SetTitleOffset(0.8);
 					deconv_flux_asymmetric->GetYaxis()->SetTitle("#bf{E#timesd#Phi(E)/dE [cm^{-2} s^{-1} lethargy^{-1}]}");
@@ -12652,7 +12670,7 @@ else{
 						deconv_flux_asymmetric->SetMaximum(0.017);
 						flux_deconv_2->SetMaximum(0.017);
 					}
-					else if (neufield_type=="MIX" || neufield_type=="BEAM" ){
+					else if (neufield_type=="MIX" || neufield_type=="BEAM"){
 						//BEAM 15 min
 						deconv_flux_asymmetric->SetMaximum(0.007);
 						flux_deconv_2->SetMaximum(0.007);
@@ -12678,16 +12696,30 @@ else{
 				//~ deconv_flux_asymmetric->SetMaximum(0.005);
 				//~ flux_deconv_2->SetMaximum(0.005); //LCO
 				if(campaign=="Chapiquilta"){
-					//~ deconv_flux_asymmetric->SetMaximum(0.005);
-					//~ flux_deconv_2->SetMaximum(0.005);
-					deconv_flux_asymmetric->SetMaximum(0.004);
-					flux_deconv_2->SetMaximum(0.004);
+						if (neufield_type=="ISO"){
+							deconv_flux_asymmetric->SetMaximum(0.016);
+							flux_deconv_2->SetMaximum(0.016);
+						}
+						else if (neufield_type=="MIX" || neufield_type=="BEAM"){
+							deconv_flux_asymmetric->SetMaximum(0.006);
+							flux_deconv_2->SetMaximum(0.006);
+						}
 				}
+				
 				if(campaign=="SanPedrodeAtacama"){
 					//~ deconv_flux_asymmetric->SetMaximum(0.005);
 					//~ flux_deconv_2->SetMaximum(0.005);
-					deconv_flux_asymmetric->SetMaximum(0.004);
-					flux_deconv_2->SetMaximum(0.004);
+					if (neufield_type=="ISO"){
+						deconv_flux_asymmetric->SetMaximum(0.016);
+						flux_deconv_2->SetMaximum(0.016);
+					}
+					else if (neufield_type=="MIX" || neufield_type=="BEAM"){
+						deconv_flux_asymmetric->SetMaximum(0.006);
+						flux_deconv_2->SetMaximum(0.006);
+					}
+					
+					//deconv_flux_asymmetric->SetMaximum(0.004);
+					//flux_deconv_2->SetMaximum(0.004);
 				}
 
 		
@@ -12820,6 +12852,11 @@ else{
 
 	TCanvas *canvas_compare = new TCanvas("Compare flux seed, flux deconv","Compare flux seed, flux decon",1920,1080);
 	//~ gStyle->SetCanvasPreferGL(kTRUE);
+
+	canvas_compare->SetLeftMargin(0.0763);
+	canvas_compare->SetRightMargin(0.009);
+	canvas_compare->SetTopMargin(0.055);
+	canvas_compare->SetBottomMargin(0.15);
 	
 	 /*Histograma de flujo inicial*/
 	 //El flujo de parma/expacs esta en su representacion letargica
@@ -12882,6 +12919,9 @@ else{
 	flux_inicial->GetXaxis()->SetTitleSize(0.04);
 	flux_inicial->SetStats(0);
 
+
+	flux_inicial->GetYaxis()->SetMaxDigits(1);
+
 			if(flux_representation=="Integral")
 				{
 					flux_inicial->GetYaxis()->SetTitle("#bf{#Phi(E)=#phi(E)#timesdE [cm^{-2} s^{-1}]}");
@@ -12889,8 +12929,8 @@ else{
 				}
 			if(flux_representation=="Lethargy")
 				{
-					flux_inicial->GetYaxis()->SetTitle("#bf{#phi(u)=E#times#phi(E) [cm^{-2} s^{-1} lethargy^{-1}]}");
-					flux_inicial->GetYaxis()->SetTitleOffset(1.7);
+					flux_inicial->GetYaxis()->SetTitle("#bf{E#timesd#Phi(E)/dE [cm^{-2} s^{-1} lethargy^{-1}]}");
+					flux_inicial->GetYaxis()->SetTitleOffset(0.8);
 				}
 			if(flux_representation=="Differential")
 				{
@@ -12955,7 +12995,7 @@ else{
 	//~ flux_inicial->GetXaxis()->SetTitle("Energy [MeV]" );
 
 
-	canvas_compare->SetLeftMargin(0.15);
+	//canvas_compare->SetLeftMargin(0.15);
 	//~ canvas_deconv->GetPad(i+1)->SetRightMargin(0.009);
 
 	TLegend *legend_c = new TLegend(0.32,0.59,0.59,0.82);
@@ -17474,10 +17514,10 @@ cout << " " << endl;
 	
 
 
-canvas_intg->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/integral_flux_relations/"+campaign+"/"+campaign_path_new+"/EM_integrales_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".pdf").c_str());
-canvas_intg->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/integral_flux_relations/"+campaign+"/"+campaign_path_new+"/EM_integrales_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".svg").c_str());
-canvas_intg->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/integral_flux_relations/"+campaign+"/"+campaign_path_new+"/EM_integrales_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".png").c_str());
-canvas_intg->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/integral_flux_relations/"+campaign+"/"+campaign_path_new+"/EM_integrales_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".eps").c_str());
+canvas_intg->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/integral_flux_relations/"+campaign+"/"+campaign_path_new+"/EM_integrales_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+physic_list+"_"+neufield_type+".pdf").c_str());
+canvas_intg->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/integral_flux_relations/"+campaign+"/"+campaign_path_new+"/EM_integrales_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+physic_list+"_"+neufield_type+".svg").c_str());
+canvas_intg->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/integral_flux_relations/"+campaign+"/"+campaign_path_new+"/EM_integrales_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+physic_list+"_"+neufield_type+".png").c_str());
+canvas_intg->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/integral_flux_relations/"+campaign+"/"+campaign_path_new+"/EM_integrales_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+physic_list+"_"+neufield_type+".eps").c_str());
 
 
 TCanvas *canvas_ratio_integrales = new TCanvas("Ratio_Integrales","Ratio_Integrales",786,927);
@@ -17571,7 +17611,7 @@ legend_c->AddEntry(hist_intg_ratio_th_total_clone,"Ratio #Phi_{th}/(#Phi_{total}
 legend_c->Draw();
 
 canvas_ratio_integrales->Draw();
-canvas_ratio_integrales->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/integral_flux_relations/"+campaign+"/"+campaign_path_new+"/EM_ratio_integrales_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".pdf").c_str());
+canvas_ratio_integrales->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/integral_flux_relations/"+campaign+"/"+campaign_path_new+"/EM_ratio_integrales_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+physic_list+"_"+neufield_type+".pdf").c_str());
 
 TCanvas *canvas_eta_integrales = new TCanvas("Eta_Integrales","#Eta Integrales",700,1027);
 canvas_eta_integrales->Divide(1,3);
@@ -17693,7 +17733,7 @@ legend_fs->AddEntry(hist_intg_eta_fs_clone,"Ratio #eta_{fs}","lep");
 legend_fs->Draw();
 
 canvas_eta_integrales->Draw();
-canvas_eta_integrales->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/integral_flux_relations/"+campaign+"/"+campaign_path_new+"/EM_eta_integrales_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+".pdf").c_str());
+canvas_eta_integrales->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_MC_fitting/integral_flux_relations/"+campaign+"/"+campaign_path_new+"/EM_eta_integrales_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_"+physic_list+"_"+neufield_type+".pdf").c_str());
 
 
 string fit_event_file_name ="../outputs/root/deconv_mc_data_energy_fitting/"+campaign+"/"+campaign_path_new+"/EM_MC_fit_parameters_campaign_"+campaign+"_timegrid_"+str_stream_timegrid+"_ndet_"+str_stream_ndet+"_update_merge_02.root";
@@ -20328,7 +20368,7 @@ canvas_ratios_relations_TC_5cm->SaveAs(("../outputs/pdf/deconv_data_pdf/EM_scatt
 	
 }
 
-
+/*Para uso en  fit_Ln_solar_only()*/
 vector<vector<double>> plot_data_merge_plus_sp_output(string campaign, int time_grid, int ndet)
 {
 	
@@ -21682,7 +21722,7 @@ return data_output;
 }
 
 
-
+/*Para uso en  fit_Ln_solar_only()*/
 vector<vector<double>> data_merge_plus_sp_output(string campaign, int time_grid, int ndet)
 {
 	
