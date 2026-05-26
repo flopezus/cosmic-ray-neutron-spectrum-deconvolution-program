@@ -3,7 +3,7 @@
 #SBATCH -p main
 #SBATCH -n 1
 #SBATCH -c 1
-#SBATCH --mem-per-cpu=4000
+#SBATCH --mem-per-cpu=2800
 #SBATCH --time=15-00:00:00
 #SBATCH --mail-user=franco.lopez.usquiano@gmail.com
 #SBATCH --mail-type=FAIL,END
