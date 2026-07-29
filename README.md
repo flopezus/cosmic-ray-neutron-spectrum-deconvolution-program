@@ -4,6 +4,8 @@
 
 La actividad práctica con Docker, ROOT, PyROOT y JupyterLab puede ejecutarse:
 
+- con la guía breve de descarga e instalación
+  [`INSTALACION_RAPIDA.md`](INSTALACION_RAPIDA.md);
 - localmente, siguiendo [`CLASSROOM_DOCKER.md`](CLASSROOM_DOCKER.md);
 - desde un navegador con GitHub Codespaces, siguiendo
   [`CODESPACES.md`](CODESPACES.md).
