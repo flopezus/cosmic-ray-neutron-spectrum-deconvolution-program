@@ -26,9 +26,17 @@ outputs/log/*
 !outputs/log/.keep_dir
 
 ############################################
-# Local scripts (never track)
+# Local scripts
 ############################################
 local_scripts/*
+!local_scripts/.keep_dir
+!local_scripts/run_event_em_local.sh
+!local_scripts/run_event_em_mc_local.sh
+
+# Python/Jupyter state
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
 
 ############################################
 # External data (downloaded, not tracked)

@@ -1,4 +1,16 @@
 # Cosmic Ray Neutron Spectra Deconvolutions
+
+## Actividad docente reproducible
+
+La actividad práctica con Docker, ROOT, PyROOT y JupyterLab puede ejecutarse:
+
+- localmente, siguiendo [`CLASSROOM_DOCKER.md`](CLASSROOM_DOCKER.md);
+- desde un navegador con GitHub Codespaces, siguiendo
+  [`CODESPACES.md`](CODESPACES.md).
+
+En Codespaces no es necesario instalar Docker localmente ni ejecutar
+`start_class.sh`: el repositorio se abre directamente dentro del contenedor.
+
 ## Root Macros
     
   `deconv_CRNS.C` is a `ROOT` macro written using the paradigm of functional programming. The main objective of this macro is to obtain a  
@@ -249,4 +261,3 @@ For LCO campaign using a 15 minutes time grid:
 - `void loop_fit_over_events(15)`
 - `routine_final_plot_lco_15min()`
 - `routine_data_merge_em_mc()` 
-

@@ -1,0 +1,8 @@
+.git
+.gitignore
+.dockerignore
+*
+!docker/
+!docker/Dockerfile
+!docker/entrypoint.sh
+!docker/requirements.txt

@@ -1,0 +1,35 @@
+{
+  "name": "CRNS Unfolding Classroom",
+  "build": {
+    "dockerfile": "../docker/Dockerfile",
+    "context": ".."
+  },
+  "workspaceMount": "type=bind,source=${localWorkspaceFolder},target=/workspace",
+  "workspaceFolder": "/workspace",
+  "containerUser": "classroom",
+  "remoteUser": "classroom",
+  "updateRemoteUserUID": true,
+  "overrideCommand": false,
+  "containerEnv": {
+    "JUPYTER_TOKEN": "neutrons",
+    "PYTHONUNBUFFERED": "1"
+  },
+  "forwardPorts": [
+    8888
+  ],
+  "portsAttributes": {
+    "8888": {
+      "label": "JupyterLab · CRNS",
+      "onAutoForward": "openBrowser",
+      "visibility": "private"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-toolsai.jupyter"
+      ]
+    }
+  }
+}

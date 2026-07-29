@@ -12554,7 +12554,23 @@ void em_loop_MC_opt_new(string campaign,int event,int steps,int time_grid, int n
 
 /*Nuevo loop de deconvolucion EM_MC_stop, que da como input al .root de PARMA/EXPACS y
  * `icrp116_binning_resume.csv para la funcion deconv_em_output_MC_update() */
-void em_loop_MC_opt_new_update(string campaign,int event,int steps,int time_grid, int ndet, int bin_seed, int random_seed, string cut, string physic_list, string scale_factor, string neufield_type){
+void em_loop_MC_opt_new_update(
+	string campaign,
+	int event,
+	int steps,
+	int time_grid,
+	int ndet,
+	int bin_seed,
+	int random_seed,
+	string cut,
+	string physic_list,
+	string scale_factor,
+	string neufield_type,
+	int target_accepted = 10000,
+	int max_mc_trials = 20000000,
+	int max_steps_em = 20,
+	double diff_limit = 0.02
+){
 
 	//~ ROOT::EnableImplicitMT(0); // Desactiva el uso de múltiples hilos en ROOT
 	
@@ -12579,11 +12595,9 @@ void em_loop_MC_opt_new_update(string campaign,int event,int steps,int time_grid
 
     TRandom3 r(random_seed); // Inicializa el generador de números aleatorios
     //~ int N = 2000000; //numero de iteraciones MC
-    int N = 20000000; //numero de iteraciones MC (La aumentamos para evitar tener que generar nuevos MC y completar la estadistica de 10000)
+    int N = max_mc_trials; //numero maximo de iteraciones MC
     int mc_it = 0, mc_it_rejected = 0;
-    // int max_em_mc_it = 30000; // Máximo número de eventos aceptados
-    int max_em_mc_it = 10000; // Máximo número de eventos aceptados (Chapiquilta)
-    int max_steps_em = 20;    // Máximo número de pasos permitidos en EM (Chapiquilta)
+    int max_em_mc_it = target_accepted; // Máximo número de eventos aceptados
 
 	/******CREAMOS LA CARPETA DE SALIDA******/
 	//~ fs::path outdir = PrepareOutputDir(campaign_path);
@@ -12667,11 +12681,11 @@ void em_loop_MC_opt_new_update(string campaign,int event,int steps,int time_grid
         double chi_square = vec_event_MC_loop_element[vec_event_MC_loop_element.size() - 7]; // Ejemplo: Chi2 (posición ajustada)
         double diff = vec_event_MC_loop_element[vec_event_MC_loop_element.size() - 5];      // Ejemplo: diff (posición ajustada)
 
-        // Aplica el criterio de aceptación:
-        // 1. Menos de 31 pasos (em_it < 31).
-        // 2. Cumple criterio de stop (chi_square < ndet y 0.01 < diff).
-        //~ if (em_it_value < 31 && chi_square < ndet && diff < 0.02) {
-        if (em_it_value < max_steps_em && chi_square < ndet && diff < 0.02) {
+        // Aplica el criterio de aceptación configurable:
+        // 1. Menos de max_steps_em pasos.
+        // 2. chi_square menor que el número de detectores.
+        // 3. Cambio relativo menor que diff_limit.
+        if (em_it_value < max_steps_em && chi_square < ndet && diff < diff_limit) {
             vec_event_MC_loop.push_back(vec_event_MC_loop_element); // Guarda solo si cumple ambos criterios
             mc_it++;
         }

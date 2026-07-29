@@ -1,0 +1,21 @@
+services:
+  jupyter:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    image: crns-unfolding-jupyter:root-6.32.06
+    container_name: crns-unfolding-jupyter
+    init: true
+    user: "${LOCAL_UID:-1000}:${LOCAL_GID:-1000}"
+    working_dir: /workspace
+    ports:
+      - "127.0.0.1:${JUPYTER_PORT:-8888}:8888"
+    environment:
+      HOME: /tmp/jupyter-home
+      JUPYTER_TOKEN: "${JUPYTER_TOKEN:-neutrons}"
+      LOGNAME: classroom
+      PYTHONUNBUFFERED: "1"
+      USER: classroom
+    volumes:
+      - .:/workspace
+    restart: unless-stopped
