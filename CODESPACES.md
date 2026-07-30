@@ -83,5 +83,17 @@ Los resultados bajo `outputs/` son locales a cada Codespace y no se guardan
 en GitHub a menos que el estudiante los descargue o los confirme
 explícitamente con Git.
 
+El ROOT de cada evento se escribe, al terminar el Monte Carlo, bajo:
+
+```text
+/workspace/outputs/root/deconv_data_rootfile/EM_MC_stop/
+```
+
+La sección final del notebook muestra un enlace separado para cada uno de los
+cinco eventos asignados. También se puede abrir esa carpeta en el explorador de
+Jupyter o VS Code, hacer clic derecho sobre un `.root` y elegir **Download**.
+No se debe buscar `/outputs`, `deconv_data_rootfiles` ni `_EM_MC_stop`, porque
+esas rutas no corresponden a las que usa el código.
+
 El puerto 8888 queda configurado como privado. No se recomienda cambiarlo a
 público, porque Jupyter permite ejecutar código dentro del Codespace.

@@ -8,7 +8,9 @@ La actividad práctica con Docker, ROOT, PyROOT y JupyterLab puede ejecutarse:
   [`INSTALACION_RAPIDA.md`](INSTALACION_RAPIDA.md);
 - localmente, siguiendo [`CLASSROOM_DOCKER.md`](CLASSROOM_DOCKER.md);
 - desde un navegador con GitHub Codespaces, siguiendo
-  [`CODESPACES.md`](CODESPACES.md).
+  [`CODESPACES.md`](CODESPACES.md);
+- para reunir y entregar los resultados asignados, siguiendo
+  [`ENTREGA_5_EVENTOS.md`](ENTREGA_5_EVENTOS.md).
 
 En Codespaces no es necesario instalar Docker localmente ni ejecutar
 `start_class.sh`: el repositorio se abre directamente dentro del contenedor.

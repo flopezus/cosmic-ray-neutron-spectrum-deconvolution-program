@@ -3,6 +3,7 @@
 # sin módulos, arreglos ni comandos de SLURM.
 
 set -euo pipefail
+umask 0022
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
@@ -132,6 +133,8 @@ LOG_FILE="${LOG_DIR}/EM_MC_${CAMPAIGN}_event_${EVENT_ID}_${TIME_GRID}min_target_
 DECONV_PATH="${REPO_DIR}/macros/deconv_CRNS.C"
 
 mkdir -p "${OUTPUT_DIR}" "${LOG_DIR}" "${REPO_DIR}/outputs/pdf"
+[ -w "${OUTPUT_DIR}" ] ||
+    fail "no hay permiso de escritura en ${OUTPUT_DIR}"
 [ -f "${DECONV_PATH}" ] || fail "no existe la macro ${DECONV_PATH}"
 command -v root >/dev/null 2>&1 || fail "ROOT no está disponible en PATH."
 
@@ -178,8 +181,8 @@ em_loop_MC_opt_new_update(
 .q
 ROOT_EOF
 
-[ -f "${OUTPUT_FILE}" ] ||
-    fail "ROOT terminó sin crear el archivo esperado: ${OUTPUT_FILE}"
+[ -s "${OUTPUT_FILE}" ] ||
+    fail "ROOT terminó sin crear un archivo válido: ${OUTPUT_FILE}"
 
 echo "Ejecución EM-MC terminada."
 echo "OUTPUT_ROOT=${OUTPUT_FILE}"
