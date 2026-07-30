@@ -440,11 +440,22 @@ def _response_file_map(directory: Path) -> dict[int, Path]:
 
 def load_response_matrix(
     config: str | Path,
+    *,
+    include_inactive: bool = False,
 ) -> tuple[np.ndarray, pd.DataFrame, pd.DataFrame]:
-    """Matriz respuesta activa, bineado y metadatos en el orden de la macro."""
+    """Matriz respuesta, bineado y metadatos en el orden de la macro.
+
+    Por defecto devuelve solamente los canales activos de la campaña.
+    ``include_inactive=True`` carga D01–D16 para visualizaciones comparativas,
+    sin cambiar la matriz activa usada por el unfolding.
+    """
 
     values = load_shell_config(config)
-    channels = active_channels(values["CAMPAIGN"])
+    channels = (
+        tuple(range(1, 17))
+        if include_inactive
+        else active_channels(values["CAMPAIGN"])
+    )
     response_dir = scientific_inputs(config)["respuestas"]
     files = _response_file_map(response_dir)
     rows: list[np.ndarray] = []
