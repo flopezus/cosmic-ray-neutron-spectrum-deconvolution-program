@@ -24,6 +24,7 @@ fi
 
 CONFIG_INPUT="$1"
 EVENT_ID="$2"
+EM_PROGRESS_EVERY="${EM_PROGRESS_EVERY:-100}"
 
 if [[ "${CONFIG_INPUT}" = /* ]]; then
     CONFIG_FILE="${CONFIG_INPUT}"
@@ -36,6 +37,8 @@ CONFIG_FILE="$(readlink -f "${CONFIG_FILE}")"
 
 [[ "${EVENT_ID}" =~ ^[1-9][0-9]*$ ]] ||
     fail "EVENT_ID debe ser un entero positivo."
+[[ "${EM_PROGRESS_EVERY}" =~ ^[1-9][0-9]*$ ]] ||
+    fail "EM_PROGRESS_EVERY debe ser un entero positivo."
 
 # shellcheck disable=SC1090
 source "${CONFIG_FILE}"
@@ -111,11 +114,85 @@ echo "Configuración : ${CONFIG_FILE}"
 echo "Parámetros    : steps=${STEPS}, time_grid=${TIME_GRID}, ndet=${NDET}, max_steps=${MAX_STEPS}"
 echo "Salida        : ${OUTPUT_FILE}"
 echo "Log           : ${LOG_FILE}"
+echo "Progreso      : cada ${EM_PROGRESS_EVERY} iteraciones EM acumuladas"
 
 # deconv_CRNS.C construye sus rutas desde ../data y ../outputs.
 cd "${SCRIPT_DIR}"
 
-root -l -b 2>&1 <<ROOT_EOF | tee "${LOG_FILE}"
+root -l -b 2>&1 <<ROOT_EOF \
+    | tee "${LOG_FILE}" \
+    | tr '\r' '\n' \
+    | awk -v every="${EM_PROGRESS_EVERY}" '
+        function emit(line) {
+            print line
+            fflush()
+        }
+
+        /^[[:space:]]*$/ {
+            next
+        }
+
+        /#SPECTRA size:[[:space:]]*[0-9]+/ {
+            total_seeds = $0
+            sub(/^.*#SPECTRA size:[[:space:]]*/, "", total_seeds)
+            sub(/[^0-9].*$/, "", total_seeds)
+            emit($0)
+            next
+        }
+
+        /Seed:[[:space:]]*[0-9]+[[:space:]]+Starting[[:space:]]+\.\.\./ {
+            seed = $0
+            sub(/^.*Seed:[[:space:]]*/, "", seed)
+            sub(/[[:space:]]+Starting.*$/, "", seed)
+            current_seed = seed + 0
+            inside_seed = 1
+            next
+        }
+
+        inside_seed && /em_it[[:space:]]+[0-9]+/ {
+            iteration_count++
+            if (iteration_count % every == 0) {
+                diagnostic = $0
+                finished_at = index(diagnostic, "EM unfolding")
+                if (finished_at > 0) {
+                    diagnostic = substr(diagnostic, 1, finished_at - 1)
+                }
+                sub(/^[[:space:]]+/, "", diagnostic)
+                seed_total = total_seeds ? total_seeds : "?"
+                printf "[EM] %d iteraciones acumuladas | semilla %d/%s | %s\n", iteration_count, current_seed, seed_total, diagnostic
+                fflush()
+            }
+            if ($0 ~ /Finished\./) {
+                inside_seed = 0
+            }
+            next
+        }
+
+        inside_seed && /Finished\./ {
+            inside_seed = 0
+            next
+        }
+
+        inside_seed {
+            lowered = tolower($0)
+            if (lowered ~ /error|fatal|warning|exception|segmentation/) {
+                emit($0)
+            }
+            next
+        }
+
+        {
+            emit($0)
+        }
+
+        END {
+            if (iteration_count > 0) {
+                seed_total = total_seeds ? total_seeds : "?"
+                printf "[EM] Fin: %d iteraciones acumuladas en %s semillas.\n", iteration_count, seed_total
+                fflush()
+            }
+        }
+    '
 .L ${DECONV_PATH}
 if (!gROOT->GetGlobalFunction("em_loop_steps_update")) {
     std::cerr << "No se pudo cargar em_loop_steps_update" << std::endl;
